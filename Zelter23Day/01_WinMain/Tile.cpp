@@ -20,7 +20,7 @@ void Tile::Render(HDC hdc)
 {
 	if (mTileLayer == TileLayer::PalletteType)
 	{
-		mImage->FrameRender(hdc, mX, mY, mFrameIndexX, mFrameIndexY);
+		mImage->FrameRender(hdc, mRect.left, mRect.top, mFrameIndexX, mFrameIndexY);
 	}
 	else
 	{
@@ -53,5 +53,5 @@ void Tile::Move(float x, float y)
 {
 	mX = x;
 	mY = y;
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 }

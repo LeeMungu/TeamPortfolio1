@@ -77,8 +77,6 @@ class MapToolScene : public Scene
 
 	TileLayer mCurrentLayer;
 
-	bool isGridMode;
-
 	stack<ICommand*> mCommandList;
 	stack<ICommand*> mRedoList;
 

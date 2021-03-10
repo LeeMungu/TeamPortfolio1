@@ -1,8 +1,6 @@
 #pragma once
 #include "GameObject.h"
 
-
-
 //구조체 변수는 대문자로 시작하게 짬, 나같은경우에는
 struct TilePallete
 {

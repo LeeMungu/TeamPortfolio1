@@ -44,21 +44,13 @@ void MapToolScene::Init()
 			mTileList[y][x]->SetTileLayer(TileLayer::normal);
 		}
 	}
-
-	//mSaveButton = RectMake(WINSIZEX / 2, WINSIZEY / 2, 200, 50);
-	//mLoadButton = RectMake(mSaveButton.right + 10, WINSIZEY / 2, 200, 50);
-
-	mSaveButton = new Button(L"Save",WINSIZEX / 2 + 450, WINSIZEY / 2 + 50, 200, 50, 
-		bind(&MapToolScene::Save,this));
-	mLoadButton = new Button(L"Load",WINSIZEX / 2 + 450, WINSIZEY / 2 + 130, 200, 50,
+	//버튼
+	mSaveButton = new Button(L"Save", mToolBook->GetX()+mToolBook->GetSizeX()/5, mToolBook->GetY(), 200, 50,
+		bind(&MapToolScene::Save, this));
+	mLoadButton = new Button(L"Load", mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY() + 100, 200, 50,
 		bind(&MapToolScene::Load, this));
 
-	//mNormal = new Button(wstring(L"Normal"), palleteStartX + 100, palleteStartY - 120, 70, 50, bind(&MapToolScene::MakeNormal, this));
-	//mWall = new Button(wstring(L"Wall"), palleteStartX + 170, palleteStartY - 120, 70, 50, bind(&MapToolScene::MakeWall, this));
-	//mSlow = new Button(wstring(L"Slow"), palleteStartX + 240, palleteStartY - 120, 70, 50, bind(&MapToolScene::MakeSlow, this));
-
 	mCurrentPallete = nullptr;
-	isGridMode = true;
 	mCurrentLayer = TileLayer::normal;
 }
 
@@ -74,8 +66,6 @@ void MapToolScene::Release()
 			SafeDelete(mTileList[y][x]);
 		}
 	}
-
-
 	SafeDelete(mSaveButton);
 	SafeDelete(mLoadButton);
 }
@@ -128,6 +118,11 @@ void MapToolScene::Update()
 	}
 	// }}
 
+	mSaveButton->Move(mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY());
+	mLoadButton->Move(mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY() + 100);
+	//버튼 업데이트
+	mSaveButton->Update();
+	mLoadButton->Update();
 	//되감기
 	if (Input::GetInstance()->GetKey(VK_LCONTROL))
 	{
@@ -136,10 +131,6 @@ void MapToolScene::Update()
 			Undo();
 		}
 	}
-
-	mSaveButton->Update();
-	mLoadButton->Update();
-
 }
 
 void MapToolScene::Render(HDC hdc)
@@ -177,12 +168,11 @@ void MapToolScene::Render(HDC hdc)
 	}
 
 	TextOut(hdc, 10, 10, to_wstring(renderCount).c_str(), to_wstring(renderCount).length());
-	TextOut(hdc, 10, 40, L"wasd : 카메라이동", 12);
-	TextOut(hdc, 10, 70, L"←→↑↓ : 캐릭터이동", 12);
-	TextOut(hdc, 10, 100, L"Lctrl : 기찌모~", 12);
+	TextOut(hdc, 10, 40, L"WASD : 카메라 이동", 12);
+	TextOut(hdc, 10, 70, L"Shift + ←→↑↓ : 책 이동", 12);
+	TextOut(hdc, 10, 100, L"Lctrl : 테두리", 12);
+	TextOut(hdc, 10, 130, L"Lctrl + Z : 되감기", 12);
 
-	mSaveButton->Render(hdc);
-	mLoadButton->Render(hdc);
 
 	if (mCurrentPallete != nullptr)
 	{
@@ -197,6 +187,11 @@ void MapToolScene::Render(HDC hdc)
 			Gizmo::GetInstance()->DrawRect(hdc, miniRc, Gizmo::Color::Green);
 	}
 	ObjectManager::GetInstance()->Render(hdc);
+
+	//버튼 그려주기
+	mSaveButton->Render(hdc);
+	mLoadButton->Render(hdc);
+
 	//카메라렉트 테스트용
 	//RenderRect(hdc,CameraManager::GetInstance()->GetMainCamera()->GetRect());
 }

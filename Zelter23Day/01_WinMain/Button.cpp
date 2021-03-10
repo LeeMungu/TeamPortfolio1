@@ -53,3 +53,11 @@ void Button::Render(HDC hdc)
 
 	TextOut(hdc, mX - mSizeX / 4, mY - mSizeY / 4, mText.c_str(), mText.length());
 }
+
+void Button::Move(float x, float y)
+{
+	mX = x;
+	mY = y;
+
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+}

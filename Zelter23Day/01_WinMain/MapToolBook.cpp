@@ -3,6 +3,7 @@
 #include "Image.h"
 #include "Animation.h"
 #include "Tile.h"
+#include "Button.h"
 
 void MapToolBook::Init()
 {
@@ -25,6 +26,8 @@ void MapToolBook::Init()
 		Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 		int palleteStartX = mRect.left+200;
 		int palleteStartY = mRect.top+50;
+
+		//후에 갯수조정 자동으로 되게 셋팅할 예정
 		mPallete.assign(4, vector<Tile*>());
 		for (int y = 0; y < 4; ++y)
 		{
@@ -44,6 +47,7 @@ void MapToolBook::Init()
 			}
 		}
 	});
+
 }
 
 void MapToolBook::Release()
@@ -132,6 +136,7 @@ void MapToolBook::Update()
 	}
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mAnimation->Update();
+
 }
 
 void MapToolBook::Render(HDC hdc)

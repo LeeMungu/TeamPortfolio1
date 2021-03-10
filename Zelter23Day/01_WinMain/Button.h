@@ -19,6 +19,9 @@ public:
 
 	void Update();
 	void Render(HDC hdc);
+
+	void Move(float x, float y);
+
 	RECT GetRect() const { return mRect; }
 };
 

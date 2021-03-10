@@ -7,8 +7,8 @@ void Camera::Init()
 {
 	mMode = Mode::Free;
 	//mTarget = nullptr;
-	//mX = WINSIZEX / 2;
-	//mY = WINSIZEY / 2;
+	mX = WINSIZEX / 2;
+	mY = WINSIZEY / 2;
 	mSizeX = WINSIZEX;
 	mSizeY = WINSIZEY;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);

@@ -59,7 +59,7 @@ float Math::Lerp(float start, float end, float ratio)
 {
 	return start + (end - start) * ratio;
 }
-
+//범위안의 값 반환
 int Math::Clamp(int value, int min, int max)
 {
 	if (value < min)value = min;

@@ -23,7 +23,7 @@ void MapToolBook::Init()
 	mAnimation->SetCallbackFunc([this]()
 	{
 		Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
-		int palleteStartX = mRect.left+150;
+		int palleteStartX = mRect.left+200;
 		int palleteStartY = mRect.top+50;
 		mPallete.assign(4, vector<Tile*>());
 		for (int y = 0; y < 4; ++y)

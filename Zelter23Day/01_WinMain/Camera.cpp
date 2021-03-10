@@ -83,7 +83,10 @@ void Camera::ScaleRender(HDC hdc, Image * image, int x, int y, int width, int he
 
 void Camera::ScaleFrameRender(HDC hdc, Image * image, int x, int y, int frameX, int frameY, int width, int height)
 {
-	image->ScaleFrameRender(hdc, x - mRect.left, y - mRect.top, frameX, frameY, width, height);
+	if (IsInCameraArea(x, y, width, height))
+	{
+		image->ScaleFrameRender(hdc, x - mRect.left, y - mRect.top, frameX, frameY, width, height);
+	}
 }
 
 void Camera::AlphaScaleRender(HDC hdc, Image * image, int x, int y, int width, int height, float alpha)
@@ -98,11 +101,14 @@ void Camera::AlphaScaleFrameRender(HDC hdc, Image * image, int x, int y, int fra
 
 void Camera::RenderRect(HDC hdc, RECT rc)
 {
-	rc.left -= mRect.left;
-	rc.right -= mRect.left;
-	rc.top -= mRect.top;
-	rc.bottom -= mRect.top;
-	RenderRect(hdc, rc);
+	if(IsInCameraArea(rc))
+	{
+		rc.left -= mRect.left;
+		rc.right -= mRect.left;
+		rc.top -= mRect.top;
+		rc.bottom -= mRect.top;
+		RenderRect(hdc, rc);
+	}
 }
 
 void Camera::RenderEllipse(HDC hdc, float x, float y, float radius)

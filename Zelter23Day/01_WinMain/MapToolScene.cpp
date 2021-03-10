@@ -108,20 +108,22 @@ void MapToolScene::Update()
 	// {{ 타일 그리기~
 	if (Input::GetInstance()->GetKey(VK_LBUTTON))
 	{
-		int indexX = (_mousePosition.x + cameraX) / TileSize;
-		int indexY = (_mousePosition.y + cameraY) / TileSize;
-
-		if (indexX >= 0 && indexX < TileCountX && indexY >= 0 && indexY < TileCountY)
+		if (mCurrentPallete != nullptr)
 		{
-			if (mTileList[indexY][indexX]->mImage != mCurrentPallete->mImage ||
-				mTileList[indexY][indexX]->mFrameIndexX != mCurrentPallete->mFrameIndexX ||
-				mTileList[indexY][indexX]->mFrameIndexY != mCurrentPallete->mFrameIndexY)
+			int indexX = (_mousePosition.x + cameraX) / TileSize;
+			int indexY = (_mousePosition.y + cameraY) / TileSize;
+			if (indexX >= 0 && indexX < TileCountX && indexY >= 0 && indexY < TileCountY)
 			{
-				IBrushTile* command = new IBrushTile(mTileList[indexY][indexX], mCurrentPallete);
-				PushCommand(command);
-				//cout << "OnPushCommand" << endl;
+				if (mTileList[indexY][indexX]->mImage != mCurrentPallete->mImage ||
+					mTileList[indexY][indexX]->mFrameIndexX != mCurrentPallete->mFrameIndexX ||
+					mTileList[indexY][indexX]->mFrameIndexY != mCurrentPallete->mFrameIndexY)
+				{
+					IBrushTile* command = new IBrushTile(mTileList[indexY][indexX], mCurrentPallete);
+					PushCommand(command);
+					//cout << "OnPushCommand" << endl;
+				}
+				mTileList[indexY][indexX]->mTileLayer = mCurrentLayer;
 			}
-			mTileList[indexY][indexX]->mTileLayer = mCurrentLayer;
 		}
 	}
 	// }}
@@ -144,20 +146,33 @@ void MapToolScene::Render(HDC hdc)
 {
 	Camera* mainCamera = CameraManager::GetInstance()->GetMainCamera();
 
-	//카메라에 맞춰서 타일을 그려줌
-	int leftIndex = Math::Clamp(mainCamera->GetRect().left / TileSize, 0, TileCountX - 1);
-	int rightIndex = Math::Clamp(mainCamera->GetRect().right / TileSize, 0, TileCountX - 1);	
-	int topIndex = Math::Clamp(mainCamera->GetRect().top / TileSize, 0, TileCountY - 1);
-	int bottomIndex = Math::Clamp(mainCamera->GetRect().bottom / TileSize,0,TileCountY - 1);
+	////카메라에 맞춰서 타일을 그려줌
+	//int leftIndex = Math::Clamp(mainCamera->GetRect().left / TileSize, 0, TileCountX - 1);
+	//int rightIndex = Math::Clamp(mainCamera->GetRect().right / TileSize, 0, TileCountX - 1);	
+	//int topIndex = Math::Clamp(mainCamera->GetRect().top / TileSize, 0, TileCountY - 1);
+	//int bottomIndex = Math::Clamp(mainCamera->GetRect().bottom / TileSize,0,TileCountY - 1);
+	//
+	//int renderCount = 0;
+	//for (int y = topIndex; y <= bottomIndex; ++y)
+	//{
+	//	for (int x = leftIndex; x <= rightIndex; ++x)
+	//	{
+	//		mTileList[y][x]->Render(hdc);
+	//		++renderCount;
+	//	}
+	//}
 
+	//카메라의 스케일프레임렌더만 내부에서 클렘핑 판정해줌 봐서 기타 오브젝트도 고쳐볼것
 	int renderCount = 0;
-
-	for (int y = topIndex; y <= bottomIndex; ++y)
+	for (int y = 0; y < mTileList.size(); ++y)
 	{
-		for (int x = leftIndex; x <= rightIndex; ++x)
+		for (int x = 0; x < TileCountX; ++x)
 		{
 			mTileList[y][x]->Render(hdc);
-			++renderCount;
+			if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mTileList[y][x]->GetRect()))
+			{
+				++renderCount;
+			}
 		}
 	}
 
@@ -165,7 +180,6 @@ void MapToolScene::Render(HDC hdc)
 	TextOut(hdc, 10, 40, L"wasd : 카메라이동", 12);
 	TextOut(hdc, 10, 70, L"←→↑↓ : 캐릭터이동", 12);
 	TextOut(hdc, 10, 100, L"Lctrl : 기찌모~", 12);
-
 
 	mSaveButton->Render(hdc);
 	mLoadButton->Render(hdc);
@@ -182,8 +196,9 @@ void MapToolScene::Render(HDC hdc)
 		else
 			Gizmo::GetInstance()->DrawRect(hdc, miniRc, Gizmo::Color::Green);
 	}
-
 	ObjectManager::GetInstance()->Render(hdc);
+	//카메라렉트 테스트용
+	//RenderRect(hdc,CameraManager::GetInstance()->GetMainCamera()->GetRect());
 }
 
 void MapToolScene::Save()

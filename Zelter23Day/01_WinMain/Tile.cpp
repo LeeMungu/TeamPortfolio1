@@ -18,17 +18,21 @@ Tile::Tile(Image * image, float x, float y, float sizeX, float sizeY, int frameI
 
 void Tile::Render(HDC hdc)
 {
+	//파레트일때
 	if (mTileLayer == TileLayer::PalletteType)
 	{
 		mImage->FrameRender(hdc, mRect.left, mRect.top, mFrameIndexX, mFrameIndexY);
 	}
+	//타일일때
 	else
 	{
 		//RenderRect(hdc, mRect);
 		if (mImage != nullptr)
+		{
 			CameraManager::GetInstance()->GetMainCamera()->ScaleFrameRender(hdc,
 				mImage, mRect.left, mRect.top, mFrameIndexX, mFrameIndexY, mSizeX, mSizeY);
-
+		}
+		//기즈모 외곽선 그리기
 		RECT tempRc = RectMake(mX - CameraManager::GetInstance()->GetMainCamera()->GetRect().left,
 			mY - CameraManager::GetInstance()->GetMainCamera()->GetRect().top,
 			mSizeX, mSizeY);

@@ -8,9 +8,13 @@
 #include <fstream>
 #include "GameObject.h"
 #include "Player.h"
-
+#include "SmartWatch.h"
 void scene1::Init()
 {
+	mSmartWatch = new SmartWatch("SmartWatch");
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mSmartWatch);
+
+
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 
 	player = new Player("Player", 150, 150);

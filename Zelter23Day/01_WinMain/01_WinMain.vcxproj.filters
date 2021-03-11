@@ -76,6 +76,9 @@
     <Filter Include="MainGame\Object">
       <UniqueIdentifier>{7f9c98f3-e9fb-4e0b-9e1a-80b672b94da6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\UI">
+      <UniqueIdentifier>{dd46708d-08ee-4334-9509-8d4c606a414b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -174,6 +177,12 @@
     <ClInclude Include="MapToolBook.h">
       <Filter>MainGame\Object</Filter>
     </ClInclude>
+    <ClInclude Include="SmartWatch.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -259,6 +268,12 @@
     </ClCompile>
     <ClCompile Include="MapToolBook.cpp">
       <Filter>MainGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SmartWatch.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

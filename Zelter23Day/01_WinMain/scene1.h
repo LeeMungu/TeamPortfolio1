@@ -5,6 +5,7 @@
 #include "MapToolScene.h"
 
 class Player;
+class SmartWatch;
 
 #define TileCountX 25
 #define TileCountY 25
@@ -24,6 +25,7 @@ class scene1 : public Scene
 	int mLoadingFile;
 
 	Player* player;
+	SmartWatch* mSmartWatch;
 public:
 	void Init()override;
 	void Release()override;

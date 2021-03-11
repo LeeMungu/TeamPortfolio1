@@ -11,8 +11,13 @@ class SmartWatch : public UI
 	Image* mGlassDark;
 	Image* mGlass;
 	Image* mTimeBG;
+	Image* mUIBaseImage;
 
 	DayTime mDayTime;
+	class PlayerHPUI* mPlayerHPUI;
+	class ThirstUI* mThirstUI;
+	class HungerUI* mHungerUI;
+	class SteminaUI* mSteminaUI;
 public:
 	SmartWatch(const string& name);
 	void Init()override;

@@ -183,6 +183,15 @@
     <ClInclude Include="UI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
+    <ClInclude Include="HousingObject.h">
+      <Filter>MainGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractObject.h">
+      <Filter>MainGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="NonInteractObject.h">
+      <Filter>MainGame\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -274,6 +283,15 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="HousingObject.cpp">
+      <Filter>MainGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractObject.cpp">
+      <Filter>MainGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="NonInteractObject.cpp">
+      <Filter>MainGame\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -159,14 +159,17 @@
     <ClInclude Include="GameEventManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gizmo.h" />
+    <ClInclude Include="HousingObject.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="InteractObject.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MapToolBook.h" />
     <ClInclude Include="MapToolScene.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="NonInteractObject.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
@@ -192,15 +195,18 @@
     <ClCompile Include="GameEventManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gizmo.cpp" />
+    <ClCompile Include="HousingObject.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InteractObject.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="MainGame + MainProc.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MapToolBook.cpp" />
     <ClCompile Include="MapToolScene.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="NonInteractObject.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

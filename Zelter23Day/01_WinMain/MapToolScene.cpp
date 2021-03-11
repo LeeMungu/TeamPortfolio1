@@ -12,6 +12,7 @@
 void MapToolScene::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
+	Image* houseImage = ImageManager::GetInstance()->FindImage(L"House");
 
 	Camera* camera = new Camera;
 	CameraManager::GetInstance()->SetMainCamera(camera);

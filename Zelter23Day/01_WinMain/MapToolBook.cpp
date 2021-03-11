@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "Tile.h"
 #include "Button.h"
-
+#include "HousingObject.h"
 void MapToolBook::Init()
 {
 	mX = WINSIZEX / 2;
@@ -66,6 +66,9 @@ void MapToolBook::Init()
 		[this]() {ChangeMode(BookType::NoninterectObject); });
 
 	mIsTypeChange = false;
+
+
+
 }
 
 void MapToolBook::Release()
@@ -213,6 +216,7 @@ void MapToolBook::Update()
 	mHouseButton->Update();
 	mInterectObjectButton->Update();
 	mNoninterectObjectButton->Update();
+
 }
 
 void MapToolBook::Render(HDC hdc)
@@ -244,5 +248,10 @@ void MapToolBook::ChangeMode(BookType bookType)
 	{
 		mBookType = bookType;
 		mIsTypeChange = true;
+	}
+	if (bookType == BookType::House)
+	{
+		mHouseObject = new HousingObject("House", 0, 0, SideType::InSide);
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
 	}
 }

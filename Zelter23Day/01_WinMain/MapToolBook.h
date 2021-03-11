@@ -12,6 +12,7 @@ enum class BookType : int
 
 
 class Button;
+class HousingObject;
 class MapToolBook : public GameObject
 {
 	class Image* mImage;
@@ -26,6 +27,8 @@ class MapToolBook : public GameObject
 	Button* mHouseButton;
 	Button* mInterectObjectButton;
 	Button* mNoninterectObjectButton;
+
+	HousingObject* mHouseObject;
 public:
 	void Init()override;
 	void Release()override;

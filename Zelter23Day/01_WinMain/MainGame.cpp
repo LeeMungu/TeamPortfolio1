@@ -22,6 +22,10 @@ void MainGame::Init()
 
 	ImageManager::GetInstance()->LoadFromFile(L"Book", Resources(L"book.bmp"), 3942*SizeUp, 1350*SizeUp, 9, 5, true);
 	ImageManager::GetInstance()->LoadFromFile(L"Tile", Resources(L"Tile00.bmp"), 256, 128, 8, 4, false);
+	
+	//집 이미지
+	IMAGEMANAGER->LoadFromFile(L"House", Resources(L"/02_House/House01_INSIDE_BMP.bmp"), 261, 306, 9, 9, true);
+	
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
 	SceneManager::GetInstance()->LoadScene(L"MapToolScene");

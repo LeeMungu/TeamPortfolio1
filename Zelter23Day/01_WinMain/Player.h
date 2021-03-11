@@ -34,6 +34,9 @@ class Player : public GameObject
 	Animation* mRightIdleAni;
 	Animation* mDownIdleAni;
 
+	Animation* mLeftAttack;
+	Animation* mRightAttack;
+
 	float mSpeed;
 	Direction mDirection;
 

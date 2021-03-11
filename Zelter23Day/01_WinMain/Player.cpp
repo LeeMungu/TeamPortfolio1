@@ -19,6 +19,7 @@ void Player::Init()
 {
 	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_run.bmp"), 168*2, 156*2, 7, 4, true);
 	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_walk.bmp"), 168*2, 156*2, 7, 4, true);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_attack", Resources(L"/03_Player/Player_attack.bmp"), 450*2, 86*2, 10, 2, true);
 	mImage = IMAGEMANAGER->FindImage(L"Player_run");
 	mSizeX = mImage->GetFrameWidth();
 	mSizeY = mImage->GetFrameHeight();
@@ -66,6 +67,23 @@ void Player::Init()
 	mDownWalkAni->SetIsLoop(true);
 	mDownWalkAni->SetFrameUpdateTime(0.1f);
 
+	//Attack Animation
+	mLeftAttack = new Animation();
+	mLeftAttack->InitFrameByStartEnd(0, 0, 9, 0, false);
+	mLeftAttack->SetIsLoop(true);
+	mLeftAttack->SetFrameUpdateTime(0.05f);
+
+	mRightAttack = new Animation();
+	mRightAttack->InitFrameByStartEnd(1, 1, 9, 1, false);
+	mRightAttack->SetIsLoop(true);
+	mRightAttack->SetFrameUpdateTime(0.05f);
+
+
+
+
+
+
+
 	//Idle Animation
 	mUpIdleAni = new Animation();
 	mUpIdleAni->InitFrameByStartEnd(0, 0, 0, 0, false);
@@ -106,6 +124,9 @@ void Player::Release()
 	SafeDelete(mLeftIdleAni);
 	SafeDelete(mRightIdleAni);
 	SafeDelete(mDownIdleAni);
+
+	SafeDelete(mRightAttack);
+	SafeDelete(mLeftAttack);
 }
 
 void Player::Update()
@@ -174,6 +195,23 @@ void Player::Update()
 		mY = mY + mSpeed;
 		mCurrentAnimation->Play();
 	}
+	else if (Input::GetInstance()->GetKeyDown('F'))
+	{
+		if (_mousePosition.x < mX)
+		{
+			mImage = IMAGEMANAGER->FindImage(L"Player_attack");
+			mCurrentAnimation = mLeftAttack;
+			mSpeed = 0.f;
+		}
+		else
+		{
+			mImage = IMAGEMANAGER->FindImage(L"Player_attack");
+			mCurrentAnimation = mRightAttack;
+			mSpeed = 0.f;
+		}
+		mCurrentAnimation->Play();
+	}
+
 	else
 	{
 		if (mCurrentAnimation == mDownRunAni || mCurrentAnimation == mDownWalkAni) mCurrentAnimation = mDownIdleAni;

@@ -76,9 +76,9 @@ void MapToolScene::Update()
 	{
 		vector<vector<Tile*>> palletList = mToolBook->GetPalleteList();
 		//{{ ÆÈ·¹Æ® ÇÈ~
-		for (int y = 0; y < 4; ++y)
+		for (int y = 0; y < mToolBook->GetNowTilecountY(); ++y)
 		{
-			for (int x = 0; x < 8; ++x)
+			for (int x = 0; x < mToolBook->GetNowTilecountX(); ++x)
 			{
 				RECT palletRect = palletList[y][x]->GetRect();
 				if (PtInRect(&palletRect, _mousePosition))

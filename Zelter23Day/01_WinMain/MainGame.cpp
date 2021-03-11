@@ -25,7 +25,7 @@ void MainGame::Init()
 	
 	//집 이미지
 	IMAGEMANAGER->LoadFromFile(L"House", Resources(L"/02_House/House01_INSIDE_BMP.bmp"), 261, 306, 9, 9, true);
-	
+	IMAGEMANAGER->LoadFromFile(L"HouseRoof", Resources(L"/02_House/House01_Roof_bmp.bmp"), 306, 315, 9, 9, true);
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
 	SceneManager::GetInstance()->LoadScene(L"MapToolScene");

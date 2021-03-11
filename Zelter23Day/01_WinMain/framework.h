@@ -27,6 +27,18 @@ using namespace std;
 
 #include "../03_Libraries/inc/fmod.hpp"
 
+//Window10으로 넘어오면서부터 DirectX라이브러리는 기본적으로 탑재되어있다~
+#pragma comment(lib,"d2d1.lib")
+#pragma comment(lib,"dwrite.lib")
+#pragma comment(lib,"dxguid.lib")
+#pragma comment(lib,"WindowsCodecs.lib")
+
+#include <D2D1.h>
+#include <d2d1helper.h>
+#include <d2d1.h>
+#include <dwrite.h>
+#include <wincodec.h>
+
 #include "DefineHeader.h"
 #include "Figure.h"
 #include "Random.h"
@@ -40,6 +52,9 @@ using namespace std;
 #include "SceneManager.h"
 #include "GameEventManager.h"
 #include "Gizmo.h"
+
+#include "Vector2.h"
+#include "D2DRenderer.h"
 
 //#ifdef UNICODE
 //#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")

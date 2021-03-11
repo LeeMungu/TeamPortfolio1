@@ -1,4 +1,5 @@
 #pragma once
+#include "D2DRenderer.h"
 
 inline RECT RectMake(int x, int y, int width, int height)
 {
@@ -22,7 +23,30 @@ inline RECT RectMakeBottom(int x, int y, int width, int height)
 
 inline void RenderRect(HDC hdc, RECT rc)
 {
-	Rectangle(hdc, rc.left,rc.top,rc.right,rc.bottom);
+	ID2D1RenderTarget* renderTarget = D2DRenderer::GetInstance()->GetRenderTarget();
+
+	
+	ID2D1SolidColorBrush* brush;
+	D2D1_COLOR_F color;
+	//r,g,b,a
+	color = { 1.0f,1.0f,1.0f,1.0f };
+	renderTarget->CreateSolidColorBrush(color, &brush);
+
+	//¾ë ÀÏ´Ü ³öµÎ°í
+	renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+
+	D2D1_RECT_F rect = { rc.left,rc.top,rc.right,rc.bottom };
+
+	renderTarget->DrawRectangle(rect, brush);
+	/*
+	DrawRectangle(
+		CONST D2D1_RECT_F & rect,
+		_In_ ID2D1Brush * brush,
+		FLOAT strokeWidth = 1.0f,
+		_In_opt_ ID2D1StrokeStyle * strokeStyle = NULL
+	)
+	*/
+	//Rectangle(hdc, rc.left,rc.top,rc.right,rc.bottom);
 }
 
 inline void RenderEllipse(HDC hdc, RECT rc)
@@ -38,8 +62,23 @@ inline void RenderEllipse(HDC hdc,int x, int y, int radius)
 
 inline void RenderLine(HDC hdc,int startX, int startY, int endX, int endY)
 {
-	MoveToEx(hdc, startX, startY, NULL);
-	LineTo(hdc, endX, endY);
+	ID2D1RenderTarget* renderTarget = D2DRenderer::GetInstance()->GetRenderTarget();
+
+	D2D_POINT_2F start = D2D1::Point2F(startX, startY);
+	D2D_POINT_2F end = D2D1::Point2F(endX, endY);
+
+	ID2D1SolidColorBrush* brush;
+	D2D1_COLOR_F color;
+	//r,g,b,a
+	color = { 1.0f,1.0f,1.0f,1.0f };
+	renderTarget->CreateSolidColorBrush(color, &brush);
+
+	renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+	renderTarget->DrawLine(start, end, brush, 1.0f);
+	
+	//±âÁ¸ ·»´õ¹æ½Ä
+	//MoveToEx(hdc, startX, startY, NULL);
+	//LineTo(hdc, endX, endY);
 }
 
 inline float GetDistance(int aX, int aY, int bX, int bY)

@@ -6,7 +6,7 @@
 
 class Player;
 class SmartWatch;
-
+class PlayerHPUI;
 #define TileCountX 25
 #define TileCountY 25
 #define TileSize 32
@@ -26,6 +26,7 @@ class scene1 : public Scene
 
 	Player* player;
 	SmartWatch* mSmartWatch;
+	PlayerHPUI* mPlayerHPUI;
 public:
 	void Init()override;
 	void Release()override;

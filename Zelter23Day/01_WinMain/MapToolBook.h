@@ -12,6 +12,7 @@ enum class BookType : int
 
 
 class Button;
+class HousingObject;
 class MapToolBook : public GameObject
 {
 	class Image* mImage;
@@ -26,6 +27,11 @@ class MapToolBook : public GameObject
 	Button* mHouseButton;
 	Button* mInterectObjectButton;
 	Button* mNoninterectObjectButton;
+
+	HousingObject* mHouseObject;
+	int mNowTileCountX;
+	int mNowTileCountY;
+
 public:
 	void Init()override;
 	void Release()override;
@@ -34,5 +40,8 @@ public:
 
 	void ChangeMode(BookType bookType);
 	vector<vector<Tile*>> GetPalleteList() const { return mPallete; }
+
+	int GetNowTilecountX() {return mNowTileCountX;}
+	int GetNowTilecountY() { return mNowTileCountY; }
 };
 

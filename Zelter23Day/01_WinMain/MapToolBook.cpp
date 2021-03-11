@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "Tile.h"
 #include "Button.h"
-
+#include "HousingObject.h"
 void MapToolBook::Init()
 {
 	mX = WINSIZEX / 2;
@@ -66,16 +66,21 @@ void MapToolBook::Init()
 		[this]() {ChangeMode(BookType::NoninterectObject); });
 
 	mIsTypeChange = false;
+
+	mNowTileCountX = 8;
+	mNowTileCountY = 4;
+
 }
 
 void MapToolBook::Release()
 {
 	SafeDelete(mAnimation);
+
 	if (mPallete.size() != NULL)
 	{
-		for (int y = 0; y < 4; ++y)
+		for (int y = 0; y < mNowTileCountY; ++y)
 		{
-			for (int x = 0; x < 8; ++x)
+			for (int x = 0; x < mNowTileCountX; ++x)
 			{
 				SafeDelete(mPallete[y][x]);
 			}
@@ -109,9 +114,9 @@ void MapToolBook::Update()
 			//타일 이동
 			if (mPallete.size() != NULL)
 			{
-				for (int y = 0; y < 4; ++y)
+				for (int y = 0; y < mNowTileCountY; ++y)
 				{
-					for (int x = 0; x < 8; ++x)
+					for (int x = 0; x < mNowTileCountX; ++x)
 					{
 						mPallete[y][x]->Move(
 							mPallete[y][x]->GetX(), 
@@ -134,9 +139,9 @@ void MapToolBook::Update()
 				mNoninterectObjectButton->GetY() + mSpeed * Time::GetInstance()->DeltaTime());
 			if (mPallete.size() != NULL)
 			{
-				for (int y = 0; y < 4; ++y)
+				for (int y = 0; y < mNowTileCountY; ++y)
 				{
-					for (int x = 0; x < 8; ++x)
+					for (int x = 0; x < mNowTileCountX; ++x)
 					{
 						mPallete[y][x]->Move(
 							mPallete[y][x]->GetX(),
@@ -163,9 +168,9 @@ void MapToolBook::Update()
 				mNoninterectObjectButton->GetY());
 			if (mPallete.size() != NULL)
 			{
-				for (int y = 0; y < 4; ++y)
+				for (int y = 0; y < mNowTileCountY; ++y)
 				{
-					for (int x = 0; x < 8; ++x)
+					for (int x = 0; x < mNowTileCountX; ++x)
 					{
 						mPallete[y][x]->Move(
 							mPallete[y][x]->GetX() + mSpeed * Time::GetInstance()->DeltaTime(),
@@ -192,9 +197,9 @@ void MapToolBook::Update()
 				mNoninterectObjectButton->GetY());
 			if (mPallete.size() != NULL)
 			{
-				for (int y = 0; y < 4; ++y)
+				for (int y = 0; y < mNowTileCountY; ++y)
 				{
-					for (int x = 0; x < 8; ++x)
+					for (int x = 0; x < mNowTileCountX; ++x)
 					{
 						mPallete[y][x]->Move(
 							mPallete[y][x]->GetX() - mSpeed * Time::GetInstance()->DeltaTime(),
@@ -213,6 +218,7 @@ void MapToolBook::Update()
 	mHouseButton->Update();
 	mInterectObjectButton->Update();
 	mNoninterectObjectButton->Update();
+
 }
 
 void MapToolBook::Render(HDC hdc)
@@ -223,14 +229,18 @@ void MapToolBook::Render(HDC hdc)
 	
 	if (mPallete.size() != NULL)
 	{
-		for (int y = 0; y < 4; ++y)
+		for (int y = 0; y < mNowTileCountY; ++y)
 		{
-			for (int x = 0; x < 8; ++x)
+			for (int x = 0; x < mNowTileCountX; ++x)
 			{
 				mPallete[y][x]->Render(hdc);
 			}
 		}
 	}
+	
+
+
+
 	mTileButton->Render(hdc);
 	mHouseButton->Render(hdc);
 	mInterectObjectButton->Render(hdc);
@@ -245,4 +255,42 @@ void MapToolBook::ChangeMode(BookType bookType)
 		mBookType = bookType;
 		mIsTypeChange = true;
 	}
+	if (bookType == BookType::House)
+	{
+		//mHouseObject = new HousingObject("House", 0, 0, SideType::InSide);
+		//ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
+
+		mBookType = bookType;
+		mNowTileCountY = 9;
+		mNowTileCountX = 9;
+		//Image* tempImage;
+		Image* tileImage = ImageManager::GetInstance()->FindImage(L"House");
+		//Image* tileRoofImage = ImageManager::GetInstance()->FindImage(L"HouseRoof");
+		int palleteStartX = mRect.left + 200;
+		int palleteStartY = mRect.top + 50;
+
+		mPallete.assign(18, vector<Tile*>());
+		for (int y = 0; y < mNowTileCountY; ++y)
+		{
+			for (int x = 0; x < mNowTileCountX; ++x)
+			{
+				
+				mPallete[y].push_back(new Tile(
+					tileImage,
+					palleteStartX + Pallette * x,
+					palleteStartY + Pallette * y,
+					Pallette,
+					Pallette,
+					x,
+					y
+				));
+				mPallete[y][x]->SetSpeed(mSpeed);
+				mPallete[y][x]->SetTileLayer(TileLayer::PalletteType);
+			}
+
+		}
+	}
 }
+
+
+

@@ -33,7 +33,7 @@ public:
 		mExecutePalleteData = executeData;
 
 		if(tile->mImage != nullptr)
-			mSaveImageKey = tile->mImage->GetKeyName();
+			mSaveImageKey = tile->mImage->GetKey();
 		mSaveFrameX = tile->mFrameIndexX;
 		mSaveFrameY = tile->mFrameIndexY;
 	}
@@ -41,7 +41,7 @@ public:
 	void Execute()
 	{
 		mTargetTile->mImage =
-			ImageManager::GetInstance()->FindImage(mExecutePalleteData->mImage->GetKeyName());
+			ImageManager::GetInstance()->FindImage(mExecutePalleteData->mImage->GetKey());
 		mTargetTile->mFrameIndexX = mExecutePalleteData->mFrameIndexX;
 		mTargetTile->mFrameIndexY = mExecutePalleteData->mFrameIndexY;
 	}

@@ -18,10 +18,25 @@ class Player : public GameObject
 {
 	Image* mImage;
 	Animation* mCurrentAnimation;
-	Animation* mUpAnimation;
-	Animation* mLeftAnimation;
-	Animation* mRightAnimation;
-	Animation* mDownAnimation;
+
+	Animation* mUpRunAni;
+	Animation* mLeftRunAni;
+	Animation* mRightRunAni;
+	Animation* mDownRunAni;
+
+	Animation* mUpWalkAni;
+	Animation* mLeftWalkAni;
+	Animation* mRightWalkAni;
+	Animation* mDownWalkAni;
+
+	Animation* mUpIdleAni;
+	Animation* mLeftIdleAni;
+	Animation* mRightIdleAni;
+	Animation* mDownIdleAni;
+
+	Animation* mLeftAttack;
+	Animation* mRightAttack;
+
 	float mSpeed;
 	Direction mDirection;
 

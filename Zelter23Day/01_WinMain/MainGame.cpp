@@ -17,11 +17,16 @@ void MainGame::Init()
 	Camera* main = new Camera();
 	main->Init();
 	CameraManager::GetInstance()->SetMainCamera(main);
-	mBackBuffer = new Image();
-	mBackBuffer->CreateEmpty(WINSIZEX, WINSIZEY);
 
+	ImageManager::GetInstance()->LoadFromFile(L"Book", Resources(L"book.bmp"), 9, 5);
+	ImageManager::GetInstance()->LoadFromFile(L"Tile", Resources(L"tiletest.bmp"), 8, 4);
 	ImageManager::GetInstance()->LoadFromFile(L"Book", Resources(L"book.bmp"), 3942*SizeUp, 1350*SizeUp, 9, 5, true);
 	ImageManager::GetInstance()->LoadFromFile(L"Tile", Resources(L"Tile00.bmp"), 256, 128, 8, 4, false);
+	
+	//집 이미지
+	IMAGEMANAGER->LoadFromFile(L"House", Resources(L"/02_House/House01_INSIDE_BMP.bmp"), 261, 306, 9, 9, true);
+	IMAGEMANAGER->LoadFromFile(L"HouseRoof", Resources(L"/02_House/House01_Roof_bmp.bmp"), 306, 315, 9, 9, true);
+
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
 	SceneManager::GetInstance()->LoadScene(L"MapToolScene");
@@ -35,9 +40,6 @@ Release : 메모리 해제할 때 불러주는 함수
 void MainGame::Release()
 {
 	Random::ReleaseInstance();	//싱글톤 인스턴스 삭제
-
-	SafeDelete(mBackBuffer);
-
 }
 
 /*
@@ -56,18 +58,13 @@ Render : 매 프레임 실행되는 함수, Update가 끝나고 Render가 실행된다.
 */
 void MainGame::Render(HDC hdc)
 {
-	//백버퍼의 HDC 가져온다
-	HDC backDC = mBackBuffer->GetHDC();
-	//HDC 영역을 특정 색으로 밀어버리는 녀석
-	PatBlt(backDC, 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
-	// ==================================================
+	D2DRenderer::GetInstance()->BeginRender(D2D1::ColorF::Black);
+	//이 안에서 그려라
 	{
-		SceneManager::GetInstance()->Render(backDC);
+		SceneManager::GetInstance()->Render(hdc);
 		//RenderTime(backDC);
 	}
-	//====================================================
-	//후면버퍼 내용을 윈도우 창에 고속 복사
-	mBackBuffer->Render(hdc, 0, 0);
+	D2DRenderer::GetInstance()->EndRender();
 }
 
 void MainGame::RenderTime(HDC hdc)

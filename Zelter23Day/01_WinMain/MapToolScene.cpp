@@ -12,6 +12,7 @@
 void MapToolScene::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
+	Image* houseImage = ImageManager::GetInstance()->FindImage(L"House");
 
 	Camera* camera = new Camera;
 	CameraManager::GetInstance()->SetMainCamera(camera);
@@ -75,9 +76,9 @@ void MapToolScene::Update()
 	{
 		vector<vector<Tile*>> palletList = mToolBook->GetPalleteList();
 		//{{ ÆÈ·¹Æ® ÇÈ~
-		for (int y = 0; y < 4; ++y)
+		for (int y = 0; y < mToolBook->GetNowTilecountY(); ++y)
 		{
-			for (int x = 0; x < 8; ++x)
+			for (int x = 0; x < mToolBook->GetNowTilecountX(); ++x)
 			{
 				RECT palletRect = palletList[y][x]->GetRect();
 				if (PtInRect(&palletRect, _mousePosition))
@@ -209,7 +210,7 @@ void MapToolScene::Save()
 				string str;
 				wstring keyName;
 				if(mTileList[y][x]->mImage != nullptr)
-					keyName = mTileList[y][x]->mImage->GetKeyName();
+					keyName = mTileList[y][x]->mImage->GetKey();
 				str.assign(keyName.begin(), keyName.end());
 
 				saveStream << str.c_str();

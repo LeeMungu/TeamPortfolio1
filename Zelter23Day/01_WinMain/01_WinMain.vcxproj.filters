@@ -79,6 +79,15 @@
     <Filter Include="MainGame\UI">
       <UniqueIdentifier>{dd46708d-08ee-4334-9509-8d4c606a414b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\D2D">
+      <UniqueIdentifier>{a7823e7c-865f-4885-9da8-ab9436d03251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\Statu">
+      <UniqueIdentifier>{251ce202-fa1d-42be-a9b1-290a96037b60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\Statu">
+      <UniqueIdentifier>{251ce202-fa1d-42be-a9b1-290a96037b60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -177,9 +186,6 @@
     <ClInclude Include="MapToolBook.h">
       <Filter>MainGame\Object</Filter>
     </ClInclude>
-    <ClInclude Include="SmartWatch.h">
-      <Filter>MainGame\UI</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
@@ -191,6 +197,27 @@
     </ClInclude>
     <ClInclude Include="NonInteractObject.h">
       <Filter>MainGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="D2DRenderer.h">
+      <Filter>FrameWork\D2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>FrameWork\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="HungerUI.h">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHPUI.h">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClInclude>
+    <ClInclude Include="SmartWatch.h">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClInclude>
+    <ClInclude Include="SteminaUI.h">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirstUI.h">
+      <Filter>MainGame\UI\Statu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,9 +305,6 @@
     <ClCompile Include="MapToolBook.cpp">
       <Filter>MainGame\Object</Filter>
     </ClCompile>
-    <ClCompile Include="SmartWatch.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>MainGame\UI</Filter>
     </ClCompile>
@@ -292,6 +316,30 @@
     </ClCompile>
     <ClCompile Include="NonInteractObject.cpp">
       <Filter>MainGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="D2DRenderer.cpp">
+      <Filter>FrameWork\D2D</Filter>
+    </ClCompile>
+    <ClCompile Include="D2DRenderer+Draw.cpp">
+      <Filter>FrameWork\D2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>FrameWork\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="HungerUI.cpp">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHPUI.cpp">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClCompile>
+    <ClCompile Include="SmartWatch.cpp">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClCompile>
+    <ClCompile Include="SteminaUI.cpp">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirstUI.cpp">
+      <Filter>MainGame\UI\Statu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

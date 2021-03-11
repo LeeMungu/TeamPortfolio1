@@ -11,9 +11,9 @@
 #include "SmartWatch.h"
 void scene1::Init()
 {
-	mSmartWatch = new SmartWatch("SmartWatch");
+	
+	mSmartWatch = new SmartWatch("SmartWatch", 5, 5);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mSmartWatch);
-
 
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 

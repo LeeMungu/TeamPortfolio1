@@ -9,7 +9,8 @@ class Image;
 
 class MainGame
 {
-	Image* mBackBuffer;	//후면버퍼(건들지마라)
+	//d2d하면서 더블버퍼 필요없다.
+	//Image* mBackBuffer;	//후면버퍼(건들지마라)
 public:
 	void Init();
 	void Release();

@@ -152,6 +152,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="DefineHeader.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="framework.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gizmo.h" />
     <ClInclude Include="HousingObject.h" />
+    <ClInclude Include="HungerUI.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
@@ -173,6 +175,7 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerHPUI.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
@@ -180,10 +183,13 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SmartWatch.h" />
     <ClInclude Include="SoundPlayer.h" />
+    <ClInclude Include="SteminaUI.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="ThirstUI.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp" />
@@ -191,11 +197,14 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="D2DRenderer+Draw.cpp" />
+    <ClCompile Include="D2DRenderer.cpp" />
     <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameEventManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gizmo.cpp" />
     <ClCompile Include="HousingObject.cpp" />
+    <ClCompile Include="HungerUI.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -215,15 +224,19 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerHPUI.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="scene1.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SmartWatch.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
+    <ClCompile Include="SteminaUI.cpp" />
+    <ClCompile Include="ThirstUI.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="01_WinMain.rc" />

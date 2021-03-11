@@ -22,6 +22,7 @@ void Tile::Render(HDC hdc)
 	if (mTileLayer == TileLayer::PalletteType)
 	{
 		mImage->FrameRender(hdc, mRect.left, mRect.top, mFrameIndexX, mFrameIndexY);
+		Gizmo::GetInstance()->DrawRect(hdc, mRect, Gizmo::Color::Blue);
 	}
 	//타일일때
 	else

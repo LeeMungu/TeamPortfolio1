@@ -9,11 +9,16 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "SmartWatch.h"
+#include "PlayerHPUI.h"
 void scene1::Init()
 {
+	mPlayerHPUI = new PlayerHPUI("PlayerHPUI");
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mPlayerHPUI);
+
 	mSmartWatch = new SmartWatch("SmartWatch");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mSmartWatch);
 
+	
 
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 

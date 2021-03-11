@@ -13,8 +13,11 @@ SmartWatch::SmartWatch(const string& name) : UI (name)
 	mGlassDark = IMAGEMANAGER->FindImage(L"SW_glass_dark");
 	mGlass = IMAGEMANAGER->FindImage(L"SW_glass");
 	mTimeBG = IMAGEMANAGER->FindImage(L"SW_morning");
+	
 	mX = 10;
 	mY = 10;
+
+	mDayTime = DayTime::morning;
 }
 
 void SmartWatch::Init()
@@ -27,6 +30,12 @@ void SmartWatch::Release()
 
 void SmartWatch::Update()
 {
+	if (mDayTime == DayTime::morning) {
+		mTimeBG = IMAGEMANAGER->FindImage(L"SW_morning");
+	}
+	else {
+		mTimeBG = IMAGEMANAGER->FindImage(L"SW_night");
+	}
 }
 
 void SmartWatch::Render(HDC hdc)

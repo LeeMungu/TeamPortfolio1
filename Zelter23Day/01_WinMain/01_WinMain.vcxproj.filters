@@ -79,6 +79,9 @@
     <Filter Include="MainGame\UI">
       <UniqueIdentifier>{dd46708d-08ee-4334-9509-8d4c606a414b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\UI\Statu">
+      <UniqueIdentifier>{251ce202-fa1d-42be-a9b1-290a96037b60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -177,9 +180,6 @@
     <ClInclude Include="MapToolBook.h">
       <Filter>MainGame\Object</Filter>
     </ClInclude>
-    <ClInclude Include="SmartWatch.h">
-      <Filter>MainGame\UI</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
@@ -192,8 +192,20 @@
     <ClInclude Include="NonInteractObject.h">
       <Filter>MainGame\Object</Filter>
     </ClInclude>
+    <ClInclude Include="HungerUI.h">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerHPUI.h">
-      <Filter>MainGame\UI</Filter>
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClInclude>
+    <ClInclude Include="SmartWatch.h">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClInclude>
+    <ClInclude Include="SteminaUI.h">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirstUI.h">
+      <Filter>MainGame\UI\Statu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -281,9 +293,6 @@
     <ClCompile Include="MapToolBook.cpp">
       <Filter>MainGame\Object</Filter>
     </ClCompile>
-    <ClCompile Include="SmartWatch.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>MainGame\UI</Filter>
     </ClCompile>
@@ -296,8 +305,20 @@
     <ClCompile Include="NonInteractObject.cpp">
       <Filter>MainGame\Object</Filter>
     </ClCompile>
+    <ClCompile Include="HungerUI.cpp">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClCompile>
     <ClCompile Include="PlayerHPUI.cpp">
-      <Filter>MainGame\UI</Filter>
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClCompile>
+    <ClCompile Include="SmartWatch.cpp">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClCompile>
+    <ClCompile Include="SteminaUI.cpp">
+      <Filter>MainGame\UI\Statu</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirstUI.cpp">
+      <Filter>MainGame\UI\Statu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

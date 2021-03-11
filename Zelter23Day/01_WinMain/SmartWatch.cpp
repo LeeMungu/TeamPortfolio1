@@ -3,7 +3,11 @@
 #include "Image.h"
 SmartWatch::SmartWatch(const string& name) : UI (name)
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SmarWatch_base", Resources(L"/01_UI/SmartWatch_Base.bmp"), 56*2, 64*2, true);
+}
+
+void SmartWatch::Init()
+{
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SmarWatch_base", Resources(L"/01_UI/SmartWatch_Base.bmp"), 56 * 2, 64 * 2, true);
 	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass_dark", Resources(L"/01_UI/SmartWatch_GlassDark1161.bmp"), 80, 83, true);
 	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass", Resources(L"/01_UI/SmartWatch_GlassShine.bmp"), 80, 83, true);
 	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_morning", Resources(L"/01_UI/Morning-resources.assets-2276.bmp"), 80, 83, false);
@@ -13,15 +17,11 @@ SmartWatch::SmartWatch(const string& name) : UI (name)
 	mGlassDark = IMAGEMANAGER->FindImage(L"SW_glass_dark");
 	mGlass = IMAGEMANAGER->FindImage(L"SW_glass");
 	mTimeBG = IMAGEMANAGER->FindImage(L"SW_morning");
-	
+
 	mX = 10;
 	mY = 10;
 
 	mDayTime = DayTime::morning;
-}
-
-void SmartWatch::Init()
-{
 }
 
 void SmartWatch::Release()

@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "SteminaUI.h"
 #include "Image.h"
-SteminaUI::SteminaUI(const string& name) : UI(name)
+SteminaUI::SteminaUI(const string& name, int x, int y) : UI(name)
 {
+	mX = x + 200;
+	mY = y + 80;
 }
 
 void SteminaUI::Init()
@@ -13,9 +15,6 @@ void SteminaUI::Init()
 	mEmptyGageImage = IMAGEMANAGER->FindImage(L"Statu_empty");
 	mFullGageImage = IMAGEMANAGER->FindImage(L"Stemina_full");
 	mIconImage = IMAGEMANAGER->FindImage(L"Stemina_icon");
-
-	mX = 210;
-	mY = 90;
 }
 
 void SteminaUI::Release()

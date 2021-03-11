@@ -3,8 +3,10 @@
 #include "Animation.h"
 #include "Image.h"
 #include "SmartWatch.h"
-PlayerHPUI::PlayerHPUI(const string& name) : UI (name)
+PlayerHPUI::PlayerHPUI(const string& name, int x, int y) : UI (name)
 {
+	mX = x + 115;
+	mY = y + 25;
 }
 
 void PlayerHPUI::Init()
@@ -23,8 +25,6 @@ void PlayerHPUI::Init()
 	mHeartAnimation->SetFrameUpdateTime(0.1f);
 	mHeartAnimation->Play();
 	
-	mX = 125;
-	mY = 35;
 }
 
 void PlayerHPUI::Release()

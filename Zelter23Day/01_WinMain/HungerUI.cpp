@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "HungerUI.h"
 #include "Image.h"
-HungerUI::HungerUI(const string& name) : UI(name)
+HungerUI::HungerUI(const string& name, int x, int y) : UI(name)
 {
+	mX = x + 200;
+	mY = y + 48;
 }
 
 void HungerUI::Init()
@@ -14,8 +16,6 @@ void HungerUI::Init()
 	mFullGageImage = IMAGEMANAGER->FindImage(L"Hunger_full");
 	mIconImage = IMAGEMANAGER->FindImage(L"Hunger_icon");
 
-	mX = 210;
-	mY = 58;
 }
 
 void HungerUI::Release()

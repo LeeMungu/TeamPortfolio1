@@ -9,7 +9,7 @@ class SteminaUI : public UI
 	int mStemina;
 
 public:
-	SteminaUI(const string& name);
+	SteminaUI(const string& name, int x, int y);
 	void Init()override;
 	void Release()override;
 	void Update()override;

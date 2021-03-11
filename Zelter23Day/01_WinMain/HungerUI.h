@@ -9,7 +9,7 @@ class HungerUI : public UI
 	int mHunger;
 
 public:
-	HungerUI(const string& name);
+	HungerUI(const string& name, int x, int y);
 	void Init()override;
 	void Release()override;
 	void Update()override;

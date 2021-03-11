@@ -10,7 +10,7 @@ class ThirstUI : public UI
 	int mThirst;
 
 public:
-	ThirstUI(const string& name);
+	ThirstUI(const string& name, int x, int y);
 	void Init()override;
 	void Release()override;
 	void Update()override;

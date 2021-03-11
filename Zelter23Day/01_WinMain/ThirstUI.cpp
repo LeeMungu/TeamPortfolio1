@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "ThirstUI.h"
 #include "Image.h"
-ThirstUI::ThirstUI(const string& name) : UI(name)
+ThirstUI::ThirstUI(const string& name, int x, int y) : UI(name)
 {
+	mX = x + 200;
+	mY = y + 15;
 }
 
 void ThirstUI::Init()
@@ -14,9 +16,6 @@ void ThirstUI::Init()
 	mEmptyGageImage = IMAGEMANAGER->FindImage(L"Statu_empty");
 	mFullGageImage = IMAGEMANAGER->FindImage(L"Thirst_full");
 	mIconImage = IMAGEMANAGER->FindImage(L"Thirst_icon");
-	
-	mX = 210;
-	mY = 25;
 }
 
 void ThirstUI::Release()

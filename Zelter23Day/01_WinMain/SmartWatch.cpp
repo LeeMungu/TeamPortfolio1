@@ -5,8 +5,10 @@
 #include "ThirstUI.h"
 #include "HungerUI.h"
 #include "SteminaUI.h"
-SmartWatch::SmartWatch(const string& name) : UI (name)
+SmartWatch::SmartWatch(const string& name, int x, int y) : UI (name)
 {
+	mX = x;
+	mY = y;
 }
 
 void SmartWatch::Init()
@@ -26,21 +28,20 @@ void SmartWatch::Init()
 	mUIBaseImage = IMAGEMANAGER->FindImage(L"BlackBase");
 
 
-	mX = 10;
-	mY = 10;
+	
 
 	mDayTime = DayTime::morning;
 
-	mPlayerHPUI = new PlayerHPUI("PlayerHPUI");
+	mPlayerHPUI = new PlayerHPUI("PlayerHPUI", mX, mY);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mPlayerHPUI);
 
-	mThirstUI = new ThirstUI("ThirstUI");
+	mThirstUI = new ThirstUI("ThirstUI", mX, mY);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mThirstUI);
 
-	mHungerUI = new HungerUI("HungerUI");
+	mHungerUI = new HungerUI("HungerUI", mX, mY);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mHungerUI);
 	
-	mSteminaUI = new SteminaUI("SteminaUI");
+	mSteminaUI = new SteminaUI("SteminaUI", mX, mY);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mSteminaUI);
 
 }
@@ -61,7 +62,7 @@ void SmartWatch::Update()
 
 void SmartWatch::Render(HDC hdc)
 {
-	mUIBaseImage->AlphaRender(hdc, 112, 22, 0.7f);
+	mUIBaseImage->AlphaRender(hdc, mX + 102, mY + 12, 0.7f);
 
 	mBaseImage->Render(hdc, mX, mY);
 	mTimeBG->Render(hdc, mX + 14, mY + 18);

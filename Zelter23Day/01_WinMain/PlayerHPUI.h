@@ -14,7 +14,7 @@ class PlayerHPUI : public UI
 
 	Animation* mHeartAnimation;
 public:
-	PlayerHPUI(const string& name); 
+	PlayerHPUI(const string& name, int x, int y); 
 	void Init()override;
 	void Release()override;
 	void Update()override;

@@ -19,7 +19,7 @@ class SmartWatch : public UI
 	class HungerUI* mHungerUI;
 	class SteminaUI* mSteminaUI;
 public:
-	SmartWatch(const string& name);
+	SmartWatch(const string& name, int x, int y);
 	void Init()override;
 	void Release()override;
 	void Update()override;

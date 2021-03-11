@@ -9,11 +9,8 @@
 #include "GameObject.h"
 #include "Player.h"
 
-
-
 void MapToolScene::Init()
 {
-
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 
 	Camera* camera = new Camera;

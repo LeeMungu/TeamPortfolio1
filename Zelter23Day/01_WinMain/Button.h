@@ -22,6 +22,7 @@ public:
 
 	void Move(float x, float y);
 
+	float GetX() const { return mX; }
+	float GetY() const { return mY; }
 	RECT GetRect() const { return mRect; }
 };
-

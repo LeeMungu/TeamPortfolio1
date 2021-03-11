@@ -1,31 +1,38 @@
 #pragma once
 #include "GameObject.h"
-
-//구조체 변수는 대문자로 시작하게 짬, 나같은경우에는
-struct TilePallete
+enum class BookType : int
 {
-	class Image* Image;
-	int PositionX;
-	int PositionY;
-	int Width;
-	int Height;
-	RECT Rc;
-	int FrameX;
-	int FrameY;
+	Tile = 0,
+	House = 1,
+	InterectObject = 2,
+	NoninterectObject = 3,
+	End
 };
 
+
+
+class Button;
 class MapToolBook : public GameObject
 {
 	class Image* mImage;
 	class Animation* mAnimation;
 	vector<vector<class Tile*>> mPallete;
 	float mSpeed;
+	//버튼 형변환
+	BookType mBookType;
+	bool mIsTypeChange;
+	//버튼
+	Button* mTileButton;
+	Button* mHouseButton;
+	Button* mInterectObjectButton;
+	Button* mNoninterectObjectButton;
 public:
 	void Init()override;
 	void Release()override;
 	void Update()override;
 	void Render(HDC hdc)override;
 
+	void ChangeMode(BookType bookType);
 	vector<vector<Tile*>> GetPalleteList() const { return mPallete; }
 };
 

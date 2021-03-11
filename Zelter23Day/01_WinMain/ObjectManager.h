@@ -10,11 +10,11 @@ enum class ObjectLayer : int
 {
 	Background = 0, 
 	camera = 1,	
-	Enemey = 2,
-	UI = 3,
-	Tile = 4,
-	Player = 5,
-	ToolBook=6,
+	Tile = 2,
+	Enemey = 3,
+	Player = 4,
+	ToolBook = 5,
+	UI = 6,
 	End
 };
 

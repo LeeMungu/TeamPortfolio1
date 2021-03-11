@@ -238,9 +238,6 @@ void MapToolBook::Render(HDC hdc)
 		}
 	}
 	
-
-
-
 	mTileButton->Render(hdc);
 	mHouseButton->Render(hdc);
 	mInterectObjectButton->Render(hdc);

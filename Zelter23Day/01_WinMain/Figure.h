@@ -29,7 +29,7 @@ inline void RenderRect(HDC hdc, RECT rc)
 	ID2D1SolidColorBrush* brush;
 	D2D1_COLOR_F color;
 	//r,g,b,a
-	color = { 1.0f,1.0f,1.0f,1.0f };
+	color = { 0.0f,0.0f,0.0f,1.0f };
 	renderTarget->CreateSolidColorBrush(color, &brush);
 
 	//¾ë ÀÏ´Ü ³öµÎ°í
@@ -38,6 +38,8 @@ inline void RenderRect(HDC hdc, RECT rc)
 	D2D1_RECT_F rect = { rc.left,rc.top,rc.right,rc.bottom };
 
 	renderTarget->DrawRectangle(rect, brush);
+
+	brush->Release();
 	/*
 	DrawRectangle(
 		CONST D2D1_RECT_F & rect,
@@ -70,11 +72,13 @@ inline void RenderLine(HDC hdc,int startX, int startY, int endX, int endY)
 	ID2D1SolidColorBrush* brush;
 	D2D1_COLOR_F color;
 	//r,g,b,a
-	color = { 1.0f,1.0f,1.0f,1.0f };
+	color = { 0.0f,0.0f,0.0f,1.0f };
 	renderTarget->CreateSolidColorBrush(color, &brush);
 
 	renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	renderTarget->DrawLine(start, end, brush, 1.0f);
+
+	brush->Release();
 	
 	//±âÁ¸ ·»´õ¹æ½Ä
 	//MoveToEx(hdc, startX, startY, NULL);

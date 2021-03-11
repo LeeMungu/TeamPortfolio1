@@ -5,6 +5,7 @@ ThirstUI::ThirstUI(const string& name, int x, int y) : UI(name)
 {
 	mX = x + 200;
 	mY = y + 15;
+	mRect = RectMake(mX, mY, 30, 30);
 }
 
 void ThirstUI::Init()
@@ -16,6 +17,8 @@ void ThirstUI::Init()
 	mEmptyGageImage = IMAGEMANAGER->FindImage(L"Statu_empty");
 	mFullGageImage = IMAGEMANAGER->FindImage(L"Thirst_full");
 	mIconImage = IMAGEMANAGER->FindImage(L"Thirst_icon");
+
+	mThirst = 30;
 }
 
 void ThirstUI::Release()
@@ -29,6 +32,6 @@ void ThirstUI::Update()
 void ThirstUI::Render(HDC hdc)
 {
 	mEmptyGageImage->Render(hdc, mX, mY);
-	mFullGageImage->Render(hdc, mX, mY);
+	mFullGageImage->Render(hdc, mX, mRect.bottom - mThirst, 0, 30 - mThirst, 30, mThirst);
 	mIconImage->Render(hdc, mX + 7, mY + 7);
 }

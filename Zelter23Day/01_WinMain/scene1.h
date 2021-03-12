@@ -21,10 +21,10 @@ class scene1 : public Scene
 	class Tile* mTileList[TileCountY][TileCountX];
 
 	TileLayer mCurrentLayer;
-	bool isGridMode;
+	bool mIsGridMode;
 	int mLoadingFile;
 
-	Player* player;
+	Player* mPlayer;
 	SmartWatch* mSmartWatch;
 	PlayerHPUI* mPlayerHPUI;
 public:

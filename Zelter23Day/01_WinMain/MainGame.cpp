@@ -3,6 +3,7 @@
 
 #include "Image.h"
 #include "MapToolScene.h"
+#include "LoadingScene.h"
 #include "scene1.h"
 #include "Camera.h"
 
@@ -42,8 +43,9 @@ void MainGame::Init()
 	IMAGEMANAGER->LoadFromFile(L"Zombie01", Resources(L"/06_Zombie/Zombie01.png"), 10, 2);
 
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
+	SceneManager::GetInstance()->AddScene(L"LoadingScene", new LoadingScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
-	SceneManager::GetInstance()->LoadScene(L"MapToolScene");
+	SceneManager::GetInstance()->LoadScene(L"LoadingScene");
 }
 
 /*

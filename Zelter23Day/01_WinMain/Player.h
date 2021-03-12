@@ -6,13 +6,12 @@ class Animation;
 
 #define TileSize 32
 
-enum class Direction
+enum class PlayerState
 {
-	Up,
-	Left,
-	Right,
-	Down,
-	End
+	walk,
+	run,
+	attack,
+	die,
 };
 class Player : public GameObject
 {
@@ -38,10 +37,18 @@ class Player : public GameObject
 	Animation* mRightAttack;
 
 	float mSpeed;
-	Direction mDirection;
+	int mHP;
+	int mThirst;
+	int mHunger;
+	int mStemina;
+
+	PlayerState mPlayerState;
+
+	
+
 
 	//class Tile* mTileList[TileCountX][TileCountY];
-
+	
 public:
 	Player(const string& name, float x, float y);
 
@@ -51,5 +58,10 @@ public:
 	void Render(HDC hdc)override;
 
 	void SetSpeed(float speed) { mSpeed = speed; }
+
+	int GetHP() { return mHP; }
+	int GetThirst() { return mThirst; }
+	int GetHunger() { return mHunger; }
+	int GetStemina() { return mStemina; }
 };
 

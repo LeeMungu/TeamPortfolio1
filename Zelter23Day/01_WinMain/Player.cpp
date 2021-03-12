@@ -12,17 +12,13 @@ Player::Player(const string& name, float x, float y)
 	mX = x;
 	mY = y;
 	mSpeed = 3.f;
-	mDirection = Direction::Left;
 }
 
 void Player::Init()
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_run.png"), 7, 4);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_walk.png"),7, 4);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_attack", Resources(L"/03_Player/Player_attack.png"), 10, 2);
 	mImage = IMAGEMANAGER->FindImage(L"Player_run");
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+	mSizeX = mImage->GetFrameWidth() * 2;
+	mSizeY = mImage->GetFrameHeight() * 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 	//Run Animation
@@ -221,15 +217,18 @@ void Player::Update()
 	}
 
 	mCurrentAnimation->Update();
+	mSizeX = mImage->GetFrameWidth() * 2;
+	mSizeY = mImage->GetFrameHeight() * 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
 void Player::Render(HDC hdc)
 {
+	
 	CameraManager::GetInstance()->GetMainCamera()->
-		FrameRender(hdc, mImage, mRect.left, mRect.top, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+		ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
 	if (Input::GetInstance()->GetKey(VK_LSHIFT))
 	{
-		RenderRect(hdc, mRect);
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
 	}
 }

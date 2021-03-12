@@ -107,7 +107,7 @@ void Camera::RenderRect(HDC hdc, RECT rc)
 		rc.right -= mRect.left;
 		rc.top -= mRect.top;
 		rc.bottom -= mRect.top;
-		RenderRect(hdc, rc);
+		::RenderRect(hdc, rc);
 	}
 }
 

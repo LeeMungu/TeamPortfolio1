@@ -85,6 +85,7 @@ void MapToolScene::Update()
 				if (PtInRect(&palletRect, _mousePosition))
 				{
 					mCurrentPallete = palletList[y][x];
+					mToolBook->SetIsRoofOn(false);
 				}
 			}
 		}
@@ -108,8 +109,14 @@ void MapToolScene::Update()
 					mTileList[indexY][indexX]->mFrameIndexX != mCurrentPallete->mFrameIndexX ||
 					mTileList[indexY][indexX]->mFrameIndexY != mCurrentPallete->mFrameIndexY)
 				{
+					if (mToolBook->GetIsRoofOn() == true)
+					{
+						mToolBook->RoofOnMode(indexX, indexY);
+						mToolBook->SetIsRoofOn(false);
+					}
 					IBrushTile* command = new IBrushTile(mTileList[indexY][indexX], mCurrentPallete);
 					PushCommand(command);
+					mToolBook->SetIsRoofOn(false);
 					//cout << "OnPushCommand" << endl;
 				}
 				mTileList[indexY][indexX]->mTileLayer = mCurrentLayer;

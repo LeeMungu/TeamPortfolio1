@@ -85,6 +85,10 @@ void MapToolBook::Init()
 	mIsTypeChange = false;
 	mIsOpenBook = false;
 	mIsPageChange = false;
+
+	mIsRoofOn = false;
+	mRoofBtn = new Button(L"RoofBtn", WINSIZEX / 2 + 200, WINSIZEY / 2 - 100, 100, 100, [this]() {SetIsRoofOn(true); });
+
 }
 
 void MapToolBook::Release()
@@ -107,6 +111,7 @@ void MapToolBook::Release()
 	SafeDelete(mNoninterectObjectButton);
 	SafeDelete(mNextButton);
 	SafeDelete(mPrevButton);
+	SafeDelete(mRoofBtn);
 }
 
 void MapToolBook::Update()
@@ -280,6 +285,10 @@ void MapToolBook::UpdateButtons()
 	{
 		mPrevButton->Update();
 	}
+	if (mRoofBtn != nullptr)
+	{
+		mRoofBtn->Update();
+	}
 }
 
 void MapToolBook::RenderButtons(HDC hdc)
@@ -307,6 +316,10 @@ void MapToolBook::RenderButtons(HDC hdc)
 	if (mPrevButton != nullptr)
 	{
 		mPrevButton->Render(hdc);
+	}
+	if (mRoofBtn != nullptr)
+	{
+		mRoofBtn->Render(hdc);
 	}
 }
 //버튼 기능
@@ -354,5 +367,10 @@ void MapToolBook::ChangeMode(BookType bookType)
 	}
 }
 
+void MapToolBook::RoofOnMode(int x, int y)
+{
+	mHouseObject = new HousingObject("Roof", x, y);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
+}
 
 

@@ -3,7 +3,7 @@
 #include <functional>
 class LoadingScene : public Scene
 {
-	
+	Image* mLoadingImage;
 
 	vector<function<void(void)>> mLoadList;
 	int mLoadIndex;

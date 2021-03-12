@@ -11,6 +11,12 @@ void LoadingScene::Init()
 {
 	mLoadIndex = 0;
 	mIsEndLoading = false;
+
+	//이미지 (플레이어)
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PlayerRun", Resources(L"Player_run.png"),7,4); });
+
+
+
 }
 
 void LoadingScene::Release()

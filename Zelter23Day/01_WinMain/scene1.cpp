@@ -18,7 +18,7 @@ void scene1::Init()
 	
 	mSmartWatch = new SmartWatch("SmartWatch", 5, 5);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mSmartWatch);
-	//mSmartWatch->SetPlayer(mPlayer);
+	mSmartWatch->SetPlayer(mPlayer);
 
 	Camera* camera = new Camera;
 	camera->SetTarget(mPlayer);

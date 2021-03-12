@@ -11,9 +11,9 @@ PlayerHPUI::PlayerHPUI(const string& name, int x, int y) : UI (name)
 
 void PlayerHPUI::Init()
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon_Sheet-resources.assets-564.bmp"), 240*2, 20*2, 12, 1, true);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"CircleGage_empty", Resources(L"/01_UI/CircleGage_Status-resources.assets-697.bmp"), 75, 75, true);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"CircleGage_full", Resources(L"/01_UI/CircleGage_Status-Full.bmp"), 75, 75, true);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon_Sheet-resources.assets-564.bmp"), 12, 1);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"CircleGage_empty", Resources(L"/01_UI/CircleGage_Status-resources.assets-697.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"CircleGage_full", Resources(L"/01_UI/CircleGage_Status-Full.bmp"));
 	
 	mHeartImage = IMAGEMANAGER->FindImage(L"Heart");
 	mEmptyGageImage = IMAGEMANAGER->FindImage(L"CircleGage_empty");

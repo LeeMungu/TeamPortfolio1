@@ -10,8 +10,8 @@ SteminaUI::SteminaUI(const string& name, int x, int y) : UI(name)
 
 void SteminaUI::Init()
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Stemina_icon", Resources(L"/01_UI/Gage_Icon_Stemina.bmp"), 7 * 2, 8 * 2, true);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Stemina_full", Resources(L"/01_UI/Gage_Fill_Stemina.bmp"), 15 * 2, 15 * 2, true);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Stemina_icon", Resources(L"/01_UI/Gage_Icon_Stemina.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Stemina_full", Resources(L"/01_UI/Gage_Fill_Stemina.bmp"));
 
 	mEmptyGageImage = IMAGEMANAGER->FindImage(L"Statu_empty");
 	mFullGageImage = IMAGEMANAGER->FindImage(L"Stemina_full");

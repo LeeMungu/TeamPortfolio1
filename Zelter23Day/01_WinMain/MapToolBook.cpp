@@ -5,13 +5,15 @@
 #include "Tile.h"
 #include "Button.h"
 #include "HousingObject.h"
+#define BookSize 2
+
 void MapToolBook::Init()
 {
 	mX = WINSIZEX / 2;
 	mY = WINSIZEY / 2;
 	mImage = ImageManager::GetInstance()->FindImage(L"Book");
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+	mSizeX = mImage->GetFrameWidth() * BookSize;
+	mSizeY = mImage->GetFrameHeight() * BookSize;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 	mSpeed = 1000.f;
@@ -223,6 +225,8 @@ void MapToolBook::Update()
 
 void MapToolBook::Render(HDC hdc)
 {
+	RenderRect(hdc, mRect);
+	mImage->SetScale(BookSize/2*1.5f);
 	mImage->FrameRender(hdc, mRect.left, mRect.top,
 		mAnimation->GetNowFrameX(),
 		mAnimation->GetNowFrameY());

@@ -10,9 +10,9 @@ ThirstUI::ThirstUI(const string& name, int x, int y) : UI(name)
 
 void ThirstUI::Init()
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Thirst_icon", Resources(L"/01_UI/Gage_Icon_Thirst-resources.assets-996.bmp"), 7 * 2, 8 * 2, true);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Thirst_full", Resources(L"/01_UI/Gage_Fill_Thirst.bmp"), 15 * 2, 15 * 2, true);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Statu_empty", Resources(L"/01_UI/Gage01_Base-resources.assets-500.bmp"), 15 * 2, 15 * 2, true);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Thirst_icon", Resources(L"/01_UI/Gage_Icon_Thirst-resources.assets-996.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Thirst_full", Resources(L"/01_UI/Gage_Fill_Thirst.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Statu_empty", Resources(L"/01_UI/Gage01_Base-resources.assets-500.bmp"));
 	
 	mEmptyGageImage = IMAGEMANAGER->FindImage(L"Statu_empty");
 	mFullGageImage = IMAGEMANAGER->FindImage(L"Thirst_full");

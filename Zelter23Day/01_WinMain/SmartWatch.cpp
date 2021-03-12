@@ -13,13 +13,13 @@ SmartWatch::SmartWatch(const string& name, int x, int y) : UI (name)
 
 void SmartWatch::Init()
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SmarWatch_base", Resources(L"/01_UI/SmartWatch_Base.bmp"), 56 * 2, 64 * 2, true);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass_dark", Resources(L"/01_UI/SmartWatch_GlassDark1161.bmp"), 80, 83, true);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass", Resources(L"/01_UI/SmartWatch_GlassShine.bmp"), 80, 83, true);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_morning", Resources(L"/01_UI/Morning-resources.assets-2276.bmp"), 80, 83, false);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_night", Resources(L"/01_UI/Night-resources.assets-1833.bmp"), 80, 83, false);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SmarWatch_base", Resources(L"/01_UI/SmartWatch_Base.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass_dark", Resources(L"/01_UI/SmartWatch_GlassDark1161.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass", Resources(L"/01_UI/SmartWatch_GlassShine.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_morning", Resources(L"/01_UI/Morning-resources.assets-2276.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_night", Resources(L"/01_UI/Night-resources.assets-1833.bmp"));
 
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"BlackBase", Resources(L"/01_UI/black_base_status.bmp"), 130, 101, true);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"BlackBase", Resources(L"/01_UI/black_base_status.bmp"));
 
 	mBaseImage = IMAGEMANAGER->FindImage(L"SmarWatch_base");
 	mGlassDark = IMAGEMANAGER->FindImage(L"SW_glass_dark");

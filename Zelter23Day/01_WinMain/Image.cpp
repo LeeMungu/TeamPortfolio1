@@ -121,13 +121,14 @@ void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, i
 
 void Image::FrameRender(HDC hdc, int x, int y, int frameX, int frameY)
 {
+
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;
 	Vector2 size =mSize * mScale;
 
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f);
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x , y );
 
 	//그릴 영역 세팅 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);

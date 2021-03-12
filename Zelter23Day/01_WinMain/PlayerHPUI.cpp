@@ -11,13 +11,13 @@ PlayerHPUI::PlayerHPUI(const string& name, int x, int y) : UI (name)
 
 void PlayerHPUI::Init()
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon_Sheet.png"), 12, 1);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"CircleGage_empty", Resources(L"/01_UI/CircleGage_Status-resources.png"));
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"CircleGage_full", Resources(L"/01_UI/CircleGage_Status-Full.png"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon_Sheet-resources.assets-564.bmp"), 12, 1);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"CircleGage_empty", Resources(L"/01_UI/CircleGage_Status-resources.assets-697.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"CircleGage_full", Resources(L"/01_UI/CircleGage_Status-Full.bmp"));
 	
 	mHeartImage = IMAGEMANAGER->FindImage(L"Heart");
-	mEmptyGaugeImage = IMAGEMANAGER->FindImage(L"CircleGage_empty");
-	mFullGaugeImage = IMAGEMANAGER->FindImage(L"CircleGage_full");
+	mEmptyGageImage = IMAGEMANAGER->FindImage(L"CircleGage_empty");
+	mFullGageImage = IMAGEMANAGER->FindImage(L"CircleGage_full");
 
 	mHeartAnimation = new Animation();
 	mHeartAnimation->InitFrameByStartEnd(0, 0, 8, 0, true);
@@ -39,8 +39,8 @@ void PlayerHPUI::Update()
 
 void PlayerHPUI::Render(HDC hdc)
 {
-	mEmptyGaugeImage->Render(hdc, mX, mY);
-	mFullGaugeImage->Render(hdc, mX, mY);
+	mEmptyGageImage->Render(hdc, mX, mY);
+	mFullGageImage->Render(hdc, mX, mY);
 
 	mHeartImage->FrameRender(hdc, mX + 17, mY + 17, mHeartAnimation->GetNowFrameX(), mHeartAnimation->GetNowFrameY());
 }

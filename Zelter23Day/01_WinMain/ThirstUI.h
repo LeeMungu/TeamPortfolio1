@@ -3,8 +3,8 @@
 class Image;
 class ThirstUI : public UI
 {
-	Image* mEmptyGaugeImage;
-	Image* mFullGaugeImage;
+	Image* mEmptyGageImage;
+	Image* mFullGageImage;
 	Image* mIconImage;
 
 	int mThirst;

@@ -26,8 +26,8 @@ void MapToolBook::Init()
 	mAnimation->SetCallbackFunc([this]()
 	{
 		Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile1");
-		int palleteStartX = mRect.left + 200;
-		int palleteStartY = mRect.top + 50;
+		int palleteStartX = mRect.left + mSizeX/6;
+		int palleteStartY = mRect.top + mSizeY/10;
 		mNowTileCountX = tileImage->GetMaxFrameX();
 		mNowTileCountY = tileImage->GetMaxFrameY();
 
@@ -50,27 +50,27 @@ void MapToolBook::Init()
 				mPallete[y][x]->SetTileLayer(TileLayer::PalletteType);
 			}
 		}
+
+		//좌상단 버튼 출력
+		mTileButton = new Button(L"Tile", mX - mSizeX / 2, mY - 300, 200, 50,
+			[this]() {ChangeMode(BookType::Tile); });
+		mHouseButton = new Button(L"House", mX - mSizeX / 2, mY - 250, 200, 50,
+			[this]() {ChangeMode(BookType::House); });
+		mInterectObjectButton = new Button(L"InterectObject", mX - mSizeX / 2, mY - 200, 200, 50,
+			[this]() {ChangeMode(BookType::InterectObject); });
+		mNoninterectObjectButton = new Button(L"NoninterectObject", mX - mSizeX / 2, mY - 150, 200, 50,
+			[this]() {ChangeMode(BookType::NoninterectObject); });
+
+		mNextButton = new Button(L"Next", mX - mSizeX / 3, mY + mSizeY / 3, 50, 50,
+			[]() {});
+		mPrevButton = new Button(L"Prev", mX - mSizeX / 6, mY + mSizeY / 3, 50, 50,
+			[]() {});
+
+		mIsOpenBook = true;
 	});
 
-	//
-	//좌상단 버튼 출력
-	mTileButton = new Button(L"Tile", mX - mSizeX/2, mY - 300, 200, 50,
-		[this]() {ChangeMode(BookType::Tile); });
-
-	mHouseButton = new Button(L"House", mX - mSizeX/2, mY - 250, 200, 50,
-		//함수 만들어야함
-		//북자체 타입을 나누는 방법이 가장 실현 가능성 있어 보임
-		//에니매이션 분류도 필요
-		//실행시 발생되는 람다식혹은 바인드로 넣어줄것<-되도록 바인드로 해보자<-추가함수를 만들어 줄것
-		//람다가 편하다...
-		[this]() {ChangeMode(BookType::House); });
-	mInterectObjectButton = new Button(L"InterectObject", mX - mSizeX/2, mY - 200, 200, 50,
-		[this]() {ChangeMode(BookType::InterectObject); });
-	mNoninterectObjectButton = new Button(L"NoninterectObject", mX - mSizeX/2, mY - 150, 200, 50,
-		[this]() {ChangeMode(BookType::NoninterectObject); });
-
 	mIsTypeChange = false;
-
+	mIsOpenBook = false;
 }
 
 void MapToolBook::Release()
@@ -91,6 +91,8 @@ void MapToolBook::Release()
 	SafeDelete(mHouseButton);
 	SafeDelete(mInterectObjectButton);
 	SafeDelete(mNoninterectObjectButton);
+	SafeDelete(mNextButton);
+	SafeDelete(mPrevButton);
 }
 
 void MapToolBook::Update()
@@ -104,14 +106,7 @@ void MapToolBook::Update()
 			//책이동
 			mY -= mSpeed * Time::GetInstance()->DeltaTime();
 			//버튼 이동
-			mTileButton->Move(mTileButton->GetX(),
-				mTileButton->GetY() - mSpeed * Time::GetInstance()->DeltaTime());
-			mHouseButton->Move(mHouseButton->GetX(),
-				mHouseButton->GetY() - mSpeed * Time::GetInstance()->DeltaTime());
-			mInterectObjectButton->Move(mInterectObjectButton->GetX(),
-				mInterectObjectButton->GetY() - mSpeed * Time::GetInstance()->DeltaTime());
-			mNoninterectObjectButton->Move(mNoninterectObjectButton->GetX(),
-				mNoninterectObjectButton->GetY() - mSpeed * Time::GetInstance()->DeltaTime());
+			MoveButtons(0, -mSpeed * Time::GetInstance()->DeltaTime());
 			//타일 이동
 			if (mPallete.size() != NULL)
 			{
@@ -130,14 +125,7 @@ void MapToolBook::Update()
 		{
 			mY += mSpeed * Time::GetInstance()->DeltaTime();
 			//버튼 이동
-			mTileButton->Move(mTileButton->GetX(),
-				mTileButton->GetY() + mSpeed * Time::GetInstance()->DeltaTime());
-			mHouseButton->Move(mHouseButton->GetX(),
-				mHouseButton->GetY() + mSpeed * Time::GetInstance()->DeltaTime());
-			mInterectObjectButton->Move(mInterectObjectButton->GetX(),
-				mInterectObjectButton->GetY() + mSpeed * Time::GetInstance()->DeltaTime());
-			mNoninterectObjectButton->Move(mNoninterectObjectButton->GetX(),
-				mNoninterectObjectButton->GetY() + mSpeed * Time::GetInstance()->DeltaTime());
+			MoveButtons(0, mSpeed * Time::GetInstance()->DeltaTime());
 			if (mPallete.size() != NULL)
 			{
 				for (int y = 0; y < mNowTileCountY; ++y)
@@ -155,18 +143,7 @@ void MapToolBook::Update()
 		{
 			mX += mSpeed * Time::GetInstance()->DeltaTime();
 			//버튼 이동
-			mTileButton->Move(
-				mTileButton->GetX() + mSpeed * Time::GetInstance()->DeltaTime(),
-				mTileButton->GetY());
-			mHouseButton->Move(
-				mHouseButton->GetX() + mSpeed * Time::GetInstance()->DeltaTime(),
-				mHouseButton->GetY());
-			mInterectObjectButton->Move(
-				mInterectObjectButton->GetX() + mSpeed * Time::GetInstance()->DeltaTime(),
-				mInterectObjectButton->GetY());
-			mNoninterectObjectButton->Move(
-				mNoninterectObjectButton->GetX() + mSpeed * Time::GetInstance()->DeltaTime(),
-				mNoninterectObjectButton->GetY());
+			MoveButtons(mSpeed * Time::GetInstance()->DeltaTime(), 0);
 			if (mPallete.size() != NULL)
 			{
 				for (int y = 0; y < mNowTileCountY; ++y)
@@ -184,18 +161,7 @@ void MapToolBook::Update()
 		{
 			mX -= mSpeed * Time::GetInstance()->DeltaTime();
 			//버튼 이동
-			mTileButton->Move(
-				mTileButton->GetX() - mSpeed * Time::GetInstance()->DeltaTime(),
-				mTileButton->GetY());
-			mHouseButton->Move(
-				mHouseButton->GetX() - mSpeed * Time::GetInstance()->DeltaTime(),
-				mHouseButton->GetY());
-			mInterectObjectButton->Move(
-				mInterectObjectButton->GetX() - mSpeed * Time::GetInstance()->DeltaTime(),
-				mInterectObjectButton->GetY());
-			mNoninterectObjectButton->Move(
-				mNoninterectObjectButton->GetX() - mSpeed * Time::GetInstance()->DeltaTime(),
-				mNoninterectObjectButton->GetY());
+			MoveButtons(-mSpeed * Time::GetInstance()->DeltaTime(), 0);
 			if (mPallete.size() != NULL)
 			{
 				for (int y = 0; y < mNowTileCountY; ++y)
@@ -215,10 +181,7 @@ void MapToolBook::Update()
 
 	mAnimation->Update();
 
-	mTileButton->Update();
-	mHouseButton->Update();
-	mInterectObjectButton->Update();
-	mNoninterectObjectButton->Update();
+	UpdateButtons();
 
 }
 
@@ -240,12 +203,98 @@ void MapToolBook::Render(HDC hdc)
 		}
 	}
 	
-	mTileButton->Render(hdc);
-	mHouseButton->Render(hdc);
-	mInterectObjectButton->Render(hdc);
-	mNoninterectObjectButton->Render(hdc);
+	RenderButtons(hdc);
 }
 
+void MapToolBook::MoveButtons(float moveX, float moveY)
+{
+	if (mTileButton != nullptr)
+	{
+		mTileButton->Move(mTileButton->GetX() + moveX,
+			mTileButton->GetY() + moveY);
+	}
+	if (mHouseButton != nullptr)
+	{
+		mHouseButton->Move(mHouseButton->GetX() + moveX,
+			mHouseButton->GetY() + moveY);
+	}
+	if (mInterectObjectButton != nullptr)
+	{
+		mInterectObjectButton->Move(mInterectObjectButton->GetX() + moveX,
+			mInterectObjectButton->GetY() + moveY);
+	}
+	if (mInterectObjectButton != nullptr)
+	{
+		mNoninterectObjectButton->Move(mNoninterectObjectButton->GetX() + moveX,
+			mNoninterectObjectButton->GetY() + moveY);
+	}
+	if (mNextButton != nullptr)
+	{
+		mNextButton->Move(mNextButton->GetX() + moveX,
+			mNextButton->GetY() + moveY);
+	}
+	if (mPrevButton != nullptr)
+	{
+		mPrevButton->Move(mPrevButton->GetX() + moveX,
+			mPrevButton->GetY() + moveY);
+	}
+}
+
+void MapToolBook::UpdateButtons()
+{
+	if (mTileButton != nullptr)
+	{
+		mTileButton->Update();
+	}
+	if (mHouseButton != nullptr)
+	{
+		mHouseButton->Update();
+	}
+	if (mInterectObjectButton != nullptr)
+	{
+		mInterectObjectButton->Update();
+	}
+	if (mInterectObjectButton != nullptr)
+	{
+		mNoninterectObjectButton->Update();
+	}
+	if (mNextButton != nullptr)
+	{
+		mNextButton->Update();
+	}
+	if (mPrevButton != nullptr)
+	{
+		mPrevButton->Update();
+	}
+}
+
+void MapToolBook::RenderButtons(HDC hdc)
+{
+	if (mTileButton != nullptr)
+	{
+		mTileButton->Render(hdc);
+	}
+	if (mHouseButton != nullptr)
+	{
+		mHouseButton->Render(hdc);
+	}
+	if (mInterectObjectButton != nullptr)
+	{
+		mInterectObjectButton->Render(hdc);
+	}
+	if (mInterectObjectButton != nullptr)
+	{
+		mNoninterectObjectButton->Render(hdc);
+	}
+	if (mNextButton != nullptr)
+	{
+		mNextButton->Render(hdc);
+	}
+	if (mPrevButton != nullptr)
+	{
+		mPrevButton->Render(hdc);
+	}
+}
 //버튼 기능
 void MapToolBook::ChangeMode(BookType bookType)
 {

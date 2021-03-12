@@ -17,9 +17,9 @@ Player::Player(const string& name, float x, float y)
 
 void Player::Init()
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_run.bmp"), 7, 4);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_walk.bmp"),7, 4);
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_attack", Resources(L"/03_Player/Player_attack.bmp"), 10, 2);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_run.png"), 7, 4);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_walk.png"),7, 4);
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Player_attack", Resources(L"/03_Player/Player_attack.png"), 10, 2);
 	mImage = IMAGEMANAGER->FindImage(L"Player_run");
 	mSizeX = mImage->GetFrameWidth();
 	mSizeY = mImage->GetFrameHeight();

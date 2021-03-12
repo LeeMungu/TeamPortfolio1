@@ -19,6 +19,9 @@ class MapToolBook : public GameObject
 	class Animation* mAnimation;
 	vector<vector<class Tile*>> mPallete;
 	float mSpeed;
+	//책 활성화 여부
+	bool mIsOpenBook;
+
 	//버튼 형변환
 	BookType mBookType;
 	bool mIsTypeChange;
@@ -27,6 +30,8 @@ class MapToolBook : public GameObject
 	Button* mHouseButton;
 	Button* mInterectObjectButton;
 	Button* mNoninterectObjectButton;
+	Button* mNextButton;
+	Button* mPrevButton;
 
 	HousingObject* mHouseObject;
 	int mNowTileCountX;
@@ -38,10 +43,16 @@ public:
 	void Update()override;
 	void Render(HDC hdc)override;
 
+	void MoveButtons(float moveX, float moveY);
+	void UpdateButtons();
+	void RenderButtons(HDC hdc);
+
 	void ChangeMode(BookType bookType);
 	vector<vector<Tile*>> GetPalleteList() const { return mPallete; }
+	bool GetIsOpenBook() const { return mIsOpenBook; }
 
-	int GetNowTilecountX() {return mNowTileCountX;}
+	int GetNowTilecountX() { return mNowTileCountX;}
 	int GetNowTilecountY() { return mNowTileCountY; }
+
 };
 

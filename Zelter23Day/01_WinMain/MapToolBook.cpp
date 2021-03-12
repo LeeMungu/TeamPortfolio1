@@ -61,16 +61,30 @@ void MapToolBook::Init()
 		mNoninterectObjectButton = new Button(L"NoninterectObject", mX - mSizeX / 2, mY - 150, 200, 50,
 			[this]() {ChangeMode(BookType::NoninterectObject); });
 
-		mNextButton = new Button(L"Next", mX - mSizeX / 3, mY + mSizeY / 3, 50, 50,
-			[]() {});
-		mPrevButton = new Button(L"Prev", mX - mSizeX / 6, mY + mSizeY / 3, 50, 50,
-			[]() {});
+		mNextButton = new Button(L"Next", mX - mSizeX / 6, mY + mSizeY / 3, 50, 50,
+			[this]() {
+			if (mPage < 15)
+			{
+				mPage++;
+				mIsPageChange = true;
+			}
+		});
+		mPrevButton = new Button(L"Prev", mX - mSizeX / 3, mY + mSizeY / 3, 50, 50,
+			[this]() {
+			if (mPage > 1)
+			{
+				mPage--;
+				mIsPageChange = true;
+			}
+		});
 
 		mIsOpenBook = true;
 	});
 
+
 	mIsTypeChange = false;
 	mIsOpenBook = false;
+	mIsPageChange = false;
 }
 
 void MapToolBook::Release()

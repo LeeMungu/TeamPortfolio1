@@ -30,6 +30,9 @@ class MapToolBook : public GameObject
 	Button* mHouseButton;
 	Button* mInterectObjectButton;
 	Button* mNoninterectObjectButton;
+	
+	int mPage;
+	bool mIsPageChange;
 	Button* mNextButton;
 	Button* mPrevButton;
 

@@ -42,12 +42,7 @@ void MapToolScene::Init()
 			mTileList[y][x]->SetTileLayer(TileLayer::normal);
 		}
 	}
-	//버튼
-	mSaveButton = new Button(L"Save", mToolBook->GetX()+mToolBook->GetSizeX()/5, mToolBook->GetY(), 200, 50,
-		bind(&MapToolScene::Save, this));
-	mLoadButton = new Button(L"Load", mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY() + 100, 200, 50,
-		bind(&MapToolScene::Load, this));
-
+	
 	mCurrentPallete = nullptr;
 	mCurrentLayer = TileLayer::normal;
 }
@@ -64,8 +59,14 @@ void MapToolScene::Release()
 			SafeDelete(mTileList[y][x]);
 		}
 	}
-	SafeDelete(mSaveButton);
-	SafeDelete(mLoadButton);
+	if (mSaveButton != nullptr)
+	{
+		SafeDelete(mSaveButton);
+	}
+	if (mLoadButton != nullptr)
+	{
+		SafeDelete(mLoadButton);
+	}
 }
 
 void MapToolScene::Update()
@@ -96,7 +97,8 @@ void MapToolScene::Update()
 	// {{ 타일 그리기~
 	if (Input::GetInstance()->GetKey(VK_LBUTTON))
 	{
-		if (mCurrentPallete != nullptr)
+		RECT bookRect = mToolBook->GetRect();
+		if (mCurrentPallete != nullptr && !PtInRect(&bookRect,_mousePosition))
 		{
 			int indexX = (_mousePosition.x + cameraX) / TileSize;
 			int indexY = (_mousePosition.y + cameraY) / TileSize;
@@ -116,11 +118,25 @@ void MapToolScene::Update()
 	}
 	// }}
 
-	mSaveButton->Move(mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY());
-	mLoadButton->Move(mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY() + 100);
+	//버튼 생성
+	if (mToolBook->GetIsOpenBook() && mSaveButton == nullptr && mLoadButton == nullptr)
+	{
+		mSaveButton = new Button(L"Save", mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY(), 200, 50,
+			bind(&MapToolScene::Save, this));
+		mLoadButton = new Button(L"Load", mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY() + 100, 200, 50,
+			bind(&MapToolScene::Load, this));
+	}
 	//버튼 업데이트
-	mSaveButton->Update();
-	mLoadButton->Update();
+	if (mSaveButton != nullptr)
+	{
+		mSaveButton->Move(mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY());
+		mSaveButton->Update();
+	}
+	if (mLoadButton != nullptr)
+	{
+		mLoadButton->Move(mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY() + 100);
+		mLoadButton->Update();
+	}
 	//되감기
 	if (Input::GetInstance()->GetKey(VK_LCONTROL))
 	{
@@ -192,9 +208,14 @@ void MapToolScene::Render(HDC hdc)
 	ObjectManager::GetInstance()->Render(hdc);
 
 	//버튼 그려주기
-	mSaveButton->Render(hdc);
-	mLoadButton->Render(hdc);
-
+	if (mSaveButton != nullptr)
+	{
+		mSaveButton->Render(hdc);
+	}
+	if (mLoadButton != nullptr)
+	{
+		mLoadButton->Render(hdc);
+	}
 	//카메라렉트 테스트용
 	//RenderRect(hdc,CameraManager::GetInstance()->GetMainCamera()->GetRect());
 }

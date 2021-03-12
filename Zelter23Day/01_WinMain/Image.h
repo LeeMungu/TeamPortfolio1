@@ -61,6 +61,8 @@ public:
 	void AlphaScaleRender(HDC hdc, int x, int y, int width, int height, float alpha);
 	//알파값 + 프레임렌더링 + 크기 조정
 	void AlphaScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float alpha);
+	//엑티브스케일렌더
+	void ActiveScaleRender(HDC hdc, int x, int y, int width, int height);
 
 	void ResetRenderOption();
 

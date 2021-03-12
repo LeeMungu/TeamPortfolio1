@@ -50,7 +50,9 @@ Image::~Image()
 *********************************************************************************/
 void Image::Render(const Vector2& position)
 {
-	Vector2 size = mSize * mScale;
+	//testing
+	//Vector2 size = mSize * mScale;
+	Vector2 size = mSize;
 
 	//스케일 행렬을 만들어준다
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
@@ -73,7 +75,7 @@ void Image::FrameRender(const Vector2& position, const int frameX, const int fra
 {
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;
-	Vector2 size = mSize * mScale;
+	Vector2 size = mSize;
 
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
@@ -103,7 +105,7 @@ void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, i
 	mSize.X = (float)tempWidth;
 	mSize.Y = (float)tempHeight;
 	//원래 사이즈
-	Vector2 size = mSize * mScale;
+	Vector2 size = mSize;
 
 	//스케일 행렬을 만들어준다
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
@@ -124,7 +126,7 @@ void Image::FrameRender(HDC hdc, int x, int y, int frameX, int frameY)
 
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;
-	Vector2 size =mSize * mScale;
+	Vector2 size =mSize;
 
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
@@ -248,6 +250,27 @@ void Image::AlphaScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY,
 		D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, &dxSrc);
 
 	this->ResetRenderOption();
+}
+
+void Image::ActiveScaleRender(HDC hdc, int x, int y, int width, int height)
+{
+	Vector2 size = Vector2(mSize.X * width / this->GetWidth(), mSize.Y * height / this->GetHeight());
+
+	//원래 사이즈
+	//Vector2 size = mSize * mScale;
+
+	//스케일 행렬을 만들어준다
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	//회전 행렬을 만들어준다. 
+	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	//이동 행렬을 만들어준다.
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
+
+	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
+
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha);
+	ResetRenderOption();
 }
 
 /********************************************************************************

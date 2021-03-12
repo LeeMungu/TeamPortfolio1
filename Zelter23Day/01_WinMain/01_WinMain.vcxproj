@@ -154,6 +154,7 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="DefineHeader.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameEvent.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InteractObject.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MapToolBook.h" />
@@ -190,6 +192,7 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Zombie01.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp" />
@@ -199,6 +202,7 @@
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="D2DRenderer+Draw.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameEventManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -209,6 +213,7 @@
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InteractObject.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="MainGame + MainProc.cpp" />
     <ClCompile Include="MainGame.cpp" />
@@ -237,6 +242,7 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Zombie01.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="01_WinMain.rc" />

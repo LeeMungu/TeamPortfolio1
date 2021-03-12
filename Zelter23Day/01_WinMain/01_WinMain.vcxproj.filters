@@ -88,6 +88,9 @@
     <Filter Include="MainGame\UI\Statu">
       <UniqueIdentifier>{251ce202-fa1d-42be-a9b1-290a96037b60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Enemy">
+      <UniqueIdentifier>{1ce9bf47-e051-4d3a-9f75-6caffdd72aec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -219,6 +222,15 @@
     <ClInclude Include="ThirstUI.h">
       <Filter>MainGame\UI\Statu</Filter>
     </ClInclude>
+    <ClInclude Include="Zombie01.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>MainGame\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -340,6 +352,15 @@
     </ClCompile>
     <ClCompile Include="ThirstUI.cpp">
       <Filter>MainGame\UI\Statu</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie01.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>MainGame\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

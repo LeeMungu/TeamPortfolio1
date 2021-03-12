@@ -25,12 +25,12 @@ void MapToolBook::Init()
 	mAnimation->Play();
 	mAnimation->SetCallbackFunc([this]()
 	{
+		//타일 생성
 		Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile1");
 		int palleteStartX = mRect.left + mSizeX/6;
 		int palleteStartY = mRect.top + mSizeY/10;
 		mNowTileCountX = tileImage->GetMaxFrameX();
 		mNowTileCountY = tileImage->GetMaxFrameY();
-
 		//후에 갯수조정 자동으로 되게 셋팅할 예정
 		mPallete.assign(tileImage->GetMaxFrameY(), vector<Tile*>());
 		for (int y = 0; y < tileImage->GetMaxFrameY(); ++y)
@@ -192,11 +192,40 @@ void MapToolBook::Update()
 	}
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
-
 	mAnimation->Update();
 
 	UpdateButtons();
-
+	if (mIsPageChange == true)
+	{
+		//타일 생성
+		Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile"+to_wstring(mPage));
+		int palleteStartX = mRect.left + mSizeX / 6;
+		int palleteStartY = mRect.top + mSizeY / 10;
+		mNowTileCountX = tileImage->GetMaxFrameX();
+		mNowTileCountY = tileImage->GetMaxFrameY();
+		//리셋
+		mPallete.clear();
+		//후에 갯수조정 자동으로 되게 셋팅할 예정
+		mPallete.assign(tileImage->GetMaxFrameY(), vector<Tile*>());
+		for (int y = 0; y < tileImage->GetMaxFrameY(); ++y)
+		{
+			for (int x = 0; x < tileImage->GetMaxFrameX(); ++x)
+			{
+				mPallete[y].push_back(new Tile(
+					tileImage,
+					palleteStartX + Pallette * x,
+					palleteStartY + Pallette * y,
+					Pallette,
+					Pallette,
+					x,
+					y
+				));
+				mPallete[y][x]->SetSpeed(mSpeed);
+				mPallete[y][x]->SetTileLayer(TileLayer::PalletteType);
+			}
+		}
+		mIsPageChange = false;
+	}
 }
 
 void MapToolBook::Render(HDC hdc)

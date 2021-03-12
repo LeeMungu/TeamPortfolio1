@@ -45,7 +45,7 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"LoadingScene", new LoadingScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
-	SceneManager::GetInstance()->LoadScene(L"LoadingScene");
+	SceneManager::GetInstance()->LoadScene(L"MapToolScene");
 
 
 

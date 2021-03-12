@@ -10,9 +10,6 @@ HungerUI::HungerUI(const string& name, int x, int y) : UI(name)
 
 void HungerUI::Init()
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Hunger_icon", Resources(L"/01_UI/Gage_Icon_Hunger.png"));
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Hunger_full", Resources(L"/01_UI/Gage_Fill_Hunger.png"));
-
 	mEmptyGaugeImage = IMAGEMANAGER->FindImage(L"Statu_empty");
 	mFullGaugeImage = IMAGEMANAGER->FindImage(L"Hunger_full");
 	mIconImage = IMAGEMANAGER->FindImage(L"Hunger_icon");

@@ -13,9 +13,9 @@ void LoadingScene::Init()
 	mIsEndLoading = false;
 
 	//이미지 (플레이어)
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PlayerRun", Resources(L"Player_run.png"),7,4); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PlayerWalk", Resources(L"Player_walk.png"), 7, 4); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PlayerAttack", Resources(L"Plauer_attack.png"), 10, 2); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PlayerRun", Resources(L"/03_Player/Player_run.png"),7,4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PlayerWalk", Resources(L"/03_Player/Player_walk.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PlayerAttack", Resources(L"/03_Player/Plauer_attack.png"), 10, 2); });
 
 	//이미지 (플레이어HP UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon.png"), 12, 1); });

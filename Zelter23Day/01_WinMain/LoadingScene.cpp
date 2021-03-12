@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "LoadingScene.h"
-#include "Image.h
+#include "Image.h"
 
 void LoadingScene::AddLoadFunc(const function<void(void)>& func)
 {

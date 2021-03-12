@@ -12,6 +12,11 @@ Player::Player(const string& name, float x, float y)
 	mX = x;
 	mY = y;
 	mSpeed = 3.f;
+
+	mHP = 100;
+	mThirst = 30;
+	mHunger = 30;
+	mStemina = 30;
 }
 
 void Player::Init()
@@ -73,11 +78,6 @@ void Player::Init()
 	mRightAttack->InitFrameByStartEnd(1, 1, 9, 1, false);
 	mRightAttack->SetIsLoop(true);
 	mRightAttack->SetFrameUpdateTime(0.05f);
-
-
-
-
-
 
 
 	//Idle Animation
@@ -229,6 +229,7 @@ void Player::Render(HDC hdc)
 		ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
 	if (Input::GetInstance()->GetKey(VK_LSHIFT))
 	{
-		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
+		//CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
+		RenderRect(hdc, mRect);
 	}
 }

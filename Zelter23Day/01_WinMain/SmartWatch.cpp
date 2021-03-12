@@ -52,10 +52,10 @@ void SmartWatch::Update()
 		mTimeBG = IMAGEMANAGER->FindImage(L"SW_night");
 	}
 
-	//	mPlayerHPUI->SetHP(mPlayer->GetHP());
-	//	mThirstUI->SetThirst(mPlayer->GetThirst());
-	//	mHungerUI->SetHunger(mPlayer->GetHunger());
-	//	mSteminaUI->SetStemina(mPlayer->GetStemina());
+	mPlayerHPUI->SetHP(mPlayer->GetHP());
+	mThirstUI->SetThirst(mPlayer->GetThirst());
+	mHungerUI->SetHunger(mPlayer->GetHunger());
+	mSteminaUI->SetStemina(mPlayer->GetStemina());
 	
 }
 

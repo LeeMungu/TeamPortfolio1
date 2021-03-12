@@ -15,6 +15,7 @@ void LoadingScene::Init()
 	//이미지 (플레이어)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PlayerRun", Resources(L"Player_run.png"),7,4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PlayerWalk", Resources(L"Player_walk.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PlayerAttack", Resources(L"Plauer_attack.png"), 10, 2); });
 
 	//이미지 (플레이어HP UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon.png"), 12, 1); });
@@ -30,9 +31,9 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Stemina_full", Resources(L"/01_UI/Gage_Fill_Stemina.png")); });
 
 	//이미지 (플레이어 Thrist UI)
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Thirst_icon", Resources(L"/01_UI/Gage_Icon_Thirst.png"));
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Thirst_full", Resources(L"/01_UI/Gage_Fill_Thirst.png"));
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Statu_empty", Resources(L"/01_UI/Gage01_Base-resources.png"));
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Thirst_icon", Resources(L"/01_UI/Gage_Icon_Thirst.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Thirst_full", Resources(L"/01_UI/Gage_Fill_Thirst.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Statu_empty", Resources(L"/01_UI/Gage01_Base-resources.png")); });
 
 
 	//이미지 (SmartWatch UI)

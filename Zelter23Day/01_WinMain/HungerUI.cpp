@@ -32,7 +32,7 @@ void HungerUI::Update()
 void HungerUI::Render(HDC hdc)
 {
 
-	mEmptyGaugeImage->Render(hdc, mX, mY);
+	mEmptyGaugeImage->ScaleRender(hdc, mX, mY, 30, 30);
 	mFullGaugeImage->Render(hdc, mX, mRect.bottom - mHunger, 0, 30 - mHunger, 30, mHunger);
-	mIconImage->Render(hdc, mX + 7, mY + 7);
+	mIconImage->ScaleRender(hdc, mX + 7, mY + 7, 12 , 13);
 }

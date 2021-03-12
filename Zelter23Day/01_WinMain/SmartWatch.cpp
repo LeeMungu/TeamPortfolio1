@@ -62,10 +62,10 @@ void SmartWatch::Update()
 
 void SmartWatch::Render(HDC hdc)
 {
-	mUIBaseImage->Render(hdc, mX + 102, mY + 12);
+	mUIBaseImage->ScaleRender(hdc, mX + 102, mY + 12, 130, 100);
 
-	mBaseImage->Render(hdc, mX, mY);
-	mTimeBG->Render(hdc, mX + 14, mY + 18);
-	mGlassDark->Render(hdc, mX + 14, mY + 18);
-	mGlass->Render(hdc, mX + 14, mY + 18);
+	mBaseImage->ScaleRender(hdc, mX, mY, 56*2, 64*2);
+	mTimeBG->ScaleRender(hdc, mX + 14, mY + 18, 80, 83);
+	mGlassDark->ScaleRender(hdc, mX + 14, mY + 18, 80, 83);
+	mGlass->ScaleRender(hdc, mX + 14, mY + 18, 80, 83);
 }

@@ -39,8 +39,7 @@ void PlayerHPUI::Update()
 
 void PlayerHPUI::Render(HDC hdc)
 {
-	mEmptyGaugeImage->Render(hdc, mX, mY);
-	mFullGaugeImage->Render(hdc, mX, mY);
-
-	mHeartImage->FrameRender(hdc, mX + 17, mY + 17, mHeartAnimation->GetNowFrameX(), mHeartAnimation->GetNowFrameY());
+	mEmptyGaugeImage->ScaleRender(hdc, mX, mY, 76, 76);
+	mFullGaugeImage->ScaleRender(hdc, mX, mY, 76, 76);
+	mHeartImage->ScaleFrameRender(hdc, mX + 17, mY + 17, mHeartAnimation->GetNowFrameX(), mHeartAnimation->GetNowFrameY(), 40, 40);
 }

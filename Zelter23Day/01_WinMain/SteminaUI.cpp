@@ -29,7 +29,7 @@ void SteminaUI::Update()
 
 void SteminaUI::Render(HDC hdc)
 {
-	mEmptyGaugeImage->Render(hdc, mX, mY);
+	mEmptyGaugeImage->ScaleRender(hdc, mX, mY, 30, 30);
 	mFullGaugeImage->Render(hdc, mX, mRect.bottom - mStemina, 0, 30 - mStemina, 30, mStemina);
-	mIconImage->Render(hdc, mX + 7, mY + 7);
+	mIconImage->ScaleRender(hdc, mX + 7, mY + 7, 12, 13);
 }

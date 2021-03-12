@@ -31,7 +31,7 @@ void ThirstUI::Update()
 
 void ThirstUI::Render(HDC hdc)
 {
-	mEmptyGaugeImage->Render(hdc, mX, mY);
+	mEmptyGaugeImage->ScaleRender(hdc, mX, mY, 30, 30);
 	mFullGaugeImage->Render(hdc, mX, mRect.bottom - mThirst, 0, 30 - mThirst, 30, mThirst);
-	mIconImage->Render(hdc, mX + 7, mY + 7);
+	mIconImage->ScaleRender(hdc, mX + 7, mY + 7, 12, 13);
 }

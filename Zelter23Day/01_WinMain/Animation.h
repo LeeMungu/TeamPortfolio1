@@ -33,6 +33,7 @@ public:
 	void InitFrameByVector(const vector<pair<int, int>>& frameList);
 	void InitFrameByStartEnd(int startX, int startY, int endX, int endY, bool isReverse);
 	void InitFrameByEndStart(int startX, int StartY, int endX, int endY, bool isReverse);
+	void InitFrameByReverseLoop(int startX, int startY, int endX, int endY);
 
 	void SetCallbackFunc(const function<void(void)>& func);
 	inline void SetIsLoop(bool isLoop) { mIsLoop = isLoop; }

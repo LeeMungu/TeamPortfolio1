@@ -226,7 +226,7 @@ void MapToolBook::Update()
 void MapToolBook::Render(HDC hdc)
 {
 	RenderRect(hdc, mRect);
-	mImage->SetScale(BookSize/2*1.5f);
+	mImage->SetScale(sqrtf(2.f));
 	mImage->FrameRender(hdc, mRect.left, mRect.top,
 		mAnimation->GetNowFrameX(),
 		mAnimation->GetNowFrameY());

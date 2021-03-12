@@ -110,7 +110,7 @@ void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, i
 	//회전 행렬을 만들어준다. 
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	//이동 행렬을 만들어준다.
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f);
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
 
 	D2D1_RECT_F dxArea = D2D1::RectF((float)tempX, (float)tempY, size.X, size.Y);
 
@@ -128,6 +128,7 @@ void Image::FrameRender(HDC hdc, int x, int y, int frameX, int frameY)
 
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	//이미지 시작점?
 	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x , y );
 
 	//그릴 영역 세팅 
@@ -153,7 +154,7 @@ void Image::AlphaRender(HDC hdc, int x, int y, float alpha)
 void Image::AlphaFrameRender(HDC hdc, int x, int y, int frameX, int frameY, float alpha)
 {
 	this->SetAlpha(alpha);
-	FrameRender(Vector2((int)(x + this->GetWidth() / 2), (int)(y + this->GetHeight() / 2)), frameX, frameY);
+	FrameRender(Vector2((int)(x + this->GetFrameWidth() / 2), (int)(y + this->GetFrameHeight() / 2)), frameX, frameY);
 }
 
 void Image::ScaleRender(HDC hdc, int x, int y, int width, int height)
@@ -168,7 +169,7 @@ void Image::ScaleRender(HDC hdc, int x, int y, int width, int height)
 	//회전 행렬을 만들어준다. 
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	//이동 행렬을 만들어준다.
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f);
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
 
@@ -181,11 +182,11 @@ void Image::ScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY, int 
 {
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;
-	Vector2 size = Vector2(mSize.X * width / this->GetWidth(), mSize.Y * height / this->GetHeight());
+	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(), mSize.Y * height / this->GetFrameHeight());
 
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f);
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
 
 	//그릴 영역 세팅 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
@@ -215,7 +216,7 @@ void Image::AlphaScaleRender(HDC hdc, int x, int y, int width, int height, float
 	//회전 행렬을 만들어준다. 
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	//이동 행렬을 만들어준다.
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f);
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x , y );
 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
 
@@ -229,7 +230,7 @@ void Image::AlphaScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY,
 	this->SetAlpha(alpha);
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;
-	Vector2 size = Vector2(mSize.X * width / this->GetWidth(), mSize.Y * height / this->GetHeight());
+	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(), mSize.Y * height / this->GetFrameHeight());
 
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));

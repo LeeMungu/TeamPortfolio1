@@ -17,16 +17,14 @@ void scene1::Init()
 
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 
-	player = new Player("Player", 150, 150);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, player);
-	ObjectManager::GetInstance()->Init();
-
+	mPlayer = new Player("Player", 150, 150);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 	
 
 	Camera* camera = new Camera;
+	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::camera, camera);
-
 	for (int y = 0; y < TileCountY; ++y)
 	{
 		for (int x = 0; x < TileCountX; ++x)
@@ -79,6 +77,8 @@ ifstream loadStream(L"../04_Data/Test.txt");
 		}
 	}
 
+	ObjectManager::GetInstance()->Init();
+	camera->ChangeMode(Camera::Mode::Follow);
 }
 
 void scene1::Release()
@@ -160,9 +160,8 @@ void scene1::Update()
 			}
 		}
 	}
-	float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
-	float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
-
+	//float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
+	//float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
 
 }
 

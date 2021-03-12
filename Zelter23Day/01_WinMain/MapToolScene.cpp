@@ -165,11 +165,16 @@ void MapToolScene::Render(HDC hdc)
 		}
 	}
 
-	TextOut(hdc, 10, 10, to_wstring(renderCount).c_str(), to_wstring(renderCount).length());
-	TextOut(hdc, 10, 40, L"WASD : 카메라 이동", 12);
-	TextOut(hdc, 10, 70, L"Shift + ←→↑↓ : 책 이동", 12);
-	TextOut(hdc, 10, 100, L"Lctrl : 테두리", 12);
-	TextOut(hdc, 10, 130, L"Lctrl + Z : 되감기", 12);
+	D2DRenderer::GetInstance()
+		->RenderText(10, 10, to_wstring(renderCount).c_str(), 12);
+	D2DRenderer::GetInstance()
+		->RenderText(10, 40, L"WASD : 카메라 이동", 12);
+	D2DRenderer::GetInstance()
+		->RenderText(10, 70, L"Shift + ←→↑↓ : 책 이동", 12);
+	D2DRenderer::GetInstance()
+		->RenderText(10, 100, L"Lctrl : 테두리", 12);
+	D2DRenderer::GetInstance()
+		->RenderText(10, 130, L"Lctrl + Z : 되감기", 12);
 
 
 	if (mCurrentPallete != nullptr)

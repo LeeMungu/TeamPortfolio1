@@ -226,10 +226,9 @@ void MapToolBook::Update()
 void MapToolBook::Render(HDC hdc)
 {
 	RenderRect(hdc, mRect);
-	mImage->SetScale(sqrtf(2.f));
-	mImage->FrameRender(hdc, mRect.left, mRect.top,
+	mImage->ScaleFrameRender(hdc, mRect.left, mRect.top,
 		mAnimation->GetNowFrameX(),
-		mAnimation->GetNowFrameY());
+		mAnimation->GetNowFrameY(),mSizeX,mSizeY);
 	
 	if (mPallete.size() != NULL)
 	{

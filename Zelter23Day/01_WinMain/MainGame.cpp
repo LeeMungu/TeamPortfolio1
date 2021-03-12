@@ -74,7 +74,8 @@ void MainGame::RenderTime(HDC hdc)
 	wstring strDeltaTime = L"DeltaTime : " + to_wstring(deltaTime);
 	wstring strFPS = L"FPS : " + to_wstring(fps);
 
-	TextOut(hdc, 10, 10, strWorldTime.c_str(), strWorldTime.length());
+	D2DRenderer::GetInstance()
+		->RenderText(10, 10, strWorldTime.c_str(),strWorldTime.length());
 	TextOut(hdc, 10, 25, strDeltaTime.c_str(), strDeltaTime.length());
 	TextOut(hdc, 10, 40, strFPS.c_str(), strFPS.length());
 }

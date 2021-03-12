@@ -21,7 +21,7 @@ void Tile::Render(HDC hdc)
 	//파레트일때
 	if (mTileLayer == TileLayer::PalletteType)
 	{
-		mImage->FrameRender(hdc, mRect.left, mRect.top, mFrameIndexX, mFrameIndexY);
+		mImage->ScaleFrameRender(hdc, mRect.left, mRect.top, mFrameIndexX, mFrameIndexY, mSizeX,mSizeY);
 		Gizmo::GetInstance()->DrawRect(hdc, mRect, Gizmo::Color::Blue);
 	}
 	//타일일때

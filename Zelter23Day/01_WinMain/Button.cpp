@@ -50,8 +50,8 @@ void Button::Render(HDC hdc)
 		RECT rc = RectMakeCenter(mX, mY, sizeX, sizeY);
 		RenderRect(hdc, rc);
 	}
-
-	TextOut(hdc, mX - mSizeX / 4, mY - mSizeY / 4, mText.c_str(), mText.length());
+	D2DRenderer::GetInstance()
+		->RenderText( mX - mSizeX / 3, mY - mSizeY / 4, mText.c_str(), 20);
 }
 
 void Button::Move(float x, float y)

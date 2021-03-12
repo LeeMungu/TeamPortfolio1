@@ -148,13 +148,13 @@ void Image::FrameRender(HDC hdc, int x, int y, int frameX, int frameY)
 void Image::AlphaRender(HDC hdc, int x, int y, float alpha)
 {
 	this->SetAlpha(alpha);
-	Render(Vector2((int)(x + this->GetWidth() / 2), (int)(y + this->GetHeight() / 2)));
+	this->Render(Vector2((int)(x + this->GetWidth() / 2), (int)(y + this->GetHeight() / 2)));
 }
 
 void Image::AlphaFrameRender(HDC hdc, int x, int y, int frameX, int frameY, float alpha)
 {
 	this->SetAlpha(alpha);
-	FrameRender(Vector2((int)(x + this->GetFrameWidth() / 2), (int)(y + this->GetFrameHeight() / 2)), frameX, frameY);
+	this->FrameRender(Vector2((int)(x + this->GetFrameWidth() / 2), (int)(y + this->GetFrameHeight() / 2)), frameX, frameY);
 }
 
 void Image::ScaleRender(HDC hdc, int x, int y, int width, int height)

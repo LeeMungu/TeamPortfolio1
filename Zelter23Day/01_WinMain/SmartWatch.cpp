@@ -13,13 +13,13 @@ SmartWatch::SmartWatch(const string& name, int x, int y) : UI (name)
 
 void SmartWatch::Init()
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SmarWatch_base", Resources(L"/01_UI/SmartWatch_Base.bmp"));
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass_dark", Resources(L"/01_UI/SmartWatch_GlassDark1161.bmp"));
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass", Resources(L"/01_UI/SmartWatch_GlassShine.bmp"));
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_morning", Resources(L"/01_UI/Morning-resources.assets-2276.bmp"));
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_night", Resources(L"/01_UI/Night-resources.assets-1833.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SmarWatch_base", Resources(L"/01_UI/SmartWatch_Base.png"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass_dark", Resources(L"/01_UI/SmartWatch_GlassDark.png"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass", Resources(L"/01_UI/SmartWatch_GlassShine.png"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_morning", Resources(L"/01_UI/Morning-resources.png"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_night", Resources(L"/01_UI/Night-resources.png"));
 
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"BlackBase", Resources(L"/01_UI/black_base_status.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"BlackBase", Resources(L"/01_UI/black_base_status.png"));
 
 	mBaseImage = IMAGEMANAGER->FindImage(L"SmarWatch_base");
 	mGlassDark = IMAGEMANAGER->FindImage(L"SW_glass_dark");
@@ -62,10 +62,12 @@ void SmartWatch::Update()
 
 void SmartWatch::Render(HDC hdc)
 {
-	mUIBaseImage->AlphaRender(hdc, mX + 102, mY + 12, 0.7f);
+	//mUIBaseImage->AlphaRender(hdc, mX + 102, mY + 12, 0.7f);
+	mUIBaseImage->Render(hdc, mX + 102, mY + 12);
 
 	mBaseImage->Render(hdc, mX, mY);
 	mTimeBG->Render(hdc, mX + 14, mY + 18);
 	mGlassDark->Render(hdc, mX + 14, mY + 18);
-	mGlass->AlphaRender(hdc, mX + 14, mY + 18, 0.3f);
+	//mGlass->AlphaRender(hdc, mX + 14, mY + 18, 0.3f);
+	mGlass->Render(hdc, mX + 14, mY + 18);
 }

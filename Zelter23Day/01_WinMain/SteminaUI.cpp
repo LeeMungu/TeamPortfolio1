@@ -10,11 +10,11 @@ SteminaUI::SteminaUI(const string& name, int x, int y) : UI(name)
 
 void SteminaUI::Init()
 {
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Stemina_icon", Resources(L"/01_UI/Gage_Icon_Stemina.bmp"));
-	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Stemina_full", Resources(L"/01_UI/Gage_Fill_Stemina.bmp"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Stemina_icon", Resources(L"/01_UI/Gage_Icon_Stemina.png"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"Stemina_full", Resources(L"/01_UI/Gage_Fill_Stemina.png"));
 
-	mEmptyGageImage = IMAGEMANAGER->FindImage(L"Statu_empty");
-	mFullGageImage = IMAGEMANAGER->FindImage(L"Stemina_full");
+	mEmptyGaugeImage = IMAGEMANAGER->FindImage(L"Statu_empty");
+	mFullGaugeImage = IMAGEMANAGER->FindImage(L"Stemina_full");
 	mIconImage = IMAGEMANAGER->FindImage(L"Stemina_icon");
 	mStemina = 30;
 }
@@ -29,7 +29,7 @@ void SteminaUI::Update()
 
 void SteminaUI::Render(HDC hdc)
 {
-	mEmptyGageImage->Render(hdc, mX, mY);
-	mFullGageImage->Render(hdc, mX, mRect.bottom - mStemina, 0, 30 - mStemina, 30, mStemina);
+	mEmptyGaugeImage->Render(hdc, mX, mY);
+	mFullGaugeImage->Render(hdc, mX, mRect.bottom - mStemina, 0, 30 - mStemina, 30, mStemina);
 	mIconImage->Render(hdc, mX + 7, mY + 7);
 }

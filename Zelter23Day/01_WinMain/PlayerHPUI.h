@@ -6,8 +6,8 @@ class Animation;
 class PlayerHPUI : public UI
 {
 	Image* mBaseImage;
-	Image* mEmptyGageImage;
-	Image* mFullGageImage;
+	Image* mEmptyGaugeImage;
+	Image* mFullGaugeImage;
 	Image* mHeartImage;
 
 	int mHP;

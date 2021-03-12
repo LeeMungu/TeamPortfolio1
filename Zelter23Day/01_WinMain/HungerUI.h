@@ -2,8 +2,8 @@
 #include "UI.h"
 class HungerUI : public UI
 {
-	Image* mEmptyGageImage;
-	Image* mFullGageImage;
+	Image* mEmptyGaugeImage;
+	Image* mFullGaugeImage;
 	Image* mIconImage;
 
 	int mHunger;

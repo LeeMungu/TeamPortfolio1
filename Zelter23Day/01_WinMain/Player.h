@@ -11,6 +11,7 @@ enum class PlayerState
 	walk,
 	run,
 	attack,
+	die,
 };
 class Player : public GameObject
 {
@@ -57,5 +58,10 @@ public:
 	void Render(HDC hdc)override;
 
 	void SetSpeed(float speed) { mSpeed = speed; }
+
+	int GetHP() { return mHP; }
+	int GetThirst() { return mThirst; }
+	int GetHunger() { return mHunger; }
+	int GetStemina() { return mStemina; }
 };
 

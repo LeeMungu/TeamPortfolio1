@@ -5,6 +5,7 @@
 #include "ThirstUI.h"
 #include "HungerUI.h"
 #include "SteminaUI.h"
+#include "Player.h"
 SmartWatch::SmartWatch(const string& name, int x, int y) : UI (name)
 {
 	mX = x;
@@ -50,6 +51,12 @@ void SmartWatch::Update()
 	else {
 		mTimeBG = IMAGEMANAGER->FindImage(L"SW_night");
 	}
+
+	//	mPlayerHPUI->SetHP(mPlayer->GetHP());
+	//	mThirstUI->SetThirst(mPlayer->GetThirst());
+	//	mHungerUI->SetHunger(mPlayer->GetHunger());
+	//	mSteminaUI->SetStemina(mPlayer->GetStemina());
+	
 }
 
 void SmartWatch::Render(HDC hdc)

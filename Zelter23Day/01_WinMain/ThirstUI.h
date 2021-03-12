@@ -15,5 +15,7 @@ public:
 	void Release()override;
 	void Update()override;
 	void Render(HDC hdc)override;
+
+	void SetThirst(int t) { mThirst = t; }
 };
 

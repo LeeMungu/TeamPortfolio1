@@ -11,15 +11,14 @@
 #include "SmartWatch.h"
 void scene1::Init()
 {
-	
-	mSmartWatch = new SmartWatch("SmartWatch", 5, 5);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mSmartWatch);
-
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 
 	mPlayer = new Player("Player", 150, 150);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 	
+	mSmartWatch = new SmartWatch("SmartWatch", 5, 5);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mSmartWatch);
+	//mSmartWatch->SetPlayer(mPlayer);
 
 	Camera* camera = new Camera;
 	camera->SetTarget(mPlayer);

@@ -40,5 +40,7 @@ public:
 
 	inline float GetMoveSpeed()const { return mMoveSpeed; }
 	inline void SetMoveSpeed(float speed) { mMoveSpeed = speed; }
+
+	POINT GetPoint(long x, long y)const { return { x - mRect.left, y - mRect.top }; }
 };
 

@@ -12,6 +12,11 @@ Player::Player(const string& name, float x, float y)
 	mX = x;
 	mY = y;
 	mSpeed = 3.f;
+
+	mHP = 100;
+	mThirst = 30;
+	mHunger = 30;
+	mStemina = 30;
 }
 
 void Player::Init()
@@ -75,11 +80,6 @@ void Player::Init()
 	mRightAttack->SetFrameUpdateTime(0.05f);
 
 
-
-
-
-
-
 	//Idle Animation
 	mUpIdleAni = new Animation();
 	mUpIdleAni->InitFrameByStartEnd(0, 0, 0, 0, false);
@@ -127,9 +127,11 @@ void Player::Release()
 
 void Player::Update()
 {
+	POINT playerPoint = CameraManager::GetInstance()->GetMainCamera()->GetPoint(GetX(), GetY());
+
 	if (Input::GetInstance()->GetKey('W'))
 	{
-		if (_mousePosition.y > mY) 
+		if (_mousePosition.y > playerPoint.y)
 		{
 			mImage = IMAGEMANAGER->FindImage(L"Player_walk");
 			mCurrentAnimation = mDownWalkAni;
@@ -145,7 +147,7 @@ void Player::Update()
 	}
 	else if (Input::GetInstance()->GetKey('A'))
 	{
-		if (_mousePosition.x > mX)
+		if (_mousePosition.x > playerPoint.x)
 		{
 			mImage = IMAGEMANAGER->FindImage(L"Player_walk");
 			mCurrentAnimation = mRightWalkAni;
@@ -161,7 +163,7 @@ void Player::Update()
 	}
 	else if (Input::GetInstance()->GetKey('D'))
 	{
-		if (_mousePosition.x < mX)
+		if (_mousePosition.x < playerPoint.x)
 		{
 			mImage = IMAGEMANAGER->FindImage(L"Player_walk");
 			mCurrentAnimation = mLeftWalkAni;
@@ -177,7 +179,7 @@ void Player::Update()
 	}
 	else if (Input::GetInstance()->GetKey('S'))
 	{
-		if (_mousePosition.y < mY)
+		if (_mousePosition.y < playerPoint.y)
 		{
 			mImage = IMAGEMANAGER->FindImage(L"Player_walk");
 			mCurrentAnimation = mUpWalkAni;
@@ -193,7 +195,7 @@ void Player::Update()
 	}
 	else if (Input::GetInstance()->GetKeyDown('F'))
 	{
-		if (_mousePosition.x < mX)
+		if (_mousePosition.x < playerPoint.x)
 		{
 			mImage = IMAGEMANAGER->FindImage(L"Player_attack");
 			mCurrentAnimation = mLeftAttack;
@@ -230,5 +232,6 @@ void Player::Render(HDC hdc)
 	if (Input::GetInstance()->GetKey(VK_LSHIFT))
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
+		//RenderRect(hdc, mRect);
 	}
 }

@@ -1,9 +1,14 @@
 #pragma once
 #include "Scene.h"
 #include <functional>
+
+class Animation;
+
 class LoadingScene : public Scene
 {
 	Image* mLoadingImage;
+	Animation* mLoadingAnimation;
+
 
 	vector<function<void(void)>> mLoadList;
 	int mLoadIndex;

@@ -25,15 +25,17 @@ void MapToolBook::Init()
 	mAnimation->Play();
 	mAnimation->SetCallbackFunc([this]()
 	{
-		Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
+		Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile1");
 		int palleteStartX = mRect.left + 200;
 		int palleteStartY = mRect.top + 50;
+		mNowTileCountX = tileImage->GetMaxFrameX();
+		mNowTileCountY = tileImage->GetMaxFrameY();
 
 		//후에 갯수조정 자동으로 되게 셋팅할 예정
-		mPallete.assign(4, vector<Tile*>());
-		for (int y = 0; y < 4; ++y)
+		mPallete.assign(tileImage->GetMaxFrameY(), vector<Tile*>());
+		for (int y = 0; y < tileImage->GetMaxFrameY(); ++y)
 		{
-			for (int x = 0; x < 8; ++x)
+			for (int x = 0; x < tileImage->GetMaxFrameX(); ++x)
 			{
 				mPallete[y].push_back(new Tile(
 					tileImage,
@@ -68,9 +70,6 @@ void MapToolBook::Init()
 		[this]() {ChangeMode(BookType::NoninterectObject); });
 
 	mIsTypeChange = false;
-
-	mNowTileCountX = 8;
-	mNowTileCountY = 4;
 
 }
 

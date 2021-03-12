@@ -95,7 +95,7 @@ void Image::FrameRender(const Vector2& position, const int frameX, const int fra
 
 void Image::Render(HDC hdc, int x, int y)
 {
-	Render(Vector2((int)(x + this->GetWidth()/2), (int)(y + this->GetHeight()/2)));
+	this->Render(Vector2((int)(x + this->GetWidth()/2), (int)(y + this->GetHeight()/2)));
 }
 
 void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, int tempHeight)

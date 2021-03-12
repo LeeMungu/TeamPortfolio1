@@ -35,7 +35,6 @@ protected:
 	int mHp;
 	int mSpeed;
 	int mAttack;
-	float mDistance;
 	bool mTargeting;
 	bool mTakenDamege;
 	float mDelay;

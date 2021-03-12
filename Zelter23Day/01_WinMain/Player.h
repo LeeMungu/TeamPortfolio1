@@ -6,13 +6,11 @@ class Animation;
 
 #define TileSize 32
 
-enum class Direction
+enum class PlayerState
 {
-	Up,
-	Left,
-	Right,
-	Down,
-	End
+	walk,
+	run,
+	attack,
 };
 class Player : public GameObject
 {
@@ -38,10 +36,18 @@ class Player : public GameObject
 	Animation* mRightAttack;
 
 	float mSpeed;
-	Direction mDirection;
+	int mHP;
+	int mThirst;
+	int mHunger;
+	int mStemina;
+
+	PlayerState mPlayerState;
+
+	
+
 
 	//class Tile* mTileList[TileCountX][TileCountY];
-
+	
 public:
 	Player(const string& name, float x, float y);
 

@@ -5,6 +5,7 @@ class Tile;
 class Image;
 class HousingObject : public GameObject
 {
+	vector<vector<Tile*>> mTileList;
 	Image* mRoofSideImage;
 	float mAlpha;
 

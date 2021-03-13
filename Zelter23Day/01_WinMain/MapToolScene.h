@@ -65,6 +65,14 @@ class Button;
 class Player;
 class MapToolScene : public Scene
 {
+	//≈∏¿œ √— ∞πºˆ
+	int mTileCountX;
+	int mTileCountY;
+	//º±≈√«—Ω√¡°¿« ¿Œµ¶Ω∫
+	int mPickStartIndexX;
+	int mPickStartIndexY;
+	bool mIsExtendTile;
+
 	//class Tile* mTileList[TileCountY][TileCountX];
 	vector<vector<class Tile*>> mTileList;
 	MapToolBook* mToolBook;

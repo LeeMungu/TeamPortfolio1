@@ -11,6 +11,8 @@
 
 void MapToolScene::Init()
 {
+	mTileCountX = 25;
+	mTileCountY = 25;
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 	Image* houseImage = ImageManager::GetInstance()->FindImage(L"House");
 
@@ -24,10 +26,10 @@ void MapToolScene::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::ToolBook, mToolBook);
 	ObjectManager::GetInstance()->Init();
 
-	mTileList.assign(TileCountY, vector<Tile*>());
+	mTileList.assign(mTileCountY, vector<Tile*>());
 	for (int y = 0; y < mTileList.size(); ++y)
 	{
-		for (int x = 0; x < TileCountX; ++x)
+		for (int x = 0; x < mTileCountX; ++x)
 		{
 			mTileList[y].push_back(new Tile
 			(
@@ -45,6 +47,10 @@ void MapToolScene::Init()
 	
 	mCurrentPallete = nullptr;
 	mCurrentLayer = TileLayer::normal;
+	//아직 선택하지 않음을 표시
+	mPickStartIndexX = -1;
+	mPickStartIndexY = -1;
+	mIsExtendTile = false;
 }
 
 void MapToolScene::Release()
@@ -52,9 +58,9 @@ void MapToolScene::Release()
 	ObjectManager::GetInstance()->Release();
 	//알아서해
 
-	for (int y = 0; y < TileCountY; ++y)
+	for (int y = 0; y < mTileCountY; ++y)
 	{
-		for (int x = 0; x < TileCountX; ++x)
+		for (int x = 0; x < mTileCountX; ++x)
 		{
 			SafeDelete(mTileList[y][x]);
 		}
@@ -73,10 +79,26 @@ void MapToolScene::Update()
 {
 	ObjectManager::GetInstance()->Update();
 
+	//카메라 보정값
+	float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
+	float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
+	RECT bookRect = mToolBook->GetRect();//툴북 제외용
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
-		vector<vector<Tile*>> palletList = mToolBook->GetPalleteList();
+		//타일 늘이기
+		if (mCurrentPallete == nullptr && !PtInRect(&bookRect,_mousePosition))
+		{
+			int indexX = (_mousePosition.x + cameraX) / TileSize;
+			int indexY = (_mousePosition.y + cameraY) / TileSize;
+			if (indexX == mTileCountX - 1 || indexY == mTileCountY - 1)
+			{
+				mPickStartIndexX = indexX;
+				mPickStartIndexY = indexY;
+				mIsExtendTile = true;
+			}
+		}
 		//{{ 팔레트 픽~
+		vector<vector<Tile*>> palletList = mToolBook->GetPalleteList();
 		for (int y = 0; y < mToolBook->GetNowTilecountY(); ++y)
 		{
 			for (int x = 0; x < mToolBook->GetNowTilecountX(); ++x)
@@ -92,18 +114,104 @@ void MapToolScene::Update()
 		// }}
 	}
 
-	float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
-	float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
-
-	// {{ 타일 그리기~
 	if (Input::GetInstance()->GetKey(VK_LBUTTON))
 	{
-		RECT bookRect = mToolBook->GetRect();
-		if (mCurrentPallete != nullptr && !PtInRect(&bookRect,_mousePosition))
+		int indexX = (_mousePosition.x + cameraX) / TileSize;
+		int indexY = (_mousePosition.y + cameraY) / TileSize;
+		//타일 늘이기
+		if (mCurrentPallete == nullptr && mIsExtendTile ==true 
+			&& (mPickStartIndexY != indexY||mPickStartIndexX != indexX))
 		{
-			int indexX = (_mousePosition.x + cameraX) / TileSize;
-			int indexY = (_mousePosition.y + cameraY) / TileSize;
-			if (indexX >= 0 && indexX < TileCountX && indexY >= 0 && indexY < TileCountY)
+			indexX = (_mousePosition.x + cameraX) / TileSize;
+			indexY = (_mousePosition.y + cameraY) / TileSize;
+			//Y축 증
+			if (mPickStartIndexY < indexY)
+			{
+				int plusIndex = indexY - mPickStartIndexY;
+				for (int i = 0; i < plusIndex; i++)
+				{
+					mTileList.push_back(vector<Tile*>());
+				}
+				for (int y = mPickStartIndexY-1; y < mTileList.size(); ++y)
+				{
+					for (int x = 0; x < mTileCountX; ++x)
+					{
+						mTileList[y].push_back(new Tile
+						(
+							nullptr,
+							TileSize * x,
+							TileSize * y,
+							TileSize,
+							TileSize,
+							0,
+							0
+						));
+						mTileList[y][x]->SetTileLayer(TileLayer::normal);
+					}
+				}
+				mPickStartIndexY = indexY;
+				mTileCountY = mPickStartIndexY + 1;
+			}
+			//Y축 감
+			else if (mPickStartIndexY > indexY)
+			{
+				int minusIndex = mPickStartIndexY - indexY;
+				for (int i = 0; i < minusIndex; i++)
+				{
+					mTileList.pop_back();
+				}
+				mPickStartIndexY = indexY;
+				mTileCountY = mPickStartIndexY + 1;
+			}
+
+			//X축 증
+			if (mPickStartIndexX < indexX)
+			{
+				int plusIndex = indexX - mPickStartIndexY;
+				
+				for (int y = 0; y < mTileList.size(); ++y)
+				{
+					for (int i = mTileCountX; i < indexX+1; i++)
+					{
+						mTileList[y].push_back(new Tile
+						(
+							nullptr,
+							TileSize * i,
+							TileSize * y,
+							TileSize,
+							TileSize,
+							0,
+							0
+						));
+						mTileList[y][i]->SetTileLayer(TileLayer::normal);
+					}
+				}
+				mPickStartIndexX = indexX;
+				mTileCountX = mPickStartIndexX + 1;
+			}
+			//x축 감
+			else if (mPickStartIndexX > indexX)
+			{
+				int minusIndex = mPickStartIndexY - indexY;
+
+				for (int y = 0; y < mTileList.size(); ++y)
+				{
+					for (int i = 0; i < minusIndex; i++)
+					{
+						mTileList[y].pop_back();
+					}
+				}
+				mPickStartIndexX = indexX;
+				mTileCountX = mPickStartIndexX + 1;
+			}
+		}
+		// {{ 타일 그리기~
+	
+		else if (mCurrentPallete != nullptr && !PtInRect(&bookRect,_mousePosition))
+		{
+			indexX = (_mousePosition.x + cameraX) / TileSize;
+			indexY = (_mousePosition.y + cameraY) / TileSize;
+			if (indexX >= 0 && indexX < mTileCountX && indexY >= 0 && indexY < mTileCountY)
 			{
 				if (mTileList[indexY][indexX]->mImage != mCurrentPallete->mImage ||
 					mTileList[indexY][indexX]->mFrameIndexX != mCurrentPallete->mFrameIndexX ||
@@ -124,6 +232,15 @@ void MapToolScene::Update()
 		}
 	}
 	// }}
+	if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
+	{
+		//초기화
+		if (mIsExtendTile == true)
+		{
+			mIsExtendTile = false;
+		}
+	}
+
 
 	//버튼 생성
 	if (mToolBook->GetIsOpenBook() && mSaveButton == nullptr && mLoadButton == nullptr)
@@ -152,6 +269,11 @@ void MapToolScene::Update()
 			Undo();
 		}
 	}
+	//팔레트 픽 지우기
+	if (Input::GetInstance()->GetKeyDown(VK_BACK))
+	{
+		mCurrentPallete = nullptr;
+	}
 }
 
 void MapToolScene::Render(HDC hdc)
@@ -178,7 +300,7 @@ void MapToolScene::Render(HDC hdc)
 	int renderCount = 0;
 	for (int y = 0; y < mTileList.size(); ++y)
 	{
-		for (int x = 0; x < TileCountX; ++x)
+		for (int x = 0; x < mTileCountX; ++x)
 		{
 			mTileList[y][x]->Render(hdc);
 			if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mTileList[y][x]->GetRect()))
@@ -236,9 +358,13 @@ void MapToolScene::Save()
 		int frameX;
 		int frameY;
 
-		for (int y = 0; y < TileCountY; ++y)
+		saveStream << mTileCountX;
+		saveStream << ',';
+		saveStream << mTileCountY;
+		saveStream << endl;
+		for (int y = 0; y < mTileCountY; ++y)
 		{
-			for (int x = 0; x < TileCountX; ++x)
+			for (int x = 0; x < mTileCountX; ++x)
 			{
 				string str;
 				wstring keyName;
@@ -264,9 +390,35 @@ void MapToolScene::Load()
 	ifstream loadStream(L"../04_Data/Test.txt");
 	if (loadStream.is_open())
 	{
-		for (int y = 0; y < TileCountY; ++y)
+
+		string bufferCount;
+		getline(loadStream, bufferCount, ',');
+		mTileCountX = stoi(bufferCount);
+		getline(loadStream, bufferCount);
+		mTileCountY = stoi(bufferCount);
+		//초기화 후 삽입
+		mTileList.clear();
+		mTileList.assign(mTileCountY, vector<Tile*>());
+		for (int y = 0; y < mTileList.size(); ++y)
 		{
-			for (int x = 0; x < TileCountX; ++x)
+			for (int x = 0; x < mTileCountX; ++x)
+			{
+				mTileList[y].push_back(new Tile
+				(
+					nullptr,
+					TileSize * x,
+					TileSize * y,
+					TileSize,
+					TileSize,
+					0,
+					0
+				));
+				mTileList[y][x]->SetTileLayer(TileLayer::normal);
+			}
+		}
+		for (int y = 0; y < mTileCountY; ++y)
+		{
+			for (int x = 0; x < mTileCountX; ++x)
 			{
 				string key;
 				int frameX;
@@ -274,12 +426,14 @@ void MapToolScene::Load()
 				string buffer;
 				int layer;
 
+				//쉼표 앞에까지
 				getline(loadStream, buffer, ',');
 				key = buffer;
 				getline(loadStream, buffer, ',');
 				frameX = stoi(buffer);
 				getline(loadStream, buffer, ',');
 				frameY = stoi(buffer);
+				//줄의 마지막 값
 				getline(loadStream, buffer);
 				layer = stoi(buffer);
 

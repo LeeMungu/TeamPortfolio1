@@ -143,7 +143,7 @@ void Image::FrameRender(HDC hdc, int x, int y, int frameX, int frameY)
 	//·»´õ¸µ ¿äÃ»
 	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha,
 		D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, &dxSrc);
-
+	
 	this->ResetRenderOption();
 }
 

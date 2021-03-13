@@ -52,13 +52,13 @@ void MapToolBook::Init()
 		}
 
 		//좌상단 버튼 출력
-		mTileButton = new Button(L"Tile", mX - mSizeX / 2, mY - 300, 200, 50,
+		mTileButton = new Button(L"BookButton",0,L"Tile", mX - mSizeX / 2, mY - 300, 200, 50,
 			[this]() {ChangeMode(BookType::Tile); });
-		mHouseButton = new Button(L"House", mX - mSizeX / 2, mY - 250, 200, 50,
+		mHouseButton = new Button(L"BookButton", 1, L"House", mX - mSizeX / 2, mY - 250, 200, 50,
 			[this]() {ChangeMode(BookType::House); });
-		mInterectObjectButton = new Button(L"InterectObject", mX - mSizeX / 2, mY - 200, 200, 50,
+		mInterectObjectButton = new Button(L"BookButton", 2, L"InterectObject", mX - mSizeX / 2, mY - 200, 200, 50,
 			[this]() {ChangeMode(BookType::InterectObject); });
-		mNoninterectObjectButton = new Button(L"NoninterectObject", mX - mSizeX / 2, mY - 150, 200, 50,
+		mNoninterectObjectButton = new Button(L"BookButton", 3, L"NoninterectObject", mX - mSizeX / 2, mY - 150, 200, 50,
 			[this]() {ChangeMode(BookType::NoninterectObject); });
 
 		mNextButton = new Button(L"Next", mX - mSizeX / 6, mY + mSizeY / 3, 50, 50,
@@ -79,6 +79,7 @@ void MapToolBook::Init()
 		});
 
 		mIsOpenBook = true;
+		mPage = 1;
 	});
 
 
@@ -210,7 +211,7 @@ void MapToolBook::Update()
 		mNowTileCountY = tileImage->GetMaxFrameY();
 		//리셋
 		mPallete.clear();
-		//후에 갯수조정 자동으로 되게 셋팅할 예정
+		
 		mPallete.assign(tileImage->GetMaxFrameY(), vector<Tile*>());
 		for (int y = 0; y < tileImage->GetMaxFrameY(); ++y)
 		{
@@ -271,7 +272,7 @@ void MapToolBook::MoveButtons(float moveX, float moveY)
 		mInterectObjectButton->Move(mInterectObjectButton->GetX() + moveX,
 			mInterectObjectButton->GetY() + moveY);
 	}
-	if (mInterectObjectButton != nullptr)
+	if (mNoninterectObjectButton != nullptr)
 	{
 		mNoninterectObjectButton->Move(mNoninterectObjectButton->GetX() + moveX,
 			mNoninterectObjectButton->GetY() + moveY);
@@ -302,7 +303,7 @@ void MapToolBook::UpdateButtons()
 	{
 		mInterectObjectButton->Update();
 	}
-	if (mInterectObjectButton != nullptr)
+	if (mNoninterectObjectButton != nullptr)
 	{
 		mNoninterectObjectButton->Update();
 	}
@@ -334,7 +335,7 @@ void MapToolBook::RenderButtons(HDC hdc)
 	{
 		mInterectObjectButton->Render(hdc);
 	}
-	if (mInterectObjectButton != nullptr)
+	if (mNoninterectObjectButton != nullptr)
 	{
 		mNoninterectObjectButton->Render(hdc);
 	}
@@ -359,40 +360,74 @@ void MapToolBook::ChangeMode(BookType bookType)
 		mBookType = bookType;
 		mIsTypeChange = true;
 	}
-	if (bookType == BookType::House)
+	if (mIsTypeChange == true)
 	{
-		//mHouseObject = new HousingObject("House", 0, 0, SideType::InSide);
-		//ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
-
-		mBookType = bookType;
-		mNowTileCountY = 9;
-		mNowTileCountX = 9;
-		//Image* tempImage;
-		Image* tileImage = ImageManager::GetInstance()->FindImage(L"House");
-		//Image* tileRoofImage = ImageManager::GetInstance()->FindImage(L"HouseRoof");
-		int palleteStartX = mRect.left + 200;
-		int palleteStartY = mRect.top + 50;
-
-		mPallete.assign(18, vector<Tile*>());
-		for (int y = 0; y < mNowTileCountY; ++y)
+		//타일 버튼 클릭시
+		if (bookType == BookType::Tile)
 		{
-			for (int x = 0; x < mNowTileCountX; ++x)
-			{
-				
-				mPallete[y].push_back(new Tile(
-					tileImage,
-					palleteStartX + Pallette * x,
-					palleteStartY + Pallette * y,
-					Pallette,
-					Pallette,
-					x,
-					y
-				));
-				mPallete[y][x]->SetSpeed(mSpeed);
-				mPallete[y][x]->SetTileLayer(TileLayer::PalletteType);
-			}
-
+			//타버튼 초기화
+			mHouseButton->SetIsSelect(false);
+			mInterectObjectButton->SetIsSelect(false);
+			mNoninterectObjectButton->SetIsSelect(false);
+			//페이지교체 불값을 이용하자
+			mIsPageChange = true;
 		}
+		//집버튼 클릭시
+		else if (bookType == BookType::House)
+		{
+			//타버튼 초기화
+			mTileButton->SetIsSelect(false);
+			mInterectObjectButton->SetIsSelect(false);
+			mNoninterectObjectButton->SetIsSelect(false);
+
+			//mHouseObject = new HousingObject("House", 0, 0, SideType::InSide);
+			//ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
+
+			mBookType = bookType;
+			mNowTileCountY = 9;
+			mNowTileCountX = 9;
+			//Image* tempImage;
+			Image* tileImage = ImageManager::GetInstance()->FindImage(L"House");
+			//Image* tileRoofImage = ImageManager::GetInstance()->FindImage(L"HouseRoof");
+			int palleteStartX = mRect.left + 200;
+			int palleteStartY = mRect.top + 50;
+
+			mPallete.assign(18, vector<Tile*>());
+			for (int y = 0; y < mNowTileCountY; ++y)
+			{
+				for (int x = 0; x < mNowTileCountX; ++x)
+				{
+
+					mPallete[y].push_back(new Tile(
+						tileImage,
+						palleteStartX + Pallette * x,
+						palleteStartY + Pallette * y,
+						Pallette,
+						Pallette,
+						x,
+						y
+					));
+					mPallete[y][x]->SetSpeed(mSpeed);
+					mPallete[y][x]->SetTileLayer(TileLayer::PalletteType);
+				}
+
+			}
+		}
+		else if (bookType == BookType::InterectObject)
+		{
+			//타버튼 초기화
+			mTileButton->SetIsSelect(false);
+			mHouseButton->SetIsSelect(false);
+			mNoninterectObjectButton->SetIsSelect(false);
+		}
+		else if (bookType == BookType::NoninterectObject)
+		{
+			//타버튼 초기화
+			mTileButton->SetIsSelect(false);
+			mHouseButton->SetIsSelect(false);
+			mInterectObjectButton->SetIsSelect(false);
+		}
+		mIsTypeChange = false;
 	}
 }
 

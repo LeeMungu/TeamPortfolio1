@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Button.h"
+#include "Image.h"
 
 Button::Button(wstring text,float x, float y, float sizeX, float sizeY, function<void(void)> func)
 {
@@ -11,31 +12,88 @@ Button::Button(wstring text,float x, float y, float sizeX, float sizeY, function
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mFunc = func;
 	mState = State::Normal;
+	mButtonType = Type::OnOffButton;
+}
+
+Button::Button(wstring imageKey, int indexY, wstring text, float x, float y, float sizeX, float sizeY, function<void(void)> func)
+{
+	mImage = ImageManager::GetInstance()->FindImage(imageKey);
+	mIndexY = indexY;
+	mIndexX = 0;
+	mText = text;
+	mX = x;
+	mY = y;
+	mSizeX = sizeX;
+	mSizeY = sizeY;
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mFunc = func;
+	mState = State::Normal;
+	mButtonType = Type::SelectButton;
+	mIsSelect = false;
 }
 
 void Button::Update()
 {
-	if (mState == State::Normal)
+	if (mButtonType == Type::OnOffButton)
 	{
-		if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
+		if (mState == State::Normal)
 		{
-			if (PtInRect(&mRect, _mousePosition))
+			if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 			{
-				mState = State::Push;
+				if (PtInRect(&mRect, _mousePosition))
+				{
+					mState = State::Push;
+				}
 			}
+		}
+		else
+		{
+			if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
+			{
+				mState = State::Normal;
+				if (mFunc != nullptr)
+				{
+					mFunc();
+				}
+			}
+
 		}
 	}
-	else
+	else if(mButtonType == Type::SelectButton)
 	{
-		if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
+		if (mState == State::Normal)
 		{
-			mState = State::Normal;
-			if (mFunc != nullptr)
+			mIndexX = 0;
+			if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 			{
-				mFunc();
+				if (PtInRect(&mRect, _mousePosition))
+				{
+					mState = State::Push;
+				}
 			}
 		}
-
+		else if(mState == State::Push)
+		{
+			mIndexX = 1;
+			if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
+			{
+				mState = State::Select;
+				if (mFunc != nullptr)
+				{
+					mFunc();
+				}
+				mIsSelect = true;
+			}
+		}
+		//다른것이 선택되었다면<-어쩔수없이 외부에서 반응 할 수밖에없다. <-버튼관리자? 후에 생각해보기
+		if (mState == State::Select)
+		{
+			mIndexX = 2;
+			if (mIsSelect == false)
+			{
+				mState = State::Normal;
+			}
+		}
 	}
 }
 
@@ -52,6 +110,8 @@ void Button::Render(HDC hdc)
 	}
 	D2DRenderer::GetInstance()
 		->RenderText( mX - mSizeX / 3, mY - mSizeY / 4, mText.c_str(), 20);
+	if (mImage != nullptr)
+		mImage->ScaleFrameRender(hdc, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX,mSizeY);
 }
 
 void Button::Move(float x, float y)

@@ -5,6 +5,7 @@
 #include "MapToolScene.h"
 
 class Player;
+class Zombie01;
 class SmartWatch;
 class PlayerHPUI;
 #define TileCountX 25
@@ -25,6 +26,7 @@ class scene1 : public Scene
 	int mLoadingFile;
 
 	Player* mPlayer;
+	Zombie01* mZombie01;
 	SmartWatch* mSmartWatch;
 	PlayerHPUI* mPlayerHPUI;
 public:

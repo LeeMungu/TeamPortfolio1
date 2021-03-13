@@ -9,12 +9,21 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "SmartWatch.h"
+#include "Zombie01.h"
+
 void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 
 	mPlayer = new Player("Player", 150, 150);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
+
+
+	Zombie01* mZombie01 = new Zombie01();
+	mZombie01->Init();
+	mZombie01->SetX(mPlayer->GetX() + 150);
+	mZombie01->SetY(mPlayer->GetY() + 100);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
 	
 	mSmartWatch = new SmartWatch("SmartWatch", 5, 5);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mSmartWatch);

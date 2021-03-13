@@ -50,7 +50,9 @@ protected:
 	Animation* mRightAttack;
 
 public:
+	Enemy();
 	Enemy(float x, float y);
+
 	virtual void Init()override = 0;
 	virtual void Release()override = 0;
 	virtual void Update()override = 0;

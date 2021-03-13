@@ -3,6 +3,11 @@
 #include "Item.h"
 #include "Animation.h"
 
+Enemy::Enemy()
+	:GameObject()
+{
+}
+
 Enemy::Enemy(float x, float y)
 {
 	mX = x;

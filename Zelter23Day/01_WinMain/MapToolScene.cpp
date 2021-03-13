@@ -47,16 +47,21 @@ void MapToolScene::Init()
 	
 	mCurrentPallete = nullptr;
 	mCurrentLayer = TileLayer::normal;
-	//아직 선택하지 않음을 표시
+	//-1 = 아직 선택하지 않음을 표시
 	mPickStartIndexX = -1;
 	mPickStartIndexY = -1;
 	mIsExtendTile = false;
+
+	mChangeStartIndexX = -1;
+	mChangeStartIndexY = -1;
+	mChangeEndIndexX = -1;
+	mChangeEndIndexY = -1;
+	mIsChangingTile = false;
 }
 
 void MapToolScene::Release()
 {
 	ObjectManager::GetInstance()->Release();
-	//알아서해
 
 	for (int y = 0; y < mTileCountY; ++y)
 	{
@@ -82,36 +87,53 @@ void MapToolScene::Update()
 	//카메라 보정값
 	float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
 	float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
+	
 	RECT bookRect = mToolBook->GetRect();//툴북 제외용
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
-		//타일 늘이기
-		if (mCurrentPallete == nullptr && !PtInRect(&bookRect,_mousePosition))
+		if (PtInRect(&bookRect, _mousePosition))
 		{
-			int indexX = (_mousePosition.x + cameraX) / TileSize;
-			int indexY = (_mousePosition.y + cameraY) / TileSize;
-			if (indexX == mTileCountX - 1 || indexY == mTileCountY - 1)
+			//{{ 팔레트 픽~
+			vector<vector<Tile*>> palletList = mToolBook->GetPalleteList();
+			for (int y = 0; y < mToolBook->GetNowTilecountY(); ++y)
 			{
-				mPickStartIndexX = indexX;
-				mPickStartIndexY = indexY;
-				mIsExtendTile = true;
-			}
-		}
-		//{{ 팔레트 픽~
-		vector<vector<Tile*>> palletList = mToolBook->GetPalleteList();
-		for (int y = 0; y < mToolBook->GetNowTilecountY(); ++y)
-		{
-			for (int x = 0; x < mToolBook->GetNowTilecountX(); ++x)
-			{
-				RECT palletRect = palletList[y][x]->GetRect();
-				if (PtInRect(&palletRect, _mousePosition))
+				for (int x = 0; x < mToolBook->GetNowTilecountX(); ++x)
 				{
-					mCurrentPallete = palletList[y][x];
-					mToolBook->SetIsRoofOn(false);
+					RECT palletRect = palletList[y][x]->GetRect();
+					if (PtInRect(&palletRect, _mousePosition))
+					{
+						mCurrentPallete = palletList[y][x];
+						mToolBook->SetIsRoofOn(false);
+					}
 				}
 			}
+			// }}
 		}
-		// }}
+		else if (!PtInRect(&bookRect, _mousePosition))
+		{
+			//타일 늘이기
+			if (mCurrentPallete == nullptr && !PtInRect(&bookRect, _mousePosition))
+			{
+				int indexX = (_mousePosition.x + cameraX) / TileSize;
+				int indexY = (_mousePosition.y + cameraY) / TileSize;
+				if (indexX == mTileCountX - 1 || indexY == mTileCountY - 1)
+				{
+					mPickStartIndexX = indexX;
+					mPickStartIndexY = indexY;
+					mIsExtendTile = true;
+				}
+			}
+			//색칠하기 픽
+			if (mCurrentPallete != nullptr)
+			{
+				int indexX = (_mousePosition.x + cameraX) / TileSize;
+				int indexY = (_mousePosition.y + cameraY) / TileSize;
+				
+				mChangeStartIndexX = indexX;
+				mChangeStartIndexY = indexY;
+			
+			}
+		}
 	}
 
 	if (Input::GetInstance()->GetKey(VK_LBUTTON))
@@ -205,10 +227,12 @@ void MapToolScene::Update()
 				mTileCountX = mPickStartIndexX + 1;
 			}
 		}
+
 		// {{ 타일 그리기~
-	
 		else if (mCurrentPallete != nullptr && !PtInRect(&bookRect,_mousePosition))
 		{
+
+			//쭈욱 그리는경우
 			indexX = (_mousePosition.x + cameraX) / TileSize;
 			indexY = (_mousePosition.y + cameraY) / TileSize;
 			if (indexX >= 0 && indexX < mTileCountX && indexY >= 0 && indexY < mTileCountY)
@@ -232,8 +256,79 @@ void MapToolScene::Update()
 		}
 	}
 	// }}
+	if (Input::GetInstance()->GetKey(VK_TAB) && mChangeStartIndexX !=-1 && mChangeStartIndexY != -1)
+	{
+		mIsChangingTile = true;
+		int indexX = (_mousePosition.x + cameraX) / TileSize;
+		int indexY = (_mousePosition.y + cameraY) / TileSize;
+		mChangeEndIndexX = indexX;
+		mChangeEndIndexY = indexY;
+	}
 	if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
 	{
+		if (mIsChangingTile == true)
+		{
+			//칠해지는 경우
+			//드래그앤드롭으로 칠해지는 경우
+			if (mCurrentPallete != nullptr && mIsChangingTile == true
+				//책예외
+				&& !PtInRect(&bookRect, _mousePosition))
+			{
+				int minIndexX = 0, maxIndexX = 0;
+				int minIndexY = 0, maxIndexY = 0;
+				if (mChangeStartIndexX >= mChangeEndIndexX)
+				{
+					minIndexX = mChangeEndIndexX;
+					maxIndexX = mChangeStartIndexX;
+				}
+				else if (mChangeStartIndexX < mChangeEndIndexX)
+				{
+					minIndexX = mChangeStartIndexX;
+					maxIndexX = mChangeEndIndexX;
+				}
+
+				if (mChangeStartIndexY >= mChangeEndIndexY)
+				{
+					minIndexY = mChangeEndIndexY;
+					maxIndexY = mChangeStartIndexY;
+				}
+				else if (mChangeStartIndexY < mChangeEndIndexY)
+				{
+					minIndexY = mChangeStartIndexY;
+					maxIndexY = mChangeEndIndexY;
+				}
+
+				for (int y = minIndexY; y < maxIndexY + 1; ++y)
+				{
+					for (int x = minIndexX; x < maxIndexX + 1; ++x)
+					{
+
+						if (x >= 0 && x < mTileCountX && y >= 0 && y < mTileCountY)
+						{
+							if (mTileList[y][x]->mImage != mCurrentPallete->mImage ||
+								mTileList[y][x]->mFrameIndexX != mCurrentPallete->mFrameIndexX ||
+								mTileList[y][x]->mFrameIndexY != mCurrentPallete->mFrameIndexY)
+							{
+								if (mToolBook->GetIsRoofOn() == true)
+								{
+									mToolBook->RoofOnMode(x, y);
+									mToolBook->SetIsRoofOn(false);
+								}
+								IBrushTile* command = new IBrushTile(mTileList[y][x], mCurrentPallete);
+								PushCommand(command);
+								mToolBook->SetIsRoofOn(false);
+								//cout << "OnPushCommand" << endl;
+							}
+							mTileList[y][x]->mTileLayer = mCurrentLayer;
+						}
+
+					}
+				}
+			}
+			mIsChangingTile = false;
+			mChangeStartIndexX = -1;
+			mChangeStartIndexY = -1;
+		}
 		//초기화
 		if (mIsExtendTile == true)
 		{
@@ -320,8 +415,10 @@ void MapToolScene::Render(HDC hdc)
 		->RenderText(10, 100, L"Lctrl : 테두리", 12);
 	D2DRenderer::GetInstance()
 		->RenderText(10, 130, L"Lctrl + Z : 되감기", 12);
+	D2DRenderer::GetInstance()
+		->RenderText(10, 160, L"TAP + 드래그엔드롭 : 범위그려줌", 12);
 
-
+	//클릭한 속성별로 마우스 따라다니며 그려주기
 	if (mCurrentPallete != nullptr)
 	{
 		RECT miniRc = RectMake(_mousePosition.x - mCurrentPallete->GetSizeX() / 4, _mousePosition.y - mCurrentPallete->GetSizeY() / 4, mCurrentPallete->GetSizeX(), mCurrentPallete->GetSizeY());
@@ -333,6 +430,37 @@ void MapToolScene::Render(HDC hdc)
 			Gizmo::GetInstance()->DrawRect(hdc, miniRc, Gizmo::Color::Blue);
 		else
 			Gizmo::GetInstance()->DrawRect(hdc, miniRc, Gizmo::Color::Green);
+	}
+
+	//드래그시 랙트 그려주기
+	if (mIsChangingTile == true)
+	{
+		int minIndexX = 0, maxIndexX = 0;
+		int minIndexY = 0, maxIndexY = 0;
+		if (mChangeStartIndexX >= mChangeEndIndexX)
+		{
+			minIndexX = mChangeEndIndexX;
+			maxIndexX = mChangeStartIndexX;
+		}
+		else if (mChangeStartIndexX < mChangeEndIndexX)
+		{
+			minIndexX = mChangeStartIndexX;
+			maxIndexX = mChangeEndIndexX;
+		}
+
+		if (mChangeStartIndexY >= mChangeEndIndexY)
+		{
+			minIndexY = mChangeEndIndexY;
+			maxIndexY = mChangeStartIndexY;
+		}
+		else if (mChangeStartIndexY < mChangeEndIndexY)
+		{
+			minIndexY = mChangeStartIndexY;
+			maxIndexY = mChangeEndIndexY;
+		}
+		RECT rc = { mTileList[minIndexY][minIndexX]->GetRect().left,mTileList[minIndexY][minIndexX]->GetRect().top,
+			mTileList[maxIndexY][maxIndexX]->GetRect().right, mTileList[maxIndexY][maxIndexX]->GetRect().bottom };
+		Gizmo::GetInstance()->DrawRect(hdc, rc, Gizmo::Color::Blue);
 	}
 	ObjectManager::GetInstance()->Render(hdc);
 

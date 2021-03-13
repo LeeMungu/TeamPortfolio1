@@ -38,7 +38,7 @@ void Tile::Render(HDC hdc)
 			mY - CameraManager::GetInstance()->GetMainCamera()->GetRect().top,
 			mSizeX, mSizeY);
 
-		Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Red);
+		Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Green);
 
 		if (Input::GetInstance()->GetKey(VK_LCONTROL))
 		{

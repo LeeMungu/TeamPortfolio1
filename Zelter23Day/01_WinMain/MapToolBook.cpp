@@ -52,13 +52,13 @@ void MapToolBook::Init()
 		}
 
 		//좌상단 버튼 출력
-		mTileButton = new Button(L"BookButton",0,L"Tile", mX - mSizeX / 2, mY - 300, 200, 50,
+		mTileButton = new Button(L"BookButton",0,L"Tile", mX - mSizeX / 2+50, mY - 250, 100, 50,
 			[this]() {ChangeMode(BookType::Tile); });
-		mHouseButton = new Button(L"BookButton", 1, L"House", mX - mSizeX / 2, mY - 250, 200, 50,
+		mHouseButton = new Button(L"BookButton", 1, L"House", mX - mSizeX / 2+50, mY - 200, 100, 50,
 			[this]() {ChangeMode(BookType::House); });
-		mInterectObjectButton = new Button(L"BookButton", 2, L"InterectObject", mX - mSizeX / 2, mY - 200, 200, 50,
+		mInterectObjectButton = new Button(L"BookButton", 2, L"InterectObject", mX - mSizeX / 2+50, mY - 150, 100, 50,
 			[this]() {ChangeMode(BookType::InterectObject); });
-		mNoninterectObjectButton = new Button(L"BookButton", 3, L"NoninterectObject", mX - mSizeX / 2, mY - 150, 200, 50,
+		mNoninterectObjectButton = new Button(L"BookButton", 3, L"NoninterectObject", mX - mSizeX / 2+50, mY - 100, 100, 50,
 			[this]() {ChangeMode(BookType::NoninterectObject); });
 
 		mNextButton = new Button(L"Next", mX - mSizeX / 6, mY + mSizeY / 3, 50, 50,

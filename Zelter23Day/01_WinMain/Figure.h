@@ -50,7 +50,26 @@ inline void RenderRect(HDC hdc, RECT rc)
 	*/
 	//Rectangle(hdc, rc.left,rc.top,rc.right,rc.bottom);
 }
+inline void RenderRect(HDC hdc, RECT rc , float r, float g, float b)
+{
+	ID2D1RenderTarget* renderTarget = D2DRenderer::GetInstance()->GetRenderTarget();
 
+
+	ID2D1SolidColorBrush* brush;
+	D2D1_COLOR_F color;
+	//r,g,b,a
+	color = { r, g, b, 1.0f };
+	renderTarget->CreateSolidColorBrush(color, &brush);
+
+	//¾ë ÀÏ´Ü ³öµÎ°í
+	renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+
+	D2D1_RECT_F rect = { rc.left,rc.top,rc.right,rc.bottom };
+
+	renderTarget->DrawRectangle(rect, brush);
+
+	brush->Release();
+}
 inline void RenderEllipse(HDC hdc, RECT rc)
 {
 	Ellipse(hdc, rc.left, rc.top, rc.right, rc.bottom);

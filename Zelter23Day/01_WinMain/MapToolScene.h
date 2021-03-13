@@ -73,6 +73,13 @@ class MapToolScene : public Scene
 	int mPickStartIndexY;
 	bool mIsExtendTile;
 
+	//드래그엔드롭 색칠하기
+	int mChangeStartIndexX;
+	int mChangeStartIndexY;
+	int mChangeEndIndexX;
+	int mChangeEndIndexY;
+	bool mIsChangingTile; //색칠하는 중인지 여부
+
 	//class Tile* mTileList[TileCountY][TileCountX];
 	vector<vector<class Tile*>> mTileList;
 	MapToolBook* mToolBook;

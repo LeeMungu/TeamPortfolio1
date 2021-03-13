@@ -11,7 +11,7 @@ enum class ObjectLayer : int
 	Background = 0, 
 	camera = 1,	
 	Tile = 2,
-	Enemey = 3,
+	Enemy = 3,
 	Player = 4,
 	ToolBook = 5,
 	UI = 6,

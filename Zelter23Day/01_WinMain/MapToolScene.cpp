@@ -460,7 +460,8 @@ void MapToolScene::Render(HDC hdc)
 		}
 		RECT rc = { mTileList[minIndexY][minIndexX]->GetRect().left,mTileList[minIndexY][minIndexX]->GetRect().top,
 			mTileList[maxIndexY][maxIndexX]->GetRect().right, mTileList[maxIndexY][maxIndexX]->GetRect().bottom };
-		Gizmo::GetInstance()->DrawRect(hdc, rc, Gizmo::Color::Blue);
+		//Gizmo::GetInstance()->DrawRect(hdc, rc, Gizmo::Color::Blue);
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, rc);
 	}
 	ObjectManager::GetInstance()->Render(hdc);
 

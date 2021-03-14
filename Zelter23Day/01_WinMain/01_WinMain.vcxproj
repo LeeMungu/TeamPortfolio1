@@ -175,6 +175,7 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="NonInteractObject.h" />
     <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="PathFinder.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerHPUI.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="NonInteractObject.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

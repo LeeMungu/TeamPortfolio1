@@ -44,6 +44,8 @@ void scene1::Init()
 				TileSize * y,
 				TileSize,
 				TileSize,
+				x,
+				y,
 				//Random::GetInstance()->RandomInt(3),
 				4,
 				0

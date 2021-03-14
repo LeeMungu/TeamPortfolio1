@@ -44,6 +44,8 @@ void MapToolBook::Init()
 					Pallette,
 					Pallette,
 					x,
+					y,
+					x,
 					y
 				));
 				mPallete[y][x]->SetSpeed(mSpeed);
@@ -223,6 +225,8 @@ void MapToolBook::Update()
 					palleteStartY + Pallette * y,
 					Pallette,
 					Pallette,
+					x,
+					y,
 					x,
 					y
 				));
@@ -404,6 +408,8 @@ void MapToolBook::ChangeMode(BookType bookType)
 						palleteStartY + Pallette * y,
 						Pallette,
 						Pallette,
+						x,
+						y,
 						x,
 						y
 					));

@@ -3,7 +3,7 @@
 #include "Image.h"
 #include "Camera.h"
 
-Tile::Tile(Image * image, float x, float y, float sizeX, float sizeY, int frameIndexX, int frameIndexY)
+Tile::Tile(Image * image, float x, float y, float sizeX, float sizeY, int frameIndexX, int frameIndexY, int indexX, int indexY)
 {
 	mImage = image;
 	mX = x;
@@ -13,6 +13,8 @@ Tile::Tile(Image * image, float x, float y, float sizeX, float sizeY, int frameI
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 	mFrameIndexX = frameIndexX;
 	mFrameIndexY = frameIndexY;
+	mIndexX = indexX;
+	mIndexY = indexY;
 }
 
 

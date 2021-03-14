@@ -38,6 +38,8 @@ void MapToolScene::Init()
 				TileSize * y,
 				TileSize,
 				TileSize,
+				x,
+				y,
 				0,
 				0
 			));
@@ -165,6 +167,8 @@ void MapToolScene::Update()
 							TileSize * y,
 							TileSize,
 							TileSize,
+							x,
+							y,
 							0,
 							0
 						));
@@ -202,6 +206,8 @@ void MapToolScene::Update()
 							TileSize * y,
 							TileSize,
 							TileSize,
+							i,
+							y,
 							0,
 							0
 						));
@@ -539,6 +545,8 @@ void MapToolScene::Load()
 					TileSize * y,
 					TileSize,
 					TileSize,
+					x,
+					y,
 					0,
 					0
 				));

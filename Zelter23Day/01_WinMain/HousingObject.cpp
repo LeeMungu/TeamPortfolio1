@@ -26,6 +26,8 @@ HousingObject::HousingObject(const string& name, float x, float y)
 				TileSize,
 				TileSize,
 				x,
+				y,
+				x,
 				y
 			));
 		}

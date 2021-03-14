@@ -91,6 +91,9 @@
     <Filter Include="MainGame\Object\Enemy">
       <UniqueIdentifier>{1ce9bf47-e051-4d3a-9f75-6caffdd72aec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\Pathfinder">
+      <UniqueIdentifier>{33eb4370-f16d-4d3b-84b3-9b7cb2b48a7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -231,6 +234,9 @@
     <ClInclude Include="Item.h">
       <Filter>MainGame\Object</Filter>
     </ClInclude>
+    <ClInclude Include="PathFinder.h">
+      <Filter>FrameWork\Pathfinder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -361,6 +367,9 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>MainGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinder.cpp">
+      <Filter>FrameWork\Pathfinder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

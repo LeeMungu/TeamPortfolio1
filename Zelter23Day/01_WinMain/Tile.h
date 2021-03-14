@@ -21,10 +21,12 @@ public:
 	int mFrameIndexX;
 	int mFrameIndexY;
 	float mSpeed;
+	int mIndexX;
+	int mIndexY;
 	TileLayer mTileLayer;
 
 	Tile(class Image* image, float x, float y, float sizeX, float sizeY,
-		int frameIndexX, int frameIndexY);
+		int frameIndexX, int frameIndexY, int indexX, int indexY);
 	void Render(HDC hdc);
 	void Init()override {};
 	void Release()override {};

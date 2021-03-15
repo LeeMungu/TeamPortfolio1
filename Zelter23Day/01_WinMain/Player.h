@@ -41,6 +41,8 @@ class Player : public GameObject
 	int mThirst;
 	int mHunger;
 	int mStemina;
+	float mNoDamageCount;
+	bool mIsNoDamage;
 
 	PlayerState mPlayerState;
 
@@ -61,8 +63,11 @@ public:
 	int GetThirst() { return mThirst; }
 	int GetHunger() { return mHunger; }
 	int GetStemina() { return mStemina; }
+	float GetNoDamageCount() { return mNoDamageCount; }
+	bool GetNoDamage() { return mIsNoDamage; }
 
 	void SetHP(int hp) { mHP = hp; }
+	void SetNoDamage(bool noDamage) { mIsNoDamage = noDamage; }
 
 	void PlayerCtrl();
 };

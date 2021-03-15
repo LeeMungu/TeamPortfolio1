@@ -161,7 +161,7 @@ void Player::PlayerCtrl() {
 		//위아래 이동
 		if (Input::GetInstance()->GetKey('W'))
 		{
-			mPlayerState != PlayerState::run;
+			mPlayerState = PlayerState::run;
 
 			if (_mousePosition.y > playerPoint.y)
 			{
@@ -179,7 +179,7 @@ void Player::PlayerCtrl() {
 		}
 		else if (Input::GetInstance()->GetKey('S'))
 		{
-			mPlayerState != PlayerState::run;
+			mPlayerState = PlayerState::run;
 
 			if (_mousePosition.y < playerPoint.y)
 			{
@@ -197,7 +197,7 @@ void Player::PlayerCtrl() {
 		}
 
 		if (Input::GetInstance()->GetKeyUp('W') || Input::GetInstance()->GetKeyUp('S')) {
-			mPlayerState != PlayerState::idle;
+			mPlayerState = PlayerState::idle;
 
 			if (mCurrentAnimation == mDownRunAni || mCurrentAnimation == mDownWalkAni) mCurrentAnimation = mDownIdleAni;
 			else if (mCurrentAnimation == mUpRunAni || mCurrentAnimation == mUpWalkAni) mCurrentAnimation = mUpIdleAni;
@@ -206,7 +206,7 @@ void Player::PlayerCtrl() {
 		//좌우이동
 		if (Input::GetInstance()->GetKey('A'))
 		{
-			mPlayerState != PlayerState::run;
+			mPlayerState = PlayerState::run;
 
 			if (_mousePosition.x > playerPoint.x)
 			{
@@ -224,7 +224,7 @@ void Player::PlayerCtrl() {
 		}
 		else if (Input::GetInstance()->GetKey('D'))
 		{
-			mPlayerState != PlayerState::run;
+			mPlayerState = PlayerState::run;
 
 			if (_mousePosition.x < playerPoint.x)
 			{
@@ -242,7 +242,7 @@ void Player::PlayerCtrl() {
 		}
 
 		if (Input::GetInstance()->GetKeyUp('A') || Input::GetInstance()->GetKeyUp('D')) {
-			mPlayerState != PlayerState::idle;
+			mPlayerState = PlayerState::idle;
 
 			if (mCurrentAnimation == mLeftRunAni || mCurrentAnimation == mLeftWalkAni) mCurrentAnimation = mLeftIdleAni;
 			else if (mCurrentAnimation == mRightRunAni || mCurrentAnimation == mRightWalkAni) mCurrentAnimation = mRightIdleAni;
@@ -251,7 +251,7 @@ void Player::PlayerCtrl() {
 		//공격모션
 		if (Input::GetInstance()->GetKeyDown('F'))
 		{
-			mPlayerState != PlayerState::attack;
+			mPlayerState = PlayerState::attack;
 
 			if (_mousePosition.x < playerPoint.x)
 			{

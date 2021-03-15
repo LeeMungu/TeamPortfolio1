@@ -38,7 +38,7 @@ void MainGame::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Tile14", Resources(L"04_Tile/Tile (14).png"), 8, 8);
 	ImageManager::GetInstance()->LoadFromFile(L"Tile15", Resources(L"04_Tile/Tile (15).png"), 8, 8);
 	ImageManager::GetInstance()->LoadFromFile(L"Tile15", Resources(L"04_Tile/Tile (15).png"), 8, 8);
-	IMAGEMANAGER->LoadFromFile(L"Tree", Resources(L"/05_Object/Tree.png"), 2, 1);
+	IMAGEMANAGER->LoadFromFile(L"Tree", Resources(L"/05_Object/Tree.png"), 1, 1);
 
 	//집 이미지
 	IMAGEMANAGER->LoadFromFile(L"House", Resources(L"/02_House/House01_INSIDE_1.png"),9,9);
@@ -48,14 +48,9 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"LoadingScene", new LoadingScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
-	SceneManager::GetInstance()->LoadScene(L"LoadingScene");
+	SceneManager::GetInstance()->LoadScene(L"MapToolScene");
 	
-
-
-
-
-
-
+	
 }
 
 /*

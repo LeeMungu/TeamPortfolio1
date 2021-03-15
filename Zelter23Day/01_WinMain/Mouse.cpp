@@ -2,10 +2,12 @@
 #include "Mouse.h"
 #include "Image.h"
 #include "Tile.h"
+#include "InteractObject.h"
 
 Mouse::Mouse(wstring imageKey)
 {
-	mImage = IMAGEMANAGER->FindImage(imageKey);
+	mImageKey = imageKey;
+	mImage = IMAGEMANAGER->FindImage(mImageKey);
 	mX = _mousePosition.x;
 	mY = _mousePosition.y;
 	mSizeX = mImage->GetFrameWidth();
@@ -26,6 +28,13 @@ void Mouse::Update()
 	mX = _mousePosition.x;
 	mY = _mousePosition.y;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+
+	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
+	{
+		InteractObject* interactObject = new InteractObject(mImageKey, mX, mY, 10);
+		interactObject->Init();
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Object,interactObject);
+	}
 }
 
 void Mouse::Render(HDC hdc)

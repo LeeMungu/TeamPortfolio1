@@ -4,12 +4,12 @@
 #include "Camera.h"
 
 
-InteractObject::InteractObject(const string name, float x, float y, int hp)
-	:GameObject(name)
+InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp)
 {
 	mX = x;
 	mY = y;
 	mHp = hp;
+	mImage = IMAGEMANAGER->FindImage(imageKey);
 }
 
 void InteractObject::Init()
@@ -28,10 +28,14 @@ void InteractObject::Release()
 
 void InteractObject::Update()
 {
-	if (mHp <= 0 && mIsInteractive == true)
+	//if (mHp <= 0 && mIsInteractive == true)
+	//{
+	//	mIsInteractive = false;
+	//	mIndexX = 1;
+	//}
+	if (mHp <= 0)
 	{
-		mIsInteractive = false;
-		mIndexX = 1;
+		mIsDestroy = true;
 	}
 }
 

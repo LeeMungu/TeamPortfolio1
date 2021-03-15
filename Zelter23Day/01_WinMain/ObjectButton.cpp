@@ -12,6 +12,9 @@ ObjectButton::ObjectButton(wstring imageKey, float x, float y, function<void(voi
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mFunc = func;
 	mState = State::Normal;
+
+	mIndexX = 0;
+	mIndexY = 0;
 }
 
 void ObjectButton::Update()
@@ -42,4 +45,12 @@ void ObjectButton::Update()
 void ObjectButton::Render(HDC hdc)
 {
 	mImage->ScaleFrameRender(hdc, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY);
+}
+
+void Button::Move(float x, float y)
+{
+	mX = x;
+	mY = y;
+
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }

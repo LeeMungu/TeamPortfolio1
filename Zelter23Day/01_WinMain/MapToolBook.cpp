@@ -432,6 +432,8 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mTileButton->SetIsSelect(false);
 			mHouseButton->SetIsSelect(false);
 			mInterectObjectButton->SetIsSelect(false);
+
+
 		}
 		mIsTypeChange = false;
 	}

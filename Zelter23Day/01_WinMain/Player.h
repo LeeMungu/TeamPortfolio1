@@ -4,8 +4,6 @@
 class Image;
 class Animation;
 
-#define TileSize 32
-
 enum class PlayerState
 {
 	idle,

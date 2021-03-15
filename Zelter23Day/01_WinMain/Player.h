@@ -4,8 +4,6 @@
 class Image;
 class Animation;
 
-#define TileSize 32
-
 enum class PlayerState
 {
 	idle,
@@ -63,6 +61,8 @@ public:
 	int GetThirst() { return mThirst; }
 	int GetHunger() { return mHunger; }
 	int GetStemina() { return mStemina; }
+
+	void SetHP(int hp) { mHP = hp; }
 
 	void PlayerCtrl();
 };

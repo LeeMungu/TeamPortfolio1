@@ -50,6 +50,7 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
 	SceneManager::GetInstance()->LoadScene(L"MapToolScene");
 	
+	
 }
 
 /*
@@ -68,6 +69,7 @@ Update : 매 프레임 실행되는 함수, 여기서 연산 처리 한다.
 void MainGame::Update()
 {
 	SceneManager::GetInstance()->Update();
+	SceneManager::GetInstance()->LoadScene(L"MapToolScene");
 }
 
 /*

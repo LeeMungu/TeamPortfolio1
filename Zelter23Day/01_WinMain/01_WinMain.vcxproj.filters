@@ -245,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="Mouse.h">
       <Filter>MainGame\Object\Mouse</Filter>
+     </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>MainGame\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>MainGame\Object\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>MainGame\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -95,12 +95,12 @@ void Player::Init()
 
 	mLeftIdleAni = new Animation();
 	mLeftIdleAni->InitFrameByStartEnd(0, 2, 0, 2, false);
-	mLeftIdleAni->SetIsLoop(false);
+	mLeftIdleAni->SetIsLoop(true);
 	mLeftIdleAni->SetFrameUpdateTime(0.1f);
 
 	mRightIdleAni = new Animation();
 	mRightIdleAni->InitFrameByStartEnd(0, 3, 0, 3, false);
-	mRightIdleAni->SetIsLoop(false);
+	mRightIdleAni->SetIsLoop(true);
 	mRightIdleAni->SetFrameUpdateTime(0.1f);
 
 	mCurrentAnimation = mDownIdleAni;
@@ -273,14 +273,18 @@ void Player::PlayerCtrl() {
 	else if (mPlayerState == PlayerState::attack) {
 		if (mCurrentAnimation == mLeftAttack) {
 			if (mCurrentAnimation->GetIsPlay() == false) {
+				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+				mPlayerState = PlayerState::idle;
+				mCurrentAnimation->Stop();
 				mCurrentAnimation = mLeftIdleAni;
 				mCurrentAnimation->Play();
 
-				mPlayerState = PlayerState::idle;
 			}
 		}
 		else if (mCurrentAnimation == mRightAttack) {
 			if (mCurrentAnimation->GetIsPlay() == false) {
+				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+				mCurrentAnimation->Stop();
 				mCurrentAnimation = mRightIdleAni;
 				mCurrentAnimation->Play();
 

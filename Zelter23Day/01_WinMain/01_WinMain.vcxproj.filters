@@ -237,6 +237,9 @@
     <ClInclude Include="PathFinder.h">
       <Filter>FrameWork\Pathfinder</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectButton.h">
+      <Filter>FrameWork\Button</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -370,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="PathFinder.cpp">
       <Filter>FrameWork\Pathfinder</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectButton.cpp">
+      <Filter>FrameWork\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -73,12 +73,12 @@ void Player::Init()
 	//Attack Animation
 	mLeftAttack = new Animation();
 	mLeftAttack->InitFrameByStartEnd(0, 0, 9, 0, false);
-	mLeftAttack->SetIsLoop(true);
+	mLeftAttack->SetIsLoop(false);
 	mLeftAttack->SetFrameUpdateTime(0.05f);
 
 	mRightAttack = new Animation();
 	mRightAttack->InitFrameByStartEnd(1, 1, 9, 1, false);
-	mRightAttack->SetIsLoop(true);
+	mRightAttack->SetIsLoop(false);
 	mRightAttack->SetFrameUpdateTime(0.05f);
 
 
@@ -267,7 +267,25 @@ void Player::PlayerCtrl() {
 			}
 			mCurrentAnimation->Play();
 		}
-	}
 
-	
+		
+	}
+	else if (mPlayerState == PlayerState::attack) {
+		if (mCurrentAnimation == mLeftAttack) {
+			if (mCurrentAnimation->GetIsPlay() == false) {
+				mCurrentAnimation = mLeftIdleAni;
+				mCurrentAnimation->Play();
+
+				mPlayerState = PlayerState::idle;
+			}
+		}
+		else if (mCurrentAnimation == mRightAttack) {
+			if (mCurrentAnimation->GetIsPlay() == false) {
+				mCurrentAnimation = mRightIdleAni;
+				mCurrentAnimation->Play();
+
+				mPlayerState = PlayerState::idle;
+			}
+		}
+	}
 }

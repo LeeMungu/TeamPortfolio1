@@ -19,11 +19,7 @@ void scene1::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
  
 
-	Zombie01* mZombie01 = new Zombie01();
-	mZombie01->Init();
-	mZombie01->SetX(mPlayer->GetX() + 150);
-	mZombie01->SetY(mPlayer->GetY() + 100);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
+
 	
 	mSmartWatch = new SmartWatch("SmartWatch", 5, 5);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mSmartWatch);
@@ -63,8 +59,8 @@ ifstream loadStream(L"../04_Data/Test.txt");
 					x,
 					y,
 					//Random::GetInstance()->RandomInt(3),
-					4,
-					0
+					x,
+					y
 				));
 				mTileList[y][x]->SetTileLayer(TileLayer::normal);
 			}
@@ -98,6 +94,13 @@ ifstream loadStream(L"../04_Data/Test.txt");
 			}
 		}
 	}
+
+	Zombie01* mZombie01 = new Zombie01();
+	mZombie01->Init();
+	mZombie01->SetX(mPlayer->GetX() + 150);
+	mZombie01->SetY(mPlayer->GetY() + 100);
+	mZombie01->SetTileList(mTileList);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
 
 	ObjectManager::GetInstance()->Init();
 	camera->ChangeMode(Camera::Mode::Follow);

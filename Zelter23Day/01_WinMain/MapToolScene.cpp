@@ -265,7 +265,8 @@ void MapToolScene::Update()
 		}
 	}
 	// }}
-	if (Input::GetInstance()->GetKey(VK_TAB) && mChangeStartIndexX !=-1 && mChangeStartIndexY != -1)
+	if (Input::GetInstance()->GetKey(VK_TAB)
+		&& mChangeStartIndexX !=-1 && mChangeStartIndexY != -1)
 	{
 		mIsChangingTile = true;
 		int indexX = (_mousePosition.x + cameraX) / TileSize;
@@ -442,7 +443,9 @@ void MapToolScene::Render(HDC hdc)
 	}
 
 	//드래그시 랙트 그려주기
-	if (mIsChangingTile == true)
+	if (mIsChangingTile == true
+		&& mChangeStartIndexX != -1 && mChangeStartIndexY !=-1
+		&& mChangeEndIndexX!=-1 && mChangeEndIndexY != -1)
 	{
 		int minIndexX = 0, maxIndexX = 0;
 		int minIndexY = 0, maxIndexY = 0;

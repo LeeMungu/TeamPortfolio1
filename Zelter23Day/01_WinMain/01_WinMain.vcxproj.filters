@@ -94,13 +94,11 @@
     <Filter Include="FrameWork\Pathfinder">
       <UniqueIdentifier>{33eb4370-f16d-4d3b-84b3-9b7cb2b48a7c}</UniqueIdentifier>
     </Filter>
-
     <Filter Include="FrameWork\CollisionManager">
       <UniqueIdentifier>{4b366fd9-64ae-473e-9061-ea4ba60b17be}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainGame\Object\Mouse">
       <UniqueIdentifier>{81687ec7-32d6-468c-a477-43a65d1c27ec}</UniqueIdentifier>
-
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -248,16 +246,11 @@
     <ClInclude Include="ObjectButton.h">
       <Filter>FrameWork\Button</Filter>
     </ClInclude>
-
     <ClInclude Include="CollisionManager.h">
       <Filter>FrameWork\CollisionManager</Filter>
     </ClInclude>
     <ClInclude Include="Mouse.h">
       <Filter>MainGame\Object\Mouse</Filter>
-     </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>MainGame\Player</Filter>
-
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -396,16 +389,11 @@
     <ClCompile Include="ObjectButton.cpp">
       <Filter>FrameWork\Button</Filter>
     </ClCompile>
-
     <ClCompile Include="CollisionManager.cpp">
       <Filter>FrameWork\CollisionManager</Filter>
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>MainGame\Object\Mouse</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>MainGame\Player</Filter>
-
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

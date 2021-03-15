@@ -57,6 +57,7 @@ void ObjectManager::Update()
 			}
 		}
 	}
+	Collision();
 }
 
 void ObjectManager::Render(HDC hdc)
@@ -151,3 +152,26 @@ vector<class GameObject*> ObjectManager::GetObjectList(ObjectLayer layer)
 {
 	return mObjectList[layer];
 }
+
+void ObjectManager::Collision()
+{
+	RECT temp;
+	RECT mZombieRC;
+	RECT mPlayerRC = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
+
+	vector<GameObject*> mZombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+
+	for (int i = 0; i < mZombie.size(); ++i)
+	{
+		RECT mZombieRC = mZombie[i]->GetRect();
+
+		if (IntersectRect(&temp, &mPlayerRC, &mZombieRC))
+		{
+			int a = 1;
+		}
+
+	}
+
+
+}
+

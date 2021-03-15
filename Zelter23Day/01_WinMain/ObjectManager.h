@@ -14,7 +14,9 @@ enum class ObjectLayer : int
 	Enemy = 3,
 	Player = 4,
 	ToolBook = 5,
-	UI = 6,
+	Button = 6,
+	ObjectButton = 7,
+	UI = 8,
 	End
 };
 

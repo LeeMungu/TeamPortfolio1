@@ -5,6 +5,7 @@
 #include "Tile.h"
 #include "Button.h"
 #include "HousingObject.h"
+#include "ObjectButton.h"
 #define BookSize 2
 
 void MapToolBook::Init()
@@ -202,7 +203,9 @@ void MapToolBook::Update()
 
 	mAnimation->Update();
 
+	//버튼들 업데이트
 	UpdateButtons();
+	//페이지 넘길때
 	if (mIsPageChange == true)
 	{
 		//타일 생성
@@ -236,6 +239,8 @@ void MapToolBook::Update()
 		}
 		mIsPageChange = false;
 	}
+	//책안의 버튼들 업데이트
+	ObjectManager::GetInstance()->Update();
 }
 
 void MapToolBook::Render(HDC hdc)
@@ -255,7 +260,7 @@ void MapToolBook::Render(HDC hdc)
 			}
 		}
 	}
-	
+	ObjectManager::GetInstance()->Render(hdc);
 	RenderButtons(hdc);
 }
 
@@ -290,6 +295,15 @@ void MapToolBook::MoveButtons(float moveX, float moveY)
 	{
 		mPrevButton->Move(mPrevButton->GetX() + moveX,
 			mPrevButton->GetY() + moveY);
+	}
+	vector<GameObject*>objectButtonList =  ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+	if (objectButtonList.size() != NULL)
+	{
+		for (int i = 0; i < objectButtonList.size(); ++i)
+		{
+			((ObjectButton*)objectButtonList[i])->Move(mPrevButton->GetX() + moveX,
+				mPrevButton->GetY() + moveY);
+		}
 	}
 }
 
@@ -425,6 +439,11 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mTileButton->SetIsSelect(false);
 			mHouseButton->SetIsSelect(false);
 			mNoninterectObjectButton->SetIsSelect(false);
+			//팔렛트 초기화
+			mPallete.clear();
+			ObjectButton* objectButton = new ObjectButton(L"tree", mX, mY, []() {});
+			objectButton->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
 		}
 		else if (bookType == BookType::NoninterectObject)
 		{
@@ -432,6 +451,8 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mTileButton->SetIsSelect(false);
 			mHouseButton->SetIsSelect(false);
 			mInterectObjectButton->SetIsSelect(false);
+
+
 		}
 		mIsTypeChange = false;
 	}

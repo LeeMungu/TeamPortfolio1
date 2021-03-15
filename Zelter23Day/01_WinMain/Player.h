@@ -8,8 +8,10 @@ class Animation;
 
 enum class PlayerState
 {
-	walk,
+	idle,
+	//walk,
 	run,
+	roll,
 	attack,
 	die,
 };
@@ -44,9 +46,7 @@ class Player : public GameObject
 
 	PlayerState mPlayerState;
 
-	
-
-
+	float mAngle;
 	//class Tile* mTileList[TileCountX][TileCountY];
 	
 public:
@@ -63,5 +63,7 @@ public:
 	int GetThirst() { return mThirst; }
 	int GetHunger() { return mHunger; }
 	int GetStemina() { return mStemina; }
+
+	void PlayerCtrl();
 };
 

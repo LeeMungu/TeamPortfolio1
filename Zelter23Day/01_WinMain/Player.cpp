@@ -17,6 +17,8 @@ Player::Player(const string& name, float x, float y)
 	mThirst = 30;
 	mHunger = 30;
 	mStemina = 30;
+
+	mAngle = 0;
 }
 
 void Player::Init()
@@ -102,6 +104,7 @@ void Player::Init()
 	mRightIdleAni->SetFrameUpdateTime(0.1f);
 
 	mCurrentAnimation = mDownIdleAni;
+	mPlayerState = PlayerState::idle;
 }
 
 void Player::Release()
@@ -127,96 +130,8 @@ void Player::Release()
 
 void Player::Update()
 {
-	POINT playerPoint = CameraManager::GetInstance()->GetMainCamera()->GetPoint(GetX(), GetY());
-
-	if (Input::GetInstance()->GetKey('W'))
-	{
-		if (_mousePosition.y > playerPoint.y)
-		{
-			mImage = IMAGEMANAGER->FindImage(L"Player_walk");
-			mCurrentAnimation = mDownWalkAni;
-			mSpeed = 1.f;
-		}
-		else {
-			mImage = IMAGEMANAGER->FindImage(L"Player_run");
-			mCurrentAnimation = mUpRunAni;
-			mSpeed = 3.f;
-		}
-		mY = mY - mSpeed;
-		mCurrentAnimation->Play();
-	}
-	else if (Input::GetInstance()->GetKey('A'))
-	{
-		if (_mousePosition.x > playerPoint.x)
-		{
-			mImage = IMAGEMANAGER->FindImage(L"Player_walk");
-			mCurrentAnimation = mRightWalkAni;
-			mSpeed = 1.f;
-		}
-		else {
-			mImage = IMAGEMANAGER->FindImage(L"Player_run");
-			mCurrentAnimation = mLeftRunAni;
-			mSpeed = 3.f;
-		}
-		mX = mX - mSpeed;
-		mCurrentAnimation->Play();
-	}
-	else if (Input::GetInstance()->GetKey('D'))
-	{
-		if (_mousePosition.x < playerPoint.x)
-		{
-			mImage = IMAGEMANAGER->FindImage(L"Player_walk");
-			mCurrentAnimation = mLeftWalkAni;
-			mSpeed = 1.f;
-		}
-		else {
-			mImage = IMAGEMANAGER->FindImage(L"Player_run");
-			mCurrentAnimation = mRightRunAni;
-			mSpeed = 3.f;
-		}
-		mX = mX + mSpeed;
-		mCurrentAnimation->Play();
-	}
-	else if (Input::GetInstance()->GetKey('S'))
-	{
-		if (_mousePosition.y < playerPoint.y)
-		{
-			mImage = IMAGEMANAGER->FindImage(L"Player_walk");
-			mCurrentAnimation = mUpWalkAni;
-			mSpeed = 1.f;
-		}
-		else {
-			mImage = IMAGEMANAGER->FindImage(L"Player_run");
-			mCurrentAnimation = mDownRunAni;
-			mSpeed = 3.f;
-		}
-		mY = mY + mSpeed;
-		mCurrentAnimation->Play();
-	}
-	else if (Input::GetInstance()->GetKeyDown('F'))
-	{
-		if (_mousePosition.x < playerPoint.x)
-		{
-			mImage = IMAGEMANAGER->FindImage(L"Player_attack");
-			mCurrentAnimation = mLeftAttack;
-			mSpeed = 0.f;
-		}
-		else
-		{
-			mImage = IMAGEMANAGER->FindImage(L"Player_attack");
-			mCurrentAnimation = mRightAttack;
-			mSpeed = 0.f;
-		}
-		mCurrentAnimation->Play();
-	}
-
-	else
-	{
-		if (mCurrentAnimation == mDownRunAni || mCurrentAnimation == mDownWalkAni) mCurrentAnimation = mDownIdleAni;
-		else if (mCurrentAnimation == mUpRunAni || mCurrentAnimation == mUpWalkAni) mCurrentAnimation = mUpIdleAni;
-		else if (mCurrentAnimation == mLeftRunAni || mCurrentAnimation == mLeftWalkAni) mCurrentAnimation = mLeftIdleAni;
-		else if (mCurrentAnimation == mRightRunAni || mCurrentAnimation == mRightWalkAni) mCurrentAnimation = mRightIdleAni;
-	}
+	// mAngle += 5;
+	PlayerCtrl();
 
 	mCurrentAnimation->Update();
 	mSizeX = mImage->GetFrameWidth() * 2;
@@ -226,7 +141,8 @@ void Player::Update()
 
 void Player::Render(HDC hdc)
 {
-	
+	mImage->SetAngle(mAngle);
+
 	CameraManager::GetInstance()->GetMainCamera()->
 		ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
 	if (Input::GetInstance()->GetKey(VK_LSHIFT))
@@ -234,4 +150,124 @@ void Player::Render(HDC hdc)
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
 		//RenderRect(hdc, mRect);
 	}
+}
+
+void Player::PlayerCtrl() {
+	//플리이어 포인트 위치
+	POINT playerPoint = CameraManager::GetInstance()->GetMainCamera()->GetPoint(GetX(), GetY());
+
+	if (mPlayerState != PlayerState::attack) 
+	{
+		//위아래 이동
+		if (Input::GetInstance()->GetKey('W'))
+		{
+			mPlayerState != PlayerState::run;
+
+			if (_mousePosition.y > playerPoint.y)
+			{
+				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+				mCurrentAnimation = mDownWalkAni;
+				mSpeed = 1.f;
+			}
+			else {
+				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				mCurrentAnimation = mUpRunAni;
+				mSpeed = 3.f;
+			}
+			mY = mY - mSpeed;
+			mCurrentAnimation->Play();
+		}
+		else if (Input::GetInstance()->GetKey('S'))
+		{
+			mPlayerState != PlayerState::run;
+
+			if (_mousePosition.y < playerPoint.y)
+			{
+				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+				mCurrentAnimation = mUpWalkAni;
+				mSpeed = 1.f;
+			}
+			else {
+				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				mCurrentAnimation = mDownRunAni;
+				mSpeed = 3.f;
+			}
+			mY = mY + mSpeed;
+			mCurrentAnimation->Play();
+		}
+
+		if (Input::GetInstance()->GetKeyUp('W') || Input::GetInstance()->GetKeyUp('S')) {
+			mPlayerState != PlayerState::idle;
+
+			if (mCurrentAnimation == mDownRunAni || mCurrentAnimation == mDownWalkAni) mCurrentAnimation = mDownIdleAni;
+			else if (mCurrentAnimation == mUpRunAni || mCurrentAnimation == mUpWalkAni) mCurrentAnimation = mUpIdleAni;
+		}
+
+		//좌우이동
+		if (Input::GetInstance()->GetKey('A'))
+		{
+			mPlayerState != PlayerState::run;
+
+			if (_mousePosition.x > playerPoint.x)
+			{
+				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+				mCurrentAnimation = mRightWalkAni;
+				mSpeed = 1.f;
+			}
+			else {
+				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				mCurrentAnimation = mLeftRunAni;
+				mSpeed = 3.f;
+			}
+			mX = mX - mSpeed;
+			mCurrentAnimation->Play();
+		}
+		else if (Input::GetInstance()->GetKey('D'))
+		{
+			mPlayerState != PlayerState::run;
+
+			if (_mousePosition.x < playerPoint.x)
+			{
+				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+				mCurrentAnimation = mLeftWalkAni;
+				mSpeed = 1.f;
+			}
+			else {
+				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				mCurrentAnimation = mRightRunAni;
+				mSpeed = 3.f;
+			}
+			mX = mX + mSpeed;
+			mCurrentAnimation->Play();
+		}
+
+		if (Input::GetInstance()->GetKeyUp('A') || Input::GetInstance()->GetKeyUp('D')) {
+			mPlayerState != PlayerState::idle;
+
+			if (mCurrentAnimation == mLeftRunAni || mCurrentAnimation == mLeftWalkAni) mCurrentAnimation = mLeftIdleAni;
+			else if (mCurrentAnimation == mRightRunAni || mCurrentAnimation == mRightWalkAni) mCurrentAnimation = mRightIdleAni;
+		}
+
+		//공격모션
+		if (Input::GetInstance()->GetKeyDown('F'))
+		{
+			mPlayerState != PlayerState::attack;
+
+			if (_mousePosition.x < playerPoint.x)
+			{
+				mImage = IMAGEMANAGER->FindImage(L"Player_attack");
+				mCurrentAnimation = mLeftAttack;
+				mSpeed = 0.f;
+			}
+			else
+			{
+				mImage = IMAGEMANAGER->FindImage(L"Player_attack");
+				mCurrentAnimation = mRightAttack;
+				mSpeed = 0.f;
+			}
+			mCurrentAnimation->Play();
+		}
+	}
+
+	
 }

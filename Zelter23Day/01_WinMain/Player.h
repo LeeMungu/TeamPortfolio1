@@ -64,6 +64,8 @@ public:
 	int GetHunger() { return mHunger; }
 	int GetStemina() { return mStemina; }
 
+	void SetHP(int hp) { mHP = hp; }
+
 	void PlayerCtrl();
 };
 

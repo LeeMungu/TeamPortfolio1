@@ -4,17 +4,19 @@
 #include "Animation.h"
 #include "Player.h"
 #include "Camera.h"
+#include "PathFinder.h"
+#include "scene1.h"
 
 void Zombie01::Init()
 {
 	mImage = IMAGEMANAGER->FindImage(L"Zombie01");
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
-	mX =  150;
-	mY =  150;
+	mX =  300;
+	mY =  300;
 	mSizeX = mImage->GetFrameWidth();
 	mSizeY = mImage->GetFrameHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
+	mAngle = 0;
 
 	mHp = 10;
 	mSpeed = 1.f;
@@ -72,6 +74,15 @@ void Zombie01::Release()
 
 void Zombie01::Update()
 {
+	vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX()/TileSize, mPlayer->GetY() / TileSize);
+
+	if (Path.size() != NULL)
+	{
+		mAngle = Math::GetAngle(Path[Path.size() - 1]->GetX(), Path[Path.size() - 1]->GetY(), mX, mY);
+		mX -= cosf(mAngle) * mSpeed;
+		mY -= -sinf(mAngle) * mSpeed;
+	}
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
 void Zombie01::Render(HDC hdc)

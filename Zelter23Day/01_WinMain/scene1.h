@@ -8,8 +8,7 @@ class Player;
 class Zombie01;
 class SmartWatch;
 class PlayerHPUI;
-#define TileCountX 25
-#define TileCountY 25
+
 #define TileSize 32
 #define Pallette 64
 #define TileDivideX 6
@@ -19,7 +18,10 @@ class PlayerHPUI;
 class scene1 : public Scene
 {
 	class Tile* mTile;
-	class Tile* mTileList[TileCountY][TileCountX];
+	vector<vector<class Tile*>> mTileList;
+
+	int mTileCountX;
+	int mTileCountY;
 
 	TileLayer mCurrentLayer;
 	bool mIsGridMode;

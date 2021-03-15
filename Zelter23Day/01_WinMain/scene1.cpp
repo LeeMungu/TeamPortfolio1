@@ -33,40 +33,52 @@ void scene1::Init()
 	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::camera, camera);
-	for (int y = 0; y < TileCountY; ++y)
-	{
-		for (int x = 0; x < TileCountX; ++x)
-		{
-			mTileList[y][x] = new Tile
-			(
-				tileImage,
-				TileSize * x,
-				TileSize * y,
-				TileSize,
-				TileSize,
-				x,
-				y,
-				//Random::GetInstance()->RandomInt(3),
-				4,
-				0
-			);
-			mTileList[y][x]->SetTileLayer(TileLayer::normal);
-		}
-	}
+	
+
+	
 
 ifstream loadStream(L"../04_Data/Test.txt");
 	if (loadStream.is_open())
 	{
-		for (int y = 0; y < TileCountY; ++y)
+		string bufferCount;
+		getline(loadStream, bufferCount, ',');
+		mTileCountX = stoi(bufferCount);
+		getline(loadStream, bufferCount);
+		mTileCountY = stoi(bufferCount);
+
+		//초기화 후 삽입
+		mTileList.clear();
+		mTileList.assign(mTileCountY, vector<Tile*>());
+		for (int y = 0; y < mTileList.size(); ++y)
 		{
-			for (int x = 0; x < TileCountX; ++x)
+			for (int x = 0; x < mTileCountX; ++x)
+			{
+				mTileList[y].push_back(new Tile
+				(
+					tileImage,
+					TileSize * x,
+					TileSize * y,
+					TileSize,
+					TileSize,
+					x,
+					y,
+					//Random::GetInstance()->RandomInt(3),
+					4,
+					0
+				));
+				mTileList[y][x]->SetTileLayer(TileLayer::normal);
+			}
+		}
+
+		for (int y = 0; y < mTileList.size(); ++y)
+		{
+			for (int x = 0; x < mTileCountX; ++x)
 			{
 				string key;
 				int frameX;
 				int frameY;
 				string buffer;
 				int layer;
-
 
 				getline(loadStream, buffer, ',');
 				key = buffer;
@@ -96,9 +108,9 @@ void scene1::Release()
 
 	ObjectManager::GetInstance()->Release();
 	//알아서해
-	for (int y = 0; y < TileCountY; ++y)
+	for (int y = 0; y < mTileList.size(); ++y)
 	{
-		for (int x = 0; x < TileCountX; ++x)
+		for (int x = 0; x < mTileCountX; ++x)
 		{
 			SafeDelete(mTileList[y][x]);
 		}
@@ -182,16 +194,16 @@ void scene1::Render(HDC hdc)
 
 
 	//카메라에 맞춰서 타일을 그려줌
-	int leftIndex = Math::Clamp(mainCamera->GetRect().left / TileSize, 0, TileCountX - 1);
-	int rightIndex = Math::Clamp(mainCamera->GetRect().right / TileSize, 0, TileCountX - 1);
-	int topIndex = Math::Clamp(mainCamera->GetRect().top / TileSize, 0, TileCountY - 1);
-	int bottomIndex = Math::Clamp(mainCamera->GetRect().bottom / TileSize, 0, TileCountY - 1);
+	int leftIndex = Math::Clamp(mainCamera->GetRect().left / TileSize, 0, mTileCountX - 1);
+	int rightIndex = Math::Clamp(mainCamera->GetRect().right / TileSize, 0, mTileCountX - 1);
+	int topIndex = Math::Clamp(mainCamera->GetRect().top / TileSize, 0, mTileCountY - 1);
+	int bottomIndex = Math::Clamp(mainCamera->GetRect().bottom / TileSize, 0, mTileCountY - 1);
 
 	int renderCount = 0;
 
-	for (int y = 0; y < TileCountY; ++y)
+	for (int y = 0; y < mTileList.size(); ++y)
 	{
-		for (int x = 0; x < TileCountX; ++x)
+		for (int x = 0; x < mTileCountX; ++x)
 		{
 			mTileList[y][x]->Render(hdc);
 			++renderCount;

@@ -8,7 +8,7 @@ ObjectButton::ObjectButton(wstring imageKey, float x, float y, function<void(voi
 	mX = x;
 	mY = y;
 	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetHeight();
+	mSizeY = mImage->GetFrameHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mFunc = func;
 	mState = State::Normal;
@@ -44,6 +44,7 @@ void ObjectButton::Update()
 
 void ObjectButton::Render(HDC hdc)
 {
+	RenderRect(hdc, mRect);
 	mImage->ScaleFrameRender(hdc, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY);
 }
 

@@ -97,15 +97,18 @@ void MapToolScene::Update()
 		{
 			//{{ ÆÈ·¹Æ® ÇÈ~
 			vector<vector<Tile*>> palletList = mToolBook->GetPalleteList();
-			for (int y = 0; y < mToolBook->GetNowTilecountY(); ++y)
+			if (palletList.size() != NULL)
 			{
-				for (int x = 0; x < mToolBook->GetNowTilecountX(); ++x)
+				for (int y = 0; y < mToolBook->GetNowTilecountY(); ++y)
 				{
-					RECT palletRect = palletList[y][x]->GetRect();
-					if (PtInRect(&palletRect, _mousePosition))
+					for (int x = 0; x < mToolBook->GetNowTilecountX(); ++x)
 					{
-						mCurrentPallete = palletList[y][x];
-						mToolBook->SetIsRoofOn(false);
+						RECT palletRect = palletList[y][x]->GetRect();
+						if (PtInRect(&palletRect, _mousePosition))
+						{
+							mCurrentPallete = palletList[y][x];
+							mToolBook->SetIsRoofOn(false);
+						}
 					}
 				}
 			}

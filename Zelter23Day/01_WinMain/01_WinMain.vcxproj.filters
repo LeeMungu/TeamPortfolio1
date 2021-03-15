@@ -94,6 +94,9 @@
     <Filter Include="FrameWork\Pathfinder">
       <UniqueIdentifier>{33eb4370-f16d-4d3b-84b3-9b7cb2b48a7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Mouse">
+      <UniqueIdentifier>{81687ec7-32d6-468c-a477-43a65d1c27ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -240,6 +243,9 @@
     <ClInclude Include="ObjectButton.h">
       <Filter>FrameWork\Button</Filter>
     </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>MainGame\Object\Mouse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -376,6 +382,9 @@
     </ClCompile>
     <ClCompile Include="ObjectButton.cpp">
       <Filter>FrameWork\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>MainGame\Object\Mouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -18,10 +18,10 @@ class ObjectButton : public GameObject
 public:
 	ObjectButton(wstring imageKey, float x, float y, function<void(void)> func);
 	
-	void Init() {}
-	void Release() {}
-	void Update();
-	void Render(HDC hdc);
+	void Init()override {}
+	void Release()override {}
+	void Update()override;
+	void Render(HDC hdc)override;
 
 	void Move(float x, float y);
 };

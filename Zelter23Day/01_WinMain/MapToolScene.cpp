@@ -268,11 +268,17 @@ void MapToolScene::Update()
 	if (Input::GetInstance()->GetKey(VK_TAB)
 		&& mChangeStartIndexX !=-1 && mChangeStartIndexY != -1)
 	{
+		if (mChangeStartIndexX == -1)
+		{
+			return;
+		}
+
 		mIsChangingTile = true;
 		int indexX = (_mousePosition.x + cameraX) / TileSize;
 		int indexY = (_mousePosition.y + cameraY) / TileSize;
 		mChangeEndIndexX = indexX;
 		mChangeEndIndexY = indexY;
+		
 	}
 	if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
 	{

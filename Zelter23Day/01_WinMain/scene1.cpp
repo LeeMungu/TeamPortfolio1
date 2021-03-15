@@ -17,7 +17,7 @@ void scene1::Init()
 
 	mPlayer = new Player("Player", 150, 150);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
-
+ 
 
 	Zombie01* mZombie01 = new Zombie01();
 	mZombie01->Init();

@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define TileSize 64
+#define TileSize 32
 #define Pallette 32
 #define TileDivideX 6
 #define TileDivideY 9

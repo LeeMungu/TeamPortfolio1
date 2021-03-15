@@ -27,6 +27,8 @@ void Player::Init()
 	mSizeX = mImage->GetFrameWidth() * 2;
 	mSizeY = mImage->GetFrameHeight() * 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mIsNoDamage = true;
+	mNoDamageCount = 0;
 
 	//Run Animation
 	mUpRunAni = new Animation();

@@ -5,7 +5,7 @@ class Mouse : public GameObject
 {
 	class Image* mImage;
 	wstring mImageKey;
-	vector<class Tile*> mTile;
+	vector<vector<class Tile*>> mTiles;
 public:
 	Mouse(wstring imageKey);
 	void Init()override;

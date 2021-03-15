@@ -13,6 +13,8 @@ Mouse::Mouse(wstring imageKey)
 	mSizeX = mImage->GetFrameWidth();
 	mSizeY = mImage->GetFrameHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+
+	
 }
 
 void Mouse::Init()

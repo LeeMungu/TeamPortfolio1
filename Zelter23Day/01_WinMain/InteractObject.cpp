@@ -41,5 +41,5 @@ void InteractObject::Update()
 
 void InteractObject::Render(HDC hdc)
 {
-	mImage->FrameRender(hdc, mX, mY, mIndexX, mIndexY);
+	mImage->FrameRender(hdc, mRect.left, mRect.top, mIndexX, mIndexY);
 }

@@ -94,6 +94,9 @@
     <Filter Include="FrameWork\Pathfinder">
       <UniqueIdentifier>{33eb4370-f16d-4d3b-84b3-9b7cb2b48a7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\CollisionManager">
+      <UniqueIdentifier>{4b366fd9-64ae-473e-9061-ea4ba60b17be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -240,8 +243,8 @@
     <ClInclude Include="ObjectButton.h">
       <Filter>FrameWork\Button</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>MainGame\Player</Filter>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>FrameWork\CollisionManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -380,8 +383,8 @@
     <ClCompile Include="ObjectButton.cpp">
       <Filter>FrameWork\Button</Filter>
     </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>MainGame\Player</Filter>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>FrameWork\CollisionManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

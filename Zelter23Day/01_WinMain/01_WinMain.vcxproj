@@ -23,7 +23,7 @@
     <ProjectGuid>{ADD52605-596E-43E8-879D-E81A28A8BB13}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My01WinMain</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -152,6 +152,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="DefineHeader.h" />
     <ClInclude Include="Enemy.h" />
@@ -194,7 +195,6 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Vector2.h" />
-    <ClInclude Include="Weapon.h" />
     <ClInclude Include="Zombie01.h" />
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +203,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="D2DRenderer+Draw.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -247,7 +248,6 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Vector2.cpp" />
-    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Zombie01.cpp" />
   </ItemGroup>
   <ItemGroup>

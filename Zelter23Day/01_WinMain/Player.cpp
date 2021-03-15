@@ -158,39 +158,75 @@ void Player::PlayerCtrl() {
 
 	if (mPlayerState != PlayerState::attack) 
 	{
+		//달리는 상태에서만 구르기
+		if (mPlayerState == PlayerState::run) {
+			if (Input::GetInstance()->GetKeyDown(VK_RBUTTON)) { 
+				mPlayerState = PlayerState::roll;
+				mSpeed = 5.f;
+			}
+		}
+		/*
+		if (mPlayerState == PlayerState::roll) {
+			mAngle += 5;
+			if (mAngle >= 360) {
+				mPlayerState = PlayerState::run;
+			}
+		}
+		*/
+
 		//위아래 이동
 		if (Input::GetInstance()->GetKey('W'))
 		{
-			mPlayerState = PlayerState::run;
+			if (mPlayerState != PlayerState::roll) {
+				mPlayerState = PlayerState::run;
 
-			if (_mousePosition.y > playerPoint.y)
-			{
-				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
-				mCurrentAnimation = mDownWalkAni;
-				mSpeed = 1.f;
+				if (_mousePosition.y > playerPoint.y)
+				{
+					mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+					mCurrentAnimation = mDownWalkAni;
+					mSpeed = 1.f;
+				}
+				else {
+					mImage = IMAGEMANAGER->FindImage(L"Player_run");
+					mCurrentAnimation = mUpRunAni;
+					mSpeed = 3.f;
+				}
 			}
 			else {
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
-				mCurrentAnimation = mUpRunAni;
-				mSpeed = 3.f;
+				mAngle += 5;
+				mSpeed = 5.f;
+				if (mAngle >= 360) {
+					mAngle = 0;
+					mPlayerState = PlayerState::run;
+				}
 			}
 			mY = mY - mSpeed;
 			mCurrentAnimation->Play();
 		}
 		else if (Input::GetInstance()->GetKey('S'))
 		{
-			mPlayerState = PlayerState::run;
+			if (mPlayerState != PlayerState::roll) {
+				mPlayerState = PlayerState::run;
 
-			if (_mousePosition.y < playerPoint.y)
-			{
-				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
-				mCurrentAnimation = mUpWalkAni;
-				mSpeed = 1.f;
+				if (_mousePosition.y < playerPoint.y)
+				{
+					mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+					mCurrentAnimation = mUpWalkAni;
+					mSpeed = 1.f;
+				}
+				else {
+					mImage = IMAGEMANAGER->FindImage(L"Player_run");
+					mCurrentAnimation = mDownRunAni;
+					mSpeed = 3.f;
+				}
 			}
 			else {
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
-				mCurrentAnimation = mDownRunAni;
-				mSpeed = 3.f;
+				mAngle += 5;
+				mSpeed = 5.f;
+				if (mAngle >= 360) {
+					mAngle = 0;
+					mPlayerState = PlayerState::run;
+				}
 			}
 			mY = mY + mSpeed;
 			mCurrentAnimation->Play();
@@ -206,48 +242,69 @@ void Player::PlayerCtrl() {
 		//좌우이동
 		if (Input::GetInstance()->GetKey('A'))
 		{
-			mPlayerState = PlayerState::run;
+			if (mPlayerState != PlayerState::roll) {
+				mPlayerState = PlayerState::run;
 
-			if (_mousePosition.x > playerPoint.x)
-			{
-				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
-				mCurrentAnimation = mRightWalkAni;
-				mSpeed = 1.f;
+				if (_mousePosition.x > playerPoint.x)
+				{
+					mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+					mCurrentAnimation = mRightWalkAni;
+					mSpeed = 1.f;
+				}
+				else {
+					mImage = IMAGEMANAGER->FindImage(L"Player_run");
+					mCurrentAnimation = mLeftRunAni;
+					mSpeed = 3.f;
+				}
 			}
 			else {
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
-				mCurrentAnimation = mLeftRunAni;
-				mSpeed = 3.f;
+				mAngle += 5;
+				mSpeed = 5.f;
+				if (mAngle >= 360) {
+					mAngle = 0;
+					mPlayerState = PlayerState::run;
+				}
 			}
 			mX = mX - mSpeed;
 			mCurrentAnimation->Play();
 		}
 		else if (Input::GetInstance()->GetKey('D'))
 		{
-			mPlayerState = PlayerState::run;
+			if (mPlayerState != PlayerState::roll) {
+				mPlayerState = PlayerState::run;
 
-			if (_mousePosition.x < playerPoint.x)
-			{
-				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
-				mCurrentAnimation = mLeftWalkAni;
-				mSpeed = 1.f;
+				if (_mousePosition.x < playerPoint.x)
+				{
+					mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+					mCurrentAnimation = mLeftWalkAni;
+					mSpeed = 1.f;
+				}
+				else {
+					mImage = IMAGEMANAGER->FindImage(L"Player_run");
+					mCurrentAnimation = mRightRunAni;
+					mSpeed = 3.f;
+				}
 			}
 			else {
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
-				mCurrentAnimation = mRightRunAni;
-				mSpeed = 3.f;
+				mAngle += 5;
+				mSpeed = 5.f;
+				if (mAngle >= 360) {
+					mAngle = 0;
+					mPlayerState = PlayerState::run;
+				}
 			}
 			mX = mX + mSpeed;
 			mCurrentAnimation->Play();
 		}
 
 		if (Input::GetInstance()->GetKeyUp('A') || Input::GetInstance()->GetKeyUp('D')) {
-			mPlayerState = PlayerState::idle;
+			if (mPlayerState != PlayerState::roll) {
+				mPlayerState = PlayerState::idle;
 
-			if (mCurrentAnimation == mLeftRunAni || mCurrentAnimation == mLeftWalkAni) mCurrentAnimation = mLeftIdleAni;
-			else if (mCurrentAnimation == mRightRunAni || mCurrentAnimation == mRightWalkAni) mCurrentAnimation = mRightIdleAni;
+				if (mCurrentAnimation == mLeftRunAni || mCurrentAnimation == mLeftWalkAni) mCurrentAnimation = mLeftIdleAni;
+				else if (mCurrentAnimation == mRightRunAni || mCurrentAnimation == mRightWalkAni) mCurrentAnimation = mRightIdleAni;
+			}
 		}
-
 		//공격모션
 		if (Input::GetInstance()->GetKeyDown('F'))
 		{
@@ -267,7 +324,7 @@ void Player::PlayerCtrl() {
 			}
 			mCurrentAnimation->Play();
 		}
-
+		
 		
 	}
 	else if (mPlayerState == PlayerState::attack) {
@@ -291,5 +348,7 @@ void Player::PlayerCtrl() {
 				mPlayerState = PlayerState::idle;
 			}
 		}
+
+		
 	}
 }

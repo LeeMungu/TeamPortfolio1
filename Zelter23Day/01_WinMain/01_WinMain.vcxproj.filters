@@ -100,6 +100,9 @@
     <Filter Include="MainGame\Object\Mouse">
       <UniqueIdentifier>{81687ec7-32d6-468c-a477-43a65d1c27ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Objectes">
+      <UniqueIdentifier>{d16a7570-863c-4f4c-bc63-1c43df9531e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -201,15 +204,6 @@
     <ClInclude Include="UI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
-    <ClInclude Include="HousingObject.h">
-      <Filter>MainGame\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="InteractObject.h">
-      <Filter>MainGame\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="NonInteractObject.h">
-      <Filter>MainGame\Object</Filter>
-    </ClInclude>
     <ClInclude Include="D2DRenderer.h">
       <Filter>FrameWork\D2D</Filter>
     </ClInclude>
@@ -254,6 +248,15 @@
     </ClInclude>
     <ClInclude Include="MapToolLoadingScene.h">
       <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="HousingObject.h">
+      <Filter>MainGame\Object\Objectes</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractObject.h">
+      <Filter>MainGame\Object\Objectes</Filter>
+    </ClInclude>
+    <ClInclude Include="NonInteractObject.h">
+      <Filter>MainGame\Object\Objectes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -344,15 +347,6 @@
     <ClCompile Include="UI.cpp">
       <Filter>MainGame\UI</Filter>
     </ClCompile>
-    <ClCompile Include="HousingObject.cpp">
-      <Filter>MainGame\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="InteractObject.cpp">
-      <Filter>MainGame\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="NonInteractObject.cpp">
-      <Filter>MainGame\Object</Filter>
-    </ClCompile>
     <ClCompile Include="D2DRenderer.cpp">
       <Filter>FrameWork\D2D</Filter>
     </ClCompile>
@@ -400,6 +394,15 @@
     </ClCompile>
     <ClCompile Include="MapToolLoadingScene.cpp">
       <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="HousingObject.cpp">
+      <Filter>MainGame\Object\Objectes</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractObject.cpp">
+      <Filter>MainGame\Object\Objectes</Filter>
+    </ClCompile>
+    <ClCompile Include="NonInteractObject.cpp">
+      <Filter>MainGame\Object\Objectes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

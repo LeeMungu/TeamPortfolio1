@@ -67,18 +67,24 @@ void MapToolBook::Init()
 
 		mNextButton = new Button(L"Next", mX - mSizeX / 6, mY + mSizeY / 3, 50, 50,
 			[this]() {
-			if (mPage < 15)
+			if (mBookType == BookType::Tile)
 			{
-				mPage++;
-				mIsPageChange = true;
+				if (mPage < 15)
+				{
+					mPage++;
+					mIsPageChange = true;
+				}
 			}
 		});
 		mPrevButton = new Button(L"Prev", mX - mSizeX / 3, mY + mSizeY / 3, 50, 50,
 			[this]() {
-			if (mPage > 1)
+			if (mBookType == BookType::Tile)
 			{
-				mPage--;
-				mIsPageChange = true;
+				if (mPage > 1)
+				{
+					mPage--;
+					mIsPageChange = true;
+				}
 			}
 		});
 
@@ -117,6 +123,9 @@ void MapToolBook::Release()
 	SafeDelete(mNextButton);
 	SafeDelete(mPrevButton);
 	SafeDelete(mRoofBtn);
+	
+	//오브젝트메니져 초기화
+	ObjectManager::GetInstance()->Release();
 }
 
 void MapToolBook::Update()
@@ -209,33 +218,36 @@ void MapToolBook::Update()
 	//페이지 넘길때
 	if (mIsPageChange == true)
 	{
-		//타일 생성
-		Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile"+to_wstring(mPage));
-		int palleteStartX = mRect.left + mSizeX / 6;
-		int palleteStartY = mRect.top + mSizeY / 10;
-		mNowTileCountX = tileImage->GetMaxFrameX();
-		mNowTileCountY = tileImage->GetMaxFrameY();
-		//리셋
-		mPallete.clear();
-		
-		mPallete.assign(tileImage->GetMaxFrameY(), vector<Tile*>());
-		for (int y = 0; y < tileImage->GetMaxFrameY(); ++y)
+		if (mBookType == BookType::Tile)
 		{
-			for (int x = 0; x < tileImage->GetMaxFrameX(); ++x)
+			//타일 생성
+			Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile" + to_wstring(mPage));
+			int palleteStartX = mRect.left + mSizeX / 6;
+			int palleteStartY = mRect.top + mSizeY / 10;
+			mNowTileCountX = tileImage->GetMaxFrameX();
+			mNowTileCountY = tileImage->GetMaxFrameY();
+			//리셋
+			mPallete.clear();
+
+			mPallete.assign(tileImage->GetMaxFrameY(), vector<Tile*>());
+			for (int y = 0; y < tileImage->GetMaxFrameY(); ++y)
 			{
-				mPallete[y].push_back(new Tile(
-					tileImage,
-					palleteStartX + Pallette * x,
-					palleteStartY + Pallette * y,
-					Pallette,
-					Pallette,
-					x,
-					y,
-					x,
-					y
-				));
-				mPallete[y][x]->SetSpeed(mSpeed);
-				mPallete[y][x]->SetTileLayer(TileLayer::PalletteType);
+				for (int x = 0; x < tileImage->GetMaxFrameX(); ++x)
+				{
+					mPallete[y].push_back(new Tile(
+						tileImage,
+						palleteStartX + Pallette * x,
+						palleteStartY + Pallette * y,
+						Pallette,
+						Pallette,
+						x,
+						y,
+						x,
+						y
+					));
+					mPallete[y][x]->SetSpeed(mSpeed);
+					mPallete[y][x]->SetTileLayer(TileLayer::PalletteType);
+				}
 			}
 		}
 		mIsPageChange = false;
@@ -481,7 +493,7 @@ void MapToolBook::ChangeMode(BookType bookType)
 			}
 			//오브젝트버튼 생성
 			ObjectButton* objectButton = new ObjectButton(L"Tree", mX -250 , mY-150, [](){
-				Mouse* mouse = new Mouse(L"Tree");
+				Mouse* mouse = new Mouse(L"Tree", ObjectLayer::InteractObject);
 				mouse->Init();
 				ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
 			});
@@ -506,13 +518,16 @@ void MapToolBook::ChangeMode(BookType bookType)
 				}
 			}
 			//오브젝트버튼 생성
-			ObjectButton* objectButton = new ObjectButton(L"Tree", mX - 250, mY - 150, []() {
-				Mouse* mouse = new Mouse(L"Tree");
-				mouse->Init();
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
-			});
-			objectButton->Init();
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+			for (int i = 0; i < 11; ++i)
+			{
+				ObjectButton* objectButton = new ObjectButton(L"Grass"+to_wstring(i+1), mX - 250 + 70*(i%4), mY - 150+90*(i/4), [i]() {
+					Mouse* mouse = new Mouse(L"Grass" + to_wstring(i + 1), ObjectLayer::NoninteractObject);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+				});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+			}
 		}
 		mIsTypeChange = false;
 	}

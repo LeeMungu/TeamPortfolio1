@@ -3,13 +3,13 @@
 #include "Image.h"
 #include "Camera.h"
 
-
 InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp)
 {
 	mX = x;
 	mY = y;
 	mHp = hp;
-	mImage = IMAGEMANAGER->FindImage(imageKey);
+	mImageKey = imageKey;
+	mImage = IMAGEMANAGER->FindImage(mImageKey);
 }
 
 void InteractObject::Init()
@@ -41,5 +41,6 @@ void InteractObject::Update()
 
 void InteractObject::Render(HDC hdc)
 {
-	mImage->FrameRender(hdc, mRect.left, mRect.top, mIndexX, mIndexY);
+	CameraManager::GetInstance()->GetMainCamera()
+		->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);
 }

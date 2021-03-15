@@ -8,6 +8,8 @@
 #include <fstream>
 #include "GameObject.h"
 #include "Player.h"
+#include "InteractObject.h"
+#include "NonInteractObject.h"
 
 void MapToolScene::Init()
 {
@@ -379,6 +381,15 @@ void MapToolScene::Update()
 	if (Input::GetInstance()->GetKeyDown(VK_BACK))
 	{
 		mCurrentPallete = nullptr;
+		//오브젝트들 제거
+		vector<GameObject*> tempMouse = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Mouse);
+		if (tempMouse.size() != NULL)
+		{
+			for (int i = 0; i < tempMouse.size(); ++i)
+			{
+				tempMouse[i]->SetIsDestroy(true);
+			}
+		}
 	}
 }
 
@@ -428,6 +439,8 @@ void MapToolScene::Render(HDC hdc)
 		->RenderText(10, 130, L"Lctrl + Z : 되감기", 12);
 	D2DRenderer::GetInstance()
 		->RenderText(10, 160, L"TAP + 드래그엔드롭 : 범위그려줌", 12);
+	D2DRenderer::GetInstance()
+		->RenderText(10, 190, L"BackSpace : 마우스 초기화", 12);
 
 	//클릭한 속성별로 마우스 따라다니며 그려주기
 	if (mCurrentPallete != nullptr)
@@ -499,11 +512,12 @@ void MapToolScene::Save()
 		string tempImageKey;
 		int frameX;
 		int frameY;
-
+		//타일 갯수 저장
 		saveStream << mTileCountX;
 		saveStream << ',';
 		saveStream << mTileCountY;
 		saveStream << endl;
+		//타일각각마다 저장
 		for (int y = 0; y < mTileCountY; ++y)
 		{
 			for (int x = 0; x < mTileCountX; ++x)
@@ -521,6 +535,72 @@ void MapToolScene::Save()
 				saveStream << mTileList[y][x]->mFrameIndexY;
 				saveStream << ',';
 				saveStream << (int)mTileList[y][x]->mTileLayer;
+				saveStream << endl;
+			}
+		}
+		//오브젝트레이어 구분, 갯수 <- *없으면 아에 기록도 하지 않는다.
+		int intObjectLayer = (int)ObjectLayer::HousingObject;
+		vector<GameObject*> tempObject = ObjectManager::GetInstance()->GetObjectList((ObjectLayer)intObjectLayer);
+		if (tempObject.size() != NULL)
+		{
+			saveStream << intObjectLayer;
+			saveStream << ',';
+			saveStream << tempObject.size();
+			saveStream << endl;
+			//각 오브젝트레이어의 이미지키, x좌표, y좌표
+			for (int i = 0; i < tempObject.size(); ++i)
+			{
+				//집은 어떻게 저장할지 더 생각해봐야한다...
+				//saveStream << (HousingObject*)tempObject[i]->
+			}
+		}
+		//인터랙트오브젝트레이어 구분, 갯수
+		intObjectLayer = (int)ObjectLayer::InteractObject;
+		tempObject.clear();
+		tempObject = ObjectManager::GetInstance()->GetObjectList((ObjectLayer)intObjectLayer);
+		if (tempObject.size() != NULL)
+		{
+			saveStream << intObjectLayer;
+			saveStream << ',';
+			saveStream << tempObject.size();
+			saveStream << endl;
+			//각 오브젝트레이어의 이미지키, x좌표, y좌표
+			for (int i = 0; i < tempObject.size(); ++i)
+			{
+				wstring imagekey;
+				string str;
+				imagekey = ((InteractObject*)tempObject[i])->GetImageKey();
+				str.assign(imagekey.begin(), imagekey.end());
+				saveStream << str;
+				saveStream << ",";
+				saveStream << tempObject[i]->GetX();
+				saveStream << ",";
+				saveStream << tempObject[i]->GetY();
+				saveStream << endl;
+			}
+		}
+		//언인터랙트오브젝트레이어 구분, 갯수
+		intObjectLayer = (int)ObjectLayer::NoninteractObject;
+		tempObject.clear();
+		tempObject = ObjectManager::GetInstance()->GetObjectList((ObjectLayer)intObjectLayer);
+		if (tempObject.size() != NULL)
+		{
+			saveStream << intObjectLayer;
+			saveStream << ',';
+			saveStream << tempObject.size();
+			saveStream << endl;
+			//각 오브젝트레이어의 이미지키, x좌표, y좌표
+			for (int i = 0; i < tempObject.size(); ++i)
+			{
+				wstring imagekey;
+				string str;
+				imagekey = ((NonInteractObject*)tempObject[i])->GetImageKey();
+				str.assign(imagekey.begin(), imagekey.end());
+				saveStream << str;
+				saveStream << ",";
+				saveStream << tempObject[i]->GetX();
+				saveStream << ",";
+				saveStream << tempObject[i]->GetY();
 				saveStream << endl;
 			}
 		}
@@ -587,6 +667,64 @@ void MapToolScene::Load()
 				mTileList[y][x]->mFrameIndexX = frameX;
 				mTileList[y][x]->mFrameIndexY = frameY;
 				mTileList[y][x]->mTileLayer = (TileLayer)layer;
+			}
+		}
+		//오브젝트들 제거
+		vector<GameObject*> tempObject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::HousingObject);
+		if (tempObject.size() != NULL)
+		{
+			for (int i = 0; i < tempObject.size(); ++i)
+			{
+				tempObject[i]->SetIsDestroy(true);
+			}
+		}
+		vector<GameObject*> tempObject1 = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+		if (tempObject1.size() != NULL)
+		{
+			for (int i = 0; i < tempObject1.size(); ++i)
+			{
+				tempObject1[i]->SetIsDestroy(true);
+			}
+		}
+		vector<GameObject*> tempObject2 = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::NoninteractObject);
+		if (tempObject2.size() != NULL)
+		{
+			for (int i = 0; i < tempObject2.size(); ++i)
+			{
+				tempObject2[i]->SetIsDestroy(true);
+			}
+		}
+
+		//오브젝트 읽어오기
+		string bufferObjectLayer;//레이어
+		getline(loadStream, bufferObjectLayer, ',');
+		if (bufferObjectLayer != "")
+		{
+			//순서는-하우스, 인터렉트,언인터렉트므로 추후에 수정해야한다.
+			//언인터랙트인 경우 <- 언인터렉트부터 구현 해본다
+			if ((ObjectLayer)stoi(bufferObjectLayer) == ObjectLayer::NoninteractObject)
+			{
+				string buffer;
+				ObjectLayer objectLayer = (ObjectLayer)stoi(bufferObjectLayer);
+				getline(loadStream, buffer);
+				int objectSize = stoi(buffer);
+				//레이어, 갯수
+				for (int i = 0; i < objectSize; ++i)
+				{
+					wstring imageKey;
+					int x, y;
+					getline(loadStream, buffer, ',');
+					imageKey.assign(buffer.begin(), buffer.end());
+					getline(loadStream, buffer, ',');
+					x = stoi(buffer);
+					getline(loadStream, buffer);
+					y = stoi(buffer);
+					//위에서 언인터렉트인것을 확인했으므로 임의로 넣는다
+					//생성
+					NonInteractObject* temp = new NonInteractObject(imageKey, x, y);
+					temp->Init();
+					ObjectManager::GetInstance()->AddObject(objectLayer, temp);
+				}
 			}
 		}
 	}

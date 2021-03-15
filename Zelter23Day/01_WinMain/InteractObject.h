@@ -15,11 +15,11 @@ class InteractObject : public GameObject
 	int mHp;
 	int mIndexX;
 	int mIndexY;
-
+	//무슨변수인가? 필요한 변수인가?
 	bool mIsInteractive;
-
+	wstring mImageKey;
 public:
-	InteractObject(const wstring name, float x, float y, int hp);
+	InteractObject(const wstring imageKey, float x, float y, int hp);
 
 	void Init()override;
 	void Release()override;
@@ -27,5 +27,6 @@ public:
 	void Render(HDC hdc)override;
 
 	void SetHp(int hp) { mHp = hp; }
+	wstring GetImageKey()const { return mImageKey; }
 };
 

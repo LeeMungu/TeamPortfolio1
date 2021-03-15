@@ -2,15 +2,21 @@
 #include "GameObject.h"
 
 class Image;
-class Animation;
 class NonInteractObject : public GameObject
 {
 	Image* mImage;
-
+	
+	int mIndexX;
+	int mIndexY;
+	wstring mImageKey;
 public:
-	NonInteractObject(const string name, float x, float y);
+	NonInteractObject(const wstring imageKey, float x, float y);
 	void Init()override;
 	void Release()override;
+	void Update()override;
 	void Render(HDC hdc)override;
+
+
+	wstring GetImageKey()const { return mImageKey; }
 };
 

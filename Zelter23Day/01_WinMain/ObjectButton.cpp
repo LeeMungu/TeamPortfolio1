@@ -47,7 +47,7 @@ void ObjectButton::Render(HDC hdc)
 	mImage->ScaleFrameRender(hdc, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY);
 }
 
-void Button::Move(float x, float y)
+void ObjectButton::Move(float x, float y)
 {
 	mX = x;
 	mY = y;

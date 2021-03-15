@@ -2,6 +2,7 @@
 #include "MainGame.h"
 
 #include "Image.h"
+#include "MapToolLoadingScene.h"
 #include "MapToolScene.h"
 #include "LoadingScene.h"
 #include "scene1.h"
@@ -44,13 +45,11 @@ void MainGame::Init()
 	IMAGEMANAGER->LoadFromFile(L"House", Resources(L"/02_House/House01_INSIDE_1.png"),9,9);
 	IMAGEMANAGER->LoadFromFile(L"HouseRoof", Resources(L"/02_House/House01_Roof_1.png"),9,9);
 
-
+	SceneManager::GetInstance()->AddScene(L"MapToolLoadingScene", new MapToolLoadingScene);
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"LoadingScene", new LoadingScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
-	SceneManager::GetInstance()->LoadScene(L"MapToolScene");
-	
-	
+	SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
 }
 
 /*
@@ -69,7 +68,6 @@ Update : 매 프레임 실행되는 함수, 여기서 연산 처리 한다.
 void MainGame::Update()
 {
 	SceneManager::GetInstance()->Update();
-	SceneManager::GetInstance()->LoadScene(L"MapToolScene");
 }
 
 /*

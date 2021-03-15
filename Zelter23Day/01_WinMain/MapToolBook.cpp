@@ -399,6 +399,15 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mHouseButton->SetIsSelect(false);
 			mInterectObjectButton->SetIsSelect(false);
 			mNoninterectObjectButton->SetIsSelect(false);
+			//오브젝트버튼 초기화
+			vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+			if (tempButton.size() != NULL)
+			{
+				for (int i = 0; i < tempButton.size(); ++i)
+				{
+					tempButton[i]->SetIsDestroy(true);
+				}
+			}
 			//페이지교체 불값을 이용하자
 			mIsPageChange = true;
 		}
@@ -409,7 +418,15 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mTileButton->SetIsSelect(false);
 			mInterectObjectButton->SetIsSelect(false);
 			mNoninterectObjectButton->SetIsSelect(false);
-
+			//오브젝트버튼 초기화
+			vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+			if (tempButton.size() != NULL)
+			{
+				for (int i = 0; i < tempButton.size(); ++i)
+				{
+					tempButton[i]->SetIsDestroy(true);
+				}
+			}
 			//mHouseObject = new HousingObject("House", 0, 0, SideType::InSide);
 			//ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
 
@@ -453,6 +470,16 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mNoninterectObjectButton->SetIsSelect(false);
 			//팔렛트 초기화
 			mPallete.clear();
+			//오브젝트버튼 초기화
+			vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+			if (tempButton.size() != NULL)
+			{
+				for (int i = 0; i < tempButton.size(); ++i)
+				{
+					tempButton[i]->SetIsDestroy(true);
+				}
+			}
+			//오브젝트버튼 생성
 			ObjectButton* objectButton = new ObjectButton(L"Tree", mX -250 , mY-150, [](){
 				Mouse* mouse = new Mouse(L"Tree");
 				mouse->Init();
@@ -467,8 +494,25 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mTileButton->SetIsSelect(false);
 			mHouseButton->SetIsSelect(false);
 			mInterectObjectButton->SetIsSelect(false);
-
-
+			//팔렛트 초기화
+			mPallete.clear();
+			//오브젝트버튼 초기화
+			vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+			if (tempButton.size() != NULL)
+			{
+				for (int i = 0; i < tempButton.size(); ++i)
+				{
+					tempButton[i]->SetIsDestroy(true);
+				}
+			}
+			//오브젝트버튼 생성
+			ObjectButton* objectButton = new ObjectButton(L"Tree", mX - 250, mY - 150, []() {
+				Mouse* mouse = new Mouse(L"Tree");
+				mouse->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+			});
+			objectButton->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
 		}
 		mIsTypeChange = false;
 	}

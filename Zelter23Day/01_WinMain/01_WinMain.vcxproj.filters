@@ -252,6 +252,9 @@
     <ClInclude Include="Mouse.h">
       <Filter>MainGame\Object\Mouse</Filter>
     </ClInclude>
+    <ClInclude Include="MapToolLoadingScene.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -394,6 +397,9 @@
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>MainGame\Object\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolLoadingScene.cpp">
+      <Filter>FrameWork\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -172,6 +172,7 @@
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MapToolBook.h" />
+    <ClInclude Include="MapToolLoadingScene.h" />
     <ClInclude Include="MapToolScene.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Mouse.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="MainGame + MainProc.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MapToolBook.cpp" />
+    <ClCompile Include="MapToolLoadingScene.cpp" />
     <ClCompile Include="MapToolScene.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Mouse.cpp" />

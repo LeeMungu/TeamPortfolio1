@@ -1,16 +1,14 @@
 #include "pch.h"
-#include "LoadingScene.h"
-#include "Image.h"
+#include "MapToolLoadingScene.h"
 #include "Animation.h"
+#include "Image.h"
 
-
-
-void LoadingScene::AddLoadFunc(const function<void(void)>& func)
+void MapToolLoadingScene::AddLoadFunc(const function<void(void)>& func)
 {
 	mLoadList.push_back(func);
 }
 
-void LoadingScene::Init()
+void MapToolLoadingScene::Init()
 {
 	mLoadIndex = 0;
 	mIsEndLoading = false;
@@ -194,28 +192,31 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bollard4", Resources(L"/05_Object/Bollard4.png"), 1, 1); });
 
 	//ÀÌ¹ÌÁö (Loading Scene)
-	IMAGEMANAGER->LoadFromFile(L"LoadingCat", Resources(L"Cat1.png"), 10, 1);
+	IMAGEMANAGER->LoadFromFile(L"LoadingCat2", Resources(L"Cat2.png"), 25, 1);
 
-	mLoadingImage = IMAGEMANAGER->FindImage(L"LoadingCat");
+	mLoadingImage = IMAGEMANAGER->FindImage(L"LoadingCat2");
 	mLoadingAnimation = new Animation();
-	mLoadingAnimation->InitFrameByStartEnd(0, 0, 9, 0, false);
+	mLoadingAnimation->InitFrameByStartEnd(0, 0, 24, 0, false);
 	mLoadingAnimation->SetIsLoop(true);
 	mLoadingAnimation->SetFrameUpdateTime(0.1f);
 	mLoadingAnimation->Play();
 }
 
-void LoadingScene::Release()
+void MapToolLoadingScene::Release()
 {
 	SafeDelete(mLoadingAnimation);
-
+	if (mLoadList.size() != NULL)
+	{
+		mLoadList.clear();
+	}
 }
 
-void LoadingScene::Update()
+void MapToolLoadingScene::Update()
 {
 	mLoadingAnimation->Update();
 	if (mIsEndLoading == true)
 	{
-		SceneManager::GetInstance()->LoadScene(L"Scene1");
+		SceneManager::GetInstance()->LoadScene(L"MapToolScene");
 	}
 	if (mLoadIndex >= mLoadList.size())
 	{
@@ -228,15 +229,15 @@ void LoadingScene::Update()
 	mLoadIndex++;
 }
 
-void LoadingScene::Render(HDC hdc)
+void MapToolLoadingScene::Render(HDC hdc)
 {
 	if (mIsEndLoading == false)
 	{
-		mLoadingImage->ScaleFrameRender(hdc, (WINSIZEX - mLoadingImage->GetFrameWidth()*5) / 2,
-			(WINSIZEY - mLoadingImage->GetFrameHeight()*5) / 2,
+		mLoadingImage->ScaleFrameRender(hdc, (WINSIZEX - mLoadingImage->GetFrameWidth() * 20) / 2,
+			(WINSIZEY - mLoadingImage->GetFrameHeight() * 20) / 2,
 			mLoadingAnimation->GetNowFrameX(),
 			mLoadingAnimation->GetNowFrameY(),
-			mLoadingImage->GetFrameWidth()*5,
-			mLoadingImage->GetFrameHeight()*5);
+			mLoadingImage->GetFrameWidth() * 20,
+			mLoadingImage->GetFrameHeight() * 20);
 	}
 }

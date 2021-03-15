@@ -4,6 +4,7 @@
 class Mouse : public GameObject
 {
 	class Image* mImage;
+	wstring mImageKey;
 	vector<class Tile*> mTile;
 public:
 	Mouse(wstring imageKey);

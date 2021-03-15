@@ -13,11 +13,12 @@ enum class ObjectLayer : int
 	Tile = 2,
 	Enemy = 3,
 	Player = 4,
-	ToolBook = 5,
-	Button = 6,
-	ObjectButton = 7,
-	Mouse = 8,
-	UI = 9,
+	Object = 5,
+	ToolBook = 6,
+	Button = 7,
+	ObjectButton = 8,
+	Mouse = 9,
+	UI = 10,
 	End
 };
 

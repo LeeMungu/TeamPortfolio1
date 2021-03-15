@@ -19,7 +19,7 @@ class InteractObject : public GameObject
 	bool mIsInteractive;
 
 public:
-	InteractObject(const string name, float x, float y, int hp);
+	InteractObject(const wstring name, float x, float y, int hp);
 
 	void Init()override;
 	void Release()override;

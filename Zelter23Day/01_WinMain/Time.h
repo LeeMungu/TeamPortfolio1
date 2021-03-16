@@ -16,12 +16,16 @@ private:
 	float mFPSTimeElapsed;
 	float mWorldTime;
 
+	float mSceneTime;	//씬 타이머 추가
+	bool mIsSceneStart;
+
 	bool mIsStart;
 private:
 	Time();
 
 	void Tick(float lockFPS = 60.0f);
 	void StartClock();
+
 public:
 	void Update();
 
@@ -32,5 +36,9 @@ public:
 	inline float GetWorldTime()const { return this->mWorldTime; }
 	inline float GetTimeScale()const { return this->mTimeScale; }
 	inline void SetTimeScale(float scale) { this->mTimeScale = scale; }
+
+	inline void SetIsSceneStart(bool b) { mIsSceneStart = b; }
+	inline float GetSceneTime()const { return this->mSceneTime; }
+
 };
 

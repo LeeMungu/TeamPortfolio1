@@ -13,7 +13,7 @@ Mouse::Mouse(wstring imageKey, ObjectLayer objectLayer)
 	mImageKey = imageKey;
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
 	mX = _mousePosition.x;
-	mY = _mousePosition.y;
+	mY = _mousePosition.y ;
 	mSizeX = mImage->GetFrameWidth();
 	mSizeY = mImage->GetFrameHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
@@ -59,35 +59,38 @@ void Mouse::Update()
 
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
-		//책안에서 클릭하면 무효
-		vector<GameObject*> tempBook = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ToolBook);
-		if (tempBook.size() != NULL)
+		if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mRect))//카메라 범위 안에 있을 경우만
 		{
-			for (int i = 0; i < tempBook.size(); ++i)
+			//책안에서 클릭하면 무효
+			vector<GameObject*> tempBook = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ToolBook);
+			if (tempBook.size() != NULL)
 			{
-				RECT tempBookRect = tempBook[i]->GetRect();
-				if (PtInRect(&tempBookRect, _mousePosition))
+				for (int i = 0; i < tempBook.size(); ++i)
 				{
-					return;
+					RECT tempBookRect = tempBook[i]->GetRect();
+					if (PtInRect(&tempBookRect, _mousePosition))
+					{
+						return;
+					}
 				}
 			}
-		}
-
-		if (mObjectType == ObjectLayer::HousingObject)
-		{
-			//이곳에서 하우징 생성넣어줄것
-		}
-		else if (mObjectType == ObjectLayer::InteractObject)
-		{
-			InteractObject* interactObject = new InteractObject(mImageKey, mX + cameraRc.left, mY + cameraRc.top, mHpMax, mTileCountX, mTileCountY);
-			interactObject->Init();
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::InteractObject, interactObject);
-		}
-		else if (mObjectType == ObjectLayer::NoninteractObject)
-		{
-			NonInteractObject* noninteractObject = new NonInteractObject(mImageKey, mX+cameraRc.left, mY+cameraRc.top);
-			noninteractObject->Init();
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::NoninteractObject, noninteractObject);
+			//누르면 생성
+			if (mObjectType == ObjectLayer::HousingObject)
+			{
+				//이곳에서 하우징 생성넣어줄것
+			}
+			else if (mObjectType == ObjectLayer::InteractObject)
+			{
+				InteractObject* interactObject = new InteractObject(mImageKey, mX + cameraRc.left, mY + mSizeY / 2 + cameraRc.top, mHpMax, mTileCountX, mTileCountY);
+				interactObject->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::InteractObject, interactObject);
+			}
+			else if (mObjectType == ObjectLayer::NoninteractObject)
+			{
+				NonInteractObject* noninteractObject = new NonInteractObject(mImageKey, mX + cameraRc.left, mY + cameraRc.top);
+				noninteractObject->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::NoninteractObject, noninteractObject);
+			}
 		}
 	}
 }

@@ -163,7 +163,7 @@ void MapToolLoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Toilet1", Resources(L"/05_Object/Toilet1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Toilet2", Resources(L"/05_Object/Toilet2.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"ToiletCloset1", Resources(L"/05_Object/ToiletCloset1.png"), 2, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Tree", Resources(L"/05_Object/Tree.png"), 1, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Tree1", Resources(L"/05_Object/Tree.png"), 1, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Tree2", Resources(L"/05_Object/Tree2.png"), 1, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Tree3", Resources(L"/05_Object/Tree3.png"), 1, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Tree4", Resources(L"/05_Object/Tree4.png"), 1, 1); });

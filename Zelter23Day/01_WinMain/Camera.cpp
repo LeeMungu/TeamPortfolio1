@@ -12,7 +12,7 @@ void Camera::Init()
 	mSizeX = WINSIZEX;
 	mSizeY = WINSIZEY;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-	mMoveSpeed = 5.f;
+	mMoveSpeed = 25.f;
 }
 
 void Camera::Release()

@@ -33,7 +33,9 @@ void NonInteractObject::Update()
 
 void NonInteractObject::Render(HDC hdc)
 {
-	//카메라렌더 해줘야 하지 않나?<-실험해보자<-카메라로 해야함
-	CameraManager::GetInstance()->GetMainCamera()
-		->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);
+	if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mRect))
+	{
+		CameraManager::GetInstance()->GetMainCamera()
+			->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);
+	}
 }

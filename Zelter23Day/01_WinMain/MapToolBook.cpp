@@ -397,6 +397,16 @@ void MapToolBook::RenderButtons(HDC hdc)
 //버튼 기능
 void MapToolBook::ChangeMode(BookType bookType)
 {
+	//마우스 초기화<-속성상관없이 체인지하면 마우스 초기화하도록
+	vector<GameObject*> tempMouse = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Mouse);
+	if (tempMouse.size() != NULL)
+	{
+		for (int i = 0; i < tempMouse.size(); ++i)
+		{
+			tempMouse[i]->SetIsDestroy(true);
+		}
+	}
+	//북타입 정해주기
 	if (mBookType != bookType)
 	{
 		mBookType = bookType;
@@ -492,13 +502,19 @@ void MapToolBook::ChangeMode(BookType bookType)
 				}
 			}
 			//오브젝트버튼 생성
-			ObjectButton* objectButton = new ObjectButton(L"Tree", mX -250 , mY-150, [](){
-				Mouse* mouse = new Mouse(L"Tree", ObjectLayer::InteractObject);
-				mouse->Init();
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
-			});
-			objectButton->Init();
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+			for (int i = 0; i < 8; ++i)
+			{
+				ObjectButton* objectButton = new ObjectButton(L"Tree"+to_wstring(i+1), mX - 250 +100*(i%3), mY - 150+100*(i/3), [i]() {
+					Mouse* mouse = new Mouse(L"Tree"+to_wstring(i+1), ObjectLayer::InteractObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+				});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+			}
 		}
 		else if (bookType == BookType::NoninterectObject)
 		{

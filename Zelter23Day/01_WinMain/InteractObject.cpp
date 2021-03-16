@@ -17,7 +17,7 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 	mSizeX = mImage->GetFrameWidth();
 	mSizeY = mImage->GetFrameHeight();
 	mX = tileIndexX * TileSize + TileSize / 2;
-	mY = tileIndexY * TileSize + TileSize / 2 - mSizeY/2;
+	mY = tileIndexY * TileSize + TileSize / 2 -(mSizeY / 2);
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mTileCountX = tileCountX;
 	mTileCountY = tileCountY;
@@ -37,11 +37,6 @@ void InteractObject::Release()
 
 void InteractObject::Update()
 {
-	//if (mHp <= 0 && mIsInteractive == true)
-	//{
-	//	mIsInteractive = false;
-	//	mIndexX = 1;
-	//}
 	if (mHp <= 0)
 	{
 		mIsDestroy = true;
@@ -50,6 +45,14 @@ void InteractObject::Update()
 
 void InteractObject::Render(HDC hdc)
 {
-	CameraManager::GetInstance()->GetMainCamera()
-		->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);
+	if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mRect))
+	{
+		RECT rc = RectMakeCenter(mX, mRect.bottom, TileSize, TileSize);
+		CameraManager::GetInstance()->GetMainCamera()
+			->RenderRect(hdc, rc);
+		CameraManager::GetInstance()->GetMainCamera()
+			->RenderRect(hdc, mRect);
+		CameraManager::GetInstance()->GetMainCamera()
+			->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);
+	}
 }

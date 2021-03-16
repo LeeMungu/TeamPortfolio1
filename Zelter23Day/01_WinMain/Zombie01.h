@@ -2,12 +2,21 @@
 #include "Enemy.h"
 class Image;
 class Tile;
+
+enum class ZombieState : int
+{
+	Patrol,
+	Chase,
+	Attack,
+	Die
+};
+
 class Zombie01 : public Enemy
 {
 	vector<vector<Tile*>> mTileList;
 	float mAngle;
 	float mDistance;
-	bool mTest;
+	bool mChase;
 public:
 	void Init()override;
 	void Release()override;

@@ -36,18 +36,19 @@ class Player : public GameObject
 	Animation* mLeftAttack;
 	Animation* mRightAttack;
 
+	Animation* mRightRoll;
+	Animation* mLeftRoll;
+
 	float mSpeed;
 	int mHP;
 	int mThirst;
 	int mHunger;
 	int mStemina;
-	float mNoDamageCount;
-	bool mIsNoDamage;
+	float mInvincibleCount;
+	bool mIsInvincible;
 
 	PlayerState mPlayerState;
 
-	float mAngle;
-	//class Tile* mTileList[TileCountX][TileCountY];
 	
 public:
 	Player(const string& name, float x, float y);
@@ -63,11 +64,11 @@ public:
 	int GetThirst() { return mThirst; }
 	int GetHunger() { return mHunger; }
 	int GetStemina() { return mStemina; }
-	float GetNoDamageCount() { return mNoDamageCount; }
-	bool GetNoDamage() { return mIsNoDamage; }
+	float GetInvincibleCount() { return mInvincibleCount; }
+	bool GetIsInvincible() { return mIsInvincible; }
 
 	void SetHP(int hp) { mHP = hp; }
-	void SetNoDamage(bool noDamage) { mIsNoDamage = noDamage; }
+	void SetNoDamage(bool noDamage) { mIsInvincible = noDamage; }
 
 	void PlayerCtrl();
 };

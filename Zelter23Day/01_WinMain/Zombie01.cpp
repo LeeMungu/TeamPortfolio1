@@ -58,7 +58,10 @@ void Zombie01::Init()
 
 	mCurrentAnimation = mLeftMove;
 	mCurrentAnimation->Play();
-	mChase = false;
+
+	mZombistate = ZombieState::Patrol;
+	mIsSwichPos = false;
+	mSwithtime = 0;
 }
 
 void Zombie01::Release()
@@ -81,7 +84,15 @@ void Zombie01::Update()
 	{
 		SearchPlayer();
 	}
+	else
+	{
+		mZombistate = ZombieState::Patrol;
+	}
 
+	if (mZombistate == ZombieState::Patrol)
+	{
+		Patrol();
+	}
 	
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
@@ -94,20 +105,58 @@ void Zombie01::Render(HDC hdc)
 
 	
 	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"공격실행", 30);
-
-	
-	
-	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, to_wstring(mDistance), 30);
-
+	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, to_wstring(mDistance), 30);
+	if (mZombistate == ZombieState::Patrol)
+	{
+		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"정찰", 30);
+	}
+	else if (mZombistate == ZombieState::Attack)
+	{
+		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"공격", 30);
+	}
+	else if (mZombistate == ZombieState::Chase)
+	{
+		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"추격", 30);
+	}
+	else if (mZombistate == ZombieState::Die)
+	{
+		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"주금", 30);
+	}
 }
 
 void Zombie01::Patrol()
 {
+	//지금은 좌우로만.
+	mSwithtime += Time::GetInstance()->DeltaTime();
+
+	if (mSwithtime > 3.f && mIsSwichPos==false)
+	{
+		mSwithtime = 0;
+		mIsSwichPos = true;
+	}
+	else if(mSwithtime >3.f && mIsSwichPos == true)
+	{
+		mSwithtime = 0;
+		mIsSwichPos = false;
+	}
+
+	if (mIsSwichPos)
+	{
+		mX += 1;
+	}
+	else
+	{
+		mX -= 1;
+	}
+
+
 }
 
 void Zombie01::SearchPlayer()
 {
-
+	//이 상태가 되면 무조건 따라가게 변경 필요
+	mZombistate = ZombieState::Chase;
+	
 	if (mDistance > 30)
 	{
 		MovetoPlayer();
@@ -120,7 +169,7 @@ void Zombie01::SearchPlayer()
 
 void Zombie01::Attack()
 {
-	
+	mZombistate = ZombieState::Attack;
 }
 
 void Zombie01::MovetoPlayer()
@@ -134,3 +183,5 @@ void Zombie01::MovetoPlayer()
 		mY -= -sinf(mAngle) * mSpeed;
 	}
 }
+
+

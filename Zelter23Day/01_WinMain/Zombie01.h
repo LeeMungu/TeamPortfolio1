@@ -16,7 +16,10 @@ class Zombie01 : public Enemy
 	vector<vector<Tile*>> mTileList;
 	float mAngle;
 	float mDistance;
-	bool mChase;
+	ZombieState mZombistate;
+
+	bool mIsSwichPos;
+	float mSwithtime;
 public:
 	void Init()override;
 	void Release()override;

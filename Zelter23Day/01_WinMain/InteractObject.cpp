@@ -5,17 +5,21 @@
 //타일 사이즈 때문에
 #include "Tile.h"
 
-InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountY)
+InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY)
 {
-	mX = x;
-	mY = y;
+	//위치 판정해주기
+	int tileIndexX = x/TileSize;
+	int tileIndexY = y/TileSize;
+	
 	mHp = hp;
 	mImageKey = imageKey;
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
 	mSizeX = mImage->GetFrameWidth();
 	mSizeY = mImage->GetFrameHeight();
+	mX = tileIndexX * TileSize + TileSize / 2;
+	mY = tileIndexY * TileSize + TileSize / 2 - mSizeY/2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-	mTileCountX = mSizeX/TileSize;
+	mTileCountX = tileCountX;
 	mTileCountY = tileCountY;
 }
 

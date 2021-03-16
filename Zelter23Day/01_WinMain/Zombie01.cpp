@@ -47,14 +47,14 @@ void Zombie01::Init()
 
 	mLeftAttack = new Animation;
 	mLeftAttack->InitFrameByStartEnd(0, 4, 4, 4, true);
-	mLeftAttack->SetIsLoop(true);
-	mLeftAttack->SetFrameUpdateTime(0.2f);
+	mLeftAttack->SetIsLoop(false);
+	mLeftAttack->SetFrameUpdateTime(0.1f);
 
 	mRightAttack = new Animation;
 
-	mRightAttack->InitFrameByEndStart(0, 4, 4, 4, true);
-	mRightAttack->SetIsLoop(true);
-	mRightAttack->SetFrameUpdateTime(0.2f);
+	mRightAttack->InitFrameByEndStart(4, 5, 0, 5, true);
+	mRightAttack->SetIsLoop(false);
+	mRightAttack->SetFrameUpdateTime(0.1f);
 
 	mCurrentAnimation = mLeftMove;
 	mCurrentAnimation->Play();
@@ -118,8 +118,8 @@ void Zombie01::Render(HDC hdc)
 		mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(),mSizeX,mSizeY);
 
 	
-	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"공격실행", 30);
-	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mDistance), 30);
+	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mAngle), 30);
+	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mDistance), 30);
 	if (mZombistate == ZombieState::Patrol)
 	{
 		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"정찰", 30);
@@ -156,10 +156,14 @@ void Zombie01::Patrol()
 
 	if (mIsSwichPos)
 	{
+		mCurrentAnimation = mRightMove;
+		mCurrentAnimation->Play();
 		mX += 1;
 	}
 	else
 	{
+		mCurrentAnimation = mLeftMove;
+		mCurrentAnimation->Play();
 		mX -= 1;
 	}
 
@@ -168,8 +172,6 @@ void Zombie01::Patrol()
 
 void Zombie01::SearchPlayer()
 {
-	//이 상태가 되면 무조건 따라가게 변경 필요
-	
 	if (mDistance > 53)
 	{
 		mSpeed = 2.f;
@@ -190,6 +192,19 @@ void Zombie01::Attack()
 	{
 		mZombistate = ZombieState::Chase;
 	}
+	else
+	{
+		if (mPlayer->GetRect().left > mRect.right)
+		{
+			mCurrentAnimation = mRightAttack;
+			mCurrentAnimation->Play();
+		}
+		else if (mPlayer->GetRect().left < mRect.left)
+		{
+			mCurrentAnimation = mLeftAttack;
+			mCurrentAnimation->Play();
+		}
+	}
 }
 
 void Zombie01::MovetoPlayer()
@@ -202,6 +217,27 @@ void Zombie01::MovetoPlayer()
 		mX -= cosf(mAngle) * mSpeed;
 		mY -= -sinf(mAngle) * mSpeed;
 	}
+	if (mPlayer->GetRect().left > mRect.right)
+	{
+		mCurrentAnimation = mRightMove;
+		mCurrentAnimation->Play();
+	}
+	else if (mPlayer->GetRect().left < mRect.left)
+	{
+		mCurrentAnimation = mLeftMove;
+		mCurrentAnimation->Play();
+	}
+	else if (mPlayer->GetRect().top > mRect.bottom)
+	{
+		mCurrentAnimation = mDownMove;
+		mCurrentAnimation->Play();
+	}
+	else if(mPlayer->GetRect().bottom<mRect.top)
+	{
+		mCurrentAnimation = mUpMove;
+		mCurrentAnimation->Play();
+	}
+	
 }
 
 

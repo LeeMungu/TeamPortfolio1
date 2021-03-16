@@ -79,7 +79,7 @@ void Mouse::Update()
 		}
 		else if (mObjectType == ObjectLayer::InteractObject)
 		{
-			InteractObject* interactObject = new InteractObject(mImageKey, mX + cameraRc.left, mY + cameraRc.top, mHpMax, mTileCountY);
+			InteractObject* interactObject = new InteractObject(mImageKey, mX + cameraRc.left, mY + cameraRc.top, mHpMax, mTileCountX, mTileCountY);
 			interactObject->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::InteractObject, interactObject);
 		}
@@ -100,6 +100,8 @@ void Mouse::Render(HDC hdc)
 	}
 	else if (mObjectType == ObjectLayer::InteractObject)
 	{
+		RECT rc = RectMakeCenter(mX, mRect.bottom, TileSize, TileSize);
+		RenderRect(hdc, rc);
 		mImage->Render(hdc, mRect.left, mRect.top);
 	}
 	else if (mObjectType == ObjectLayer::NoninteractObject)

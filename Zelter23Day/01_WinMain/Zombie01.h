@@ -20,6 +20,8 @@ class Zombie01 : public Enemy
 
 	bool mIsSwichPos;
 	float mSwithtime;
+
+	RECT mAttackRect;
 public:
 	void Init()override;
 	void Release()override;
@@ -36,5 +38,8 @@ public:
 	{
 		mTileList = tilelist;
 	}
+
+	RECT GetAttackRect() { return mAttackRect;}
+	void SetAttackRect(RECT rect) { mAttackRect = rect; }
 };
 

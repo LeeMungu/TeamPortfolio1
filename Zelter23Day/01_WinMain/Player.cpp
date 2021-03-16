@@ -28,6 +28,7 @@ void Player::Init()
 	mSizeY = mImage->GetFrameHeight() * 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mIsInvincible = false;
+	mIsKnockback = false;
 	mInvincibleCount = 0;
 
 	//Run Animation

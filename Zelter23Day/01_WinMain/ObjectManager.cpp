@@ -56,15 +56,15 @@ void ObjectManager::Update()
 				--i;
 				continue;
 			}
-			//클리핑
-			if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(iter->second[i]->GetRect()))
-			{
-				iter->second[i]->SetIsActive(true);
-			}
-			else
-			{
-				iter->second[i]->SetIsActive(false);
-			}
+			//클리핑테스트
+			//if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(iter->second[i]->GetRect()))
+			//{
+			//	iter->second[i]->SetIsActive(true);
+			//}
+			//else
+			//{
+			//	iter->second[i]->SetIsActive(false);
+			//}
 			if (iter->second[i]->GetIsActive() == true)
 			{
 				iter->second[i]->Update();

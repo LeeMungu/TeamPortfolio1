@@ -24,6 +24,23 @@ void ObjectManager::Init()
 			iter->second[i]->Init();
 		}
 	}
+
+	ObjectIter iter1 = mObjectList.begin();
+	for (; iter1 != mObjectList.end(); ++iter1)
+	{
+		if (iter1->first == ObjectLayer::Enemy ||
+			iter1->first == ObjectLayer::Player ||
+			iter1->first == ObjectLayer::InteractObject ||
+			iter1->first == ObjectLayer::NoninteractObject ||
+			iter1->first == ObjectLayer::HousingObject)
+		{
+			for (int i = 0; i < iter1->second.size(); ++i)
+			{
+				mZorderList.push_back(iter1->second[i]);
+			}
+		}
+	}
+
 }
 
 void ObjectManager::Release()
@@ -58,6 +75,7 @@ void ObjectManager::Update()
 				--i;
 				continue;
 			}
+
 			//클리핑테스트
 			//if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(iter->second[i]->GetRect()))
 			//{
@@ -73,7 +91,12 @@ void ObjectManager::Update()
 			}
 		}
 	}
+	
+
+
 	Collision();
+	
+	mZorderList = Zorder();
 }
 
 void ObjectManager::Render(HDC hdc)
@@ -81,6 +104,17 @@ void ObjectManager::Render(HDC hdc)
 	ObjectIter iter = mObjectList.begin();
 	for (; iter != mObjectList.end(); ++iter)
 	{
+		if (iter->first == ObjectLayer::Enemy || iter->first == ObjectLayer::Player
+			|| iter->first == ObjectLayer::NoninteractObject
+			|| iter->first == ObjectLayer::InteractObject
+			|| iter->first == ObjectLayer::HousingObject)
+		{
+			for (int i = 0; i < mZorderList.size(); ++i)
+			{
+				mZorderList[i]->Render(hdc);
+			}
+			continue;
+		}
 		for (int i = 0; i < iter->second.size(); ++i)
 		{
 			if (iter->second[i]->GetIsActive() == true)
@@ -195,21 +229,15 @@ void ObjectManager::Collision()
 
 vector<GameObject*> ObjectManager::Zorder()
 {
-	auto tmp = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::NoninteractObject);
-
-	auto NoninteractObject = tmp.begin();
-	auto Player = tmp.end();
+	vector<GameObject*> tmp = mZorderList;
 
 	auto func = [](GameObject* a, GameObject* b)
 	{
-		return a->GetY() < b->GetY();
+		return a->GetRect().bottom < b->GetRect().bottom;
 	};
 
-	sort(NoninteractObject, Player, func);
+	sort(tmp.begin(),tmp.end(), func);
 	
-
 	return tmp;
-	
-	return vector<GameObject*>();
 }
 

@@ -33,6 +33,8 @@ class ObjectManager
 private:
 	typedef map<ObjectLayer, vector<class GameObject*>>::iterator ObjectIter;
 	map<ObjectLayer, vector<class GameObject*>> mObjectList;
+
+	vector<class GameObject*> mZorderList;
 public:
 	ObjectManager();
 

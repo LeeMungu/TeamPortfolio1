@@ -82,7 +82,7 @@ void Time::Tick(float lockFPS)
 
 		//씬 타이머 추가
 		if (mIsSceneStart) {
-			this->mSceneTime += this->mDeltaTime;
+			this->mSceneTime += this->mDeltaTime * 50;
 		}
 
 		//초당 프레임 타임이 1초가 넘었다면 요소들 다시 초기화 

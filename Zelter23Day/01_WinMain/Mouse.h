@@ -11,6 +11,7 @@ class Mouse : public GameObject
 	
 	//interactObject일때 필요
 	int mTileCountY;
+	int mTileCountX;
 	int mHpMax;
 public:
 	Mouse(wstring imageKey, ObjectLayer objectLayer);
@@ -20,6 +21,7 @@ public:
 	void Render(HDC hdc)override;
 
 	void SetHpMax(int hpMax) { mHpMax = hpMax; }
+	void SetTileCountX(int tileCountX) { mTileCountX = tileCountX; }
 	void SetTileCountY(int tileCountY) { mTileCountY = tileCountY; }
 };
 

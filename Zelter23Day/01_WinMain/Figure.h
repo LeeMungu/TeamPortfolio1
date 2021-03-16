@@ -50,7 +50,7 @@ inline void RenderRect(HDC hdc, RECT rc)
 	*/
 	//Rectangle(hdc, rc.left,rc.top,rc.right,rc.bottom);
 }
-inline void RenderRect(HDC hdc, RECT rc , float r, float g, float b)
+inline void RenderRect(HDC hdc, RECT rc , float r, float g, float b, float stokeWight = 1.0f)
 {
 	ID2D1RenderTarget* renderTarget = D2DRenderer::GetInstance()->GetRenderTarget();
 
@@ -66,7 +66,7 @@ inline void RenderRect(HDC hdc, RECT rc , float r, float g, float b)
 
 	D2D1_RECT_F rect = { rc.left,rc.top,rc.right,rc.bottom };
 
-	renderTarget->DrawRectangle(rect, brush);
+	renderTarget->DrawRectangle(rect, brush, stokeWight);
 
 	brush->Release();
 }

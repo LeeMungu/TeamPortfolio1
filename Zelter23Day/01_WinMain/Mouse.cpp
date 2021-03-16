@@ -5,6 +5,7 @@
 #include "HousingObject.h"
 #include "InteractObject.h"
 #include "NonInteractObject.h"
+#include "Camera.h"
 
 
 Mouse::Mouse(wstring imageKey, ObjectLayer objectLayer)
@@ -39,6 +40,7 @@ void Mouse::Release()
 
 void Mouse::Update()
 {
+	RECT cameraRc = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	mX = _mousePosition.x;
 	mY = _mousePosition.y;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
@@ -65,13 +67,13 @@ void Mouse::Update()
 		}
 		else if (mObjectType == ObjectLayer::InteractObject)
 		{
-			InteractObject* interactObject = new InteractObject(mImageKey, mX, mY, 10);
+			InteractObject* interactObject = new InteractObject(mImageKey, mX + cameraRc.left, mY + cameraRc.top, 10);
 			interactObject->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::InteractObject, interactObject);
 		}
 		else if (mObjectType == ObjectLayer::NoninteractObject)
 		{
-			NonInteractObject* noninteractObject = new NonInteractObject(mImageKey, mX, mY);
+			NonInteractObject* noninteractObject = new NonInteractObject(mImageKey, mX+cameraRc.left, mY+cameraRc.top);
 			noninteractObject->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::NoninteractObject, noninteractObject);
 		}

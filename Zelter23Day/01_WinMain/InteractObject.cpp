@@ -8,13 +8,16 @@
 InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY)
 {
 	//위치 판정해주기
-	mX = x;
-	mY = y;
+	int tileIndexX = x/TileSize;
+	int tileIndexY = y/TileSize;
+	
 	mHp = hp;
 	mImageKey = imageKey;
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
 	mSizeX = mImage->GetFrameWidth();
 	mSizeY = mImage->GetFrameHeight();
+	mX = tileIndexX * TileSize + TileSize / 2;
+	mY = tileIndexY * TileSize + TileSize / 2 - mSizeY/2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mTileCountX = tileCountX;
 	mTileCountY = tileCountY;

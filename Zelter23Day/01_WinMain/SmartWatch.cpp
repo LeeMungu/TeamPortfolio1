@@ -29,7 +29,7 @@ void SmartWatch::Init()
 
 	mHour = 0;
 	mMin = 0;
-	mDayTime = DayTime::night;
+	mDayTime = DayTime::morning;
 	mAMPM = AMPM::PM;
 	mIsFirstChange = false;
 	mIsFstImgChange = false;

@@ -12,17 +12,14 @@ Player::Player(const string& name, float x, float y)
 	mX = x;
 	mY = y;
 	mSpeed = 3.f;
-
 	mHP = 100;
 	mThirst = 30;
 	mHunger = 30;
 	mStemina = 30;
-
 }
 
 void Player::Init()
 {
-
 	mImage = IMAGEMANAGER->FindImage(L"Player_run");
 	mSizeX = mImage->GetFrameWidth() * 2;
 	mSizeY = mImage->GetFrameHeight() * 2;

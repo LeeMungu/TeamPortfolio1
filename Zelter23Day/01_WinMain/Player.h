@@ -18,7 +18,11 @@ enum class Attacked
 	left,
 	right,
 	top,
-	bottom
+	down,
+	lefttop,
+	leftdown,
+	righttop,
+	rightdown
 };
 class Player : public GameObject
 {

@@ -210,6 +210,7 @@ void scene1::Render(HDC hdc)
 	{
 		for (int x = 0; x < mTileCountX; ++x)
 		{
+			if(CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mTileList[y][x]->GetRect()))
 			mTileList[y][x]->Render(hdc);
 			++renderCount;
 		}

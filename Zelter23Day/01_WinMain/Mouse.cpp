@@ -41,8 +41,20 @@ void Mouse::Release()
 void Mouse::Update()
 {
 	RECT cameraRc = CameraManager::GetInstance()->GetMainCamera()->GetRect();
-	mX = _mousePosition.x;
-	mY = _mousePosition.y;
+	if (mObjectType == ObjectLayer::HousingObject)
+	{
+		//이곳에서 하우징 생성넣어줄것
+	}
+	else if (mObjectType == ObjectLayer::InteractObject)
+	{
+		mX = _mousePosition.x;
+		mY = _mousePosition.y - mSizeY/2;
+	}
+	else if (mObjectType == ObjectLayer::NoninteractObject)
+	{
+		mX = _mousePosition.x;
+		mY = _mousePosition.y;
+	}
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
@@ -67,7 +79,7 @@ void Mouse::Update()
 		}
 		else if (mObjectType == ObjectLayer::InteractObject)
 		{
-			InteractObject* interactObject = new InteractObject(mImageKey, mX + cameraRc.left, mY + cameraRc.top, 10);
+			InteractObject* interactObject = new InteractObject(mImageKey, mX + cameraRc.left, mY + cameraRc.top, mHpMax, mTileCountY);
 			interactObject->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::InteractObject, interactObject);
 		}
@@ -82,6 +94,17 @@ void Mouse::Update()
 
 void Mouse::Render(HDC hdc)
 {
-	mImage->Render(hdc, mRect.left, mRect.top);
+	if (mObjectType == ObjectLayer::HousingObject)
+	{
+		//이곳에서 하우징 생성넣어줄것
+	}
+	else if (mObjectType == ObjectLayer::InteractObject)
+	{
+		mImage->Render(hdc, mRect.left, mRect.top);
+	}
+	else if (mObjectType == ObjectLayer::NoninteractObject)
+	{
+		mImage->Render(hdc, mRect.left, mRect.top);
+	}
 }
 

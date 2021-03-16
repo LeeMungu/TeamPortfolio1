@@ -15,11 +15,13 @@ class InteractObject : public GameObject
 	int mHp;
 	int mIndexX;
 	int mIndexY;
+	//차지하는 타일 갯수
+	int mTileCountX, mTileCountY;
 	//무슨변수인가? 필요한 변수인가?
 	bool mIsInteractive;
 	wstring mImageKey;
 public:
-	InteractObject(const wstring imageKey, float x, float y, int hp);
+	InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountY);
 
 	void Init()override;
 	void Release()override;

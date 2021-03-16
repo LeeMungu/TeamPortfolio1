@@ -146,7 +146,6 @@ void Player::Release()
 
 void Player::Update()
 {
-	// mAngle += 5;
 	PlayerCtrl();
 
 	mCurrentAnimation->Update();
@@ -171,6 +170,7 @@ void Player::Render(HDC hdc)
 void Player::PlayerCtrl() {
 	//플리이어 포인트 위치
 	POINT playerPoint = CameraManager::GetInstance()->GetMainCamera()->GetPoint(GetX(), GetY());
+	float deltaTime = Time::GetInstance()->DeltaTime() * 15.f;
 
 	if (mPlayerState != PlayerState::attack) 
 	{
@@ -181,22 +181,23 @@ void Player::PlayerCtrl() {
 
 				mImage = IMAGEMANAGER->FindImage(L"Player_roll");
 				mSpeed = 10.f;
-				mDash = 5.f;
+				mDash = 10.f;
 				mCurrentAnimation->Stop();
 
 				if (mCurrentAnimation == mLeftRunAni)
 				{
-					
 					mCurrentAnimation = mLeftRoll;
 					mCurrentAnimation->Play();
 				}
 				else if (mCurrentAnimation == mRightRunAni) {
-					
+					mCurrentAnimation = mRightRoll;
+					mCurrentAnimation->Play();
+				}
+				else if (mCurrentAnimation == mDownRunAni) {
 					mCurrentAnimation = mRightRoll;
 					mCurrentAnimation->Play();
 				}
 				else {
-					
 					mCurrentAnimation = mLeftRoll;
 					mCurrentAnimation->Play();
 				}
@@ -221,19 +222,19 @@ void Player::PlayerCtrl() {
 				{
 					mImage = IMAGEMANAGER->FindImage(L"Player_walk");
 					mCurrentAnimation = mDownWalkAni;
-					mSpeed = 1.f;
+					mSpeed = 5.f;
 					mCurrentAnimation->Play();
 
 				}
 				else {
 					mImage = IMAGEMANAGER->FindImage(L"Player_run");
 					mCurrentAnimation = mUpRunAni;
-					mSpeed = 3.f;
+					mSpeed = 10.f;
 					mCurrentAnimation->Play();
 
 				}
 			}
-			mY = mY - mSpeed;
+			mY -= deltaTime * mSpeed + mDash;
 		}
 		else if (Input::GetInstance()->GetKey('S'))
 		{
@@ -244,19 +245,19 @@ void Player::PlayerCtrl() {
 				{
 					mImage = IMAGEMANAGER->FindImage(L"Player_walk");
 					mCurrentAnimation = mUpWalkAni;
-					mSpeed = 1.f;
+					mSpeed = 5.f;
 					mCurrentAnimation->Play();
 
 				}
 				else {
 					mImage = IMAGEMANAGER->FindImage(L"Player_run");
 					mCurrentAnimation = mDownRunAni;
-					mSpeed = 3.f;
+					mSpeed = 10.f;
 					mCurrentAnimation->Play();
 
 				}
 			}
-			mY = mY + mSpeed;
+			mY += deltaTime * mSpeed + mDash;
 		}
 
 		if (Input::GetInstance()->GetKeyUp('W') || Input::GetInstance()->GetKeyUp('S')) {
@@ -276,15 +277,15 @@ void Player::PlayerCtrl() {
 				{
 					mImage = IMAGEMANAGER->FindImage(L"Player_walk");
 					mCurrentAnimation = mRightWalkAni;
-					mSpeed = 1.f;
+					mSpeed = 5.f;
 				}
 				else {
 					mImage = IMAGEMANAGER->FindImage(L"Player_run");
 					mCurrentAnimation = mLeftRunAni;
-					mSpeed = 3.f;
+					mSpeed = 10.f;
 				}
 			}
-			mX = mX - mSpeed;
+			mX -= deltaTime * mSpeed + mDash;
 			mCurrentAnimation->Play();
 		}
 		else if (Input::GetInstance()->GetKey('D'))
@@ -296,15 +297,15 @@ void Player::PlayerCtrl() {
 				{
 					mImage = IMAGEMANAGER->FindImage(L"Player_walk");
 					mCurrentAnimation = mLeftWalkAni;
-					mSpeed = 1.f;
+					mSpeed = 5.f;
 				}
 				else {
 					mImage = IMAGEMANAGER->FindImage(L"Player_run");
 					mCurrentAnimation = mRightRunAni;
-					mSpeed = 3.f;
+					mSpeed = 10.f;
 				}
 			}
-			mX = mX + mSpeed+mDash;
+			mX += deltaTime * mSpeed + mDash;
 			mCurrentAnimation->Play();
 		}
 

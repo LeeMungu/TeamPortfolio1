@@ -1,7 +1,10 @@
 #pragma once
 #include "UI.h"
 class Image;
-
+enum class AMPM {
+	AM,
+	PM,
+};
 class SmartWatch : public UI
 {
 	Image* mBaseImage;
@@ -26,6 +29,9 @@ class SmartWatch : public UI
 	float mSceneTime;
 	int mHour;
 	int mMin;
+	AMPM mAMPM;
+	bool mIsFirstChange;
+	bool mIsFstImgChange;
 
 public:
 	SmartWatch(const string& name, int x, int y);

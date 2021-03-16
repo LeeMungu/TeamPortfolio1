@@ -23,6 +23,7 @@ Player::Player(const string& name, float x, float y)
 
 void Player::Init()
 {
+
 	mImage = IMAGEMANAGER->FindImage(L"Player_run");
 	mSizeX = mImage->GetFrameWidth() * 2;
 	mSizeY = mImage->GetFrameHeight() * 2;
@@ -83,6 +84,16 @@ void Player::Init()
 	mRightAttack->SetIsLoop(false);
 	mRightAttack->SetFrameUpdateTime(0.05f);
 
+	//Roll Animation
+	mLeftRoll = new Animation();
+	mLeftRoll->InitFrameByStartEnd(0, 0, 5, 0, false);
+	mLeftRoll->SetIsLoop(false);
+	mLeftRoll->SetFrameUpdateTime(0.05f);
+
+	mRightRoll = new Animation();
+	mRightRoll->InitFrameByEndStart(5, 1, 0, 1, false);
+	mRightRoll->SetIsLoop(false);
+	mRightRoll->SetFrameUpdateTime(0.05f);
 
 	//Idle Animation
 	mUpIdleAni = new Animation();
@@ -167,14 +178,6 @@ void Player::PlayerCtrl() {
 				mSpeed = 5.f;
 			}
 		}
-		/*
-		if (mPlayerState == PlayerState::roll) {
-			mAngle += 5;
-			if (mAngle >= 360) {
-				mPlayerState = PlayerState::run;
-			}
-		}
-		*/
 
 		//위아래 이동
 		if (Input::GetInstance()->GetKey('W'))
@@ -260,10 +263,10 @@ void Player::PlayerCtrl() {
 				}
 			}
 			else {
-				mAngle += 5;
+				mImage = IMAGEMANAGER->FindImage(L"Player_roll");
 				mSpeed = 5.f;
-				if (mAngle >= 360) {
-					mAngle = 0;
+				mCurrentAnimation = mLeftRoll;
+				if (mCurrentAnimation->GetIsPlay() == false) {
 					mPlayerState = PlayerState::run;
 				}
 			}
@@ -288,10 +291,10 @@ void Player::PlayerCtrl() {
 				}
 			}
 			else {
-				mAngle += 5;
+				mImage = IMAGEMANAGER->FindImage(L"Player_roll");
 				mSpeed = 5.f;
-				if (mAngle >= 360) {
-					mAngle = 0;
+				mCurrentAnimation = mRightRoll;
+				if (mCurrentAnimation->GetIsPlay() == false) {
 					mPlayerState = PlayerState::run;
 				}
 			}

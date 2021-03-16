@@ -33,6 +33,12 @@ class SmartWatch : public UI
 	bool mIsFirstChange;
 	bool mIsFstImgChange;
 
+	Image* mTensHourImg;
+	Image* mUnitsHourImg;
+	Image* mTensMinImg;
+	Image* mUnitsMinImg;
+	Image* mClock;
+
 public:
 	SmartWatch(const string& name, int x, int y);
 	void Init()override;

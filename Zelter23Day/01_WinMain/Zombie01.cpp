@@ -58,7 +58,7 @@ void Zombie01::Init()
 
 	mCurrentAnimation = mLeftMove;
 	mCurrentAnimation->Play();
-	mTest = false;
+	mChase = false;
 }
 
 void Zombie01::Release()
@@ -77,14 +77,11 @@ void Zombie01::Update()
 	
 	mDistance = Math::GetDistance(mPlayer->GetX(), mPlayer->GetY(), mX, mY);
 
-	if (mDistance > 30)
+	if (mDistance < 150)
 	{
-		MovetoPlayer();
+		SearchPlayer();
 	}
-	else
-	{
-		Attack();
-	}
+
 	
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
@@ -110,6 +107,15 @@ void Zombie01::Patrol()
 
 void Zombie01::SearchPlayer()
 {
+
+	if (mDistance > 30)
+	{
+		MovetoPlayer();
+	}
+	else
+	{
+		Attack();
+	}
 }
 
 void Zombie01::Attack()

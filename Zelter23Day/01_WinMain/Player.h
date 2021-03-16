@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 
 class Image;
@@ -46,6 +46,8 @@ class Player : public GameObject
 	int mStemina;
 	float mInvincibleCount;
 	bool mIsInvincible;
+	bool mIsKnockback;
+	float mDash;
 
 	PlayerState mPlayerState;
 
@@ -60,15 +62,19 @@ public:
 
 	void SetSpeed(float speed) { mSpeed = speed; }
 
+
 	int GetHP() { return mHP; }
 	int GetThirst() { return mThirst; }
 	int GetHunger() { return mHunger; }
 	int GetStemina() { return mStemina; }
 	float GetInvincibleCount() { return mInvincibleCount; }
 	bool GetIsInvincible() { return mIsInvincible; }
+	bool GetIsKnockback() {return mIsKnockback;	}
+
 
 	void SetHP(int hp) { mHP = hp; }
 	void SetNoDamage(bool noDamage) { mIsInvincible = noDamage; }
+	void SetmIsKnockback(bool knockback) { mIsKnockback = knockback; }
 
 	void PlayerCtrl();
 };

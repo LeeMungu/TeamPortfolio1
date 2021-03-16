@@ -220,7 +220,7 @@ void scene1::Render(HDC hdc)
 		}
 	}
 
-	TextOut(hdc, 10, 10, to_wstring(renderCount).c_str(), to_wstring(renderCount).length());
+	//TextOut(hdc, 10, 10, to_wstring(renderCount).c_str(), to_wstring(renderCount).length());
 
 	ObjectManager::GetInstance()->Render(hdc);
 

@@ -39,8 +39,14 @@ void Tile::Render(HDC hdc)
 		RECT tempRc = RectMake(mX - CameraManager::GetInstance()->GetMainCamera()->GetRect().left,
 			mY - CameraManager::GetInstance()->GetMainCamera()->GetRect().top,
 			mSizeX, mSizeY);
-
-		Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Green);
+		if (PtInRect(&tempRc, _mousePosition))
+		{
+			Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Red2);
+		}
+		else
+		{
+			Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Green);
+		}
 
 		if (Input::GetInstance()->GetKey(VK_LCONTROL))
 		{

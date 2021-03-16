@@ -1,10 +1,7 @@
 #pragma once
 #include "UI.h"
 class Image;
-enum class DayTime {
-	morning,
-	night,
-};
+
 class SmartWatch : public UI
 {
 	Image* mBaseImage;
@@ -25,6 +22,11 @@ class SmartWatch : public UI
 	int mThirst;
 	int mHunger;
 	int mStemina;
+
+	float mSceneTime;
+	int mHour;
+	int mMin;
+
 public:
 	SmartWatch(const string& name, int x, int y);
 	void Init()override;

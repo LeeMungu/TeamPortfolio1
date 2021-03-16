@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "ObjectManager.h"
 #include "Camera.h"
+#include <algorithm>
+
 
 #include "GameObject.h"
 ObjectManager::ObjectManager()
@@ -189,5 +191,25 @@ void ObjectManager::Collision()
 	//		}
 	//	}
 	//}
+}
+
+vector<GameObject*> ObjectManager::Zorder()
+{
+	auto tmp = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::NoninteractObject);
+
+	auto NoninteractObject = tmp.begin();
+	auto Player = tmp.end();
+
+	auto func = [](GameObject* a, GameObject* b)
+	{
+		return a->GetY() < b->GetY();
+	};
+
+	sort(NoninteractObject, Player, func);
+	
+
+	return tmp;
+	
+	return vector<GameObject*>();
 }
 

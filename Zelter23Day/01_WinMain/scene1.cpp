@@ -12,6 +12,7 @@
 #include "Zombie01.h"
 #include "InteractObject.h"
 #include "NonInteractObject.h"
+#include "CollisionManager.h"
 
 void scene1::Init()
 {
@@ -105,12 +106,15 @@ void scene1::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
 
 	ObjectManager::GetInstance()->Init();
+	CollisionManager::GetInstance()->Init();
 	camera->ChangeMode(Camera::Mode::Follow);
+
+	//true 설정하면 씬 시간 흐름
+	Time::GetInstance()->SetIsSceneStart(true);
 }
 
 void scene1::Release()
 {
-
 	ObjectManager::GetInstance()->Release();
 	//알아서해
 	for (int y = 0; y < mTileList.size(); ++y)
@@ -126,7 +130,7 @@ void scene1::Release()
 void scene1::Update()
 {
 	ObjectManager::GetInstance()->Update();
-
+	CollisionManager::GetInstance()->Update();
 
 
 	Player* tempPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
@@ -219,6 +223,16 @@ void scene1::Render(HDC hdc)
 	TextOut(hdc, 10, 10, to_wstring(renderCount).c_str(), to_wstring(renderCount).length());
 
 	ObjectManager::GetInstance()->Render(hdc);
+
+	//씬 시간 보기
+	float worldTime = Time::GetInstance()->GetWorldTime();
+	float sceneTime = Time::GetInstance()->GetSceneTime();
+	wstring strWorldTime = L"WorldTime : " + to_wstring(worldTime);
+	wstring strSceneTime = L"ScneTime : " + to_wstring(sceneTime);
+	D2DRenderer::GetInstance()
+		->RenderText(10, 200, strWorldTime.c_str(), strWorldTime.length());
+	D2DRenderer::GetInstance()
+		->RenderText(10, 280, strSceneTime.c_str(), strSceneTime.length());
 }
 
 void scene1::Load()

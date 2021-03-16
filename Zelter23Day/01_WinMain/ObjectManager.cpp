@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "ObjectManager.h"
 #include "Camera.h"
+#include <algorithm>
+
 
 #include "GameObject.h"
 ObjectManager::ObjectManager()
@@ -22,6 +24,23 @@ void ObjectManager::Init()
 			iter->second[i]->Init();
 		}
 	}
+
+	ObjectIter iter1 = mObjectList.begin();
+	for (; iter1 != mObjectList.end(); ++iter1)
+	{
+		if (iter1->first == ObjectLayer::Enemy ||
+			iter1->first == ObjectLayer::Player ||
+			iter1->first == ObjectLayer::InteractObject ||
+			iter1->first == ObjectLayer::NoninteractObject ||
+			iter1->first == ObjectLayer::HousingObject)
+		{
+			for (int i = 0; i < iter1->second.size(); ++i)
+			{
+				mZorderList.push_back(iter1->second[i]);
+			}
+		}
+	}
+
 }
 
 void ObjectManager::Release()
@@ -56,6 +75,7 @@ void ObjectManager::Update()
 				--i;
 				continue;
 			}
+
 			//클리핑테스트
 			//if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(iter->second[i]->GetRect()))
 			//{
@@ -71,7 +91,12 @@ void ObjectManager::Update()
 			}
 		}
 	}
+	
+
+
 	Collision();
+	
+	mZorderList = Zorder();
 }
 
 void ObjectManager::Render(HDC hdc)
@@ -79,6 +104,17 @@ void ObjectManager::Render(HDC hdc)
 	ObjectIter iter = mObjectList.begin();
 	for (; iter != mObjectList.end(); ++iter)
 	{
+		if (iter->first == ObjectLayer::Enemy || iter->first == ObjectLayer::Player
+			|| iter->first == ObjectLayer::NoninteractObject
+			|| iter->first == ObjectLayer::InteractObject
+			|| iter->first == ObjectLayer::HousingObject)
+		{
+			for (int i = 0; i < mZorderList.size(); ++i)
+			{
+				mZorderList[i]->Render(hdc);
+			}
+			continue;
+		}
 		for (int i = 0; i < iter->second.size(); ++i)
 		{
 			if (iter->second[i]->GetIsActive() == true)
@@ -169,25 +205,39 @@ vector<class GameObject*> ObjectManager::GetObjectList(ObjectLayer layer)
 
 void ObjectManager::Collision()
 {
-	RECT temp;
-	RECT mZombieRC;
-	if (ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player") != nullptr)
+	//RECT temp;
+	//RECT mZombieRC;
+	//if (ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player") != nullptr)
+	//{
+	//	RECT mPlayerRC = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
+	//	vector<GameObject*> mZombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+
+	//	if (mZombie.size() != NULL)
+	//	{
+	//		for (int i = 0; i < mZombie.size(); ++i)
+	//		{
+	//			RECT mZombieRC = mZombie[i]->GetRect();
+	//			if (IntersectRect(&temp, &mPlayerRC, &mZombieRC))
+	//			{
+	//				int a = 1;
+	//			}
+
+	//		}
+	//	}
+	//}
+}
+
+vector<GameObject*> ObjectManager::Zorder()
+{
+	vector<GameObject*> tmp = mZorderList;
+
+	auto func = [](GameObject* a, GameObject* b)
 	{
-		RECT mPlayerRC = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
-		vector<GameObject*> mZombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+		return a->GetRect().bottom < b->GetRect().bottom;
+	};
 
-		if (mZombie.size() != NULL)
-		{
-			for (int i = 0; i < mZombie.size(); ++i)
-			{
-				RECT mZombieRC = mZombie[i]->GetRect();
-				if (IntersectRect(&temp, &mPlayerRC, &mZombieRC))
-				{
-					int a = 1;
-				}
-
-			}
-		}
-	}
+	sort(tmp.begin(),tmp.end(), func);
+	
+	return tmp;
 }
 

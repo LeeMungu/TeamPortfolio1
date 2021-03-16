@@ -33,6 +33,8 @@ class ObjectManager
 private:
 	typedef map<ObjectLayer, vector<class GameObject*>>::iterator ObjectIter;
 	map<ObjectLayer, vector<class GameObject*>> mObjectList;
+
+	vector<class GameObject*> mZorderList;
 public:
 	ObjectManager();
 
@@ -49,5 +51,8 @@ public:
 	vector<class GameObject*> GetObjectList(ObjectLayer layer);
 
 	void Collision();
+
+	vector<GameObject*> Zorder();
+
 };
 

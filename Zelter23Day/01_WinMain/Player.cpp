@@ -177,7 +177,7 @@ void Player::PlayerCtrl() {
 				mPlayerState = PlayerState::roll;
 
 				mImage = IMAGEMANAGER->FindImage(L"Player_roll");
-				mSpeed = 8.f;
+				mSpeed = 10.f;
 				mCurrentAnimation->Stop();
 
 				if (mCurrentAnimation == mLeftRunAni)

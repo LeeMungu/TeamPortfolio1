@@ -1,21 +1,11 @@
 #pragma once
 #include "GameObject.h"
-#include "Player.h"
 
-class Image;
-class Animation;
-
-enum class WeaponState
+class Weapon : public GameObject
 {
-	Idle,
-	Attack,
-};
-
-class Weapon : public Player
-{
+public:
+	Weapon(const float x, float y, float sizeX, float sizeY);
 	Image* mImage;
-	//총엔 애니메이션이 필요없겠지?
-	//Animation* mCurrentAnimation;
 
 	int mBullet;
 	float mAngle; //총알 궤적?

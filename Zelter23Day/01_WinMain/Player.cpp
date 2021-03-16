@@ -30,6 +30,7 @@ void Player::Init()
 	mIsInvincible = false;
 	mIsKnockback = false;
 	mInvincibleCount = 0;
+	mAttacked = Attacked::left;
 
 	//Run Animation
 	mUpRunAni = new Animation();

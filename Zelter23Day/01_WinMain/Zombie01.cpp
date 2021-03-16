@@ -13,8 +13,8 @@ void Zombie01::Init()
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	mX =  300;
 	mY =  300;
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+	mSizeX = mImage->GetFrameWidth()*2;
+	mSizeY = mImage->GetFrameHeight()*2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mAngle = 0;
 
@@ -58,7 +58,7 @@ void Zombie01::Init()
 
 	mCurrentAnimation = mLeftMove;
 	mCurrentAnimation->Play();
-
+	mTest = false;
 }
 
 void Zombie01::Release()
@@ -74,21 +74,34 @@ void Zombie01::Release()
 
 void Zombie01::Update()
 {
-	vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX()/TileSize, mPlayer->GetY() / TileSize);
+	
+	mDistance = Math::GetDistance(mPlayer->GetX(), mPlayer->GetY(), mX, mY);
 
-	if (Path.size() != NULL)
+	if (mDistance > 30)
 	{
-		mAngle = Math::GetAngle(Path[Path.size() - 1]->GetX(), Path[Path.size() - 1]->GetY(), mX, mY);
-		mX -= cosf(mAngle) * mSpeed;
-		mY -= -sinf(mAngle) * mSpeed;
+		MovetoPlayer();
 	}
+	else
+	{
+		Attack();
+	}
+	
+
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
 void Zombie01::Render(HDC hdc)
 {
-	CameraManager::GetInstance()->GetMainCamera()->FrameRender(hdc, mImage, mRect.left, mRect.top,
-		mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	CameraManager::GetInstance()->GetMainCamera()->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top,
+		mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(),mSizeX,mSizeY);
+
+	
+	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"공격실행", 30);
+
+	
+	
+	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, to_wstring(mDistance), 30);
+
 }
 
 void Zombie01::Patrol()
@@ -101,4 +114,17 @@ void Zombie01::SearchPlayer()
 
 void Zombie01::Attack()
 {
+	
+}
+
+void Zombie01::MovetoPlayer()
+{
+	vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
+
+	if (Path.size() != NULL)
+	{
+		mAngle = Math::GetAngle(Path[Path.size() - 1]->GetX(), Path[Path.size() - 1]->GetY(), mX, mY);
+		mX -= cosf(mAngle) * mSpeed;
+		mY -= -sinf(mAngle) * mSpeed;
+	}
 }

@@ -49,8 +49,6 @@ class Player : public GameObject
 
 	PlayerState mPlayerState;
 
-	float mAngle;
-	//class Tile* mTileList[TileCountX][TileCountY];
 	
 public:
 	Player(const string& name, float x, float y);

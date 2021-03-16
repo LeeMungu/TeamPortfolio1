@@ -18,7 +18,6 @@ Player::Player(const string& name, float x, float y)
 	mHunger = 30;
 	mStemina = 30;
 
-	mAngle = 0;
 }
 
 void Player::Init()
@@ -88,12 +87,12 @@ void Player::Init()
 	mLeftRoll = new Animation();
 	mLeftRoll->InitFrameByStartEnd(0, 0, 5, 0, false);
 	mLeftRoll->SetIsLoop(false);
-	mLeftRoll->SetFrameUpdateTime(0.05f);
+	mLeftRoll->SetFrameUpdateTime(0.1f);
 
 	mRightRoll = new Animation();
 	mRightRoll->InitFrameByEndStart(5, 1, 0, 1, false);
 	mRightRoll->SetIsLoop(false);
-	mRightRoll->SetFrameUpdateTime(0.05f);
+	mRightRoll->SetFrameUpdateTime(0.1f);
 
 	//Idle Animation
 	mUpIdleAni = new Animation();
@@ -139,6 +138,9 @@ void Player::Release()
 
 	SafeDelete(mRightAttack);
 	SafeDelete(mLeftAttack);
+
+	SafeDelete(mLeftRoll);
+	SafeDelete(mRightRoll);
 }
 
 void Player::Update()
@@ -154,8 +156,6 @@ void Player::Update()
 
 void Player::Render(HDC hdc)
 {
-	mImage->SetAngle(mAngle);
-
 	CameraManager::GetInstance()->GetMainCamera()->
 		ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
 	if (Input::GetInstance()->GetKey(VK_LSHIFT))
@@ -175,10 +175,37 @@ void Player::PlayerCtrl() {
 		if (mPlayerState == PlayerState::run) {
 			if (Input::GetInstance()->GetKeyDown(VK_RBUTTON)) { 
 				mPlayerState = PlayerState::roll;
+
+				mImage = IMAGEMANAGER->FindImage(L"Player_roll");
 				mSpeed = 5.f;
+				mCurrentAnimation->Stop();
+
+				if (mCurrentAnimation == mLeftRunAni)
+				{
+					
+					mCurrentAnimation = mLeftRoll;
+					mCurrentAnimation->Play();
+				}
+				else if (mCurrentAnimation == mRightRunAni) {
+					
+					mCurrentAnimation = mRightRoll;
+					mCurrentAnimation->Play();
+				}
+				else {
+					
+					mCurrentAnimation = mLeftRoll;
+					mCurrentAnimation->Play();
+				}
+
 			}
 		}
-
+		//roll 상태 끝나면 run으로 전환해줌
+		if (mPlayerState == PlayerState::roll) {
+			if (mCurrentAnimation->GetIsPlay() == false) {
+				mPlayerState = PlayerState::run;
+				mCurrentAnimation->Stop();
+			}
+		}
 		//위아래 이동
 		if (Input::GetInstance()->GetKey('W'))
 		{
@@ -190,23 +217,18 @@ void Player::PlayerCtrl() {
 					mImage = IMAGEMANAGER->FindImage(L"Player_walk");
 					mCurrentAnimation = mDownWalkAni;
 					mSpeed = 1.f;
+					mCurrentAnimation->Play();
+
 				}
 				else {
 					mImage = IMAGEMANAGER->FindImage(L"Player_run");
 					mCurrentAnimation = mUpRunAni;
 					mSpeed = 3.f;
-				}
-			}
-			else {
-				mAngle += 5;
-				mSpeed = 5.f;
-				if (mAngle >= 360) {
-					mAngle = 0;
-					mPlayerState = PlayerState::run;
+					mCurrentAnimation->Play();
+
 				}
 			}
 			mY = mY - mSpeed;
-			mCurrentAnimation->Play();
 		}
 		else if (Input::GetInstance()->GetKey('S'))
 		{
@@ -218,23 +240,18 @@ void Player::PlayerCtrl() {
 					mImage = IMAGEMANAGER->FindImage(L"Player_walk");
 					mCurrentAnimation = mUpWalkAni;
 					mSpeed = 1.f;
+					mCurrentAnimation->Play();
+
 				}
 				else {
 					mImage = IMAGEMANAGER->FindImage(L"Player_run");
 					mCurrentAnimation = mDownRunAni;
 					mSpeed = 3.f;
-				}
-			}
-			else {
-				mAngle += 5;
-				mSpeed = 5.f;
-				if (mAngle >= 360) {
-					mAngle = 0;
-					mPlayerState = PlayerState::run;
+					mCurrentAnimation->Play();
+
 				}
 			}
 			mY = mY + mSpeed;
-			mCurrentAnimation->Play();
 		}
 
 		if (Input::GetInstance()->GetKeyUp('W') || Input::GetInstance()->GetKeyUp('S')) {
@@ -262,14 +279,6 @@ void Player::PlayerCtrl() {
 					mSpeed = 3.f;
 				}
 			}
-			else {
-				mImage = IMAGEMANAGER->FindImage(L"Player_roll");
-				mSpeed = 5.f;
-				mCurrentAnimation = mLeftRoll;
-				if (mCurrentAnimation->GetIsPlay() == false) {
-					mPlayerState = PlayerState::run;
-				}
-			}
 			mX = mX - mSpeed;
 			mCurrentAnimation->Play();
 		}
@@ -288,14 +297,6 @@ void Player::PlayerCtrl() {
 					mImage = IMAGEMANAGER->FindImage(L"Player_run");
 					mCurrentAnimation = mRightRunAni;
 					mSpeed = 3.f;
-				}
-			}
-			else {
-				mImage = IMAGEMANAGER->FindImage(L"Player_roll");
-				mSpeed = 5.f;
-				mCurrentAnimation = mRightRoll;
-				if (mCurrentAnimation->GetIsPlay() == false) {
-					mPlayerState = PlayerState::run;
 				}
 			}
 			mX = mX + mSpeed;
@@ -331,7 +332,7 @@ void Player::PlayerCtrl() {
 		}
 		
 		
-	}
+	}//공격모션 끝나면
 	else if (mPlayerState == PlayerState::attack) {
 		if (mCurrentAnimation == mLeftAttack) {
 			if (mCurrentAnimation->GetIsPlay() == false) {

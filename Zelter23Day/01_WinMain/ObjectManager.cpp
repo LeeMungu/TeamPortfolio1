@@ -91,7 +91,22 @@ void ObjectManager::Update()
 			}
 		}
 	}
-	
+	mZorderList.clear();
+	ObjectIter iter1 = mObjectList.begin();
+	for (; iter1 != mObjectList.end(); ++iter1)
+	{
+		if (iter1->first == ObjectLayer::Enemy ||
+			iter1->first == ObjectLayer::Player ||
+			iter1->first == ObjectLayer::InteractObject ||
+			iter1->first == ObjectLayer::NoninteractObject ||
+			iter1->first == ObjectLayer::HousingObject)
+		{
+			for (int i = 0; i < iter1->second.size(); ++i)
+			{
+				mZorderList.push_back(iter1->second[i]);
+			}
+		}
+	}
 
 
 	Collision();

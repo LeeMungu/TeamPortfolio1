@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "ObjectManager.h"
 #include "Camera.h"
+#include <algorithm>
+
 
 #include "GameObject.h"
 ObjectManager::ObjectManager()
@@ -169,45 +171,45 @@ vector<class GameObject*> ObjectManager::GetObjectList(ObjectLayer layer)
 
 void ObjectManager::Collision()
 {
-	RECT temp;
-	RECT mZombieRC;
-	if (ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player") != nullptr)
-	{
-		RECT mPlayerRC = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
-		vector<GameObject*> mZombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	//RECT temp;
+	//RECT mZombieRC;
+	//if (ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player") != nullptr)
+	//{
+	//	RECT mPlayerRC = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
+	//	vector<GameObject*> mZombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
 
-		if (mZombie.size() != NULL)
-		{
-			for (int i = 0; i < mZombie.size(); ++i)
-			{
-				RECT mZombieRC = mZombie[i]->GetRect();
-				if (IntersectRect(&temp, &mPlayerRC, &mZombieRC))
-				{
-					int a = 1;
-				}
+	//	if (mZombie.size() != NULL)
+	//	{
+	//		for (int i = 0; i < mZombie.size(); ++i)
+	//		{
+	//			RECT mZombieRC = mZombie[i]->GetRect();
+	//			if (IntersectRect(&temp, &mPlayerRC, &mZombieRC))
+	//			{
+	//				int a = 1;
+	//			}
 
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
 }
 
 vector<GameObject*> ObjectManager::Zorder()
 {
-	auto tmp = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Player);
+	auto tmp = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::NoninteractObject);
 
-	auto start = tmp.begin();
-	auto end = tmp.end();
+	auto NoninteractObject = tmp.begin();
+	auto Player = tmp.end();
 
 	auto func = [](GameObject* a, GameObject* b)
 	{
 		return a->GetY() < b->GetY();
 	};
 
-
+	sort(NoninteractObject, Player, func);
 	
 
-
-
+	return tmp;
+	
 	return vector<GameObject*>();
 }
 

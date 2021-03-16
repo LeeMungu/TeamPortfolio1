@@ -17,7 +17,10 @@ class InteractObject : public GameObject
 	int mIndexY;
 	//차지하는 타일 갯수
 	int mTileCountX, mTileCountY;
-	//
+	//시작 타일 배열값
+	int mTileIndexX, mTileIndexY;
+	//입력해주는 Y값
+	int mInputY;
 	//무슨변수인가? 필요한 변수인가?
 	bool mIsInteractive;
 	wstring mImageKey;
@@ -29,7 +32,14 @@ public:
 	void Update()override;
 	void Render(HDC hdc)override;
 
+	int GetHp()const { return mHp; }
 	void SetHp(int hp) { mHp = hp; }
 	wstring GetImageKey()const { return mImageKey; }
+	
+	int GetInputY()const { return mInputY; }
+	int GetTileIndexX()const { return mTileIndexX; }
+	int GetTileIndexY()const { return mTileIndexY; }
+	int GetTileCountX()const { return mTileCountX; }
+	int GetTileCountY()const { return mTileCountY; }
 };
 

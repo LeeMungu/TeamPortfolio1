@@ -504,7 +504,7 @@ void MapToolBook::ChangeMode(BookType bookType)
 			//오브젝트버튼 생성
 			for (int i = 0; i < 8; ++i)
 			{
-				ObjectButton* objectButton = new ObjectButton(L"Tree"+to_wstring(i+1), mX - 250 +100*(i%3), mY - 150+100*(i/3), [i]() {
+				ObjectButton* objectButton = new ObjectButton(L"Tree"+to_wstring(i+1), mX - 250 +100*(i%3), mY - 210+145*(i/3), [i]() {
 					Mouse* mouse = new Mouse(L"Tree"+to_wstring(i+1), ObjectLayer::InteractObject);
 					mouse->SetHpMax(10);
 					mouse->SetTileCountX(1);

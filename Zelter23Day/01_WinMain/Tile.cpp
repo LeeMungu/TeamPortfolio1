@@ -54,7 +54,7 @@ void Tile::Render(HDC hdc)
 			if (Input::GetInstance()->GetKey(VK_LCONTROL))
 			{
 				if (mTileLayer == TileLayer::normal)
-					Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Green2);
+					Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Green);
 				if (mTileLayer == TileLayer::wall)
 					Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Red2);
 				if (mTileLayer == TileLayer::slow)

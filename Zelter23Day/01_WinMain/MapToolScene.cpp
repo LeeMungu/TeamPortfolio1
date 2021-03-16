@@ -349,7 +349,6 @@ void MapToolScene::Update()
 		}
 	}
 
-
 	//버튼 생성
 	if (mToolBook->GetIsOpenBook() && mSaveButton == nullptr && mLoadButton == nullptr)
 	{
@@ -389,6 +388,21 @@ void MapToolScene::Update()
 			{
 				tempMouse[i]->SetIsDestroy(true);
 			}
+		}
+	}
+	//인터렉트 오브젝트에 따른 타일 속성 바꾸기(wall로 바꿔주기)
+	//로드 할때도 해줘야 할듯하다 -> 항상 적용되어야한다 -> 오브젝트매니져에서 해주고 싶지만 타일이 오브젝트매니져에 없다.
+	//->타일을 오브젝트매니져에 넣기는 메리트가 너무 적다(업데이트나 기타부분이 의미가 없다 타일은 타일로 남겨두는게 충돌이 적고 
+	//타일이 적게 들어갈듯
+	vector<GameObject*> tempInteractList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+	if (tempInteractList.size() != NULL)
+	{
+		for(int i=0; i<tempInteractList.size();++i)
+		{
+			//후에 다중 타일 추가로 판정해줘야 한다.
+			InteractObject* tempInteract = (InteractObject * )tempInteractList[i];
+			if(mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer()!= TileLayer::wall)
+			mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
 		}
 	}
 }
@@ -541,12 +555,13 @@ void MapToolScene::Save()
 		//오브젝트레이어 구분, 갯수 <- *없으면 아에 기록도 하지 않는다.
 		int intObjectLayer = (int)ObjectLayer::HousingObject;
 		vector<GameObject*> tempObject = ObjectManager::GetInstance()->GetObjectList((ObjectLayer)intObjectLayer);
+		
+		saveStream << intObjectLayer;
+		saveStream << ',';
+		saveStream << tempObject.size();
+		saveStream << endl;
 		if (tempObject.size() != NULL)
-		{
-			saveStream << intObjectLayer;
-			saveStream << ',';
-			saveStream << tempObject.size();
-			saveStream << endl;
+		{	
 			//각 오브젝트레이어의 이미지키, x좌표, y좌표
 			for (int i = 0; i < tempObject.size(); ++i)
 			{
@@ -558,12 +573,13 @@ void MapToolScene::Save()
 		intObjectLayer = (int)ObjectLayer::InteractObject;
 		tempObject.clear();
 		tempObject = ObjectManager::GetInstance()->GetObjectList((ObjectLayer)intObjectLayer);
-		if (tempObject.size() != NULL)
-		{
+		
 			saveStream << intObjectLayer;
 			saveStream << ',';
 			saveStream << tempObject.size();
 			saveStream << endl;
+		if (tempObject.size() != NULL)
+		{
 			//각 오브젝트레이어의 이미지키, x좌표, y좌표
 			for (int i = 0; i < tempObject.size(); ++i)
 			{
@@ -575,7 +591,13 @@ void MapToolScene::Save()
 				saveStream << ",";
 				saveStream << tempObject[i]->GetX();
 				saveStream << ",";
-				saveStream << tempObject[i]->GetY();
+				saveStream << ((InteractObject*)tempObject[i])->GetInputY();
+				saveStream << ",";
+				saveStream << ((InteractObject*)tempObject[i])->GetHp();
+				saveStream << ",";
+				saveStream << ((InteractObject*)tempObject[i])->GetTileCountX();
+				saveStream << ",";
+				saveStream << ((InteractObject*)tempObject[i])->GetTileCountY();
 				saveStream << endl;
 			}
 		}
@@ -583,12 +605,13 @@ void MapToolScene::Save()
 		intObjectLayer = (int)ObjectLayer::NoninteractObject;
 		tempObject.clear();
 		tempObject = ObjectManager::GetInstance()->GetObjectList((ObjectLayer)intObjectLayer);
+		
+		saveStream << intObjectLayer;
+		saveStream << ',';
+		saveStream << tempObject.size();
+		saveStream << endl;
 		if (tempObject.size() != NULL)
 		{
-			saveStream << intObjectLayer;
-			saveStream << ',';
-			saveStream << tempObject.size();
-			saveStream << endl;
 			//각 오브젝트레이어의 이미지키, x좌표, y좌표
 			for (int i = 0; i < tempObject.size(); ++i)
 			{
@@ -697,34 +720,103 @@ void MapToolScene::Load()
 
 		//오브젝트 읽어오기
 		string bufferObjectLayer;//레이어
+		//집 읽어오기
 		getline(loadStream, bufferObjectLayer, ',');
-		if (bufferObjectLayer != "")
+		string buffer;
+		ObjectLayer objectLayer = (ObjectLayer)stoi(bufferObjectLayer);
+		getline(loadStream, buffer);
+		int objectSize = stoi(buffer);
+		//레이어, 갯수
+		if (objectSize != NULL)
 		{
-			//순서는-하우스, 인터렉트,언인터렉트므로 추후에 수정해야한다.
-			//언인터랙트인 경우 <- 언인터렉트부터 구현 해본다
-			if ((ObjectLayer)stoi(bufferObjectLayer) == ObjectLayer::NoninteractObject)
+			for (int i = 0; i < objectSize; ++i)
 			{
-				string buffer;
-				ObjectLayer objectLayer = (ObjectLayer)stoi(bufferObjectLayer);
+				wstring imageKey;
+				int x, y;
+				getline(loadStream, buffer, ',');
+				imageKey.assign(buffer.begin(), buffer.end());
+				getline(loadStream, buffer, ',');
+				x = stoi(buffer);
 				getline(loadStream, buffer);
-				int objectSize = stoi(buffer);
-				//레이어, 갯수
-				for (int i = 0; i < objectSize; ++i)
-				{
-					wstring imageKey;
-					int x, y;
-					getline(loadStream, buffer, ',');
-					imageKey.assign(buffer.begin(), buffer.end());
-					getline(loadStream, buffer, ',');
-					x = stoi(buffer);
-					getline(loadStream, buffer);
-					y = stoi(buffer);
-					//위에서 언인터렉트인것을 확인했으므로 임의로 넣는다
-					//생성
-					NonInteractObject* temp = new NonInteractObject(imageKey, x, y);
-					temp->Init();
-					ObjectManager::GetInstance()->AddObject(objectLayer, temp);
-				}
+				y = stoi(buffer);
+				//하우징 생성 <-추후에 밑에 예같이 생성해줄예정
+				// 생성자 매개변수는 더 늘릴 예정?
+				//HousingObject* temp = new HousingObject(imageKey, x, y);
+				//temp->Init();
+				//ObjectManager::GetInstance()->AddObject(objectLayer, temp);
+			}
+		}
+		//인터렉트 읽어오기
+		getline(loadStream, bufferObjectLayer, ',');
+		objectLayer = (ObjectLayer)stoi(bufferObjectLayer);
+		getline(loadStream, buffer);
+		objectSize = stoi(buffer);
+		//레이어, 갯수
+		if (objectSize != NULL)
+		{
+			for (int i = 0; i < objectSize; ++i)
+			{
+				wstring imageKey;
+				int x, y;
+				int hp, tileCountX, tileCountY;
+				getline(loadStream, buffer, ',');
+				imageKey.assign(buffer.begin(), buffer.end());
+				getline(loadStream, buffer, ',');
+				x = stoi(buffer);
+				getline(loadStream, buffer, ',');
+				y = stoi(buffer);
+				getline(loadStream, buffer, ',');
+				hp = stoi(buffer);
+				getline(loadStream, buffer, ',');
+				tileCountX = stoi(buffer);
+				getline(loadStream, buffer);
+				tileCountY = stoi(buffer);
+				//위에서 인터렉트인것을 확인했으므로 임의로 넣는다
+				//생성
+				InteractObject* temp = new InteractObject(imageKey, x, y, hp, tileCountX, tileCountY);
+				temp->Init();
+				ObjectManager::GetInstance()->AddObject(objectLayer, temp);
+			}
+		}
+		//언인터렉트 읽어오기
+		getline(loadStream, bufferObjectLayer, ',');
+		//순서는-하우스, 인터렉트, 언인터렉트	
+		objectLayer = (ObjectLayer)stoi(bufferObjectLayer);
+		getline(loadStream, buffer);
+		objectSize = stoi(buffer);
+		//레이어, 갯수
+		if (objectSize != NULL)
+		{
+			for (int i = 0; i < objectSize; ++i)
+			{
+				wstring imageKey;
+				int x, y;
+				getline(loadStream, buffer, ',');
+				imageKey.assign(buffer.begin(), buffer.end());
+				getline(loadStream, buffer, ',');
+				x = stoi(buffer);
+				getline(loadStream, buffer);
+				y = stoi(buffer);
+				//위에서 언인터렉트인것을 확인했으므로 임의로 넣는다
+				//생성
+				NonInteractObject* temp = new NonInteractObject(imageKey, x, y);
+				temp->Init();
+				ObjectManager::GetInstance()->AddObject(objectLayer, temp);
+			}
+		}
+		//인터렉트 오브젝트에 따른 타일 속성 바꾸기(wall로 바꿔주기)
+		//로드 할때도 해줘야 할듯하다 -> 항상 적용되어야한다 -> 오브젝트매니져에서 해주고 싶지만 타일이 오브젝트매니져에 없다.
+		//->타일을 오브젝트매니져에 넣기는 메리트가 너무 적다(업데이트나 기타부분이 의미가 없다 타일은 타일로 남겨두는게 충돌이 적고 
+		//타일이 적게 들어갈듯
+		vector<GameObject*> tempInteractList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+		if (tempInteractList.size() != NULL)
+		{
+			for (int i = 0; i < tempInteractList.size(); ++i)
+			{
+				//후에 다중 타일 추가로 판정해줘야 한다.
+				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
+				if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
+					mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
 			}
 		}
 	}

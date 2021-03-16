@@ -80,22 +80,33 @@ void Zombie01::Update()
 	
 	mDistance = Math::GetDistance(mPlayer->GetX(), mPlayer->GetY(), mX, mY);
 
-	if (mDistance < 150)
+	if (mDistance < 150 && mTargeting==false)
 	{
-		SearchPlayer();
+		mTargeting = true;
+		mZombistate = ZombieState::Chase;
 	}
-	else
-	{
-		mZombistate = ZombieState::Patrol;
-	}
+	
 
 	if (mZombistate == ZombieState::Patrol)
 	{
 		Patrol();
 	}
+
+	if (mTargeting)
+	{
+		SearchPlayer();
+
+		if (mDistance > 1000)
+		{
+			mZombistate = ZombieState::Patrol;
+			mTargeting = false;
+		}
+	}
+	
 	
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mCurrentAnimation->Update();
 }
 
 void Zombie01::Render(HDC hdc)
@@ -105,7 +116,7 @@ void Zombie01::Render(HDC hdc)
 
 	
 	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"공격실행", 30);
-	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, to_wstring(mDistance), 30);
+	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mDistance), 30);
 	if (mZombistate == ZombieState::Patrol)
 	{
 		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"정찰", 30);
@@ -155,16 +166,18 @@ void Zombie01::Patrol()
 void Zombie01::SearchPlayer()
 {
 	//이 상태가 되면 무조건 따라가게 변경 필요
-	mZombistate = ZombieState::Chase;
 	
-	if (mDistance > 30)
+	if (mDistance > 53)
 	{
+		mSpeed = 2.f;
 		MovetoPlayer();
 	}
 	else
 	{
 		Attack();
 	}
+	
+	
 }
 
 void Zombie01::Attack()

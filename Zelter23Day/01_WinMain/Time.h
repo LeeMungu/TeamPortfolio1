@@ -1,4 +1,8 @@
 #pragma once
+enum class DayTime {
+morning,
+night,
+};
 class Time
 {
 	Singleton(Time)
@@ -16,10 +20,12 @@ private:
 	float mFPSTimeElapsed;
 	float mWorldTime;
 
+	bool mIsStart;
+
+	// ***추가*** //
 	float mSceneTime;	//씬 타이머 추가
 	bool mIsSceneStart;
 
-	bool mIsStart;
 private:
 	Time();
 

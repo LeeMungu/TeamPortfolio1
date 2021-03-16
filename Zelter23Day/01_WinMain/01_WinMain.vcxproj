@@ -197,6 +197,7 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Weapon.h" />
     <ClInclude Include="Zombie01.h" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +253,7 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Zombie01.cpp" />
   </ItemGroup>
   <ItemGroup>

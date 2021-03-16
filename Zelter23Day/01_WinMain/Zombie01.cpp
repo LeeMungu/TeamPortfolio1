@@ -85,11 +85,14 @@ void Zombie01::Update()
 		mTargeting = true;
 		mZombistate = ZombieState::Chase;
 	}
-	
 
 	if (mZombistate == ZombieState::Patrol)
 	{
 		Patrol();
+	}
+	else if (mZombistate == ZombieState::Attack)
+	{
+		Attack();
 	}
 
 	if (mTargeting)
@@ -174,7 +177,8 @@ void Zombie01::SearchPlayer()
 	}
 	else
 	{
-		Attack();
+		mSpeed = 0;
+		mZombistate = ZombieState::Attack;
 	}
 	
 	
@@ -182,7 +186,10 @@ void Zombie01::SearchPlayer()
 
 void Zombie01::Attack()
 {
-	mZombistate = ZombieState::Attack;
+	if (mDistance > 53)
+	{
+		mZombistate = ZombieState::Chase;
+	}
 }
 
 void Zombie01::MovetoPlayer()

@@ -9,6 +9,7 @@ class CollisionManager
 public:
 	Player* mPlayer;
 
+
 public:
 	void Init();
 	void Update();

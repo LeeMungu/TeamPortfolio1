@@ -13,7 +13,8 @@ public:
 	void Update();
 
 	void PlayerCollion();
-	void PlayerTaken();
+	void PlayerTakenZombie(); //플레이어와 좀비 충돌
+	void Playerknukback
 
 
 };

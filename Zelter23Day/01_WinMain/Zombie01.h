@@ -6,6 +6,8 @@ class Zombie01 : public Enemy
 {
 	vector<vector<Tile*>> mTileList;
 	float mAngle;
+	float mDistance;
+	bool mTest;
 public:
 	void Init()override;
 	void Release()override;
@@ -15,6 +17,8 @@ public:
 	void Patrol();
 	void SearchPlayer();
 	void Attack()override;
+
+	void MovetoPlayer();
 
 	void SetTileList(vector<vector<Tile*>> tilelist)
 	{

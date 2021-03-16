@@ -10,6 +10,8 @@
 #include "Player.h"
 #include "SmartWatch.h"
 #include "Zombie01.h"
+#include "InteractObject.h"
+#include "NonInteractObject.h"
 
 void scene1::Init()
 {
@@ -33,68 +35,68 @@ void scene1::Init()
 
 	
 
-ifstream loadStream(L"../04_Data/Test.txt");
-	if (loadStream.is_open())
-	{
-		string bufferCount;
-		getline(loadStream, bufferCount, ',');
-		mTileCountX = stoi(bufferCount);
-		getline(loadStream, bufferCount);
-		mTileCountY = stoi(bufferCount);
-
-		//초기화 후 삽입
-		mTileList.clear();
-		mTileList.assign(mTileCountY, vector<Tile*>());
-		for (int y = 0; y < mTileList.size(); ++y)
-		{
-			for (int x = 0; x < mTileCountX; ++x)
-			{
-				mTileList[y].push_back(new Tile
-				(
-					tileImage,
-					TileSize * x,
-					TileSize * y,
-					TileSize,
-					TileSize,
-					x,
-					y,
-					//Random::GetInstance()->RandomInt(3),
-					x,
-					y
-				));
-				mTileList[y][x]->SetTileLayer(TileLayer::normal);
-			}
-		}
-
-		for (int y = 0; y < mTileList.size(); ++y)
-		{
-			for (int x = 0; x < mTileCountX; ++x)
-			{
-				string key;
-				int frameX;
-				int frameY;
-				string buffer;
-				int layer;
-
-				getline(loadStream, buffer, ',');
-				key = buffer;
-				getline(loadStream, buffer, ',');
-				frameX = stoi(buffer);
-				getline(loadStream, buffer, ',');
-				frameY = stoi(buffer);
-				getline(loadStream, buffer);
-				layer = stoi(buffer);
-
-				wstring wstr;
-				wstr.assign(key.begin(), key.end());
-				mTileList[y][x]->mImage = ImageManager::GetInstance()->FindImage(wstr);
-				mTileList[y][x]->mFrameIndexX = frameX;
-				mTileList[y][x]->mFrameIndexY = frameY;
-				mTileList[y][x]->mTileLayer = (TileLayer)layer;
-			}
-		}
-	}
-
+	//ifstream loadStream(L"../04_Data/Test.txt");
+	//if (loadStream.is_open())
+	//{
+	//	string bufferCount;
+	//	getline(loadStream, bufferCount, ',');
+	//	mTileCountX = stoi(bufferCount);
+	//	getline(loadStream, bufferCount);
+	//	mTileCountY = stoi(bufferCount);
+	//
+	//	//초기화 후 삽입
+	//	mTileList.clear();
+	//	mTileList.assign(mTileCountY, vector<Tile*>());
+	//	for (int y = 0; y < mTileList.size(); ++y)
+	//	{
+	//		for (int x = 0; x < mTileCountX; ++x)
+	//		{
+	//			mTileList[y].push_back(new Tile
+	//			(
+	//				tileImage,
+	//				TileSize * x,
+	//				TileSize * y,
+	//				TileSize,
+	//				TileSize,
+	//				x,
+	//				y,
+	//				//Random::GetInstance()->RandomInt(3),
+	//				x,
+	//				y
+	//			));
+	//			mTileList[y][x]->SetTileLayer(TileLayer::normal);
+	//		}
+	//	}
+	//
+	//	for (int y = 0; y < mTileList.size(); ++y)
+	//	{
+	//		for (int x = 0; x < mTileCountX; ++x)
+	//		{
+	//			string key;
+	//			int frameX;
+	//			int frameY;
+	//			string buffer;
+	//			int layer;
+	//
+	//			getline(loadStream, buffer, ',');
+	//			key = buffer;
+	//			getline(loadStream, buffer, ',');
+	//			frameX = stoi(buffer);
+	//			getline(loadStream, buffer, ',');
+	//			frameY = stoi(buffer);
+	//			getline(loadStream, buffer);
+	//			layer = stoi(buffer);
+	//
+	//			wstring wstr;
+	//			wstr.assign(key.begin(), key.end());
+	//			mTileList[y][x]->mImage = ImageManager::GetInstance()->FindImage(wstr);
+	//			mTileList[y][x]->mFrameIndexX = frameX;
+	//			mTileList[y][x]->mFrameIndexY = frameY;
+	//			mTileList[y][x]->mTileLayer = (TileLayer)layer;
+	//		}
+	//	}
+	//}
+	Load();
 	Zombie01* mZombie01 = new Zombie01();
 	mZombie01->Init();
 	mZombie01->SetX(mPlayer->GetX() + 150);
@@ -216,4 +218,127 @@ void scene1::Render(HDC hdc)
 	TextOut(hdc, 10, 10, to_wstring(renderCount).c_str(), to_wstring(renderCount).length());
 
 	ObjectManager::GetInstance()->Render(hdc);
+}
+
+void scene1::Load()
+{
+	ifstream loadStream(L"../04_Data/Test.txt");
+	if (loadStream.is_open())
+	{
+
+		string bufferCount;
+		getline(loadStream, bufferCount, ',');
+		mTileCountX = stoi(bufferCount);
+		getline(loadStream, bufferCount);
+		mTileCountY = stoi(bufferCount);
+		//초기화 후 삽입
+		mTileList.clear();
+		mTileList.assign(mTileCountY, vector<Tile*>());
+		for (int y = 0; y < mTileList.size(); ++y)
+		{
+			for (int x = 0; x < mTileCountX; ++x)
+			{
+				mTileList[y].push_back(new Tile
+				(
+					nullptr,
+					TileSize * x,
+					TileSize * y,
+					TileSize,
+					TileSize,
+					x,
+					y,
+					x,
+					y
+				));
+				mTileList[y][x]->SetTileLayer(TileLayer::normal);
+			}
+		}
+		for (int y = 0; y < mTileCountY; ++y)
+		{
+			for (int x = 0; x < mTileCountX; ++x)
+			{
+				string key;
+				int frameX;
+				int frameY;
+				string buffer;
+				int layer;
+
+				//쉼표 앞에까지
+				getline(loadStream, buffer, ',');
+				key = buffer;
+				getline(loadStream, buffer, ',');
+				frameX = stoi(buffer);
+				getline(loadStream, buffer, ',');
+				frameY = stoi(buffer);
+				//줄의 마지막 값
+				getline(loadStream, buffer);
+				layer = stoi(buffer);
+
+				wstring wstr;
+				wstr.assign(key.begin(), key.end());
+				mTileList[y][x]->mImage = ImageManager::GetInstance()->FindImage(wstr);
+				mTileList[y][x]->mFrameIndexX = frameX;
+				mTileList[y][x]->mFrameIndexY = frameY;
+				mTileList[y][x]->mTileLayer = (TileLayer)layer;
+			}
+		}
+		//오브젝트들 제거
+		vector<GameObject*> tempObject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::HousingObject);
+		if (tempObject.size() != NULL)
+		{
+			for (int i = 0; i < tempObject.size(); ++i)
+			{
+				tempObject[i]->SetIsDestroy(true);
+			}
+		}
+		vector<GameObject*> tempObject1 = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+		if (tempObject1.size() != NULL)
+		{
+			for (int i = 0; i < tempObject1.size(); ++i)
+			{
+				tempObject1[i]->SetIsDestroy(true);
+			}
+		}
+		vector<GameObject*> tempObject2 = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::NoninteractObject);
+		if (tempObject2.size() != NULL)
+		{
+			for (int i = 0; i < tempObject2.size(); ++i)
+			{
+				tempObject2[i]->SetIsDestroy(true);
+			}
+		}
+
+		//오브젝트 읽어오기
+		string bufferObjectLayer;//레이어
+		getline(loadStream, bufferObjectLayer, ',');
+		if (bufferObjectLayer != "")
+		{
+			//순서는-하우스, 인터렉트,언인터렉트므로 추후에 수정해야한다.
+			//언인터랙트인 경우 <- 언인터렉트부터 구현 해본다
+			if ((ObjectLayer)stoi(bufferObjectLayer) == ObjectLayer::NoninteractObject)
+			{
+				string buffer;
+				ObjectLayer objectLayer = (ObjectLayer)stoi(bufferObjectLayer);
+				getline(loadStream, buffer);
+				int objectSize = stoi(buffer);
+				//레이어, 갯수
+				for (int i = 0; i < objectSize; ++i)
+				{
+					wstring imageKey;
+					int x, y;
+					getline(loadStream, buffer, ',');
+					imageKey.assign(buffer.begin(), buffer.end());
+					getline(loadStream, buffer, ',');
+					x = stoi(buffer);
+					getline(loadStream, buffer);
+					y = stoi(buffer);
+					//위에서 언인터렉트인것을 확인했으므로 임의로 넣는다
+					//생성
+					NonInteractObject* temp = new NonInteractObject(imageKey, x, y);
+					temp->Init();
+					ObjectManager::GetInstance()->AddObject(objectLayer, temp);
+				}
+			}
+		}
+	}
 }

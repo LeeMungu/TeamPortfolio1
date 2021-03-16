@@ -65,6 +65,4 @@ void HousingObject::Render(HDC hdc)
 			mTileList[y][x]->Render(hdc);
 		}
 	}
-
-
 }

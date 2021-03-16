@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ObjectManager.h"
+#include "Camera.h"
 
 #include "GameObject.h"
 ObjectManager::ObjectManager()
@@ -54,6 +55,15 @@ void ObjectManager::Update()
 				iter->second.erase(iter->second.begin() + i);
 				--i;
 				continue;
+			}
+			//Å¬¸®ÇÎ
+			if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(iter->second[i]->GetRect()))
+			{
+				iter->second[i]->SetIsActive(true);
+			}
+			else
+			{
+				iter->second[i]->SetIsActive(false);
 			}
 			if (iter->second[i]->GetIsActive() == true)
 			{

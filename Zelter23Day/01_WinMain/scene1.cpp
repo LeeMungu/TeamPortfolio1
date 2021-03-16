@@ -12,6 +12,7 @@
 #include "Zombie01.h"
 #include "InteractObject.h"
 #include "NonInteractObject.h"
+#include "CollisionManager.h"
 
 void scene1::Init()
 {
@@ -105,12 +106,12 @@ void scene1::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
 
 	ObjectManager::GetInstance()->Init();
+	CollisionManager::GetInstance()->Init();
 	camera->ChangeMode(Camera::Mode::Follow);
 }
 
 void scene1::Release()
 {
-
 	ObjectManager::GetInstance()->Release();
 	//알아서해
 	for (int y = 0; y < mTileList.size(); ++y)
@@ -126,7 +127,7 @@ void scene1::Release()
 void scene1::Update()
 {
 	ObjectManager::GetInstance()->Update();
-
+	CollisionManager::GetInstance()->Update();
 
 
 	Player* tempPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");

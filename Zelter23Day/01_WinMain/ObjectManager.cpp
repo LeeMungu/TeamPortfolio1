@@ -169,25 +169,25 @@ vector<class GameObject*> ObjectManager::GetObjectList(ObjectLayer layer)
 
 void ObjectManager::Collision()
 {
-	RECT temp;
-	RECT mZombieRC;
-	if (ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player") != nullptr)
-	{
-		RECT mPlayerRC = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
-		vector<GameObject*> mZombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	//RECT temp;
+	//RECT mZombieRC;
+	//if (ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player") != nullptr)
+	//{
+	//	RECT mPlayerRC = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
+	//	vector<GameObject*> mZombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
 
-		if (mZombie.size() != NULL)
-		{
-			for (int i = 0; i < mZombie.size(); ++i)
-			{
-				RECT mZombieRC = mZombie[i]->GetRect();
-				if (IntersectRect(&temp, &mPlayerRC, &mZombieRC))
-				{
-					int a = 1;
-				}
+	//	if (mZombie.size() != NULL)
+	//	{
+	//		for (int i = 0; i < mZombie.size(); ++i)
+	//		{
+	//			RECT mZombieRC = mZombie[i]->GetRect();
+	//			if (IntersectRect(&temp, &mPlayerRC, &mZombieRC))
+	//			{
+	//				int a = 1;
+	//			}
 
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
 }
 

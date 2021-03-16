@@ -14,7 +14,7 @@ public:
 
 	void PlayerCollion();
 	void PlayerTakenZombie(); //플레이어와 좀비 충돌
-	void Playerknukback
+	void knockback();
 
 
 };

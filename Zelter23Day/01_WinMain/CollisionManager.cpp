@@ -71,18 +71,22 @@ void CollisionManager::PlayerTakenZombie()
 
 		}
 	}
-	if (mPlayer->GetNoDamage()==false)
+	if (mPlayer->GetInvincibleCount()==false)
 	{
-		damageCount += Time::GetInstance()->DeltaTime();
+		invincibleCount += Time::GetInstance()->DeltaTime();
 	}
-	if (damageCount <= 0.3f && mPlayer->GetNoDamage()==false)
+	if (invincibleCount <= 0.3f && mPlayer->GetIsInvincible()==true)
 	{
 		
 	}
-	if (damageCount > 1.5)
+	if (invincibleCount > 1.5)
 	{
-		damageCount = 0;
+		invincibleCount = 0;
 		mPlayer->SetNoDamage(true);
 	}
 
+}
+
+void CollisionManager::knockback()
+{
 }

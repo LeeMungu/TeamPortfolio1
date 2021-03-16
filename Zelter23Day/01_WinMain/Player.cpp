@@ -85,14 +85,14 @@ void Player::Init()
 
 	//Roll Animation
 	mLeftRoll = new Animation();
-	mLeftRoll->InitFrameByStartEnd(0, 0, 5, 0, false);
+	mLeftRoll->InitFrameByStartEnd(0, 0, 6, 0, false);
 	mLeftRoll->SetIsLoop(false);
-	mLeftRoll->SetFrameUpdateTime(0.1f);
+	mLeftRoll->SetFrameUpdateTime(0.08f);
 
 	mRightRoll = new Animation();
-	mRightRoll->InitFrameByEndStart(5, 1, 0, 1, false);
+	mRightRoll->InitFrameByEndStart(6, 1, 0, 1, false);
 	mRightRoll->SetIsLoop(false);
-	mRightRoll->SetFrameUpdateTime(0.1f);
+	mRightRoll->SetFrameUpdateTime(0.08f);
 
 	//Idle Animation
 	mUpIdleAni = new Animation();
@@ -177,7 +177,7 @@ void Player::PlayerCtrl() {
 				mPlayerState = PlayerState::roll;
 
 				mImage = IMAGEMANAGER->FindImage(L"Player_roll");
-				mSpeed = 5.f;
+				mSpeed = 8.f;
 				mCurrentAnimation->Stop();
 
 				if (mCurrentAnimation == mLeftRunAni)

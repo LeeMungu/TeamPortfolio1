@@ -46,6 +46,7 @@ class Player : public GameObject
 	int mStemina;
 	float mInvincibleCount;
 	bool mIsInvincible;
+	float mDash;
 
 	PlayerState mPlayerState;
 

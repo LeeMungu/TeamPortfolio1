@@ -117,6 +117,7 @@ void Player::Init()
 
 	mCurrentAnimation = mDownIdleAni;
 	mPlayerState = PlayerState::idle;
+	mDash = 0;
 }
 
 void Player::Release()
@@ -152,6 +153,8 @@ void Player::Update()
 	mSizeX = mImage->GetFrameWidth() * 2;
 	mSizeY = mImage->GetFrameHeight() * 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+
+	
 }
 
 void Player::Render(HDC hdc)
@@ -178,6 +181,7 @@ void Player::PlayerCtrl() {
 
 				mImage = IMAGEMANAGER->FindImage(L"Player_roll");
 				mSpeed = 10.f;
+				mDash = 5.f;
 				mCurrentAnimation->Stop();
 
 				if (mCurrentAnimation == mLeftRunAni)
@@ -204,6 +208,7 @@ void Player::PlayerCtrl() {
 			if (mCurrentAnimation->GetIsPlay() == false) {
 				mPlayerState = PlayerState::run;
 				mCurrentAnimation->Stop();
+				mDash = 0;
 			}
 		}
 		//위아래 이동
@@ -299,7 +304,7 @@ void Player::PlayerCtrl() {
 					mSpeed = 3.f;
 				}
 			}
-			mX = mX + mSpeed;
+			mX = mX + mSpeed+mDash;
 			mCurrentAnimation->Play();
 		}
 

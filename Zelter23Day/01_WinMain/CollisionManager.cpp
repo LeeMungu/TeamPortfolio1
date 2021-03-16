@@ -89,7 +89,7 @@ void CollisionManager::PlayerTakenZombie()
 		}
 		if (invincibleCount <= 0.3f && mPlayer->GetIsInvincible() == true)
 		{
-			knockback(temp, 10.f);
+			//knockback(temp, 10.f);
 		}
 		if (invincibleCount > 1.5)
 		{
@@ -126,4 +126,5 @@ void CollisionManager::knockback(RECT temp, float Distance)
 		mPlayer->SetX(mPlayer->GetX() - Distance * Time::GetInstance()->DeltaTime());
 		mPlayer->SetY(mPlayer->GetY() + Distance * Time::GetInstance()->DeltaTime());
 	}
+
 }

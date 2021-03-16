@@ -108,6 +108,9 @@ void scene1::Init()
 	ObjectManager::GetInstance()->Init();
 	CollisionManager::GetInstance()->Init();
 	camera->ChangeMode(Camera::Mode::Follow);
+
+	//true ¼³Á¤ÇÏ¸é ¾À ½Ã°£ Èå¸§
+	Time::GetInstance()->SetIsSceneStart(true);
 }
 
 void scene1::Release()
@@ -220,6 +223,16 @@ void scene1::Render(HDC hdc)
 	TextOut(hdc, 10, 10, to_wstring(renderCount).c_str(), to_wstring(renderCount).length());
 
 	ObjectManager::GetInstance()->Render(hdc);
+
+	//¾À ½Ã°£ º¸±â
+	float worldTime = Time::GetInstance()->GetWorldTime();
+	float sceneTime = Time::GetInstance()->GetSceneTime();
+	wstring strWorldTime = L"WorldTime : " + to_wstring(worldTime);
+	wstring strSceneTime = L"ScneTime : " + to_wstring(sceneTime);
+	D2DRenderer::GetInstance()
+		->RenderText(10, 200, strWorldTime.c_str(), strWorldTime.length());
+	D2DRenderer::GetInstance()
+		->RenderText(10, 280, strSceneTime.c_str(), strSceneTime.length());
 }
 
 void scene1::Load()

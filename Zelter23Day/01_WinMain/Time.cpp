@@ -26,6 +26,9 @@ Time::Time()
 	this->mFrameRate = this->mFPSFrameCount = 0;
 	this->mFPSTimeElapsed = this->mWorldTime = 0.0f;
 	this->mIsStart = true;
+
+	this->mIsSceneStart = false;
+	this->mSceneTime = 0.0f;
 }
 
 
@@ -37,6 +40,7 @@ void Time::Tick(float lockFPS)
 		//mWorldTime 버그 때문에 추가
 		if (isFirstChecking == false)
 		{
+			this->mSceneTime = 0.0f;
 			this->mWorldTime = 0.0f;
 			this->mFrameRate = this->mFPSFrameCount = 0;
 			this->mFPSTimeElapsed = this->mWorldTime = 0.0f;
@@ -75,6 +79,12 @@ void Time::Tick(float lockFPS)
 		this->mFPSTimeElapsed += this->mDeltaTime;
 		//프로세스 실행 후 시간 증감
 		this->mWorldTime += this->mDeltaTime;
+
+		//씬 타이머 추가
+		if (mIsSceneStart) {
+			this->mSceneTime += this->mDeltaTime;
+		}
+
 		//초당 프레임 타임이 1초가 넘었다면 요소들 다시 초기화 
 		if (this->mFPSTimeElapsed > 1.0f)
 		{
@@ -87,6 +97,7 @@ void Time::Tick(float lockFPS)
 	{
 		mDeltaTime = 0.f;
 	}
+
 }
 
 void Time::StartClock()

@@ -49,5 +49,8 @@ public:
 	vector<class GameObject*> GetObjectList(ObjectLayer layer);
 
 	void Collision();
+
+	vector<GameObject*> Zorder();
+
 };
 

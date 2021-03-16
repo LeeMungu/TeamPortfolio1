@@ -191,3 +191,23 @@ void ObjectManager::Collision()
 	}
 }
 
+vector<GameObject*> ObjectManager::Zorder()
+{
+	auto tmp = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Player);
+
+	auto start = tmp.begin();
+	auto end = tmp.end();
+
+	auto func = [](GameObject* a, GameObject* b)
+	{
+		return a->GetY() < b->GetY();
+	};
+
+
+	
+
+
+
+	return vector<GameObject*>();
+}
+

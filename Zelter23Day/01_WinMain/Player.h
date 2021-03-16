@@ -36,6 +36,9 @@ class Player : public GameObject
 	Animation* mLeftAttack;
 	Animation* mRightAttack;
 
+	Animation* mRightRoll;
+	Animation* mLeftRoll;
+
 	float mSpeed;
 	int mHP;
 	int mThirst;

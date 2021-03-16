@@ -118,7 +118,7 @@ void Camera::RenderEllipse(HDC hdc, float x, float y, float radius)
 
 bool Camera::IsInCameraArea(float x, float y, float width, float height)
 {
-	RECT rc = RectMakeCenter(x, y, width, height);
+	RECT rc = RectMake(x, y, width, height);
 	return IsInCameraArea(rc);
 }
 

@@ -2,21 +2,26 @@
 #include "InteractObject.h"
 #include "Image.h"
 #include "Camera.h"
+//타일 사이즈 때문에
+#include "Tile.h"
 
-InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp)
+InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountY)
 {
 	mX = x;
 	mY = y;
 	mHp = hp;
 	mImageKey = imageKey;
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
+	mSizeX = mImage->GetFrameWidth();
+	mSizeY = mImage->GetFrameHeight();
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mTileCountX = mSizeX/TileSize;
+	mTileCountY = tileCountY;
 }
 
 void InteractObject::Init()
 {
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	
 	mIsInteractive = true;
 	mIndexX = 0;
 	mIndexY = 0;

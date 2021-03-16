@@ -183,25 +183,44 @@ void CollisionManager::knockback(RECT temp, float Distance)
 	float tempX = temp.right - tempW / 2;
 	float tempY = temp.bottom - tempH / 2;
 
-	if(mPlayer->GetX() - tempX > 0 && mPlayer->GetY() - tempY > 0) // 좌상단 충돌
+	// 좌상단 충돌
+	if(mPlayer->GetX() - tempX > 0 && mPlayer->GetY() - tempY > 0 && mPlayer->GetRect().top > temp.top) 
 	{
-		mPlayer->SetX(mPlayer->GetX() + Distance * Time::GetInstance()->DeltaTime());
-		mPlayer->SetY(mPlayer->GetY() + Distance * Time::GetInstance()->DeltaTime());
+		mPlayer->SetAttacked(Attacked::lefttop);
 	}
-	if (mPlayer->GetX() - tempX > 0 && mPlayer->GetY() - tempY < 0) // 좌하단 충돌
+	// 좌하단 충돌
+	if (mPlayer->GetX() - tempX > 0 && mPlayer->GetY() - tempY < 0 && mPlayer->GetRect().bottom < temp.bottom) 
 	{
-		mPlayer->SetX(mPlayer->GetX() + Distance * Time::GetInstance()->DeltaTime());
-		mPlayer->SetY(mPlayer->GetY() - Distance * Time::GetInstance()->DeltaTime());
+		mPlayer->SetAttacked(Attacked::leftdown);
 	}
-	if (mPlayer->GetX() - tempX < 0 && mPlayer->GetY() - tempY > 0) // 우상단 충돌
+	// 우상단 충돌
+	if (mPlayer->GetX() - tempX < 0 && mPlayer->GetY() - tempY > 0 && mPlayer->GetRect().top > temp.top)
 	{
-		mPlayer->SetX(mPlayer->GetX() - Distance * Time::GetInstance()->DeltaTime());
-		mPlayer->SetY(mPlayer->GetY() + Distance * Time::GetInstance()->DeltaTime());
+		mPlayer->SetAttacked(Attacked::righttop);
 	}
-	if (mPlayer->GetX() - tempX < 0 && mPlayer->GetY() - tempY < 0) // 우하단 충돌
+	// 우하단 충돌
+	if (mPlayer->GetX() - tempX < 0 && mPlayer->GetY() - tempY < 0 && mPlayer->GetRect().bottom < temp.bottom)
 	{
-		mPlayer->SetX(mPlayer->GetX() - Distance * Time::GetInstance()->DeltaTime());
-		mPlayer->SetY(mPlayer->GetY() + Distance * Time::GetInstance()->DeltaTime());
+		mPlayer->SetAttacked(Attacked::rightdown);
 	}
-
+	// 상단 충돌
+	if (mPlayer->GetRect().left <= temp.left && mPlayer->GetRect().right >= temp.right && mPlayer->GetY() > tempY)
+	{
+		mPlayer->SetAttacked(Attacked::top);
+	}
+	// 하단 충돌
+	if (mPlayer->GetRect().left <= temp.left && mPlayer->GetRect().right >= temp.right && mPlayer->GetY() < tempY)
+	{
+		mPlayer->SetAttacked(Attacked::down);
+	}
+	// 우측 충돌
+	if (mPlayer->GetRect().top <= temp.top && mPlayer->GetRect().bottom >= temp.bottom && mPlayer->GetX() > tempX)
+	{
+		mPlayer->SetAttacked(Attacked::right);
+	}
+	// 좌측 충돌
+	if (mPlayer->GetRect().top <= temp.top && mPlayer->GetRect().bottom >= temp.bottom && mPlayer->GetX() < tempX)
+	{
+		mPlayer->SetAttacked(Attacked::left);
+	}
 }

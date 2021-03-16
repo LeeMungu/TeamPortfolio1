@@ -634,8 +634,8 @@ void MapToolScene::Load()
 					TileSize,
 					x,
 					y,
-					0,
-					0
+					x,
+					y
 				));
 				mTileList[y][x]->SetTileLayer(TileLayer::normal);
 			}

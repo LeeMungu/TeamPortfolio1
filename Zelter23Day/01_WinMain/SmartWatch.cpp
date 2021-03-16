@@ -10,6 +10,9 @@ SmartWatch::SmartWatch(const string& name, int x, int y) : UI (name)
 {
 	mX = x;
 	mY = y;
+
+	mHour = 0;
+	mMin = 0;
 }
 
 void SmartWatch::Init()
@@ -19,9 +22,6 @@ void SmartWatch::Init()
 	mGlass = IMAGEMANAGER->FindImage(L"SW_glass");
 	mTimeBG = IMAGEMANAGER->FindImage(L"SW_morning");
 	mUIBaseImage = IMAGEMANAGER->FindImage(L"BlackBase");
-
-
-	
 
 	mDayTime = DayTime::morning;
 
@@ -47,9 +47,16 @@ void SmartWatch::Update()
 {
 	if (mDayTime == DayTime::morning) {
 		mTimeBG = IMAGEMANAGER->FindImage(L"SW_morning");
+
+		if ((int)mSceneTime % 720 == 0 && mSceneTime > 1) {
+			mDayTime = DayTime::night;
+		}
 	}
 	else {
 		mTimeBG = IMAGEMANAGER->FindImage(L"SW_night");
+		if ((int)mSceneTime % 720 == 0 && mSceneTime > 1) {
+			mDayTime = DayTime::morning;
+		}
 	}
 
 	mPlayerHPUI->SetHP(mPlayer->GetHP());
@@ -57,6 +64,13 @@ void SmartWatch::Update()
 	mHungerUI->SetHunger(mPlayer->GetHunger());
 	mSteminaUI->SetStemina(mPlayer->GetStemina());
 	
+	mSceneTime = Time::GetInstance()->GetSceneTime();
+	
+	mHour = (int)(mSceneTime / 60) % 60;
+	mMin = (int)mSceneTime % 60;
+
+	if (mHour == 0) mHour = 12;
+	while (mHour >= 13) mHour -= 12;
 }
 
 void SmartWatch::Render(HDC hdc)
@@ -67,4 +81,14 @@ void SmartWatch::Render(HDC hdc)
 	mTimeBG->ScaleRender(hdc, mX + 14, mY + 18, 80, 83);
 	mGlassDark->ScaleRender(hdc, mX + 14, mY + 18, 80, 83);
 	mGlass->ScaleRender(hdc, mX + 14, mY + 18, 80, 83);
+	
+	wstring strDayTime;
+	if (mDayTime == DayTime::morning) strDayTime = L"AM";
+	else  strDayTime = L"PM";
+	wstring strWatch = to_wstring(mHour/10 % 10) + to_wstring(mHour % 10)
+		+ L" : " + to_wstring(mMin/10 % 10) + to_wstring(mMin % 10);
+	D2DRenderer::GetInstance()
+		->RenderText(30, 30, strDayTime.c_str(), 10);
+	D2DRenderer::GetInstance()
+		->RenderText(30, 50, strWatch.c_str(), 20);
 }

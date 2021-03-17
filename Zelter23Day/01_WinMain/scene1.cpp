@@ -14,6 +14,7 @@
 #include "NonInteractObject.h"
 #include "CollisionManager.h"
 #include "KeyIcon.h"
+#include "QuickSlot.h"
 void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
@@ -37,6 +38,8 @@ void scene1::Init()
 	KeyIcon* keyIcon = new KeyIcon("KeyIcon");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, keyIcon);
 
+	QuickSlot* quickSlot = new QuickSlot("QuickSlot", 800, 800);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, quickSlot);
 
 	//ifstream loadStream(L"../04_Data/Test.txt");
 	//if (loadStream.is_open())

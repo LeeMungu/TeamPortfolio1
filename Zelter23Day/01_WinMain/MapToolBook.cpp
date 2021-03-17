@@ -69,7 +69,7 @@ void MapToolBook::Init()
 			[this]() {
 			if (mBookType == BookType::Tile)
 			{
-				if (mPage < 15)
+				if (mPage < 16)
 				{
 					mPage++;
 					mIsPageChange = true;

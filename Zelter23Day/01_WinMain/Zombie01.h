@@ -21,6 +21,9 @@ class Zombie01 : public Enemy
 	bool mIsSwichPos;
 	float mSwithtime;
 
+	bool mIsAttackTrigger;
+	float mDelayTime;
+
 	RECT mAttackRect;
 public:
 	void Init()override;

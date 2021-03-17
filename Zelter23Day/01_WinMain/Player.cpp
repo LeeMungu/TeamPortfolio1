@@ -150,15 +150,15 @@ void Player::Update()
 	mCurrentAnimation->Update();
 	mSizeX = mImage->GetFrameWidth() * 2;
 	mSizeY = mImage->GetFrameHeight() * 2;
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY/3);
 
-	
+	Knockback();
 }
 
 void Player::Render(HDC hdc)
 {
 	CameraManager::GetInstance()->GetMainCamera()->
-		ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
+		ScaleFrameRender(hdc, mImage, mRect.left, mRect.top-50, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
 	if (Input::GetInstance()->GetKey(VK_LSHIFT))
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
@@ -361,5 +361,19 @@ void Player::PlayerCtrl() {
 		}
 
 		
+	}
+}
+
+void Player::Knockback()
+{
+	if (mIsKnockback == true)
+	{
+		mX += cosf(mAngle) * mKnockbackDistance * Time::GetInstance()->DeltaTime();
+		mY -= sinf(mAngle) * mKnockbackDistance * Time::GetInstance()->DeltaTime();
+		mKnockbackDistance -= 1700.2f * Time::GetInstance()->DeltaTime();
+		if (mKnockbackDistance <= 0)
+		{
+			mIsKnockback = false;
+		}
 	}
 }

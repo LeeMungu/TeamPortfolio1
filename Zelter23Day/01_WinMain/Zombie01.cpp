@@ -48,20 +48,22 @@ void Zombie01::Init()
 	mLeftAttack = new Animation;
 	mLeftAttack->InitFrameByStartEnd(0, 4, 4, 4, true);
 	mLeftAttack->SetIsLoop(false);
-	mLeftAttack->SetFrameUpdateTime(0.1f);
+	mLeftAttack->SetFrameUpdateTime(0.01f);
 
 	mRightAttack = new Animation;
 
-	mRightAttack->InitFrameByEndStart(4, 5, 0, 5, true);
+	mRightAttack->InitFrameByStartEnd(0, 5, 4, 5, true);
 	mRightAttack->SetIsLoop(false);
-	mRightAttack->SetFrameUpdateTime(0.1f);
+	mRightAttack->SetFrameUpdateTime(0.01f);
 
 	mCurrentAnimation = mLeftMove;
 	mCurrentAnimation->Play();
 
 	mZombistate = ZombieState::Patrol;
 	mIsSwichPos = false;
+	mIsAttackTrigger = false;
 	mSwithtime = 0;
+	mDelayTime = 0;
 }
 
 void Zombie01::Release()
@@ -117,6 +119,10 @@ void Zombie01::Render(HDC hdc)
 	CameraManager::GetInstance()->GetMainCamera()->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top,
 		mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(),mSizeX,mSizeY);
 
+	if (Input::GetInstance()->GetKey(VK_LSHIFT))
+	{
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
+	}
 	
 	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mAngle), 30);
 	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mDistance), 30);
@@ -194,16 +200,34 @@ void Zombie01::Attack()
 	}
 	else
 	{
-		if (mPlayer->GetRect().left > mRect.right)
+		
+		mDelayTime += Time::GetInstance()->DeltaTime();
+
+		if (mDelayTime >= mDelay && mIsAttackTrigger==false)
 		{
-			mCurrentAnimation = mRightAttack;
-			mCurrentAnimation->Play();
+			if (mPlayer->GetRect().left > mRect.right)
+			{
+				mCurrentAnimation = mRightAttack;
+				mCurrentAnimation->Play();
+				mDelayTime = 0;
+				mIsAttackTrigger = true;
+			}
+			else if (mPlayer->GetRect().left < mRect.left)
+			{
+				mCurrentAnimation = mLeftAttack;
+				mCurrentAnimation->Play();
+				mDelayTime = 0;
+				mIsAttackTrigger = true;
+			}
+			
 		}
-		else if (mPlayer->GetRect().left < mRect.left)
-		{
-			mCurrentAnimation = mLeftAttack;
-			mCurrentAnimation->Play();
-		}
+	}
+
+	if (mDelayTime >= mDelay/2 && mIsAttackTrigger == true)
+	{
+		mCurrentAnimation->Stop();
+		mDelayTime = 0;
+		mIsAttackTrigger = false;
 	}
 }
 

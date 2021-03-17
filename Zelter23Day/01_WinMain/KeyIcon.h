@@ -13,6 +13,8 @@ class KeyIcon : public UI
 	Image* mCKeyImage;
 	Image* mTKeyImage;
 
+	Image* mNameImage;
+
 public:
 	KeyIcon(const string& name);
 	void Init()override;

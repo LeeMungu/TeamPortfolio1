@@ -56,10 +56,19 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Icon_bag", Resources(L"/01_UI/Bag_Btn_Icon.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Icon_tablet", Resources(L"/01_UI/tablet_Icon.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Icon_craft", Resources(L"/01_UI/Craft_Btn_Icon.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Icon_name", Resources(L"/01_UI/icon_name.png"), 3, 1); });
 	//이미지 (Keyboard UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Key_C", Resources(L"/01_UI/C-key.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Key_I", Resources(L"/01_UI/I-key.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Key_T", Resources(L"/01_UI/T-key.png")); });
+
+	//이미지 (QuickSlot UI)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_ammo", Resources(L"/01_UI/QuickSlot_Ammo.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_back", Resources(L"/01_UI/QuickSlot_Back.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_front", Resources(L"/01_UI/QuickSlot_Front.png")); }); 
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_slotBase", Resources(L"/01_UI/QuickSlot_Slot_Base.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_tip_close", Resources(L"/01_UI/QuickSlot_Slot_Tip01.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_tip_open", Resources(L"/01_UI/QuickSlot_Slot_Tip02.png")); });
 
 	//이미지 (몬스터)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie01", Resources(L"/06_Zombie/zombie01.png"), 5, 6); });

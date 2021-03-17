@@ -22,6 +22,8 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mTileCountX = tileCountX;
 	mTileCountY = tileCountY;
+
+	mInteractRect = RectMakeCenter(mX, mRect.bottom, TileSize / 2, TileSize / 2);
 }
 
 void InteractObject::Init()
@@ -53,6 +55,8 @@ void InteractObject::Render(HDC hdc)
 			->RenderRect(hdc, rc);
 		CameraManager::GetInstance()->GetMainCamera()
 			->RenderRect(hdc, mRect);
+		CameraManager::GetInstance()->GetMainCamera()
+			->RenderRect(hdc, mInteractRect);
 		CameraManager::GetInstance()->GetMainCamera()
 			->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);
 	}

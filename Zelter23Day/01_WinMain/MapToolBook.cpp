@@ -75,6 +75,10 @@ void MapToolBook::Init()
 					mIsPageChange = true;
 				}
 			}
+			else if (mBookType == BookType::InterectObject)
+			{
+
+			}
 		});
 		mPrevButton = new Button(L"Prev", mX - mSizeX / 3, mY + mSizeY / 3, 50, 50,
 			[this]() {
@@ -85,6 +89,10 @@ void MapToolBook::Init()
 					mPage--;
 					mIsPageChange = true;
 				}
+			}
+			else if (mBookType == BookType::InterectObject)
+			{
+
 			}
 		});
 

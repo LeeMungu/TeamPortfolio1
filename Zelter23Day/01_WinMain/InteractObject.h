@@ -24,6 +24,8 @@ class InteractObject : public GameObject
 	//무슨변수인가? 필요한 변수인가?
 	bool mIsInteractive;
 	wstring mImageKey;
+	//인터렉트 렉트
+	RECT mInteractRect;
 public:
 	InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY);
 
@@ -41,5 +43,7 @@ public:
 	int GetTileIndexY()const { return mTileIndexY; }
 	int GetTileCountX()const { return mTileCountX; }
 	int GetTileCountY()const { return mTileCountY; }
+
+	RECT GetInteractRect()const { return mInteractRect; }
 };
 

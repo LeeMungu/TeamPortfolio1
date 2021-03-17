@@ -166,7 +166,7 @@ void CollisionManager::PlayerTakenDamaged()
 				{
 					float mAnlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY()
 						, mPlayer->GetX(), mPlayer->GetY());
-					mPlayer->ExecuteNuockback(mAnlge, 800.f);
+					mPlayer->ExecuteKnockback(mAnlge, 800.f);
 
 					//float pX = mPlayer->GetX();
 					//float pY = mPlayer->GetY();

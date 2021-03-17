@@ -10,6 +10,7 @@
 
 Mouse::Mouse(wstring imageKey, ObjectLayer objectLayer)
 {
+	mObjectType = objectLayer;
 	mImageKey = imageKey;
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
 	mX = _mousePosition.x;
@@ -17,8 +18,6 @@ Mouse::Mouse(wstring imageKey, ObjectLayer objectLayer)
 	mSizeX = mImage->GetFrameWidth();
 	mSizeY = mImage->GetFrameHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
-	mObjectType = objectLayer;
 }
 
 void Mouse::Init()
@@ -47,8 +46,15 @@ void Mouse::Update()
 	}
 	else if (mObjectType == ObjectLayer::InteractObject)
 	{
-		mX = _mousePosition.x;
 		mY = _mousePosition.y - mSizeY/2;
+		if (mTileCountX % 2 == 1)//X방향 홀수 타일
+		{
+			mX = _mousePosition.x + (mTileCountX-1) / 2 * TileSize;
+		}
+		else if (mTileCountX % 2 == 0)//X방향 짝수 타일
+		{
+			mX = _mousePosition.x + mTileCountX / 2 * TileSize;
+		}
 	}
 	else if (mObjectType == ObjectLayer::NoninteractObject)
 	{
@@ -79,7 +85,7 @@ void Mouse::Update()
 		}
 		else if (mObjectType == ObjectLayer::InteractObject)
 		{
-			InteractObject* interactObject = new InteractObject(mImageKey, mX + cameraRc.left, mY + mSizeY / 2 + cameraRc.top, mHpMax, mTileCountX, mTileCountY);
+			InteractObject* interactObject = new InteractObject(mImageKey, _mousePosition.x + cameraRc.left, mY + mSizeY / 2 + cameraRc.top, mHpMax, mTileCountX, mTileCountY);
 			interactObject->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::InteractObject, interactObject);
 		}
@@ -104,7 +110,7 @@ void Mouse::Render(HDC hdc)
 		{
 			for (int x = 0; x < mTileCountX; ++x)
 			{
-				RECT rc = RectMakeCenter(mX + x * TileSize, mRect.bottom - y * TileSize, TileSize, TileSize);
+				RECT rc = RectMakeCenter(_mousePosition.x + x * TileSize, mRect.bottom - y * TileSize, TileSize, TileSize);
 				RenderRect(hdc, rc);
 			}
 		}

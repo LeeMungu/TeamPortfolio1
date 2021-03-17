@@ -529,7 +529,7 @@ void MapToolBook::Update()
 						Mouse* mouse = new Mouse(L"Bus" + to_wstring(i + 1), ObjectLayer::InteractObject);
 						mouse->SetHpMax(10);
 						mouse->SetTileCountX(3);
-						mouse->SetTileCountY(9);
+						mouse->SetTileCountY(8);
 						mouse->Init();
 						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
 					});
@@ -542,8 +542,8 @@ void MapToolBook::Update()
 						mX - 250 + 100 * ((i) % 3), mY + 100 + 145 * ((i) / 3), [i]() {
 						Mouse* mouse = new Mouse(L"Car" + to_wstring(i + 5 + 1), ObjectLayer::InteractObject);
 						mouse->SetHpMax(10);
-						mouse->SetTileCountX(1);
-						mouse->SetTileCountY(1);
+						mouse->SetTileCountX(4);
+						mouse->SetTileCountY(2);
 						mouse->Init();
 						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
 					});

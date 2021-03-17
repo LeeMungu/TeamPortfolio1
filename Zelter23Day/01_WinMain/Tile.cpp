@@ -47,7 +47,7 @@ void Tile::Render(HDC hdc)
 			}
 			else
 			{
-				//Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Green);
+				Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Green);
 			}
 
 			//컨트롤키로 속성 표시
@@ -60,7 +60,6 @@ void Tile::Render(HDC hdc)
 				if (mTileLayer == TileLayer::slow)
 					Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Blue2);
 			}
-
 			//Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Black);
 		}
 	}

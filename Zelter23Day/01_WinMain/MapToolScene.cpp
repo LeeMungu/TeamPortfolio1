@@ -401,18 +401,26 @@ void MapToolScene::Update()
 		{
 			//후에 다중 타일 추가로 판정해줘야 한다.
 			InteractObject* tempInteract = (InteractObject * )tempInteractList[i];
-			if(mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer()!= TileLayer::wall)
-			mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
-			if (tempInteract->GetTileCountX() == 2)
+			int y = 0;
+			int countx = tempInteract->GetTileCountX();
+			int county = tempInteract->GetTileCountY();
+			for (int x = 0;x < countx*county; ++x)
 			{
-				if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->GetTileLayer() != TileLayer::wall)
-					mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->SetTileLayer(TileLayer::wall);
+				if (mTileList[tempInteract->GetTileIndexY()-x/countx][tempInteract->GetTileIndexX()+x%countx]->GetTileLayer() != TileLayer::wall)
+					mTileList[tempInteract->GetTileIndexY()-x/countx][tempInteract->GetTileIndexX()+x%countx]->SetTileLayer(TileLayer::wall);
 			}
-			if (tempInteract->GetTileCountY() == 2)
-			{
-				if (mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
-					mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
-			}
+			////countx ==1, county ==1 인 경우
+			//if(mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer()!= TileLayer::wall)
+			//mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+			////countx >=2, county ==1 인 경우
+			//if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->GetTileLayer() != TileLayer::wall)
+			//	mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->SetTileLayer(TileLayer::wall);
+			////countx ==1, county >=2 인 경우
+			//if (mTileList[tempInteract->GetTileIndexY()-1][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
+			//	mTileList[tempInteract->GetTileIndexY()-1][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+			////countx >=2, county >=2 인 경우
+			//if (mTileList[tempInteract->GetTileIndexY()-1][tempInteract->GetTileIndexX() + 1]->GetTileLayer() != TileLayer::wall)
+			//	mTileList[tempInteract->GetTileIndexY()-1][tempInteract->GetTileIndexX() + 1]->SetTileLayer(TileLayer::wall);
 		}
 	}
 }
@@ -420,22 +428,6 @@ void MapToolScene::Update()
 void MapToolScene::Render(HDC hdc)
 {
 	Camera* mainCamera = CameraManager::GetInstance()->GetMainCamera();
-
-	////카메라에 맞춰서 타일을 그려줌
-	//int leftIndex = Math::Clamp(mainCamera->GetRect().left / TileSize, 0, TileCountX - 1);
-	//int rightIndex = Math::Clamp(mainCamera->GetRect().right / TileSize, 0, TileCountX - 1);	
-	//int topIndex = Math::Clamp(mainCamera->GetRect().top / TileSize, 0, TileCountY - 1);
-	//int bottomIndex = Math::Clamp(mainCamera->GetRect().bottom / TileSize,0,TileCountY - 1);
-	//
-	//int renderCount = 0;
-	//for (int y = topIndex; y <= bottomIndex; ++y)
-	//{
-	//	for (int x = leftIndex; x <= rightIndex; ++x)
-	//	{
-	//		mTileList[y][x]->Render(hdc);
-	//		++renderCount;
-	//	}
-	//}
 
 	//카메라의 스케일프레임렌더만 내부에서 클렘핑 판정해줌 봐서 기타 오브젝트도 고쳐볼것
 	int renderCount = 0;

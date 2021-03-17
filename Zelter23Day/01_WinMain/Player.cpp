@@ -152,7 +152,7 @@ void Player::Update()
 	mSizeY = mImage->GetFrameHeight() * 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
-	
+	Knockback();
 }
 
 void Player::Render(HDC hdc)
@@ -361,5 +361,19 @@ void Player::PlayerCtrl() {
 		}
 
 		
+	}
+}
+
+void Player::Knockback()
+{
+	if (mIsKnockback == true)
+	{
+		mX += cosf(mAngle) * mKnockbackDistance * Time::GetInstance()->DeltaTime();
+		mY -= sinf(mAngle) * mKnockbackDistance * Time::GetInstance()->DeltaTime();
+		mKnockbackDistance -= 1700.2f * Time::GetInstance()->DeltaTime();
+		if (mKnockbackDistance <= 0)
+		{
+			mIsKnockback = false;
+		}
 	}
 }

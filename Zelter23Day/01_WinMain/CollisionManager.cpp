@@ -74,7 +74,6 @@ void CollisionManager::ObjectCollision()
 
 void CollisionManager::PlayerPhysics()
 {
-
 	RECT temp;
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	if (mPlayer != nullptr)
@@ -90,37 +89,37 @@ void CollisionManager::PlayerPhysics()
 				enemyRC = zombie[i]->GetRect();
 				if (IntersectRect(&temp, &playerRC, &enemyRC))	//플레이어 좀비 충돌 처리
 				{
-					float pX = mPlayer->GetX();
-					float pY = mPlayer->GetY();
-					float pSizeX = mPlayer->GetSizeX();
-					float pSizeY = mPlayer->GetSizeY();
+					//float pX = mPlayer->GetX();
+					//float pY = mPlayer->GetY();
+					//float pSizeX = mPlayer->GetSizeX();
+					//float pSizeY = mPlayer->GetSizeY();
 
-					float tempW = temp.right - temp.left;
-					float tempH = temp.bottom - temp.top;
-					float tempX = temp.left + tempW / 2;
-					float tempY = temp.top + tempW / 2;
-					float enemyX = enemyRC.left + (enemyRC.right - enemyRC.left) / 2;
-					float enemyY = enemyRC.top + (enemyRC.bottom - enemyRC.top) / 2;
+					//float tempW = temp.right - temp.left;
+					//float tempH = temp.bottom - temp.top;
+					//float tempX = temp.left + tempW / 2;
+					//float tempY = temp.top + tempW / 2;
+					//float enemyX = enemyRC.left + (enemyRC.right - enemyRC.left) / 2;
+					//float enemyY = enemyRC.top + (enemyRC.bottom - enemyRC.top) / 2;
 
-					if (tempW < tempH && tempX > enemyX && playerRC.left < enemyRC.right)
-					{
-						pX = enemyRC.right + pSizeX / 2;
-					}
-					if (tempW < tempH && tempX < enemyX && playerRC.right > enemyRC.left)
-					{
-						pX = enemyRC.left - pSizeX / 2;
-					}
-					if (tempW > tempH && tempY > enemyY && playerRC.top <= enemyRC.bottom)
-					{
-						pY = enemyRC.bottom + pSizeY / 2;
-					}
-					if (tempW > tempH && tempY < enemyY && playerRC.bottom >= enemyRC.top)
-					{
-						pY = enemyRC.top - pSizeY / 2;
-					}
+					//if (tempW < tempH && tempX > enemyX && playerRC.left < enemyRC.right)
+					//{
+					//	pX = enemyRC.right + pSizeX / 2;
+					//}
+					//if (tempW < tempH && tempX < enemyX && playerRC.right > enemyRC.left)
+					//{
+					//	pX = enemyRC.left - pSizeX / 2;
+					//}
+					//if (tempW > tempH && tempY > enemyY && playerRC.top <= enemyRC.bottom)
+					//{
+					//	pY = enemyRC.bottom + pSizeY / 2;
+					//}
+					//if (tempW > tempH && tempY < enemyY && playerRC.bottom >= enemyRC.top)
+					//{
+					//	pY = enemyRC.top - pSizeY / 2;
+					//}
 
-					mPlayer->SetX(pX);
-					mPlayer->SetY(pY);
+					//mPlayer->SetX(pX);
+					//mPlayer->SetY(pY);
 
 				}
 			}
@@ -165,37 +164,41 @@ void CollisionManager::PlayerTakenDamaged()
 				enemyRC = zombie[i]->GetRect();
 				if (IntersectRect(&temp, &playerRC, &enemyRC))	//플레이어 좀비 충돌 처리
 				{
-					float pX = mPlayer->GetX();
-					float pY = mPlayer->GetY();
-					float pSizeX = mPlayer->GetSizeX();
-					float pSizeY = mPlayer->GetSizeY();
+					float mAnlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY()
+						, mPlayer->GetX(), mPlayer->GetY());
+					mPlayer->ExecuteNuockback(mAnlge, 800.f);
 
-					float tempW = temp.right - temp.left;
-					float tempH = temp.bottom - temp.top;
-					float tempX = temp.left + tempW / 2;
-					float tempY = temp.top + tempW / 2;
-					float enemyX = enemyRC.left + (enemyRC.right - enemyRC.left) / 2;
-					float enemyY = enemyRC.top + (enemyRC.bottom - enemyRC.top) / 2;
+					//float pX = mPlayer->GetX();
+					//float pY = mPlayer->GetY();
+					//float pSizeX = mPlayer->GetSizeX();
+					//float pSizeY = mPlayer->GetSizeY();
 
-					if (tempW < tempH && tempX > enemyX && playerRC.left < enemyRC.right)
-					{
-						pX = enemyRC.right + pSizeX / 2;
-					}
-					if (tempW < tempH && tempX < enemyX && playerRC.right > enemyRC.left)
-					{
-						pX = enemyRC.left - pSizeX / 2;
-					}
-					if (tempW > tempH && tempY > enemyY && playerRC.top < enemyRC.bottom)
-					{
-						pY = enemyRC.bottom + pSizeY / 2;
-					}
-					if (tempW > tempH && tempY < enemyY && playerRC.bottom > enemyRC.top)
-					{
-						pY = enemyRC.top - pSizeY / 2;
-					}
+					//float tempW = temp.right - temp.left;
+					//float tempH = temp.bottom - temp.top;
+					//float tempX = temp.left + tempW / 2;
+					//float tempY = temp.top + tempW / 2;
+					//float enemyX = enemyRC.left + (enemyRC.right - enemyRC.left) / 2;
+					//float enemyY = enemyRC.top + (enemyRC.bottom - enemyRC.top) / 2;
 
-					mPlayer->SetX(pX);
-					mPlayer->SetY(pY);
+					//if (tempW < tempH && tempX > enemyX && playerRC.left < enemyRC.right)
+					//{
+					//	pX = enemyRC.right + pSizeX / 2;
+					//					}
+					//if (tempW < tempH && tempX < enemyX && playerRC.right > enemyRC.left)
+					//{
+					//	pX = enemyRC.left - pSizeX / 2;
+					//}
+					//if (tempW > tempH && tempY > enemyY && playerRC.top < enemyRC.bottom)
+					//{
+					//	pY = enemyRC.bottom + pSizeY / 2;
+					//}
+					//if (tempW > tempH && tempY < enemyY && playerRC.bottom > enemyRC.top)
+					//{
+					//	pY = enemyRC.top - pSizeY / 2;
+					//}
+
+					//mPlayer->SetX(pX);
+					//mPlayer->SetY(pY);
 
 				}
 			}
@@ -227,49 +230,49 @@ void CollisionManager::PlayerTakenDamaged()
 
 void CollisionManager::knockback(RECT temp, float Distance) 
 {
-	float tempW = temp.right - temp.left;
-	float tempH = temp.bottom - temp.top;
-	float tempX = temp.right - tempW / 2;
-	float tempY = temp.bottom - tempH / 2;
+	//float tempW = temp.right - temp.left;
+	//float tempH = temp.bottom - temp.top;
+	//float tempX = temp.right - tempW / 2;
+	//float tempY = temp.bottom - tempH / 2;
 
-	// 좌상단 충돌
-	if(mPlayer->GetX() - tempX > 0 && mPlayer->GetY() - tempY > 0 && mPlayer->GetRect().top > temp.top) 
-	{
-		mPlayer->SetAttacked(Attacked::lefttop);
-	}
-	// 좌하단 충돌
-	if (mPlayer->GetX() - tempX > 0 && mPlayer->GetY() - tempY < 0 && mPlayer->GetRect().bottom < temp.bottom) 
-	{
-		mPlayer->SetAttacked(Attacked::leftdown);
-	}
-	// 우상단 충돌
-	if (mPlayer->GetX() - tempX < 0 && mPlayer->GetY() - tempY > 0 && mPlayer->GetRect().top > temp.top)
-	{
-		mPlayer->SetAttacked(Attacked::righttop);
-	}
-	// 우하단 충돌
-	if (mPlayer->GetX() - tempX < 0 && mPlayer->GetY() - tempY < 0 && mPlayer->GetRect().bottom < temp.bottom)
-	{
-		mPlayer->SetAttacked(Attacked::rightdown);
-	}
-	// 상단 충돌
-	if (mPlayer->GetRect().left <= temp.left && mPlayer->GetRect().right >= temp.right && mPlayer->GetY() > tempY)
-	{
-		mPlayer->SetAttacked(Attacked::top);
-	}
-	// 하단 충돌
-	if (mPlayer->GetRect().left <= temp.left && mPlayer->GetRect().right >= temp.right && mPlayer->GetY() < tempY)
-	{
-		mPlayer->SetAttacked(Attacked::down);
-	}
-	// 우측 충돌
-	if (mPlayer->GetRect().top <= temp.top && mPlayer->GetRect().bottom >= temp.bottom && mPlayer->GetX() > tempX)
-	{
-		mPlayer->SetAttacked(Attacked::right);
-	}
-	// 좌측 충돌
-	if (mPlayer->GetRect().top <= temp.top && mPlayer->GetRect().bottom >= temp.bottom && mPlayer->GetX() < tempX)
-	{
-		mPlayer->SetAttacked(Attacked::left);
-	}
+	//// 좌상단 충돌
+	//if(mPlayer->GetX() - tempX > 0 && mPlayer->GetY() - tempY > 0 && mPlayer->GetRect().top > temp.top) 
+	//{
+	//	mPlayer->SetAttacked(Attacked::lefttop);
+	//}
+	//// 좌하단 충돌
+	//if (mPlayer->GetX() - tempX > 0 && mPlayer->GetY() - tempY < 0 && mPlayer->GetRect().bottom < temp.bottom) 
+	//{
+	//	mPlayer->SetAttacked(Attacked::leftdown);
+	//}
+	//// 우상단 충돌
+	//if (mPlayer->GetX() - tempX < 0 && mPlayer->GetY() - tempY > 0 && mPlayer->GetRect().top > temp.top)
+	//{
+	//	mPlayer->SetAttacked(Attacked::righttop);
+	//}
+	//// 우하단 충돌
+	//if (mPlayer->GetX() - tempX < 0 && mPlayer->GetY() - tempY < 0 && mPlayer->GetRect().bottom < temp.bottom)
+	//{
+	//	mPlayer->SetAttacked(Attacked::rightdown);
+	//}
+	//// 상단 충돌
+	//if (mPlayer->GetRect().left <= temp.left && mPlayer->GetRect().right >= temp.right && mPlayer->GetY() > tempY)
+	//{
+	//	mPlayer->SetAttacked(Attacked::top);
+	//}
+	//// 하단 충돌
+	//if (mPlayer->GetRect().left <= temp.left && mPlayer->GetRect().right >= temp.right && mPlayer->GetY() < tempY)
+	//{
+	//	mPlayer->SetAttacked(Attacked::down);
+	//}
+	//// 우측 충돌
+	//if (mPlayer->GetRect().top <= temp.top && mPlayer->GetRect().bottom >= temp.bottom && mPlayer->GetX() > tempX)
+	//{
+	//	mPlayer->SetAttacked(Attacked::right);
+	//}
+	//// 좌측 충돌
+	//if (mPlayer->GetRect().top <= temp.top && mPlayer->GetRect().bottom >= temp.bottom && mPlayer->GetX() < tempX)
+	//{
+	//	mPlayer->SetAttacked(Attacked::left);
+	//}
 }

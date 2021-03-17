@@ -58,6 +58,8 @@ class Player : public GameObject
 	float mInvincibleCount;
 	bool mIsInvincible;
 	bool mIsKnockback;
+	float mKnockbackDistance;
+	float mAngle;
 	float mDash;
 
 	PlayerState mPlayerState;
@@ -87,8 +89,16 @@ public:
 	void SetAttacked(Attacked attacked) { mAttacked = attacked; }
 	void SetHP(int hp) { mHP = hp; }
 	void SetNoDamage(bool noDamage) { mIsInvincible = noDamage; }
-	void SetmIsKnockback(bool knockback) { mIsKnockback = knockback; }
+
+	
+	void ExecuteKnockback(float angle, float force)
+	{
+		mIsKnockback = true;
+		mAngle = angle;
+		mKnockbackDistance = force;
+	}
 
 	void PlayerCtrl();
+	void Knockback();
 };
 

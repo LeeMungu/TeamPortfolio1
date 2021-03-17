@@ -403,6 +403,16 @@ void MapToolScene::Update()
 			InteractObject* tempInteract = (InteractObject * )tempInteractList[i];
 			if(mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer()!= TileLayer::wall)
 			mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+			if (tempInteract->GetTileCountX() == 2)
+			{
+				if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->GetTileLayer() != TileLayer::wall)
+					mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->SetTileLayer(TileLayer::wall);
+			}
+			if (tempInteract->GetTileCountY() == 2)
+			{
+				if (mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
+					mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+			}
 		}
 	}
 }
@@ -817,6 +827,16 @@ void MapToolScene::Load()
 				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
 				if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
 					mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+				if (tempInteract->GetTileCountX() == 2)
+				{
+					if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->GetTileLayer() != TileLayer::wall)
+						mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->SetTileLayer(TileLayer::wall);
+				}
+				if (tempInteract->GetTileCountY() == 2)
+				{
+					if (mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
+						mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+				}
 			}
 		}
 	}

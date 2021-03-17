@@ -237,6 +237,7 @@ void scene1::Render(HDC hdc)
 
 void scene1::Load()
 {
+
 	ifstream loadStream(L"../04_Data/Test.txt");
 	if (loadStream.is_open())
 	{
@@ -422,6 +423,16 @@ void scene1::Load()
 				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
 				if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
 					mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+				if (tempInteract->GetTileCountX() == 2)
+				{
+					if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX() + 1]->GetTileLayer() != TileLayer::wall)
+						mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX() + 1]->SetTileLayer(TileLayer::wall);
+				}
+				if (tempInteract->GetTileCountY() == 2)
+				{
+					if (mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
+						mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+				}
 			}
 		}
 	}

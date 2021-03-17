@@ -21,12 +21,14 @@ public:
 	float mStartImageY;
 
 	//무기 생성 시 플레이어 좌표
-	float mStartPlayerX;
-	float mStartPlayerY;
+	//float mStartPlayerX;
+	//float mStartPlayerY;
+	// 
 	//플레이어의 위치
 	float mNowPlayerX;
 	float mNowPlayerY;
 
+	bool mIsEqip;
 
 	int mBullet;
 	float mAngle; //총알 궤적?
@@ -35,7 +37,7 @@ public:
 	void Init()override;
 	void Release()override;
 	void Update()override;
-	void Render(HDC hdc, float cameraX, float cameraY)override;
+	void Render(HDC hdc)override;
 
 
 	void SetPlayerPtr(Player* player) { mPlayer = player; }

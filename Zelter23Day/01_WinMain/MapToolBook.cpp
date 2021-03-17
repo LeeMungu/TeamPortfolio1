@@ -77,7 +77,7 @@ void MapToolBook::Init()
 			}
 			else if (mBookType == BookType::InterectObject)
 			{
-				if (mPage < 3)
+				if (mPage < 10)
 				{
 					mPage++;
 					mIsPageChange = true;
@@ -366,8 +366,273 @@ void MapToolBook::Update()
 					objectButton->Init();
 					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
 				}
+				for (int i = 0; i < 2; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Bench" + to_wstring(i + 1), mX - 250 + 100 * ((i + 6) % 3), mY - 210 + 145 * ((i + 6) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Bench" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						if (i >= 1)
+						{
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(2);
+						}
+						else
+						{
+							mouse->SetTileCountX(2);
+							mouse->SetTileCountY(1);
+						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+
+			}
+			else if (mPage == 4)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				//오브젝트버튼 생성
+				for (int i = 0; i < 5; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Computer" + to_wstring(i + 1), mX - 250 + 100 * (i % 3), mY - 210 + 145 * (i / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Computer" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						if (i >= 4)
+						{
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(2);
+						}
+						else
+						{
+							mouse->SetTileCountX(2);
+							mouse->SetTileCountY(1);
+						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 4; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Desk" + to_wstring(i + 1), mX - 250 + 100 * ((i + 5)% 3), mY - 210 + 145 * ((i + 5)/ 3), [i]() {
+						Mouse* mouse = new Mouse(L"Desk" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						if (i >= 2)
+						{
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(2);
+						}
+						else
+						{
+							mouse->SetTileCountX(2);
+							mouse->SetTileCountY(1);
+						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+			else if (mPage == 5)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				for (int i = 0; i < 2; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Doll" + to_wstring(i + 1), 
+						mX - 250 + 100 * (i % 3), mY - 210 + 145 * (i / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Doll" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 4; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"DustBox" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i+2) % 3), mY - 210 + 145 * ((i+2) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"DustBox" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						if (i >= 3)
+						{
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(2);
+						}
+						else if(i>=2)
+						{
+							mouse->SetTileCountX(3);
+							mouse->SetTileCountY(1);
+						}
+						else
+						{
+							mouse->SetTileCountX(2);
+							mouse->SetTileCountY(1);
+						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 2; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Fan" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i + 6) % 3), mY - 210 + 145 * ((i + 6) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Fan" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+			else if (mPage == 6)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				for (int i = 0; i < 3; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Bus" + to_wstring(i + 1),
+						mX - 250 + 100 * (i % 3), mY - 110 + 145 * (i / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Bus" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(3);
+						mouse->SetTileCountY(9);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+			else if (mPage == 7)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				for (int i = 0; i < 3; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Bus" + to_wstring(i + 6 + 1),
+						mX - 250 + 100, mY - 170 + 120 * (i % 3), [i]() {
+						Mouse* mouse = new Mouse(L"Bus" + to_wstring(i + 6 + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(9);
+						mouse->SetTileCountY(3);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+			else if (mPage == 8)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				for (int i = 0; i < 2; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Bus" + to_wstring(i + 9 + 1),
+						mX - 250 + 100, mY - 170 + 120 * (i % 3), [i]() {
+						Mouse* mouse = new Mouse(L"Bus" + to_wstring(i + 9 + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(9);
+						mouse->SetTileCountY(3);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 5; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Car" + to_wstring(i + 1),
+						mX - 280 + 60*(i % 5), mY - 170 + 120 * 2, [i]() {
+						Mouse* mouse = new Mouse(L"Car" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(2);
+						mouse->SetTileCountY(3);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+			else if (mPage == 9)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
 			}
 		}
+		else if (mPage == 7)
+		{
+			//오브젝트버튼 초기화
+			vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+			if (tempButton.size() != NULL)
+			{
+				for (int i = 0; i < tempButton.size(); ++i)
+				{
+					tempButton[i]->SetIsDestroy(true);
+				}
+			}
+			for (int i = 0; i < 3; ++i)
+			{
+			}
+		}
+
 		mIsPageChange = false;
 	}
 	//책안의 버튼들 업데이트

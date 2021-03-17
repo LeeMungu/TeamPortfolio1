@@ -30,8 +30,25 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 	mY = mTileIndexY * TileSize + TileSize / 2 - mSizeY / 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	
-	mInteractRect = RectMakeCenter(mX, mRect.bottom-TileSize*(mTileCountY-1),
-		(TileSize / 2)* mTileCountX, (TileSize / 2)* mTileCountY);
+	int interactRectSizeX, interactRectSizeY;
+	if (mTileCountX == 1)
+	{
+		interactRectSizeX = TileSize / 2;
+	}
+	else
+	{
+		interactRectSizeX = TileSize * (mTileCountX - 1);
+	}
+	if (mTileCountY == 1)
+	{
+		interactRectSizeY = TileSize / 2;
+	}
+	else
+	{
+		interactRectSizeY = TileSize * (mTileCountY - 1);
+	}
+	mInteractRect = RectMakeCenter(mX, mRect.bottom-TileSize/2*(mTileCountY-1),
+		interactRectSizeX, interactRectSizeY);
 }
 
 void InteractObject::Init()

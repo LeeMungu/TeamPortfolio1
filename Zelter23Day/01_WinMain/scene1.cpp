@@ -13,7 +13,7 @@
 #include "InteractObject.h"
 #include "NonInteractObject.h"
 #include "CollisionManager.h"
-
+#include "KeyIcon.h"
 void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
@@ -34,7 +34,9 @@ void scene1::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::camera, camera);
 	
 
-	
+	KeyIcon* keyIcon = new KeyIcon("KeyIcon");
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, keyIcon);
+
 
 	//ifstream loadStream(L"../04_Data/Test.txt");
 	//if (loadStream.is_open())

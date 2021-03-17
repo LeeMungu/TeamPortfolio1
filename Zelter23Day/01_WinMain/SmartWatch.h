@@ -34,11 +34,7 @@ class SmartWatch : public UI
 	bool mIsFirstChange;
 	bool mIsFstImgChange;
 
-	Image* mTensHourImg;
-	Image* mUnitsHourImg;
-	Image* mTensMinImg;
-	Image* mUnitsMinImg;
-	Image* mClock;
+	Image* mNumberImg;
 
 public:
 	SmartWatch(const string& name, int x, int y);

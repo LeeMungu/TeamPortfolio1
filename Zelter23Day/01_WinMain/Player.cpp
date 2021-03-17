@@ -29,6 +29,8 @@ void Player::Init()
 	mInvincibleCount = 0;
 	mAttacked = Attacked::left;
 
+	mCollisionBox = RectMakeCenter(mX , mY , mSizeX / 2, mSizeY / 3);
+
 	//Run Animation
 	mUpRunAni = new Animation();
 	mUpRunAni->InitFrameByStartEnd(1, 0, 6, 0, false);
@@ -151,7 +153,7 @@ void Player::Update()
 	mSizeX = mImage->GetFrameWidth() * 2;
 	mSizeY = mImage->GetFrameHeight() * 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY/3);
-
+	mCollisionBox = RectMakeCenter(mX , mY, mSizeX / 2, mSizeY / 3);
 	Knockback();
 }
 
@@ -162,8 +164,9 @@ void Player::Render(HDC hdc)
 	if (Input::GetInstance()->GetKey(VK_LSHIFT))
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
-		//RenderRect(hdc, mRect);
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mCollisionBox);
 	}
+
 }
 
 void Player::PlayerCtrl() {

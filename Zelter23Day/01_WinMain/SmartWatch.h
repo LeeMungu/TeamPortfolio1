@@ -12,6 +12,7 @@ class SmartWatch : public UI
 	Image* mGlass;
 	Image* mTimeBG;
 	Image* mUIBaseImage;
+	Image* mAMPMImage;
 
 	DayTime mDayTime;
 	class PlayerHPUI* mPlayerHPUI;

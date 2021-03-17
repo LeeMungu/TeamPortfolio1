@@ -119,9 +119,9 @@ void SmartWatch::Render(HDC hdc)
 		->RenderText(30, 40, strDayTime.c_str(), 10);
 	//D2DRenderer::GetInstance()->RenderText(30, 50, strWatch.c_str(), 20);
 		
-	mTensHourImg->ScaleFrameRender(hdc, mX + 12, mY + 50, mHour / 10 % 10, 0 , 25, 25);
-	mUnitsHourImg->ScaleFrameRender(hdc, mX + 27, mY + 50, mHour % 10, 0, 25, 25);
-	mClock->ScaleFrameRender(hdc, mX + 40, mY + 50, 10, 0, 25, 25);
-	mTensMinImg->ScaleFrameRender(hdc, mX + 55, mY + 50, mMin / 10 % 10, 0, 25, 25);
-	mTensMinImg->ScaleFrameRender(hdc, mX + 70, mY + 50, mMin % 10, 0, 25, 25);
+	mTensHourImg->ScaleFrameRender(hdc, mX + 12, mY + 50, mHour / 10 % 10, 0 , 23, 23);
+	mUnitsHourImg->ScaleFrameRender(hdc, mX + 27, mY + 50, mHour % 10, 0, 23, 23);
+	mClock->ScaleFrameRender(hdc, mX + 42, mY + 50, 10, 0, 23, 23);
+	mTensMinImg->ScaleFrameRender(hdc, mX + 55, mY + 50, mMin / 10 % 10, 0, 23, 23);
+	mTensMinImg->ScaleFrameRender(hdc, mX + 70, mY + 50, mMin % 10, 0, 23, 23);
 }

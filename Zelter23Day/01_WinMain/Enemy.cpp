@@ -61,6 +61,6 @@ void Enemy::SetAnimation()
 	}
 }
 
-void Enemy::DropItem(Item item)
-{
-}
+//void Enemy::DropItem(Item item)
+//{
+//}

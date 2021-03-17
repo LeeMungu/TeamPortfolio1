@@ -169,6 +169,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="InteractObject.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MapToolBook.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InteractObject.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="MainGame + MainProc.cpp" />
     <ClCompile Include="MainGame.cpp" />

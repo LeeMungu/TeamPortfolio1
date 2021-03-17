@@ -35,7 +35,7 @@ public:
 	void Init()override;
 	void Release()override;
 	void Update()override;
-	void Render(HDC hdc)override;
+	void Render(HDC hdc, float cameraX, float cameraY)override;
 
 
 	void SetPlayerPtr(Player* player) { mPlayer = player; }

@@ -49,7 +49,7 @@ void Weapon::Update()
 
 }
 
-void Weapon::Render(HDC hdc)
+void Weapon::Render(HDC hdc, float cameraX, float cameraY)
 {
-	mImage->Render(hdc, mImageX, mImageY);
+	mImage->Render(hdc, mImageX + cameraX, mImageY + cameraY);
 }

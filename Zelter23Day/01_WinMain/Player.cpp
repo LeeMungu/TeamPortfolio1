@@ -119,6 +119,7 @@ void Player::Init()
 	mCurrentAnimation = mDownIdleAni;
 	mPlayerState = PlayerState::idle;
 	mDash = 0;
+	mDashTime = 0;
 }
 
 void Player::Release()
@@ -155,6 +156,17 @@ void Player::Update()
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY/3);
 	mCollisionBox = RectMakeCenter(mX , mY, mSizeX / 2, mSizeY / 3);
 	Knockback();
+
+	if (mDash > 0)
+	{
+		mDashTime += Time::GetInstance()->DeltaTime();
+
+		if (mDashTime > 0.4f)
+		{
+			mDashTime = 0;
+			mDash = 0;
+		}
+	}
 }
 
 void Player::Render(HDC hdc)
@@ -183,7 +195,7 @@ void Player::PlayerCtrl() {
 
 				mImage = IMAGEMANAGER->FindImage(L"Player_roll");
 				mSpeed = 10.f;
-				mDash = 10.f;
+				mDash = 6.f;
 				mCurrentAnimation->Stop();
 
 				if (mCurrentAnimation == mLeftRunAni)
@@ -207,11 +219,16 @@ void Player::PlayerCtrl() {
 			}
 		}
 		//roll 상태 끝나면 run으로 전환해줌
-		if (mPlayerState == PlayerState::roll) {
+		if (mPlayerState == PlayerState::roll)
+		{
 			if (mCurrentAnimation->GetIsPlay() == false) {
 				mPlayerState = PlayerState::run;
 				mCurrentAnimation->Stop();
 				mDash = 0;
+			}
+			if (Input::GetInstance()->GetKeyDown(VK_RBUTTON))
+			{
+				return;
 			}
 		}
 		//위아래 이동

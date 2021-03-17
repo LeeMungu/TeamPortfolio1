@@ -77,7 +77,11 @@ void MapToolBook::Init()
 			}
 			else if (mBookType == BookType::InterectObject)
 			{
-
+				if (mPage < 2)
+				{
+					mPage++;
+					mIsPageChange = true;
+				}
 			}
 		});
 		mPrevButton = new Button(L"Prev", mX - mSizeX / 3, mY + mSizeY / 3, 50, 50,
@@ -92,7 +96,11 @@ void MapToolBook::Init()
 			}
 			else if (mBookType == BookType::InterectObject)
 			{
-
+				if (mPage > 1)
+				{
+					mPage--;
+					mIsPageChange = true;
+				}
 			}
 		});
 
@@ -257,6 +265,10 @@ void MapToolBook::Update()
 					mPallete[y][x]->SetTileLayer(TileLayer::PalletteType);
 				}
 			}
+		}
+		if (mBookType == BookType::InterectObject)
+		{
+			//if(mPage ==)
 		}
 		mIsPageChange = false;
 	}

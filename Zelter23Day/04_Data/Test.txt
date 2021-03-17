@@ -812,7 +812,6 @@ Tile1,1,1,0
 Tile1,1,1,0
 Tile1,1,1,0
 Tile1,1,1,0
-Tile1,1,1,1
 Tile1,1,1,0
 Tile1,1,1,0
 Tile1,1,1,0
@@ -1012,7 +1011,8 @@ Tile1,1,1,0
 Tile1,1,1,0
 Tile1,1,1,0
 Tile1,1,1,0
-Tile1,1,1,1
+Tile1,1,1,0
+Tile1,1,1,0
 Tile1,1,1,0
 Tile1,1,1,0
 Tile1,1,1,0

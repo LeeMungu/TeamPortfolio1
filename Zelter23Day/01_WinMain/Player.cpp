@@ -173,7 +173,7 @@ void Player::Render(HDC hdc)
 {
 	CameraManager::GetInstance()->GetMainCamera()->
 		ScaleFrameRender(hdc, mImage, mRect.left, mRect.top-50, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
-	if (Input::GetInstance()->GetKey(VK_LSHIFT))
+	if (Input::GetInstance()->GetKey(VK_LCONTROL))
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mCollisionBox);

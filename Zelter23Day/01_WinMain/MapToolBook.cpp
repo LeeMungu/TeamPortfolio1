@@ -77,7 +77,7 @@ void MapToolBook::Init()
 			}
 			else if (mBookType == BookType::InterectObject)
 			{
-				if (mPage < 2)
+				if (mPage < 3)
 				{
 					mPage++;
 					mIsPageChange = true;
@@ -268,7 +268,105 @@ void MapToolBook::Update()
 		}
 		if (mBookType == BookType::InterectObject)
 		{
-			//if(mPage ==)
+			if (mPage == 1)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				//오브젝트버튼 생성
+				for (int i = 0; i < 8; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Tree" + to_wstring(i + 1), mX - 250 + 100 * (i % 3), mY - 210 + 145 * (i / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Tree" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+			else if (mPage == 2)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				//오브젝트버튼 생성
+				for (int i = 0; i < 8; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Cabinet" + to_wstring(i + 1), mX - 250 + 100 * (i % 3), mY - 210 + 145 * (i / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Cabinet" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+			else if (mPage == 3)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				//오브젝트버튼 생성
+				for (int i = 0; i < 3; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Chair" + to_wstring(i + 1), mX - 250 + 100 * (i % 3), mY - 210 + 145 * (i / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Chair" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 3; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Closet" + to_wstring(i + 1), mX - 250 + 100 * ((i+3) % 3), mY - 210 + 145 * ((i+3) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Closet" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						if(i>=2)
+						{ 
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(2);
+						}
+						else
+						{
+							mouse->SetTileCountX(2);
+							mouse->SetTileCountY(1);
+						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
 		}
 		mIsPageChange = false;
 	}

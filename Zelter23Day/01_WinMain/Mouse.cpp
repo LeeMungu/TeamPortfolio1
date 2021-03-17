@@ -59,38 +59,35 @@ void Mouse::Update()
 
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
-		if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mRect))//카메라 범위 안에 있을 경우만
+		//책안에서 클릭하면 무효
+		vector<GameObject*> tempBook = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ToolBook);
+		if (tempBook.size() != NULL)
 		{
-			//책안에서 클릭하면 무효
-			vector<GameObject*> tempBook = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ToolBook);
-			if (tempBook.size() != NULL)
+			for (int i = 0; i < tempBook.size(); ++i)
 			{
-				for (int i = 0; i < tempBook.size(); ++i)
+				RECT tempBookRect = tempBook[i]->GetRect();
+				if (PtInRect(&tempBookRect, _mousePosition))
 				{
-					RECT tempBookRect = tempBook[i]->GetRect();
-					if (PtInRect(&tempBookRect, _mousePosition))
-					{
-						return;
-					}
+					return;
 				}
 			}
-			//누르면 생성
-			if (mObjectType == ObjectLayer::HousingObject)
-			{
-				//이곳에서 하우징 생성넣어줄것
-			}
-			else if (mObjectType == ObjectLayer::InteractObject)
-			{
-				InteractObject* interactObject = new InteractObject(mImageKey, mX + cameraRc.left, mY + mSizeY / 2 + cameraRc.top, mHpMax, mTileCountX, mTileCountY);
-				interactObject->Init();
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::InteractObject, interactObject);
-			}
-			else if (mObjectType == ObjectLayer::NoninteractObject)
-			{
-				NonInteractObject* noninteractObject = new NonInteractObject(mImageKey, mX + cameraRc.left, mY + cameraRc.top);
-				noninteractObject->Init();
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::NoninteractObject, noninteractObject);
-			}
+		}
+		//누르면 생성
+		if (mObjectType == ObjectLayer::HousingObject)
+		{
+			//이곳에서 하우징 생성넣어줄것
+		}
+		else if (mObjectType == ObjectLayer::InteractObject)
+		{
+			InteractObject* interactObject = new InteractObject(mImageKey, mX + cameraRc.left, mY + mSizeY / 2 + cameraRc.top, mHpMax, mTileCountX, mTileCountY);
+			interactObject->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::InteractObject, interactObject);
+		}
+		else if (mObjectType == ObjectLayer::NoninteractObject)
+		{
+			NonInteractObject* noninteractObject = new NonInteractObject(mImageKey, mX + cameraRc.left, mY + cameraRc.top);
+			noninteractObject->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::NoninteractObject, noninteractObject);
 		}
 	}
 }
@@ -103,9 +100,15 @@ void Mouse::Render(HDC hdc)
 	}
 	else if (mObjectType == ObjectLayer::InteractObject)
 	{
-		RECT rc = RectMakeCenter(mX, mRect.bottom, TileSize, TileSize);
-		RenderRect(hdc, rc);
-		mImage->Render(hdc, mRect.left, mRect.top);
+		for (int y = 0; y < mTileCountY; ++y)
+		{
+			for (int x = 0; x < mTileCountX; ++x)
+			{
+				RECT rc = RectMakeCenter(mX + x * TileSize, mRect.bottom - y * TileSize, TileSize, TileSize);
+				RenderRect(hdc, rc);
+			}
+		}
+		mImage->FrameRender(hdc, mRect.left, mRect.top,0,0);
 	}
 	else if (mObjectType == ObjectLayer::NoninteractObject)
 	{

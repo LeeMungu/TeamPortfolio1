@@ -273,6 +273,9 @@
     <ClInclude Include="QuickSlot.h">
       <Filter>MainGame\UI\Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="Zombie02.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -427,6 +430,9 @@
     </ClCompile>
     <ClCompile Include="QuickSlot.cpp">
       <Filter>MainGame\UI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie02.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

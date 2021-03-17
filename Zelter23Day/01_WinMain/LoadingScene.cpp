@@ -72,6 +72,7 @@ void LoadingScene::Init()
 
 	//이미지 (몬스터)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie01", Resources(L"/06_Zombie/zombie01.png"), 5, 6); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie02", Resources(L"/06_Zombie/zombie02.png"), 5, 6); });
 
 	//이미지 (Active Object)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bench1", Resources(L"/05_Object/Bench1.png"), 2, 1); });

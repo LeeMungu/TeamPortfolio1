@@ -2,7 +2,13 @@
 #include "GameObject.h"
 
 
-
+enum class ZombieState : int
+{
+	Patrol,
+	Chase,
+	Attack,
+	Die
+};
 class Image;
 class Player;
 class Animation;

@@ -201,6 +201,7 @@
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Zombie01.h" />
+    <ClInclude Include="Zombie02.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp" />
@@ -259,6 +260,7 @@
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Zombie01.cpp" />
+    <ClCompile Include="Zombie02.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="01_WinMain.rc" />

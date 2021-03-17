@@ -14,6 +14,7 @@ void KeyIcon::Init()
 	mBagIconImage = IMAGEMANAGER->FindImage(L"Icon_bag");
 	mCraftIconImage = IMAGEMANAGER->FindImage(L"Icon_craft");
 	mTabletIconImage = IMAGEMANAGER->FindImage(L"Icon_tablet");
+	mNameImage = IMAGEMANAGER->FindImage(L"Icon_name");
 
 	mIKeyImage = IMAGEMANAGER->FindImage(L"Key_I");
 	mCKeyImage = IMAGEMANAGER->FindImage(L"Key_C");
@@ -30,15 +31,19 @@ void KeyIcon::Update()
 
 void KeyIcon::Render(HDC hdc)
 {
-	mBaseImage->ScaleRender(hdc, mX + 80, mY + 13, 56 * 2, 50);
-	mBaseImage->ScaleRender(hdc, mX + 80, mY + 73, 56 * 2, 50);
-	mBaseImage->ScaleRender(hdc, mX + 80, mY + 133, 56 * 2, 50);
+	mBaseImage->ScaleRender(hdc, mX + 80, mY + 13, 56 * 2, 55);
+	mBaseImage->ScaleRender(hdc, mX + 80, mY + 83, 56 * 2, 55);
+	mBaseImage->ScaleRender(hdc, mX + 80, mY + 153, 56 * 2, 55);
 
-	mBagIconImage->ScaleRender(hdc, mX + 50, mY, 60, 60);
-	mCraftIconImage->ScaleRender(hdc, mX + 50, mY + 60, 60, 60);
-	mTabletIconImage->ScaleRender(hdc, mX + 50, mY + 120, 60, 60);
+	mBagIconImage->ScaleRender(hdc, mX + 50, mY, 65, 65);
+	mCraftIconImage->ScaleRender(hdc, mX + 50, mY + 70, 65, 65);
+	mTabletIconImage->ScaleRender(hdc, mX + 50, mY + 140, 65, 65);
 
-	mIKeyImage->ScaleRender(hdc, mX + 130, mY + 20, 40, 40);
-	mCKeyImage->ScaleRender(hdc, mX + 130, mY + 80, 40, 40);
-	mTKeyImage->ScaleRender(hdc, mX + 130, mY + 140, 40, 40);
+	mIKeyImage->ScaleRender(hdc, mX + 130, mY + 25, 40, 40);
+	mCKeyImage->ScaleRender(hdc, mX + 130, mY + 95, 40, 40);
+	mTKeyImage->ScaleRender(hdc, mX + 130, mY + 165, 40, 40);
+
+	mNameImage->FrameRender(hdc, mX + 110, mY - 25, 0, 0);
+	mNameImage->FrameRender(hdc, mX + 110, mY + 45, 1, 0);
+	mNameImage->FrameRender(hdc, mX + 110, mY + 115, 2, 0);
 }

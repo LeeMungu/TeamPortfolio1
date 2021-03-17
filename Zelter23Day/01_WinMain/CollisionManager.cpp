@@ -25,7 +25,7 @@ void CollisionManager::ObjectCollision()
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	if (mPlayer != nullptr)
 	{
-		RECT playerRC = mPlayer->GetRect();
+		RECT playerRC = mPlayer->GetCollisionBox();
 		RECT ObjectRC;
 		vector<GameObject*> object = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
 		if (object.size() != NULL)
@@ -37,8 +37,8 @@ void CollisionManager::ObjectCollision()
 				{
 					float pX = mPlayer->GetX();
 					float pY = mPlayer->GetY();
-					float pSizeX = mPlayer->GetSizeX();
-					float pSizeY = mPlayer->GetSizeY();
+					float pSizeX = playerRC.bottom - playerRC.top;
+					float pSizeY = playerRC.right - playerRC.left;
 
 					float tempW = temp.right - temp.left;
 					float tempH = temp.bottom - temp.top;
@@ -57,7 +57,7 @@ void CollisionManager::ObjectCollision()
 					}
 					if (tempW > tempH && tempY > ObjectY && playerRC.top <= ObjectRC.bottom)
 					{
-						pY = ObjectRC.bottom + pSizeY / 2;
+						pY = ObjectRC.bottom + pSizeY / 2 ;
 					}
 					if (tempW > tempH && tempY < ObjectY && playerRC.bottom >= ObjectRC.top)
 					{

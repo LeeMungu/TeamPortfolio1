@@ -42,67 +42,6 @@ void scene1::Init()
 	QuickSlot* quickSlot = new QuickSlot("QuickSlot", 800, 800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, quickSlot);
 
-	//ifstream loadStream(L"../04_Data/Test.txt");
-	//if (loadStream.is_open())
-	//{
-	//	string bufferCount;
-	//	getline(loadStream, bufferCount, ',');
-	//	mTileCountX = stoi(bufferCount);
-	//	getline(loadStream, bufferCount);
-	//	mTileCountY = stoi(bufferCount);
-	//
-	//	//초기화 후 삽입
-	//	mTileList.clear();
-	//	mTileList.assign(mTileCountY, vector<Tile*>());
-	//	for (int y = 0; y < mTileList.size(); ++y)
-	//	{
-	//		for (int x = 0; x < mTileCountX; ++x)
-	//		{
-	//			mTileList[y].push_back(new Tile
-	//			(
-	//				tileImage,
-	//				TileSize * x,
-	//				TileSize * y,
-	//				TileSize,
-	//				TileSize,
-	//				x,
-	//				y,
-	//				//Random::GetInstance()->RandomInt(3),
-	//				x,
-	//				y
-	//			));
-	//			mTileList[y][x]->SetTileLayer(TileLayer::normal);
-	//		}
-	//	}
-	//
-	//	for (int y = 0; y < mTileList.size(); ++y)
-	//	{
-	//		for (int x = 0; x < mTileCountX; ++x)
-	//		{
-	//			string key;
-	//			int frameX;
-	//			int frameY;
-	//			string buffer;
-	//			int layer;
-	//
-	//			getline(loadStream, buffer, ',');
-	//			key = buffer;
-	//			getline(loadStream, buffer, ',');
-	//			frameX = stoi(buffer);
-	//			getline(loadStream, buffer, ',');
-	//			frameY = stoi(buffer);
-	//			getline(loadStream, buffer);
-	//			layer = stoi(buffer);
-	//
-	//			wstring wstr;
-	//			wstr.assign(key.begin(), key.end());
-	//			mTileList[y][x]->mImage = ImageManager::GetInstance()->FindImage(wstr);
-	//			mTileList[y][x]->mFrameIndexX = frameX;
-	//			mTileList[y][x]->mFrameIndexY = frameY;
-	//			mTileList[y][x]->mTileLayer = (TileLayer)layer;
-	//		}
-	//	}
-	//}
 	Load();
 	Zombie01* mZombie01 = new Zombie01();
 	mZombie01->SetTileList(mTileList);
@@ -391,6 +330,14 @@ void scene1::Load()
 				ObjectManager::GetInstance()->AddObject(objectLayer, temp);
 			}
 		}
+		//타일속성 바꿔주기전에 초기화해주기
+		for (int y = 0; y < mTileCountY; ++y)
+		{
+			for (int x = 0; x < mTileCountX; ++x)
+			{
+				mTileList[y][x]->SetTileLayer(TileLayer::normal);
+			}
+		}
 		//인터렉트 오브젝트에 따른 타일 속성 바꾸기(wall로 바꿔주기)
 		//로드 할때도 해줘야 할듯하다 -> 항상 적용되어야한다 -> 오브젝트매니져에서 해주고 싶지만 타일이 오브젝트매니져에 없다.
 		//->타일을 오브젝트매니져에 넣기는 메리트가 너무 적다(업데이트나 기타부분이 의미가 없다 타일은 타일로 남겨두는게 충돌이 적고 
@@ -400,19 +347,14 @@ void scene1::Load()
 		{
 			for (int i = 0; i < tempInteractList.size(); ++i)
 			{
-				//후에 다중 타일 추가로 판정해줘야 한다.
 				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
-				if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
-					mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
-				if (tempInteract->GetTileCountX() == 2)
+				int y = 0;
+				int countx = tempInteract->GetTileCountX();
+				int county = tempInteract->GetTileCountY();
+				for (int x = 0; x < countx * county; ++x)
 				{
-					if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX() + 1]->GetTileLayer() != TileLayer::wall)
-						mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX() + 1]->SetTileLayer(TileLayer::wall);
-				}
-				if (tempInteract->GetTileCountY() == 2)
-				{
-					if (mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
-						mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+					if (mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->GetTileLayer() != TileLayer::wall)
+						mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->SetTileLayer(TileLayer::wall);
 				}
 			}
 		}

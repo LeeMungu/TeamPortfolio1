@@ -375,6 +375,15 @@ void MapToolScene::Update()
 		{
 			Undo();
 		}
+		//인터렉트 지우기
+		if (Input::GetInstance()->GetKeyDown('X'))
+		{
+			vector<GameObject*>tempObjectList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+			if (tempObjectList.size() != NULL)
+			{
+				tempObjectList[tempObjectList.size() - 1]->SetIsDestroy(true);
+			}
+		}
 	}
 	//팔레트 픽 지우기
 	if (Input::GetInstance()->GetKeyDown(VK_BACK))
@@ -390,6 +399,15 @@ void MapToolScene::Update()
 			}
 		}
 	}
+
+	//타일속성 바꿔주기전에 초기화해주기
+	for (int y = 0; y < mTileCountY; ++y)
+	{
+		for (int x = 0; x < mTileCountX; ++x)
+		{
+			mTileList[y][x]->SetTileLayer(TileLayer::normal);
+		}
+	}
 	//인터렉트 오브젝트에 따른 타일 속성 바꾸기(wall로 바꿔주기)
 	//로드 할때도 해줘야 할듯하다 -> 항상 적용되어야한다 -> 오브젝트매니져에서 해주고 싶지만 타일이 오브젝트매니져에 없다.
 	//->타일을 오브젝트매니져에 넣기는 메리트가 너무 적다(업데이트나 기타부분이 의미가 없다 타일은 타일로 남겨두는게 충돌이 적고 
@@ -399,28 +417,18 @@ void MapToolScene::Update()
 	{
 		for(int i=0; i<tempInteractList.size();++i)
 		{
-			//후에 다중 타일 추가로 판정해줘야 한다.
-			InteractObject* tempInteract = (InteractObject * )tempInteractList[i];
-			int y = 0;
-			int countx = tempInteract->GetTileCountX();
-			int county = tempInteract->GetTileCountY();
-			for (int x = 0;x < countx*county; ++x)
+			if (tempInteractList[i]->GetIsDestroy() != true)
 			{
-				if (mTileList[tempInteract->GetTileIndexY()-x/countx][tempInteract->GetTileIndexX()+x%countx]->GetTileLayer() != TileLayer::wall)
-					mTileList[tempInteract->GetTileIndexY()-x/countx][tempInteract->GetTileIndexX()+x%countx]->SetTileLayer(TileLayer::wall);
+				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
+				int y = 0;
+				int countx = tempInteract->GetTileCountX();
+				int county = tempInteract->GetTileCountY();
+				for (int x = 0; x < countx * county; ++x)
+				{
+					if (mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->GetTileLayer() != TileLayer::wall)
+						mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->SetTileLayer(TileLayer::wall);
+				}
 			}
-			////countx ==1, county ==1 인 경우
-			//if(mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer()!= TileLayer::wall)
-			//mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
-			////countx >=2, county ==1 인 경우
-			//if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->GetTileLayer() != TileLayer::wall)
-			//	mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->SetTileLayer(TileLayer::wall);
-			////countx ==1, county >=2 인 경우
-			//if (mTileList[tempInteract->GetTileIndexY()-1][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
-			//	mTileList[tempInteract->GetTileIndexY()-1][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
-			////countx >=2, county >=2 인 경우
-			//if (mTileList[tempInteract->GetTileIndexY()-1][tempInteract->GetTileIndexX() + 1]->GetTileLayer() != TileLayer::wall)
-			//	mTileList[tempInteract->GetTileIndexY()-1][tempInteract->GetTileIndexX() + 1]->SetTileLayer(TileLayer::wall);
 		}
 	}
 }
@@ -446,17 +454,19 @@ void MapToolScene::Render(HDC hdc)
 	D2DRenderer::GetInstance()
 		->RenderText(10, 10, to_wstring(renderCount).c_str(), 12);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 40, L"WASD : 카메라 이동", 12);
+		->RenderText(10, 30, L"WASD : 카메라 이동", 12);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 70, L"Shift + ←→↑↓ : 책 이동", 12);
+		->RenderText(10, 50, L"Shift + ←→↑↓ : 책 이동", 12);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 100, L"Lctrl : 테두리", 12);
+		->RenderText(10, 70, L"Lctrl : 테두리", 12);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 130, L"Lctrl + Z : 되감기", 12);
+		->RenderText(10, 90, L"Lctrl + Z : 되감기", 12);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 160, L"TAP + 드래그엔드롭 : 범위그려줌", 12);
+		->RenderText(10, 110, L"TAP + 드래그엔드롭 : 범위그려줌", 12);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 190, L"BackSpace : 마우스 초기화", 12);
+		->RenderText(10, 130, L"BackSpace : 마우스 초기화", 12);
+	D2DRenderer::GetInstance()
+		->RenderText(10, 150, L"Lctrl + X  : 마지막 오브젝트 지우기", 12);
 
 	//클릭한 속성별로 마우스 따라다니며 그려주기
 	if (mCurrentPallete != nullptr)
@@ -806,6 +816,14 @@ void MapToolScene::Load()
 				ObjectManager::GetInstance()->AddObject(objectLayer, temp);
 			}
 		}
+		//타일속성 바꿔주기전에 초기화해주기
+		for (int y = 0; y < mTileCountY; ++y)
+		{
+			for (int x = 0; x < mTileCountX; ++x)
+			{
+				mTileList[y][x]->SetTileLayer(TileLayer::normal);
+			}
+		}
 		//인터렉트 오브젝트에 따른 타일 속성 바꾸기(wall로 바꿔주기)
 		//로드 할때도 해줘야 할듯하다 -> 항상 적용되어야한다 -> 오브젝트매니져에서 해주고 싶지만 타일이 오브젝트매니져에 없다.
 		//->타일을 오브젝트매니져에 넣기는 메리트가 너무 적다(업데이트나 기타부분이 의미가 없다 타일은 타일로 남겨두는게 충돌이 적고 
@@ -817,17 +835,13 @@ void MapToolScene::Load()
 			{
 				//후에 다중 타일 추가로 판정해줘야 한다.
 				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
-				if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
-					mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
-				if (tempInteract->GetTileCountX() == 2)
+				int y = 0;
+				int countx = tempInteract->GetTileCountX();
+				int county = tempInteract->GetTileCountY();
+				for (int x = 0; x < countx * county; ++x)
 				{
-					if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->GetTileLayer() != TileLayer::wall)
-						mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()+1]->SetTileLayer(TileLayer::wall);
-				}
-				if (tempInteract->GetTileCountY() == 2)
-				{
-					if (mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
-						mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+					if (mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->GetTileLayer() != TileLayer::wall)
+						mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->SetTileLayer(TileLayer::wall);
 				}
 			}
 		}

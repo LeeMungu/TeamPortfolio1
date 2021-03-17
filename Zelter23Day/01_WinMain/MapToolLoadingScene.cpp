@@ -129,12 +129,9 @@ void MapToolLoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant2", Resources(L"/05_Object/Plant2.png"), 1, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant3", Resources(L"/05_Object/Plant3.png"), 1, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant4", Resources(L"/05_Object/Plant4.png"), 1, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant5", Resources(L"/05_Object/Plant5.png"), 1, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant6", Resources(L"/05_Object/Plant6.png"), 1, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant7", Resources(L"/05_Object/Plant7.png"), 1, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant7-2", Resources(L"/05_Object/Plant7-2.png"), 1, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant8", Resources(L"/05_Object/Plant8.png"), 1, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant8-2", Resources(L"/05_Object/Plant8-2.png"), 1, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant5", Resources(L"/05_Object/Plant5.png"), 2, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant6", Resources(L"/05_Object/Plant6.png"), 2, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Plant7", Resources(L"/05_Object/Plant7.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Refrigerator1", Resources(L"/05_Object/Refrigerator1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Rock1", Resources(L"/05_Object/Rock1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Shelf1", Resources(L"/05_Object/Shelf1.png"), 2, 1); });
@@ -156,7 +153,7 @@ void MapToolLoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Sofa1", Resources(L"/05_Object/Sofa1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Sofa2", Resources(L"/05_Object/Sofa2.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Sofa3", Resources(L"/05_Object/Sofa3.png"), 2, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Suv", Resources(L"/05_Object/Suv.png"), 2, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Suv1", Resources(L"/05_Object/Suv.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Suv2", Resources(L"/05_Object/Suv2.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Table1", Resources(L"/05_Object/Table1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Table2", Resources(L"/05_Object/Table2.png"), 2, 1); });
@@ -175,6 +172,7 @@ void MapToolLoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Tv1", Resources(L"/05_Object/Tv1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Washer1", Resources(L"/05_Object/Washer1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WaterMachine1", Resources(L"/05_Object/WaterMachine1.png"), 2, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WaterMachine2", Resources(L"/05_Object/WaterMachine2.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WorkTable1", Resources(L"/05_Object/WorkTable1.png"), 2, 1); });
 
 	//ÀÌ¹ÌÁö (Non-Active Object)

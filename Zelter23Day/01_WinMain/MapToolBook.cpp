@@ -77,7 +77,7 @@ void MapToolBook::Init()
 			}
 			else if (mBookType == BookType::InterectObject)
 			{
-				if (mPage < 10)
+				if (mPage < 12)
 				{
 					mPage++;
 					mIsPageChange = true;
@@ -650,6 +650,56 @@ void MapToolBook::Update()
 					objectButton->Init();
 					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
 				}
+				for (int i = 0; i < 2; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"HandWash" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i+2) % 3), mY - 170 + 120 * ((i+2) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"HandWash" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 3; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"MoterCycle" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i + 4) % 3), mY - 170 + 120 * ((i + 4) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"MoterCycle" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						if(i >= 1)
+						{
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(2);
+						}
+						else
+						{
+							mouse->SetTileCountX(2);
+							mouse->SetTileCountY(1);
+						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 1; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Refrigerator" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i + 8) % 3), mY - 210 + 145 * ((i + 8) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Refrigerator" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
 			}
 			else if (mPage == 10)
 			{
@@ -661,6 +711,180 @@ void MapToolBook::Update()
 					{
 						tempButton[i]->SetIsDestroy(true);
 					}
+				}
+				for (int i = 0; i < 3; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Plant" + to_wstring(i + 5),
+						mX - 250 + 100 * (i % 3), mY - 210 + 145 * (i / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Plant" + to_wstring(i + 5), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				
+				for (int i = 0; i < 6; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Shelf" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i + 3) % 3), mY - 210 + 145 * ((i + 3) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Shelf" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						if (i >= 5)
+						{
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(2);
+						}
+						else
+						{
+							mouse->SetTileCountX(2);
+							mouse->SetTileCountY(1);
+						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+			else if (mPage == 11)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				for (int i = 0; i < 6; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"ShowCase" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i) % 3), mY - 210 + 145 * ((i) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"ShowCase" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						if (i >= 5)
+						{
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(2);
+						}
+						else
+						{
+							mouse->SetTileCountX(2);
+							mouse->SetTileCountY(1);
+						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 3; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Sofa" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i+6) % 3), mY - 210 + 145 * ((i+6) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Sofa" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						if (i >= 2)
+						{
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(3);
+						}
+						else if (i >= 1)
+						{
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(2);
+						}
+						else
+						{
+							mouse->SetTileCountX(3);
+							mouse->SetTileCountY(1);
+						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+			else if (mPage == 12)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				for (int i = 0; i < 2; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Table" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i) % 3), mY - 210 + 145 * ((i) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Table" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						if (i >= 1)
+						{
+							mouse->SetTileCountX(1);
+							mouse->SetTileCountY(2);
+						}
+						else
+						{
+							mouse->SetTileCountX(3);
+							mouse->SetTileCountY(1);
+						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 1; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Washer" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i+2) % 3), mY - 210 + 145 * ((i+2) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Washer" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 2; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"WaterMachine" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i + 3) % 3), mY - 210 + 145 * ((i + 3) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"WaterMachine" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+				for (int i = 0; i < 2; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Toilet" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i + 5) % 3), mY - 210 + 145 * ((i + 5) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Toilet" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
 				}
 			}
 		}

@@ -64,6 +64,8 @@ class Player : public GameObject
 	float mAngle;
 	float mDash;
 
+	float mDashTime;
+
 	PlayerState mPlayerState;
 	Attacked mAttacked;
 

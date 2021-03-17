@@ -38,8 +38,8 @@ void Tile::Render(HDC hdc)
 					mImage, mRect.left, mRect.top, mFrameIndexX, mFrameIndexY, mSizeX, mSizeY);
 			}
 			//기즈모 외곽선 그리기
-			RECT tempRc = RectMake(mX - CameraManager::GetInstance()->GetMainCamera()->GetRect().left,
-				mY - CameraManager::GetInstance()->GetMainCamera()->GetRect().top,
+			RECT tempRc = RectMake(mRect.left - CameraManager::GetInstance()->GetMainCamera()->GetRect().left,
+				mRect.top - CameraManager::GetInstance()->GetMainCamera()->GetRect().top,
 				mSizeX, mSizeY);
 			if (PtInRect(&tempRc, _mousePosition))
 			{

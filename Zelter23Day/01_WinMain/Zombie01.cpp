@@ -17,6 +17,7 @@ void Zombie01::Init()
 	mSizeY = mImage->GetFrameHeight()*2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mCollisionBox = RectMakeCenter(mX, mY, mSizeX / 2, mSizeY / 3);
+	mAttackBox = RectMakeCenter(mX, mY,0, 0);
 	mAngle = 0;
 
 	mHp = 10;
@@ -52,7 +53,6 @@ void Zombie01::Init()
 	mLeftAttack->SetFrameUpdateTime(0.01f);
 
 	mRightAttack = new Animation;
-
 	mRightAttack->InitFrameByStartEnd(0, 5, 4, 5, true);
 	mRightAttack->SetIsLoop(false);
 	mRightAttack->SetFrameUpdateTime(0.01f);
@@ -113,6 +113,8 @@ void Zombie01::Update()
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mCollisionBox = RectMakeCenter(mX, mY, mSizeX / 2, mSizeY / 3);
+
+
 	mCurrentAnimation->Update();
 }
 
@@ -121,9 +123,10 @@ void Zombie01::Render(HDC hdc)
 	CameraManager::GetInstance()->GetMainCamera()->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top,
 		mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(),mSizeX,mSizeY);
 
-	if (Input::GetInstance()->GetKey(VK_LSHIFT))
+	if (Input::GetInstance()->GetKey(VK_LCONTROL))
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mAttackBox);
 	}
 	
 	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mAngle), 30);
@@ -211,6 +214,7 @@ void Zombie01::Attack()
 			{
 				mCurrentAnimation = mRightAttack;
 				mCurrentAnimation->Play();
+
 				mDelayTime = 0;
 				mIsAttackTrigger = true;
 			}
@@ -222,6 +226,15 @@ void Zombie01::Attack()
 				mIsAttackTrigger = true;
 			}
 			
+		}
+
+		if (mCurrentAnimation == mRightAttack && mCurrentAnimation->GetNowFrameX() > 1 && mCurrentAnimation->GetNowFrameX() < 4)
+		{
+			mAttackBox = RectMakeCenter(mCollisionBox.right, mY, mSizeX, mSizeY);
+		}
+		else if (mCurrentAnimation == mLeftAttack && mCurrentAnimation->GetNowFrameX() > 1 && mCurrentAnimation->GetNowFrameX() < 4)
+		{
+			mAttackBox = RectMakeCenter(mCollisionBox.left, mY, mSizeX, mSizeY);
 		}
 	}
 

@@ -39,6 +39,7 @@ protected:
 	bool mTakenDamege;
 	float mDelay;
 	RECT mCollisionBox;
+	RECT mAttackBox;
 
 	Animation* mCurrentAnimation;
 	Animation* mLeftIdle;
@@ -61,6 +62,7 @@ public:
 	
 	int GetAttack() { return mAttack; }
 	RECT GetCollisionBox() { return mCollisionBox; }
+	RECT GetAttackBox() { return mAttackBox; }
 	void SetHp(int hp) { mHp = hp; }
 	void DropItem(Item item);
 	void SetAnimation();

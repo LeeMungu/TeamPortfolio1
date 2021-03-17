@@ -4,6 +4,7 @@
 #include "ObjectManager.h"
 #include "GameObject.h"
 #include "InteractObject.h"
+#include "Enemy.h"
 
 
 void CollisionManager::Init()
@@ -33,7 +34,7 @@ void CollisionManager::ObjectCollision()
 			for (int i = 0; i < object.size(); ++i)
 			{
 				ObjectRC = ((InteractObject*)object[i])->GetInteractRect();
-				if (IntersectRect(&temp, &playerRC, &ObjectRC)) //오브젝트 충돌
+				if (IntersectRect(&temp, &playerRC, &ObjectRC))	//플레이어 충돌박스와 오브젝트 충돌
 				{
 					float pX = mPlayer->GetX();
 					float pY = mPlayer->GetY();
@@ -79,47 +80,47 @@ void CollisionManager::PlayerPhysics()
 	if (mPlayer != nullptr)
 	{
 		float invincibleCount = mPlayer->GetInvincibleCount();
-		RECT playerRC = mPlayer->GetRect();
+		RECT playerRC = mPlayer->GetCollisionBox();
 		RECT enemyRC;
 		vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
 		if (zombie.size() != NULL)
 		{
 			for (int i = 0; i < zombie.size(); ++i)
 			{
-				enemyRC = zombie[i]->GetRect();
+				enemyRC = ((Enemy*)zombie[i])->GetCollisionBox();
 				if (IntersectRect(&temp, &playerRC, &enemyRC))	//플레이어 좀비 충돌 처리
 				{
-					//float pX = mPlayer->GetX();
-					//float pY = mPlayer->GetY();
-					//float pSizeX = mPlayer->GetSizeX();
-					//float pSizeY = mPlayer->GetSizeY();
+					float pX = mPlayer->GetX();
+					float pY = mPlayer->GetY();
+					float pSizeX = playerRC.bottom - playerRC.top;
+					float pSizeY = playerRC.right - playerRC.left;
 
-					//float tempW = temp.right - temp.left;
-					//float tempH = temp.bottom - temp.top;
-					//float tempX = temp.left + tempW / 2;
-					//float tempY = temp.top + tempW / 2;
-					//float enemyX = enemyRC.left + (enemyRC.right - enemyRC.left) / 2;
-					//float enemyY = enemyRC.top + (enemyRC.bottom - enemyRC.top) / 2;
+					float tempW = temp.right - temp.left;
+					float tempH = temp.bottom - temp.top;
+					float tempX = temp.left + tempW / 2;
+					float tempY = temp.top + tempW / 2;
+					float enemyX = enemyRC.left + (enemyRC.right - enemyRC.left) / 2;
+					float enemyY = enemyRC.top + (enemyRC.bottom - enemyRC.top) / 2;
 
-					//if (tempW < tempH && tempX > enemyX && playerRC.left < enemyRC.right)
-					//{
-					//	pX = enemyRC.right + pSizeX / 2;
-					//}
-					//if (tempW < tempH && tempX < enemyX && playerRC.right > enemyRC.left)
-					//{
-					//	pX = enemyRC.left - pSizeX / 2;
-					//}
-					//if (tempW > tempH && tempY > enemyY && playerRC.top <= enemyRC.bottom)
-					//{
-					//	pY = enemyRC.bottom + pSizeY / 2;
-					//}
-					//if (tempW > tempH && tempY < enemyY && playerRC.bottom >= enemyRC.top)
-					//{
-					//	pY = enemyRC.top - pSizeY / 2;
-					//}
+					if (tempW < tempH && tempX > enemyX && playerRC.left < enemyRC.right)
+					{
+						pX = enemyRC.right + pSizeX / 2;
+					}
+					if (tempW < tempH && tempX < enemyX && playerRC.right > enemyRC.left)
+					{
+						pX = enemyRC.left - pSizeX / 2;
+					}
+					if (tempW > tempH && tempY > enemyY && playerRC.top <= enemyRC.bottom)
+					{
+						pY = enemyRC.bottom + pSizeY / 2;
+					}
+					if (tempW > tempH && tempY < enemyY && playerRC.bottom >= enemyRC.top)
+					{
+						pY = enemyRC.top - pSizeY / 2;
+					}
 
-					//mPlayer->SetX(pX);
-					//mPlayer->SetY(pY);
+					mPlayer->SetX(pX);
+					mPlayer->SetY(pY);
 
 				}
 			}
@@ -161,7 +162,7 @@ void CollisionManager::PlayerTakenDamaged()
 		{
 			for (int i = 0; i < zombie.size(); ++i)
 			{
-				enemyRC = zombie[i]->GetRect();
+				enemyRC = ((Enemy*)zombie[i])->GetCollisionBox();
 				if (IntersectRect(&temp, &playerRC, &enemyRC))	//플레이어 좀비 충돌 처리
 				{
 					float mAnlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY()

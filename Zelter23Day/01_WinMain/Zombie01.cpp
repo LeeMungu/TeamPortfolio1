@@ -16,6 +16,7 @@ void Zombie01::Init()
 	mSizeX = mImage->GetFrameWidth()*2;
 	mSizeY = mImage->GetFrameHeight()*2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mCollisionBox = RectMakeCenter(mX, mY, mSizeX / 2, mSizeY / 3);
 	mAngle = 0;
 
 	mHp = 10;
@@ -111,6 +112,7 @@ void Zombie01::Update()
 	
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mCollisionBox = RectMakeCenter(mX, mY, mSizeX / 2, mSizeY / 3);
 	mCurrentAnimation->Update();
 }
 

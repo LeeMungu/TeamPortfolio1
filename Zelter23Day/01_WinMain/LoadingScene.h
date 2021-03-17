@@ -3,7 +3,7 @@
 #include <functional>
 
 class Animation;
-
+class Image;
 class LoadingScene : public Scene
 {
 	Image* mLoadingImage;

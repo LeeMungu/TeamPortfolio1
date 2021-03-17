@@ -15,7 +15,7 @@ public:
 	void Update();
 
 
-	void PlayerCollision();
+	void ObjectCollision(); //플레이어와 오브젝트 충돌
 	void PlayerPhysics(); //플레이어와 좀비 충돌
 	void PlayerTakenDamaged(); //플레이어 피격
 	void knockback(RECT temp, float Distance); //플레이어 넉백 (인터섹트렉트 temp값 기준)

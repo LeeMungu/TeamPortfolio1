@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "ObjectManager.h"
 #include "GameObject.h"
+#include "InteractObject.h"
 
 
 void CollisionManager::Init()
@@ -12,15 +13,63 @@ void CollisionManager::Init()
 
 void CollisionManager::Update()
 {
-	PlayerCollision();
+	ObjectCollision();
 	PlayerPhysics();
 	PlayerTakenDamaged();
 }
 
 
-void CollisionManager::PlayerCollision()
+void CollisionManager::ObjectCollision()
 {
+	RECT temp;
+	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+	if (mPlayer != nullptr)
+	{
+		RECT playerRC = mPlayer->GetRect();
+		RECT ObjectRC;
+		vector<GameObject*> object = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+		if (object.size() != NULL)
+		{
+			for (int i = 0; i < object.size(); ++i)
+			{
+				ObjectRC = ((InteractObject*)object[i])->GetInteractRect();
+				if (IntersectRect(&temp, &playerRC, &ObjectRC)) //오브젝트 충돌
+				{
+					float pX = mPlayer->GetX();
+					float pY = mPlayer->GetY();
+					float pSizeX = mPlayer->GetSizeX();
+					float pSizeY = mPlayer->GetSizeY();
 
+					float tempW = temp.right - temp.left;
+					float tempH = temp.bottom - temp.top;
+					float tempX = temp.left + tempW / 2;
+					float tempY = temp.top + tempW / 2;
+					float ObjectX = ObjectRC.left + (ObjectRC.right - ObjectRC.left) / 2;
+					float ObjectY = ObjectRC.top + (ObjectRC.bottom - ObjectRC.top) / 2;
+
+					if (tempW < tempH && tempX > ObjectX && playerRC.left < ObjectRC.right)
+					{
+						pX = ObjectRC.right + pSizeX / 2;
+					}
+					if (tempW < tempH && tempX < ObjectX && playerRC.right > ObjectRC.left)
+					{
+						pX = ObjectRC.left - pSizeX / 2;
+					}
+					if (tempW > tempH && tempY > ObjectY && playerRC.top < ObjectRC.bottom)
+					{
+						pY = ObjectRC.bottom + pSizeY / 2;
+					}
+					if (tempW > tempH && tempY < ObjectY && playerRC.bottom > ObjectRC.top)
+					{
+						pY = ObjectRC.top - pSizeY / 2;
+					}
+
+					mPlayer->SetX(pX);
+					mPlayer->SetY(pY);
+				}
+			}
+		}
+	}
 }
 
 void CollisionManager::PlayerPhysics()
@@ -61,11 +110,11 @@ void CollisionManager::PlayerPhysics()
 					{
 						pX = enemyRC.left - pSizeX / 2;
 					}
-					if (tempW > tempH && tempY > enemyY && playerRC.top < enemyRC.bottom)
+					if (tempW > tempH && tempY > enemyY && playerRC.top <= enemyRC.bottom)
 					{
 						pY = enemyRC.bottom + pSizeY / 2;
 					}
-					if (tempW > tempH && tempY < enemyY && playerRC.bottom > enemyRC.top)
+					if (tempW > tempH && tempY < enemyY && playerRC.bottom >= enemyRC.top)
 					{
 						pY = enemyRC.top - pSizeY / 2;
 					}

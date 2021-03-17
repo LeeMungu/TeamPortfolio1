@@ -88,16 +88,21 @@ void InteractObject::Render(HDC hdc)
 					mTileIndexX * TileSize + TileSize / 2 + x * TileSize,
 					mRect.bottom - y * TileSize,
 					TileSize, TileSize);
-				CameraManager::GetInstance()->GetMainCamera()
-					->RenderRect(hdc, rc);
+				//CameraManager::GetInstance()->GetMainCamera()
+				//	->RenderRect(hdc, rc);
 			}
 		}
-		//충돌 렉트
-		CameraManager::GetInstance()->GetMainCamera()
-			->RenderRect(hdc, mInteractRect);
-		//이미지 렉트
-		CameraManager::GetInstance()->GetMainCamera()
-			->RenderRect(hdc, mRect);
+
+		if (Input::GetInstance()->GetKey(VK_LCONTROL))
+		{
+			//충돌 렉트
+			CameraManager::GetInstance()->GetMainCamera()
+				->RenderRect(hdc, mInteractRect);
+			//이미지 렉트
+			CameraManager::GetInstance()->GetMainCamera()
+				->RenderRect(hdc, mRect);
+		}
+
 		//이미지
 		CameraManager::GetInstance()->GetMainCamera()
 			->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);

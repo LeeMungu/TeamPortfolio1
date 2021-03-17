@@ -100,8 +100,7 @@ void scene1::Init()
 	Load();
 	Zombie01* mZombie01 = new Zombie01();
 	mZombie01->Init();
-	mZombie01->SetX(mPlayer->GetX() + 150);
-	mZombie01->SetY(mPlayer->GetY() + 100);
+
 	mZombie01->SetTileList(mTileList);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
 

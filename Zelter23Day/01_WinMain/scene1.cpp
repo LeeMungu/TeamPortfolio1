@@ -10,10 +10,12 @@
 #include "Player.h"
 #include "SmartWatch.h"
 #include "Zombie01.h"
+#include "Zombie02.h"
 #include "InteractObject.h"
 #include "NonInteractObject.h"
 #include "CollisionManager.h"
 #include "KeyIcon.h"
+#include "QuickSlot.h"
 void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
@@ -37,6 +39,8 @@ void scene1::Init()
 	KeyIcon* keyIcon = new KeyIcon("KeyIcon");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, keyIcon);
 
+	QuickSlot* quickSlot = new QuickSlot("QuickSlot", 800, 800);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, quickSlot);
 
 	//ifstream loadStream(L"../04_Data/Test.txt");
 	//if (loadStream.is_open())
@@ -101,10 +105,12 @@ void scene1::Init()
 	//}
 	Load();
 	Zombie01* mZombie01 = new Zombie01();
-	mZombie01->Init();
-
 	mZombie01->SetTileList(mTileList);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
+	Zombie02* mZombie02 = new Zombie02();
+	mZombie02->SetTileList(mTileList);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie02);
+
 
 	ObjectManager::GetInstance()->Init();
 	CollisionManager::GetInstance()->Init();

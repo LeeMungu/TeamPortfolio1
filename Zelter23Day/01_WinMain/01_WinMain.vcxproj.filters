@@ -103,9 +103,6 @@
     <Filter Include="MainGame\Object\Objectes">
       <UniqueIdentifier>{d16a7570-863c-4f4c-bc63-1c43df9531e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Object\ItemManager">
-      <UniqueIdentifier>{ae85c0c8-aa63-42ae-ad3b-7b6f2badb517}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\UI\Inventory">
       <UniqueIdentifier>{7a29bdb3-70b2-4650-90aa-10ea3a11ee30}</UniqueIdentifier>
     </Filter>
@@ -270,14 +267,14 @@
     <ClInclude Include="Weapon.h">
       <Filter>MainGame\Player</Filter>
     </ClInclude>
-    <ClInclude Include="ItemManager.h">
-      <Filter>MainGame\Object\ItemManager</Filter>
-    </ClInclude>
     <ClInclude Include="KeyIcon.h">
       <Filter>MainGame\UI\Icon</Filter>
     </ClInclude>
     <ClInclude Include="QuickSlot.h">
       <Filter>MainGame\UI\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie02.h">
+      <Filter>MainGame\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -428,14 +425,14 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>MainGame\Player</Filter>
     </ClCompile>
-    <ClCompile Include="ItemManager.cpp">
-      <Filter>MainGame\Object\ItemManager</Filter>
-    </ClCompile>
     <ClCompile Include="KeyIcon.cpp">
       <Filter>MainGame\UI\Icon</Filter>
     </ClCompile>
     <ClCompile Include="QuickSlot.cpp">
       <Filter>MainGame\UI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie02.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

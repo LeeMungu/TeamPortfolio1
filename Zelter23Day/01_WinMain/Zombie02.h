@@ -1,11 +1,10 @@
 #pragma once
 #include "Enemy.h"
+
 class Image;
+class Animation;
 class Tile;
-
-
-
-class Zombie01 : public Enemy
+class Zombie02 : public Enemy
 {
 	vector<vector<Tile*>> mTileList;
 	float mAngle;
@@ -36,7 +35,8 @@ public:
 		mTileList = tilelist;
 	}
 
-	RECT GetAttackRect() { return mAttackRect;}
+	RECT GetAttackRect() { return mAttackRect; }
 	void SetAttackRect(RECT rect) { mAttackRect = rect; }
+
 };
 

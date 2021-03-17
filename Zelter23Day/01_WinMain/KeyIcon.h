@@ -3,7 +3,15 @@
 class Image;
 class KeyIcon : public UI
 {
-	Image* mUIBaseImage;
+	Image* mBaseImage;
+
+	Image* mBagIconImage;
+	Image* mCraftIconImage;
+	Image* mTabletIconImage;
+	
+	Image* mIKeyImage;
+	Image* mCKeyImage;
+	Image* mTKeyImage;
 
 public:
 	KeyIcon(const string& name);

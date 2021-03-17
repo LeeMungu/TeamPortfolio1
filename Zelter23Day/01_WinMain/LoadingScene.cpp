@@ -42,7 +42,6 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Thirst_full", Resources(L"/01_UI/Gage_Fill_Thirst.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Statu_empty", Resources(L"/01_UI/Gage01_Base-resources.png")); });
 
-
 	//이미지 (SmartWatch UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"SmarWatch_base", Resources(L"/01_UI/SmartWatch_Base.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_glass_dark", Resources(L"/01_UI/SmartWatch_GlassDark.png")); });
@@ -52,6 +51,15 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"BlackBase", Resources(L"/01_UI/black_base_status.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_num", Resources(L"/01_UI/SmartWatchNum.png"), 11, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_AMPM", Resources(L"/01_UI/AMPM.png"), 2, 1); });
+
+	//이미지 (Icon UI)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Icon_bag", Resources(L"/01_UI/Bag_Btn_Icon.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Icon_tablet", Resources(L"/01_UI/tablet_Icon.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Icon_craft", Resources(L"/01_UI/Craft_Btn_Icon.png")); });
+	//이미지 (Keyboard UI)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Key_C", Resources(L"/01_UI/C-key.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Key_I", Resources(L"/01_UI/I-key.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Key_T", Resources(L"/01_UI/T-key.png")); });
 
 	//이미지 (몬스터)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie01", Resources(L"/06_Zombie/zombie01.png"), 5, 6); });

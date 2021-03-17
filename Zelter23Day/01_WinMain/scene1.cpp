@@ -100,8 +100,7 @@ void scene1::Init()
 	Load();
 	Zombie01* mZombie01 = new Zombie01();
 	mZombie01->Init();
-	mZombie01->SetX(mPlayer->GetX() + 150);
-	mZombie01->SetY(mPlayer->GetY() + 100);
+
 	mZombie01->SetTileList(mTileList);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
 
@@ -160,33 +159,7 @@ void scene1::Update()
 				}
 				else if (mTileList[y][x]->GetTileLayer() == TileLayer::wall)
 				{
-					float tempW = temp.right - temp.left;
-					float tempH = temp.bottom - temp.top;
-					float tempX = temp.left + tempW / 2;
-					float tempY = temp.top + tempW / 2;
 
-					float tileRectX = tileRect.left + (tileRect.right - tileRect.left) / 2;
-					float tileRectY = tileRect.top + (tileRect.bottom - tileRect.top) / 2;
-
-					if (tempW < tempH && tempX > tileRectX && playerRect.left < tileRect.right)
-					{
-						tempPlayer->SetX(tileRect.right + tempPlayer->GetSizeX() / 2);
-					}
-
-					if (tempW < tempH && tempX < tileRectX && playerRect.right > tileRect.left)
-					{
-						tempPlayer->SetX(tileRect.left - tempPlayer->GetSizeX() / 2);
-					}
-
-					if (tempW > tempH && tempY > tileRectY && playerRect.top < tileRect.bottom)
-					{
-						tempPlayer->SetY(tileRect.bottom + tempPlayer->GetSizeY() / 2);
-					}
-
-					if (tempW > tempH && tempY < tileRectY && playerRect.bottom > tileRect.top)
-					{
-						tempPlayer->SetY(tileRect.top - tempPlayer->GetSizeY() / 2);
-					}
 				}
 			}
 		}
@@ -237,6 +210,7 @@ void scene1::Render(HDC hdc)
 
 void scene1::Load()
 {
+
 	ifstream loadStream(L"../04_Data/Test.txt");
 	if (loadStream.is_open())
 	{
@@ -422,6 +396,16 @@ void scene1::Load()
 				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
 				if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
 					mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+				if (tempInteract->GetTileCountX() == 2)
+				{
+					if (mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX() + 1]->GetTileLayer() != TileLayer::wall)
+						mTileList[tempInteract->GetTileIndexY()][tempInteract->GetTileIndexX() + 1]->SetTileLayer(TileLayer::wall);
+				}
+				if (tempInteract->GetTileCountY() == 2)
+				{
+					if (mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->GetTileLayer() != TileLayer::wall)
+						mTileList[tempInteract->GetTileIndexY() - 1][tempInteract->GetTileIndexX()]->SetTileLayer(TileLayer::wall);
+				}
 			}
 		}
 	}

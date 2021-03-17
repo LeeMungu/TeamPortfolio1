@@ -43,23 +43,23 @@ void CollisionManager::ObjectCollision()
 					float tempW = temp.right - temp.left;
 					float tempH = temp.bottom - temp.top;
 					float tempX = temp.left + tempW / 2;
-					float tempY = temp.top + tempW / 2;
+					float tempY = temp.top + tempH / 2;
 					float ObjectX = ObjectRC.left + (ObjectRC.right - ObjectRC.left) / 2;
 					float ObjectY = ObjectRC.top + (ObjectRC.bottom - ObjectRC.top) / 2;
 
-					if (tempW < tempH && tempX > ObjectX && playerRC.left < ObjectRC.right)
+					if (tempW < tempH && tempX > ObjectX && playerRC.left <= ObjectRC.right)
 					{
 						pX = ObjectRC.right + pSizeX / 2;
 					}
-					if (tempW < tempH && tempX < ObjectX && playerRC.right > ObjectRC.left)
+					if (tempW < tempH && tempX < ObjectX && playerRC.right >= ObjectRC.left)
 					{
 						pX = ObjectRC.left - pSizeX / 2;
 					}
-					if (tempW > tempH && tempY > ObjectY && playerRC.top < ObjectRC.bottom)
+					if (tempW > tempH && tempY > ObjectY && playerRC.top <= ObjectRC.bottom)
 					{
 						pY = ObjectRC.bottom + pSizeY / 2;
 					}
-					if (tempW > tempH && tempY < ObjectY && playerRC.bottom > ObjectRC.top)
+					if (tempW > tempH && tempY < ObjectY && playerRC.bottom >= ObjectRC.top)
 					{
 						pY = ObjectRC.top - pSizeY / 2;
 					}
@@ -166,7 +166,7 @@ void CollisionManager::PlayerTakenDamaged()
 				{
 					float mAnlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY()
 						, mPlayer->GetX(), mPlayer->GetY());
-					mPlayer->ExecuteKnockback(mAnlge, 800.f);
+					mPlayer->ExecuteKnockback(mAnlge, 500.f);
 
 					//float pX = mPlayer->GetX();
 					//float pY = mPlayer->GetY();

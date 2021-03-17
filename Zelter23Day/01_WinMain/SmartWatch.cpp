@@ -27,6 +27,8 @@ void SmartWatch::Init()
 	mUnitsMinImg = IMAGEMANAGER->FindImage(L"SW_num");
 	mClock = IMAGEMANAGER->FindImage(L"SW_num");
 
+	mAMPMImage = IMAGEMANAGER->FindImage(L"SW_AMPM");
+
 	mHour = 0;
 	mMin = 0;
 	mDayTime = DayTime::morning;
@@ -109,19 +111,12 @@ void SmartWatch::Render(HDC hdc)
 	mGlassDark->ScaleRender(hdc, mX + 14, mY + 18, 80, 83);
 	mGlass->ScaleRender(hdc, mX + 14, mY + 18, 80, 83);
 	
-	wstring strDayTime = L"PM";
-	if (mAMPM == AMPM::AM) strDayTime = L"AM";
-	else strDayTime = L"PM";
-	
-	wstring strWatch = to_wstring(mHour/10 % 10) + to_wstring(mHour % 10)
-		+ L" : " + to_wstring(mMin/10 % 10) + to_wstring(mMin % 10);
-	D2DRenderer::GetInstance()
-		->RenderText(30, 40, strDayTime.c_str(), 10);
-	//D2DRenderer::GetInstance()->RenderText(30, 50, strWatch.c_str(), 20);
+	if (mAMPM == AMPM::AM) mAMPMImage->ScaleFrameRender(hdc, mX + 20, mY + 33, 0, 0, 25, 25);
+	else mAMPMImage->ScaleFrameRender(hdc, mX + 20, mY + 33, 1, 0, 25, 25);
 		
-	mTensHourImg->ScaleFrameRender(hdc, mX + 12, mY + 50, mHour / 10 % 10, 0 , 25, 25);
-	mUnitsHourImg->ScaleFrameRender(hdc, mX + 27, mY + 50, mHour % 10, 0, 25, 25);
-	mClock->ScaleFrameRender(hdc, mX + 40, mY + 50, 10, 0, 25, 25);
-	mTensMinImg->ScaleFrameRender(hdc, mX + 55, mY + 50, mMin / 10 % 10, 0, 25, 25);
-	mTensMinImg->ScaleFrameRender(hdc, mX + 70, mY + 50, mMin % 10, 0, 25, 25);
+	mTensHourImg->ScaleFrameRender(hdc, mX + 12, mY + 50, mHour / 10 % 10, 0 , 23, 23);
+	mUnitsHourImg->ScaleFrameRender(hdc, mX + 27, mY + 50, mHour % 10, 0, 23, 23);
+	mClock->ScaleFrameRender(hdc, mX + 42, mY + 50, 10, 0, 23, 23);
+	mTensMinImg->ScaleFrameRender(hdc, mX + 55, mY + 50, mMin / 10 % 10, 0, 23, 23);
+	mTensMinImg->ScaleFrameRender(hdc, mX + 70, mY + 50, mMin % 10, 0, 23, 23);
 }

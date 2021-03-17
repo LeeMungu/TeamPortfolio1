@@ -21,11 +21,7 @@ void SmartWatch::Init()
 	mTimeBG = IMAGEMANAGER->FindImage(L"SW_morning");
 	mUIBaseImage = IMAGEMANAGER->FindImage(L"BlackBase");
 
-	mTensHourImg = IMAGEMANAGER->FindImage(L"SW_num");
-	mUnitsHourImg = IMAGEMANAGER->FindImage(L"SW_num");
-	mTensMinImg = IMAGEMANAGER->FindImage(L"SW_num");
-	mUnitsMinImg = IMAGEMANAGER->FindImage(L"SW_num");
-	mClock = IMAGEMANAGER->FindImage(L"SW_num");
+	mNumberImg = IMAGEMANAGER->FindImage(L"SW_num");
 
 	mAMPMImage = IMAGEMANAGER->FindImage(L"SW_AMPM");
 
@@ -114,9 +110,9 @@ void SmartWatch::Render(HDC hdc)
 	if (mAMPM == AMPM::AM) mAMPMImage->ScaleFrameRender(hdc, mX + 20, mY + 33, 0, 0, 25, 25);
 	else mAMPMImage->ScaleFrameRender(hdc, mX + 20, mY + 33, 1, 0, 25, 25);
 		
-	mTensHourImg->ScaleFrameRender(hdc, mX + 12, mY + 50, mHour / 10 % 10, 0 , 23, 23);
-	mUnitsHourImg->ScaleFrameRender(hdc, mX + 27, mY + 50, mHour % 10, 0, 23, 23);
-	mClock->ScaleFrameRender(hdc, mX + 42, mY + 50, 10, 0, 23, 23);
-	mTensMinImg->ScaleFrameRender(hdc, mX + 55, mY + 50, mMin / 10 % 10, 0, 23, 23);
-	mTensMinImg->ScaleFrameRender(hdc, mX + 70, mY + 50, mMin % 10, 0, 23, 23);
+	mNumberImg->ScaleFrameRender(hdc, mX + 12, mY + 50, mHour / 10 % 10, 0 , 23, 23);
+	mNumberImg->ScaleFrameRender(hdc, mX + 27, mY + 50, mHour % 10, 0, 23, 23);
+	mNumberImg->ScaleFrameRender(hdc, mX + 42, mY + 50, 10, 0, 23, 23);
+	mNumberImg->ScaleFrameRender(hdc, mX + 55, mY + 50, mMin / 10 % 10, 0, 23, 23);
+	mNumberImg->ScaleFrameRender(hdc, mX + 70, mY + 50, mMin % 10, 0, 23, 23);
 }

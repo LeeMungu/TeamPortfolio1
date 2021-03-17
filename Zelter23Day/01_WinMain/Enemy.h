@@ -38,6 +38,7 @@ protected:
 	bool mTargeting;
 	bool mTakenDamege;
 	float mDelay;
+	RECT mCollisionBox;
 
 	Animation* mCurrentAnimation;
 	Animation* mLeftIdle;
@@ -59,10 +60,12 @@ public:
 	virtual void Render(HDC hdc)override = 0;
 	
 	int GetAttack() { return mAttack; }
+	RECT GetCollisionBox() { return mCollisionBox; }
 	void SetHp(int hp) { mHp = hp; }
 	void DropItem(Item item);
 	void SetAnimation();
 	virtual void Attack() {};
+
 
 };
 

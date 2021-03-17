@@ -24,6 +24,8 @@ enum class Attacked
 	righttop,
 	rightdown
 };
+
+
 class Player : public GameObject
 {
 	Image* mImage;
@@ -65,6 +67,9 @@ class Player : public GameObject
 	PlayerState mPlayerState;
 	Attacked mAttacked;
 
+	RECT mCollisionBox;
+
+
 	
 public:
 	Player(const string& name, float x, float y);
@@ -84,11 +89,13 @@ public:
 	float GetInvincibleCount() { return mInvincibleCount; }
 	bool GetIsInvincible() { return mIsInvincible; }
 	bool GetIsKnockback() {return mIsKnockback;	}
+	RECT GetCollisionBox() { return mCollisionBox; }
 	Attacked GetAttacked() { return mAttacked; }
 
 	void SetAttacked(Attacked attacked) { mAttacked = attacked; }
 	void SetHP(int hp) { mHP = hp; }
 	void SetNoDamage(bool noDamage) { mIsInvincible = noDamage; }
+
 
 	
 	void ExecuteKnockback(float angle, float force)

@@ -106,6 +106,12 @@
     <Filter Include="MainGame\Object\ItemManager">
       <UniqueIdentifier>{ae85c0c8-aa63-42ae-ad3b-7b6f2badb517}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\UI\Inventory">
+      <UniqueIdentifier>{7a29bdb3-70b2-4650-90aa-10ea3a11ee30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\Icon">
+      <UniqueIdentifier>{e3566c09-1261-44d9-b8cf-59523b12951c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -267,6 +273,12 @@
     <ClInclude Include="ItemManager.h">
       <Filter>MainGame\Object\ItemManager</Filter>
     </ClInclude>
+    <ClInclude Include="KeyIcon.h">
+      <Filter>MainGame\UI\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="QuickSlot.h">
+      <Filter>MainGame\UI\Inventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -418,6 +430,12 @@
     </ClCompile>
     <ClCompile Include="ItemManager.cpp">
       <Filter>MainGame\Object\ItemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyIcon.cpp">
+      <Filter>MainGame\UI\Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="QuickSlot.cpp">
+      <Filter>MainGame\UI\Inventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

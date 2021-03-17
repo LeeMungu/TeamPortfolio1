@@ -11,8 +11,8 @@ void Zombie01::Init()
 {
 	mImage = IMAGEMANAGER->FindImage(L"Zombie01");
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
-	mX =  300;
-	mY =  300;
+	mX =  500;
+	mY =  500;
 	mSizeX = mImage->GetFrameWidth()*2;
 	mSizeY = mImage->GetFrameHeight()*2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);

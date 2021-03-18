@@ -36,6 +36,10 @@ void PlayerHPUI::Update()
 void PlayerHPUI::Render(HDC hdc)
 {
 	mEmptyGaugeImage->ScaleRender(hdc, mX, mY, 76, 76);
-	mFullGaugeImage->ScaleRender(hdc, mX, mY, 76, 76);
+	//mFullGaugeImage->ScaleRender(hdc, mX, mY, 76, 76);
+	//mFullGaugeImage->Render(hdc, mX, mRect.bottom - mStemina, 0, 30 - mStemina, 30, mStemina);
+	mFullGaugeImage->SetSize(Vector2(76, 76));
+	mFullGaugeImage->Render(hdc, mX, mY, 0, 0, 76, 76);
+	//mFullGaugeImage->Render(hdc, mX, mRect.bottom - mHP, 0, 76 - mHP, 76, mHP);
 	mHeartImage->ScaleFrameRender(hdc, mX + 17, mY + 17, mHeartAnimation->GetNowFrameX(), mHeartAnimation->GetNowFrameY(), 40, 40);
 }

@@ -162,7 +162,7 @@ void CollisionManager::ZombieAttack()
 					for (int j = 0; j < interactobject.size(); ++j)
 					{
 						objectRC = ((InteractObject*)interactobject[j])->GetInteractRect();
-						if (IntersectRect(&temp, &objectRC, &enemyRC))
+						if (IntersectRect(&temp, &objectRC, &enemyRC) && ((InteractObject* )interactobject[j])->GetIsInterRactive() == true)
 						{
 
 						}

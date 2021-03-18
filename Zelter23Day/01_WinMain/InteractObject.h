@@ -48,7 +48,7 @@ public:
 
 	RECT GetInteractRect()const { return mInteractRect; }
 
-	bool GetIsInterRactive() { return GetIsInterRactive; }
+	bool GetIsInterRactive() { return mIsInteractive; }
 	void SetIsInterRactive(bool interactive) { mIsInteractive = interactive; }
 };
 

@@ -7,7 +7,6 @@
 #include "LoadingScene.h"
 #include "scene1.h"
 #include "Camera.h"
-#include "Player.h"
 
 #define SizeUp 3
 /*
@@ -50,8 +49,8 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"LoadingScene", new LoadingScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
-	SceneManager::GetInstance()->LoadScene(L"LoadingScene");
-	//SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
+	//SceneManager::GetInstance()->LoadScene(L"LoadingScene");
+	SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
 }
 
 /*
@@ -84,7 +83,7 @@ void MainGame::Render(HDC hdc)
 	//이 안에서 그려라
 	{
 		SceneManager::GetInstance()->Render(hdc);
-		RenderTime(hdc);
+		//RenderTime(backDC);
 	}
 	D2DRenderer::GetInstance()->EndRender();
 }
@@ -93,20 +92,14 @@ void MainGame::RenderTime(HDC hdc)
 {
 	float worldTime = Time::GetInstance()->GetWorldTime();
 	float deltaTime = Time::GetInstance()->DeltaTime();
+	ULONG fps = Time::GetInstance()->GetmFrameRate();
+	wstring strWorldTime = L"WorldTime : " + to_wstring(worldTime);
+	wstring strDeltaTime = L"DeltaTime : " + to_wstring(deltaTime);
+	wstring strFPS = L"FPS : " + to_wstring(fps);
 
-	if (ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player") != nullptr)
-	{
-		bool player = ((Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player"))->GetIsInvincible();
-		//ULONG fps = Time::GetInstance()->GetmFrameRate();
-		wstring player_invi = L"플레이어상태 : " + to_wstring(player);
-		//wstring strDeltaTime = L"DeltaTime : " + to_wstring(deltaTime);
-		//wstring strFPS = L"FPS : " + to_wstring(fps);
-
-		D2DRenderer::GetInstance()
-			->RenderText(300, 10, player_invi.c_str(), 20);
-		//TextOut(hdc, 10, 25, strDeltaTime.c_str(), strDeltaTime.length());
-		//TextOut(hdc, 10, 40, strFPS.c_str(), strFPS.length());
-	}
-
+	D2DRenderer::GetInstance()
+		->RenderText(10, 10, strWorldTime.c_str(),strWorldTime.length());
+	TextOut(hdc, 10, 25, strDeltaTime.c_str(), strDeltaTime.length());
+	TextOut(hdc, 10, 40, strFPS.c_str(), strFPS.length());
 }
 

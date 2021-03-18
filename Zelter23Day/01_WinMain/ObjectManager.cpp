@@ -91,6 +91,7 @@ void ObjectManager::Update()
 			}
 		}
 	}
+	//¢¾
 	mZorderList.clear();
 	ObjectIter iter1 = mObjectList.begin();
 	for (; iter1 != mObjectList.end(); ++iter1)

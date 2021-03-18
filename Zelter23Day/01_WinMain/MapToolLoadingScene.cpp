@@ -87,6 +87,9 @@ void MapToolLoadingScene::Init()
 	//이미지 (무기 /총)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Weapon_pistol", Resources(L"/03_Player/Weapon_pistol.png"), 1, 1); });
 
+	//이미지 (총알)
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bullet", Resources(L"/03_Player/Bullet.png"), 1, 1); });
+
 	//이미지 (플레이어HP UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon.png"), 12, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"CircleGage_empty", Resources(L"/01_UI/CircleGage_Status.png")); });

@@ -1050,6 +1050,7 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mHouseButton->SetIsSelect(false);
 			mInterectObjectButton->SetIsSelect(false);
 			mNoninterectObjectButton->SetIsSelect(false);
+
 			//오브젝트버튼 초기화
 			vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
 			if (tempButton.size() != NULL)
@@ -1069,6 +1070,9 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mTileButton->SetIsSelect(false);
 			mInterectObjectButton->SetIsSelect(false);
 			mNoninterectObjectButton->SetIsSelect(false);
+
+			mPallete.clear();
+
 			//오브젝트버튼 초기화
 			vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
 			if (tempButton.size() != NULL)
@@ -1081,36 +1085,19 @@ void MapToolBook::ChangeMode(BookType bookType)
 			//mHouseObject = new HousingObject("House", 0, 0, SideType::InSide);
 			//ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
 
-			mBookType = bookType;
-			mNowTileCountY = 9;
-			mNowTileCountX = 9;
-			//Image* tempImage;
-			Image* tileImage = ImageManager::GetInstance()->FindImage(L"House");
-			//Image* tileRoofImage = ImageManager::GetInstance()->FindImage(L"HouseRoof");
-			int palleteStartX = mRect.left + 200;
-			int palleteStartY = mRect.top + 50;
-
-			mPallete.assign(18, vector<Tile*>());
-			for (int y = 0; y < mNowTileCountY; ++y)
+			mPage = 0;
+			for (int i = 0; i < 3; ++i)
 			{
-				for (int x = 0; x < mNowTileCountX; ++x)
-				{
-
-					mPallete[y].push_back(new Tile(
-						tileImage,
-						palleteStartX + Pallette * x,
-						palleteStartY + Pallette * y,
-						Pallette,
-						Pallette,
-						x,
-						y,
-						x,
-						y
-					));
-					mPallete[y][x]->SetSpeed(mSpeed);
-					mPallete[y][x]->SetTileLayer(TileLayer::PalletteType);
-				}
-
+				ObjectButton* objectButton = new ObjectButton(L"House" + to_wstring(i + 1), mX - 250 + 100 * (i % 3), mY - 210 + 145 * (i / 3), [i]() {
+					Mouse* mouse = new Mouse(L"House" + to_wstring(i + 1), ObjectLayer::InteractObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
 			}
 		}
 		else if (bookType == BookType::InterectObject)

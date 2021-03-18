@@ -347,14 +347,17 @@ void scene1::Load()
 		{
 			for (int i = 0; i < tempInteractList.size(); ++i)
 			{
-				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
-				int y = 0;
-				int countx = tempInteract->GetTileCountX();
-				int county = tempInteract->GetTileCountY();
-				for (int x = 0; x < countx * county; ++x)
+				if (tempInteractList[i]->GetIsDestroy() != true)
 				{
-					if (mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->GetTileLayer() != TileLayer::wall)
-						mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->SetTileLayer(TileLayer::wall);
+					InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
+					int y = 0;
+					int countx = tempInteract->GetTileCountX() * InteractObjectSize;
+					int county = tempInteract->GetTileCountY() * InteractObjectSize;
+					for (int x = 0; x < countx * county; ++x)
+					{
+						if (mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->GetTileLayer() != TileLayer::wall)
+							mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->SetTileLayer(TileLayer::wall);
+					}
 				}
 			}
 		}

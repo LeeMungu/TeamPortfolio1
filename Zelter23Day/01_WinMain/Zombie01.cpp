@@ -26,7 +26,7 @@ void Zombie01::Init()
 	mAttack = 1;
 	mTargeting = false;
 	mTakenDamege = false;
-	mDelay = 1.f;
+	mDelay = 0.5f;
 
 	mLeftMove = new Animation;
 	mLeftMove->InitFrameByStartEnd(0, 1, 4, 1, true);
@@ -97,6 +97,11 @@ void Zombie01::Update()
 	else if (mZombistate == ZombieState::Attack)
 	{
 		Attack();
+	}
+
+	if (mZombistate != ZombieState::Attack) //좀비공격 렉트 초기화
+	{
+		mAttackBox = RectMakeCenter(0, 0, 0, 0);
 	}
 
 	if (mTargeting)
@@ -216,7 +221,7 @@ void Zombie01::Attack()
 
 		if (mDelayTime >= mDelay && mIsAttackTrigger==false)
 		{
-			if (mPlayer->GetRect().left > mRect.right)
+			if (mPlayer->GetRect().right >= mRect.right)
 			{
 				mCurrentAnimation = mRightAttack;
 				mCurrentAnimation->Play();
@@ -224,7 +229,7 @@ void Zombie01::Attack()
 				mDelayTime = 0;
 				mIsAttackTrigger = true;
 			}
-			else if (mPlayer->GetRect().left < mRect.left)
+			else if (mPlayer->GetRect().left <= mRect.left)
 			{
 				mCurrentAnimation = mLeftAttack;
 				mCurrentAnimation->Play();

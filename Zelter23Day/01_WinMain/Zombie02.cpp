@@ -17,6 +17,7 @@ void Zombie02::Init()
 	mSizeY = mImage->GetFrameHeight() * 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mCollisionBox = RectMakeCenter(mX, mY, mSizeX / 2, mSizeY / 3);
+	mAttackBox = RectMakeCenter(mX, mY, 0, 0);
 	mAngle = 0;
 
 	mHp = 10;
@@ -24,43 +25,37 @@ void Zombie02::Init()
 	mAttack = 1;
 	mTargeting = false;
 	mTakenDamege = false;
-	mDelay = 1.f;
+	mDelay = 0.5f;
 
 	mLeftMove = new Animation;
-	mLeftMove->InitFrameByStartEnd(0, 1, 4, 1, false);
+	mLeftMove->InitFrameByStartEnd(0, 1, 4, 1, true);
 	mLeftMove->SetIsLoop(true);
 	mLeftMove->SetFrameUpdateTime(0.2f);
 
 	mRightMove = new Animation;
-	mRightMove->InitFrameByStartEnd(0, 2, 4, 2, false);
+	mRightMove->InitFrameByStartEnd(0, 2, 4, 2, true);
 	mRightMove->SetIsLoop(true);
 	mRightMove->SetFrameUpdateTime(0.2f);
 
 	mDownMove = new Animation;
-	mDownMove->InitFrameByStartEnd(0, 0, 4, 0, false);
+	mDownMove->InitFrameByStartEnd(0, 0, 4, 0, true);
 	mDownMove->SetIsLoop(true);
 	mDownMove->SetFrameUpdateTime(0.2f);
 
 	mUpMove = new Animation;
-	mUpMove->InitFrameByStartEnd(0, 3, 4, 3, false);
+	mUpMove->InitFrameByStartEnd(0, 3, 4, 3, true);
 	mUpMove->SetIsLoop(true);
 	mUpMove->SetFrameUpdateTime(0.2f);
 
 	mLeftAttack = new Animation;
-	mLeftAttack->InitFrameByStartEnd(0, 4, 4, 4, false);
-	mLeftAttack->SetIsLoop(true);
-	mLeftAttack->SetFrameUpdateTime(0.1f);
-	mLeftAttack->SetCallbackFunc([this](){
-		mAttackRect = RectMakeCenter(mX - mSizeX/2, mY, mSizeX, mSizeY);
-	});
+	mLeftAttack->InitFrameByStartEnd(0, 4, 4, 4, true);
+	mLeftAttack->SetIsLoop(false);
+	mLeftAttack->SetFrameUpdateTime(0.01f);
 
 	mRightAttack = new Animation;
-	mRightAttack->InitFrameByStartEnd(0, 5, 4, 5, false);
-	mRightAttack->SetIsLoop(true);
-	mRightAttack->SetFrameUpdateTime(0.1f);
-	mRightAttack->SetCallbackFunc([this]() {
-		mAttackRect = RectMakeCenter(mX + mSizeX / 2, mY, mSizeX, mSizeY);
-	});
+	mRightAttack->InitFrameByStartEnd(0, 5, 4, 5, true);
+	mRightAttack->SetIsLoop(false);
+	mRightAttack->SetFrameUpdateTime(0.01f);
 
 	mCurrentAnimation = mLeftMove;
 	mCurrentAnimation->Play();
@@ -84,12 +79,8 @@ void Zombie02::Release()
 
 void Zombie02::Update()
 {
-	mDistance = Math::GetDistance(mPlayer->GetX(), mPlayer->GetY(), mX, mY);
-	if (mZombistate != ZombieState::Attack)
-	{
-		mAttackRect = {0,0,0,0};
-	}
 
+	mDistance = Math::GetDistance(mPlayer->GetX(), mPlayer->GetY(), mX, mY);
 
 	if (mDistance < 150 && mTargeting == false)
 	{
@@ -106,6 +97,11 @@ void Zombie02::Update()
 		Attack();
 	}
 
+	if (mZombistate != ZombieState::Attack) //좀비공격 렉트 초기화
+	{
+		mAttackBox = RectMakeCenter(0, 0, 0, 0);
+	}
+
 	if (mTargeting)
 	{
 		SearchPlayer();
@@ -117,8 +113,12 @@ void Zombie02::Update()
 		}
 	}
 
+
+
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mCollisionBox = RectMakeCenter(mX, mY, mSizeX / 2, mSizeY / 3);
+
+
 	mCurrentAnimation->Update();
 }
 
@@ -127,10 +127,10 @@ void Zombie02::Render(HDC hdc)
 	CameraManager::GetInstance()->GetMainCamera()->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top,
 		mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
 
-	if (Input::GetInstance()->GetKey(VK_LSHIFT))
+	if (Input::GetInstance()->GetKey(VK_LCONTROL))
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
-		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mAttackRect);
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mAttackBox);
 	}
 }
 
@@ -152,23 +152,23 @@ void Zombie02::Patrol()
 
 	if (mIsSwichPos)
 	{
-		mCurrentAnimation->Stop();
 		mCurrentAnimation = mRightMove;
 		mCurrentAnimation->Play();
 		mX += 1;
 	}
 	else
 	{
-		mCurrentAnimation->Stop();
 		mCurrentAnimation = mLeftMove;
 		mCurrentAnimation->Play();
 		mX -= 1;
 	}
+
+
 }
 
 void Zombie02::SearchPlayer()
 {
-	if (mDistance > 80)
+	if (mDistance > 53)
 	{
 		mSpeed = 2.f;
 		MovetoPlayer();
@@ -182,7 +182,7 @@ void Zombie02::SearchPlayer()
 
 void Zombie02::Attack()
 {
-	if (mDistance > 80)
+	if (mDistance > 53)
 	{
 		mZombistate = ZombieState::Chase;
 	}
@@ -193,14 +193,15 @@ void Zombie02::Attack()
 
 		if (mDelayTime >= mDelay && mIsAttackTrigger == false)
 		{
-			if (mPlayer->GetRect().left > mRect.right)
+			if (mPlayer->GetRect().right >= mRect.right)
 			{
 				mCurrentAnimation = mRightAttack;
 				mCurrentAnimation->Play();
+
 				mDelayTime = 0;
 				mIsAttackTrigger = true;
 			}
-			else if (mPlayer->GetRect().left < mRect.left)
+			else if (mPlayer->GetRect().left <= mRect.left)
 			{
 				mCurrentAnimation = mLeftAttack;
 				mCurrentAnimation->Play();
@@ -208,6 +209,15 @@ void Zombie02::Attack()
 				mIsAttackTrigger = true;
 			}
 
+		}
+
+		if (mCurrentAnimation == mRightAttack && mCurrentAnimation->GetNowFrameX() > 1 && mCurrentAnimation->GetNowFrameX() < 4)
+		{
+			mAttackBox = RectMakeCenter(mCollisionBox.right, mY, mSizeX, mSizeY);
+		}
+		else if (mCurrentAnimation == mLeftAttack && mCurrentAnimation->GetNowFrameX() > 1 && mCurrentAnimation->GetNowFrameX() < 4)
+		{
+			mAttackBox = RectMakeCenter(mCollisionBox.left, mY, mSizeX, mSizeY);
 		}
 	}
 
@@ -221,37 +231,33 @@ void Zombie02::Attack()
 
 void Zombie02::MovetoPlayer()
 {
-	vector<Tile*> Path = PathFinder::GetInstance()->
-		FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
+	vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
 
 	if (Path.size() != NULL)
 	{
-		mAngle = Math::GetAngle(Path[Path.size() - 1]->GetX(), Path[Path.size() - 1]->GetY(), mX, mY);
+		mAngle = Math::GetAngle(Path[1]->GetX(), Path[1]->GetY(), mX, mY);
 		mX -= cosf(mAngle) * mSpeed;
 		mY -= -sinf(mAngle) * mSpeed;
 	}
 	if (mPlayer->GetRect().left > mRect.right)
 	{
-		mCurrentAnimation->Stop();
 		mCurrentAnimation = mRightMove;
 		mCurrentAnimation->Play();
 	}
 	else if (mPlayer->GetRect().left < mRect.left)
 	{
-		mCurrentAnimation->Stop();
 		mCurrentAnimation = mLeftMove;
 		mCurrentAnimation->Play();
 	}
 	else if (mPlayer->GetRect().top > mRect.bottom)
 	{
-		mCurrentAnimation->Stop();
 		mCurrentAnimation = mDownMove;
 		mCurrentAnimation->Play();
 	}
 	else if (mPlayer->GetRect().bottom < mRect.top)
 	{
-		mCurrentAnimation->Stop();
 		mCurrentAnimation = mUpMove;
 		mCurrentAnimation->Play();
 	}
+
 }

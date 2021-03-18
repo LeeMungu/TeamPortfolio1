@@ -4,7 +4,7 @@
 KeyIcon::KeyIcon(const string& name) : UI(name)
 {
 	mX = -30;
-	mY = 650;
+	mY = WINSIZEY - 250;
 }
 
 void KeyIcon::Init()
@@ -43,7 +43,7 @@ void KeyIcon::Render(HDC hdc)
 	mCKeyImage->ScaleRender(hdc, mX + 130, mY + 95, 40, 40);
 	mTKeyImage->ScaleRender(hdc, mX + 130, mY + 165, 40, 40);
 
-	mNameImage->FrameRender(hdc, mX + 110, mY - 25, 0, 0);
-	mNameImage->FrameRender(hdc, mX + 110, mY + 45, 1, 0);
+	mNameImage->FrameRender(hdc, mX + 110, mY - 25, 1, 0);
+	mNameImage->FrameRender(hdc, mX + 110, mY + 45, 0, 0);
 	mNameImage->FrameRender(hdc, mX + 110, mY + 115, 2, 0);
 }

@@ -7,7 +7,7 @@ QuickSlot::QuickSlot(const string& name) : UI(name)
 
 void QuickSlot::Init()
 {
-	mX = 900;
+	mX = WINSIZEX/2 + 50;
 	mY = WINSIZEY - 64;
 
 	for (int i = 0; i < 5; i++) {

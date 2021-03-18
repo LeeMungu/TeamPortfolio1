@@ -70,6 +70,9 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_tip_close", Resources(L"/01_UI/QuickSlot_Slot_Tip01.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_tip_open", Resources(L"/01_UI/QuickSlot_Slot_Tip02.png")); });
 
+	//이미지 (인벤토리 UI)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Inventory_base", Resources(L"/01_UI/Player_InventoryBase.png")); });
+
 	//이미지 (몬스터)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie01", Resources(L"/06_Zombie/zombie01.png"), 5, 6); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie02", Resources(L"/06_Zombie/zombie02.png"), 5, 6); });

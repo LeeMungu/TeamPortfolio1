@@ -40,9 +40,6 @@ class MapToolBook : public GameObject
 	int mNowTileCountX;
 	int mNowTileCountY;
 
-	bool mIsRoofOn;
-	Button* mRoofBtn;
-
 public:
 	void Init()override;
 	void Release()override;
@@ -59,9 +56,5 @@ public:
 
 	int GetNowTilecountX() { return mNowTileCountX;}
 	int GetNowTilecountY() { return mNowTileCountY; }
-
-	bool GetIsRoofOn() { return mIsRoofOn; }
-	void SetIsRoofOn(bool Roof) { mIsRoofOn = Roof; }
-	void RoofOnMode(int x, int y);
 };
 

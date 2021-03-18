@@ -1,16 +1,23 @@
 #pragma once
 #include "UI.h"
 class Image;
+struct Slot {
+	float x;
+	float y;
+	Image* tipOpenImg;
+	Image* tipCloseImg;
+	Image* slotImg;
+	bool isSelected;
+};
 class QuickSlot : public UI
 {
-	Image* mTipOpenImg;
-	Image* mTipCloseImg;
-	Image* mSlotImg;
+	Image* mBackImage;
+	Image* mFrontImage;
 
-	bool mIsSelected;
+	Slot mSlotList[5];
 
 public:
-	QuickSlot(const string& name, int x, int y);
+	QuickSlot(const string& name);
 	void Init()override;
 	void Release()override;
 	void Update()override;

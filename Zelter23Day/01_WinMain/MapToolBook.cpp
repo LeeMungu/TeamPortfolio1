@@ -11,7 +11,7 @@
 
 void MapToolBook::Init()
 {
-	mX = WINSIZEX / 2;
+	mX = WINSIZEX;
 	mY = WINSIZEY / 2;
 	mImage = ImageManager::GetInstance()->FindImage(L"Book");
 	mSizeX = mImage->GetFrameWidth() * BookSize;
@@ -113,8 +113,6 @@ void MapToolBook::Init()
 	mIsOpenBook = false;
 	mIsPageChange = false;
 
-	mIsRoofOn = false;
-	mRoofBtn = new Button(L"RoofBtn", WINSIZEX / 2 + 200, WINSIZEY / 2 - 100, 100, 100, [this]() {SetIsRoofOn(true); });
 
 }
 
@@ -138,7 +136,7 @@ void MapToolBook::Release()
 	SafeDelete(mNoninterectObjectButton);
 	SafeDelete(mNextButton);
 	SafeDelete(mPrevButton);
-	SafeDelete(mRoofBtn);
+
 	
 	//오브젝트메니져 초기화
 	ObjectManager::GetInstance()->Release();
@@ -637,11 +635,11 @@ void MapToolBook::Update()
 						if (i >= 1)
 						{
 							mouse->SetTileCountX(2);
-							mouse->SetTileCountY(3);
+							mouse->SetTileCountY(4);
 						}
 						else
 						{
-							mouse->SetTileCountX(3);
+							mouse->SetTileCountX(4);
 							mouse->SetTileCountY(2);
 						}
 						mouse->Init();
@@ -995,10 +993,7 @@ void MapToolBook::UpdateButtons()
 	{
 		mPrevButton->Update();
 	}
-	if (mRoofBtn != nullptr)
-	{
-		mRoofBtn->Update();
-	}
+
 }
 
 void MapToolBook::RenderButtons(HDC hdc)
@@ -1026,10 +1021,6 @@ void MapToolBook::RenderButtons(HDC hdc)
 	if (mPrevButton != nullptr)
 	{
 		mPrevButton->Render(hdc);
-	}
-	if (mRoofBtn != nullptr)
-	{
-		mRoofBtn->Render(hdc);
 	}
 }
 //버튼 기능
@@ -1059,6 +1050,7 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mHouseButton->SetIsSelect(false);
 			mInterectObjectButton->SetIsSelect(false);
 			mNoninterectObjectButton->SetIsSelect(false);
+
 			//오브젝트버튼 초기화
 			vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
 			if (tempButton.size() != NULL)
@@ -1078,6 +1070,9 @@ void MapToolBook::ChangeMode(BookType bookType)
 			mTileButton->SetIsSelect(false);
 			mInterectObjectButton->SetIsSelect(false);
 			mNoninterectObjectButton->SetIsSelect(false);
+
+			mPallete.clear();
+
 			//오브젝트버튼 초기화
 			vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
 			if (tempButton.size() != NULL)
@@ -1090,36 +1085,19 @@ void MapToolBook::ChangeMode(BookType bookType)
 			//mHouseObject = new HousingObject("House", 0, 0, SideType::InSide);
 			//ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
 
-			mBookType = bookType;
-			mNowTileCountY = 9;
-			mNowTileCountX = 9;
-			//Image* tempImage;
-			Image* tileImage = ImageManager::GetInstance()->FindImage(L"House");
-			//Image* tileRoofImage = ImageManager::GetInstance()->FindImage(L"HouseRoof");
-			int palleteStartX = mRect.left + 200;
-			int palleteStartY = mRect.top + 50;
-
-			mPallete.assign(18, vector<Tile*>());
-			for (int y = 0; y < mNowTileCountY; ++y)
+			mPage = 0;
+			for (int i = 0; i < 3; ++i)
 			{
-				for (int x = 0; x < mNowTileCountX; ++x)
-				{
-
-					mPallete[y].push_back(new Tile(
-						tileImage,
-						palleteStartX + Pallette * x,
-						palleteStartY + Pallette * y,
-						Pallette,
-						Pallette,
-						x,
-						y,
-						x,
-						y
-					));
-					mPallete[y][x]->SetSpeed(mSpeed);
-					mPallete[y][x]->SetTileLayer(TileLayer::PalletteType);
-				}
-
+				ObjectButton* objectButton = new ObjectButton(L"House" + to_wstring(i + 1), mX - 250 + 100 * (i % 3), mY - 210 + 145 * (i / 3), [i]() {
+					Mouse* mouse = new Mouse(L"House" + to_wstring(i + 1), ObjectLayer::InteractObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
 			}
 		}
 		else if (bookType == BookType::InterectObject)
@@ -1139,6 +1117,8 @@ void MapToolBook::ChangeMode(BookType bookType)
 					tempButton[i]->SetIsDestroy(true);
 				}
 			}
+			//페이지 초기화
+			mPage = 0;
 			//오브젝트버튼 생성
 			for (int i = 0; i < 8; ++i)
 			{
@@ -1171,6 +1151,8 @@ void MapToolBook::ChangeMode(BookType bookType)
 					tempButton[i]->SetIsDestroy(true);
 				}
 			}
+			//페이지 초기화
+			mPage = 0;
 			//오브젝트버튼 생성
 			for (int i = 0; i < 11; ++i)
 			{
@@ -1187,10 +1169,5 @@ void MapToolBook::ChangeMode(BookType bookType)
 	}
 }
 
-void MapToolBook::RoofOnMode(int x, int y)
-{
-	mHouseObject = new HousingObject("Roof", x, y);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
-}
 
 

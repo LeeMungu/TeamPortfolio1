@@ -77,7 +77,10 @@ void MapToolLoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WoodWorkTable", Resources(L"/07_Item/WoodWorkTable.png")); });
 	
 
-
+	//이미지 (집)
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House1", Resources(L"/02_House/NewHouse1_Bottom.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House2", Resources(L"/02_House/NewHouse1_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House3", Resources(L"/02_House/NewHouse1_Roof.png")); });
 
 
 

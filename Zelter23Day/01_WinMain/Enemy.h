@@ -69,6 +69,7 @@ public:
 	int GetAttack() { return mAttack; }
 	RECT GetCollisionBox() { return mCollisionBox; }
 	RECT GetAttackBox() { return mAttackBox; }
+	int GetHP() { return mHp; }
 	void SetHp(int hp) { mHp = hp; }
 	void DropItem(Item item);
 	void SetAnimation();

@@ -39,7 +39,7 @@ void scene1::Init()
 	KeyIcon* keyIcon = new KeyIcon("KeyIcon");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, keyIcon);
 
-	QuickSlot* quickSlot = new QuickSlot("QuickSlot", 800, 800);
+	QuickSlot* quickSlot = new QuickSlot("QuickSlot");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, quickSlot);
 
 	Load();

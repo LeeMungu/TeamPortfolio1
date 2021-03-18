@@ -99,6 +99,11 @@ void Camera::AlphaScaleFrameRender(HDC hdc, Image * image, int x, int y, int fra
 	image->AlphaScaleFrameRender(hdc, x - mRect.left, y - mRect.top, frameX, frameY, width, height, alpha);
 }
 
+void Camera::ActivitScaleRender(HDC hdc, Image* image, int x, int y, int width, int height, float angleX, float angleY)
+{
+	image->ActivitScaleRender(hdc, x - mRect.left, y - mRect.top, width, height, angleX, angleY);
+}
+
 void Camera::RenderRect(HDC hdc, RECT rc)
 {
 	if(IsInCameraArea(rc))

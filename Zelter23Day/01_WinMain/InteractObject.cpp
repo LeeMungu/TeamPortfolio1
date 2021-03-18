@@ -5,6 +5,8 @@
 //타일 사이즈 때문에
 #include "Tile.h"
 
+#define InteractObjectSize 2
+
 InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY)
 {
 	//위치 판정해주기
@@ -15,19 +17,19 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 	mHp = hp;
 	mImageKey = imageKey;
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+	mSizeX = mImage->GetFrameWidth()* InteractObjectSize;
+	mSizeY = mImage->GetFrameHeight()* InteractObjectSize;
 	mTileCountX = tileCountX;
 	mTileCountY = tileCountY;
-	if (mTileCountX % 2 == 1)//X방향 홀수 타일
+	if ((mTileCountX * InteractObjectSize) % 2 == 1)//X방향 홀수 타일
 	{
-		mX = mTileIndexX * TileSize + TileSize / 2 + mTileCountX / 2 * TileSize;
+		mX = mTileIndexX * InteractObjectSize * TileSize + TileSize / 2 + mTileCountX * InteractObjectSize / 2 * TileSize;
 	}
-	else if (mTileCountX % 2 == 0)//X방향 짝수 타일
+	else if ((mTileCountX * InteractObjectSize) % 2 == 0)//X방향 짝수 타일
 	{
-		mX = mTileIndexX * TileSize + mTileCountX/2 * TileSize;
+		mX = mTileIndexX * InteractObjectSize * TileSize + mTileCountX * InteractObjectSize /2 * TileSize;
 	}
-	mY = mTileIndexY * TileSize + TileSize / 2 - mSizeY / 2;
+	mY = mTileIndexY * InteractObjectSize * TileSize + TileSize / 2 - mSizeY / 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	
 	int interactRectSizeX, interactRectSizeY;
@@ -37,7 +39,7 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 	}
 	else
 	{
-		interactRectSizeX = TileSize * (mTileCountX - 1);
+		interactRectSizeX = TileSize * (mTileCountX * InteractObjectSize - 1);
 	}
 	if (mTileCountY == 1)
 	{
@@ -45,9 +47,9 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 	}
 	else
 	{
-		interactRectSizeY = TileSize * (mTileCountY - 1);
+		interactRectSizeY = TileSize * (mTileCountY * InteractObjectSize - 1);
 	}
-	mInteractRect = RectMakeCenter(mX, mRect.bottom-TileSize/2*(mTileCountY-1),
+	mInteractRect = RectMakeCenter(mX, mRect.bottom-TileSize/2*(mTileCountY * InteractObjectSize -1),
 		interactRectSizeX, interactRectSizeY);
 }
 
@@ -80,12 +82,12 @@ void InteractObject::Render(HDC hdc)
 	if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mRect))
 	{
 		//타일 렉트
-		for (int y = 0; y < mTileCountY; ++y)
+		for (int y = 0; y < mTileCountY * InteractObjectSize; ++y)
 		{
-			for (int x = 0; x < mTileCountX; ++x)
+			for (int x = 0; x < mTileCountX * InteractObjectSize; ++x)
 			{
 				RECT rc = RectMakeCenter(
-					mTileIndexX * TileSize + TileSize / 2 + x * TileSize,
+					mTileIndexX * InteractObjectSize * TileSize + TileSize / 2 + x * TileSize,
 					mRect.bottom - y * TileSize,
 					TileSize, TileSize);
 				//CameraManager::GetInstance()->GetMainCamera()
@@ -105,6 +107,6 @@ void InteractObject::Render(HDC hdc)
 
 		//이미지
 		CameraManager::GetInstance()->GetMainCamera()
-			->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);
+			->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY,mSizeX,mSizeY);
 	}
 }

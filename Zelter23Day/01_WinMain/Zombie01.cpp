@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "PathFinder.h"
 #include "scene1.h"
+#include "Gizmo.h"
 
 void Zombie01::Init()
 {
@@ -147,6 +148,11 @@ void Zombie01::Render(HDC hdc)
 	{
 		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"аж╠щ", 30);
 	}
+	vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
+	for (int i = 0; i < Path.size(); ++i)
+	{
+		Gizmo::GetInstance()->DrawRect(hdc,(Path[i]->GetRect()), Gizmo::Color::Blue2);
+	}
 }
 
 void Zombie01::Patrol()
@@ -252,7 +258,7 @@ void Zombie01::MovetoPlayer()
 
 	if (Path.size() != NULL)
 	{
-		mAngle = Math::GetAngle(Path[Path.size() - 1]->GetX(), Path[Path.size() - 1]->GetY(), mX, mY);
+		mAngle = Math::GetAngle(Path[1]->GetX(), Path[1]->GetY(), mX, mY);
 		mX -= cosf(mAngle) * mSpeed;
 		mY -= -sinf(mAngle) * mSpeed;
 	}

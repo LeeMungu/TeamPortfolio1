@@ -18,6 +18,69 @@ void MapToolLoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_walk.png"), 7, 4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_attack", Resources(L"/03_Player/Player_attack.png"), 10, 2); });
 
+	//이미지 (아이템)
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Arrow", Resources(L"/07_Item/Arrow.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"BackPack", Resources(L"/07_Item/BackPack.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bandage", Resources(L"/07_Item/Bandage.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Barrigate", Resources(L"/07_Item/Barrigate.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bed", Resources(L"/07_Item/Bed.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Blade", Resources(L"/07_Item/Blade.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"BonFire1", Resources(L"/07_Item/BonFire1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bottle", Resources(L"/07_Item/Bottle.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Can", Resources(L"/07_Item/Can.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Chair", Resources(L"/07_Item/Chair.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Charcol1", Resources(L"/07_Item/Charcol1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"ClothPiece", Resources(L"/07_Item/ClothPiece.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"ClothRag", Resources(L"/07_Item/ClothRag.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"ClothWorkTable", Resources(L"/07_Item/ClothWorkTable.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"CookTable", Resources(L"/07_Item/CookTable.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"CrossBag", Resources(L"/07_Item/CrossBag.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"CrossBow", Resources(L"/07_Item/CrossBow.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"CrowBar", Resources(L"/07_Item/CrowBar.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Cup", Resources(L"/07_Item/Cup.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"GrilApple", Resources(L"/07_Item/GrilApple.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"GrilMeat1", Resources(L"/07_Item/GrilMeat1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"GrilStickMeat", Resources(L"/07_Item/GrilStickMeat.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Hats1", Resources(L"/07_Item/Hats1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Hats3", Resources(L"/07_Item/Hats3.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Iron1", Resources(L"/07_Item/Iron1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Iron2", Resources(L"/07_Item/Iron2.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"IronAxe", Resources(L"/07_Item/IronAxe.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"IronHammer", Resources(L"/07_Item/IronHammer.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Cloth1", Resources(L"/07_Item/Cloth1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"MetalWorkTable", Resources(L"/07_Item/MetalWorkTable.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Pants1", Resources(L"/07_Item/Pants1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Pants2", Resources(L"/07_Item/Pants2.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Pipe", Resources(L"/07_Item/Pipe.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Pistol", Resources(L"/07_Item/Pistol.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"PistolBullet", Resources(L"/07_Item/PistolBullet.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"RawApple", Resources(L"/07_Item/RawApple.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"RawMeat", Resources(L"/07_Item/RawMeat.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Rifle", Resources(L"/07_Item/Rifle.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Rifle2", Resources(L"/07_Item/Rifle2.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"RifleBullet", Resources(L"/07_Item/RifleBullet.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Shotgun", Resources(L"/07_Item/Shotgun.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"ShotgunBullet", Resources(L"/07_Item/ShotgunBullet.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"SMGBullet", Resources(L"/07_Item/SMGBullet.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"StandTorch", Resources(L"/07_Item/StandTorch.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Steel", Resources(L"/07_Item/Steel.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Stone1", Resources(L"/07_Item/Stone1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"StoneAxe", Resources(L"/07_Item/StoneAxe.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"StoneHammer", Resources(L"/07_Item/StoneHammer.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"StorageBox", Resources(L"/07_Item/StorageBox.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Tent", Resources(L"/07_Item/Tent.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Torch", Resources(L"/07_Item/Torch.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Uniform", Resources(L"/07_Item/Uniform.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WaistBag", Resources(L"/07_Item/WaistBag.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WoodBoard", Resources(L"/07_Item/WoodBoard.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WoodBrench1", Resources(L"/07_Item/WoodBrench1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WoodWorkTable", Resources(L"/07_Item/WoodWorkTable.png")); });
+	
+
+
+
+
+
 	//이미지 (무기 /총)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Weapon_pistol", Resources(L"/03_Player/Weapon_pistol.png"), 1, 1); });
 

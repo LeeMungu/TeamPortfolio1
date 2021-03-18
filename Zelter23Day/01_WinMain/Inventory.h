@@ -1,10 +1,19 @@
 #pragma once
 #include "UI.h"
 class Image;
+struct BagSlot {
+	float x;
+	float y;
+	Image* slotImage;
+	//bool isSelected;
+};
 class Inventory : public UI
 {
 	Image* mBaseImage;
 	bool mIsOpened;
+
+	BagSlot mSlotList[5][2];
+
 public:
 	Inventory(const string& name);
 	void Init()override;

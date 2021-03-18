@@ -72,6 +72,7 @@ void LoadingScene::Init()
 
 	//이미지 (인벤토리 UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Inventory_base", Resources(L"/01_UI/Player_InventoryBase.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Inventory_slot", Resources(L"/01_UI/UI_Slot.png")); });
 
 	//이미지 (몬스터)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie01", Resources(L"/06_Zombie/zombie01.png"), 5, 6); });

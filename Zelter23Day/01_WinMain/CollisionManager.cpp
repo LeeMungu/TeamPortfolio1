@@ -17,11 +17,23 @@ void CollisionManager::Update()
 	ObjectCollision();
 	ZombieCollision();
 	ZombieAttack();
+	PlayerCollision();
 }
 
 
-void CollisionManager::ObjectCollision()	//플레이어는 오브젝트를 통과하지 못합니다.
+void CollisionManager::ObjectCollision()	
 {
+
+}
+
+void CollisionManager::ZombieCollision()
+{
+
+}
+
+void CollisionManager::PlayerCollision()
+{
+	//플레이어는 오브젝트를 통과하지 못합니다.
 	RECT temp;
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	if (mPlayer != nullptr)
@@ -58,7 +70,7 @@ void CollisionManager::ObjectCollision()	//플레이어는 오브젝트를 통과하지 못합니
 					}
 					if (tempW > tempH && tempY > ObjectY && playerRC.top <= objectRC.bottom)
 					{
-						pY = objectRC.bottom + pSizeY / 2 ;
+						pY = objectRC.bottom + pSizeY / 2;
 					}
 					if (tempW > tempH && tempY < ObjectY && playerRC.bottom >= objectRC.top)
 					{
@@ -70,17 +82,8 @@ void CollisionManager::ObjectCollision()	//플레이어는 오브젝트를 통과하지 못합니
 				}
 			}
 		}
-	}
-}
 
-void CollisionManager::ZombieCollision()//플레이어는 좀비를 통과하지 못합니다.
-{
-	RECT temp;
-	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
-	if (mPlayer != nullptr)
-	{
-		float invincibleCount = mPlayer->GetInvincibleCount();
-		RECT playerRC = mPlayer->GetCollisionBox();
+		//플레이어는 좀비를 통과하지 못합니다.
 		RECT enemyRC;
 		vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
 		if (zombie.size() != NULL)
@@ -88,7 +91,7 @@ void CollisionManager::ZombieCollision()//플레이어는 좀비를 통과하지 못합니다.
 			for (int i = 0; i < zombie.size(); ++i)
 			{
 				enemyRC = ((Enemy*)zombie[i])->GetCollisionBox();
-				if (IntersectRect(&temp, &playerRC, &enemyRC))	//플레이어 충돌박스와 좀비 충돌 처리
+				if (IntersectRect(&temp, &playerRC, &enemyRC))	
 				{
 					float pX = mPlayer->GetX();
 					float pY = mPlayer->GetY();
@@ -118,7 +121,6 @@ void CollisionManager::ZombieCollision()//플레이어는 좀비를 통과하지 못합니다.
 					{
 						pY = enemyRC.top - pSizeY / 2;
 					}
-
 					mPlayer->SetX(pX);
 					mPlayer->SetY(pY);
 				}
@@ -127,20 +129,21 @@ void CollisionManager::ZombieCollision()//플레이어는 좀비를 통과하지 못합니다.
 	}
 }
 
+void CollisionManager::PlayerAttack()
+{
+}
+
 void CollisionManager::ZombieAttack()
 {
 	RECT temp;
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	if (mPlayer != nullptr)
 	{
-		float invincibleCount = mPlayer->GetInvincibleCount();
 		RECT playerRC = mPlayer->GetRect();
 		RECT enemyRC;
 		vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
 		RECT objectRC;
 		vector<GameObject*> interactobject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
-
-
 
 
 		if (zombie.size() != NULL)
@@ -151,8 +154,7 @@ void CollisionManager::ZombieAttack()
 
 				if (IntersectRect(&temp, &playerRC, &enemyRC) && mPlayer->GetIsInvincible() == false)	//좀비가 플레이어를 공격하였다!
 				{
-					float mAnlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY()
-						, mPlayer->GetX(), mPlayer->GetY());
+					float mAnlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY() , mPlayer->GetX(), mPlayer->GetY());
 					mPlayer->ExecuteKnockback(mAnlge, 500.f);
 					mPlayer->SetHP(mPlayer->GetHP() - 1);
 					mPlayer->SetIsInvincible(true);
@@ -161,30 +163,15 @@ void CollisionManager::ZombieAttack()
 				{
 					for (int j = 0; j < interactobject.size(); ++j)
 					{
-						objectRC = ((InteractObject*)interactobject[j])->GetInteractRect();
-						if (IntersectRect(&temp, &objectRC, &enemyRC) && ((InteractObject* )interactobject[j])->GetIsInterRactive() == true)
+						InteractObject* tempInteractObject =(InteractObject*)interactobject[j];
+						objectRC = tempInteractObject->GetInteractRect();
+						if (IntersectRect(&temp, &objectRC, &enemyRC) && tempInteractObject->GetIsInterRactive() == true)	//좀비가 오브젝트를 공격하였다!
 						{
-
+							tempInteractObject->SetHp(tempInteractObject->GetHp() - 1);
 						}
 					}
-
 				}
 			}
 		}
-		//플레이어(이)가 무적이 되었는가?
-		if (mPlayer->GetIsInvincible() == true)
-		{
-			invincibleCount += Time::GetInstance()->DeltaTime();
-		}
-		if (invincibleCount > 0.6f)
-		{
-			mPlayer->SetIsInvincible(false);
-			invincibleCount = 0;
-		}
-
-
-
-
-\
 	}
 }

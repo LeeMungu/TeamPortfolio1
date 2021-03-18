@@ -425,8 +425,8 @@ void MapToolScene::Update()
 				int county = tempInteract->GetTileCountY() * InteractObjectSize;
 				for (int x = 0; x < countx * county; ++x)
 				{
-					if (mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->GetTileLayer() != TileLayer::wall)
-						mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->SetTileLayer(TileLayer::wall);
+					if (mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->GetTileLayer() != TileLayer::wall)
+						mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->SetTileLayer(TileLayer::wall);
 				}
 			}
 		}
@@ -841,8 +841,8 @@ void MapToolScene::Load()
 					int county = tempInteract->GetTileCountY() * InteractObjectSize;
 					for (int x = 0; x < countx * county; ++x)
 					{
-						if (mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->GetTileLayer() != TileLayer::wall)
-							mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->SetTileLayer(TileLayer::wall);
+						if (mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->GetTileLayer() != TileLayer::wall)
+							mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->SetTileLayer(TileLayer::wall);
 					}
 				}
 			}

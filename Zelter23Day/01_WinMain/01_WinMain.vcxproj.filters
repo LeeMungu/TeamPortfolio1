@@ -276,6 +276,9 @@
     <ClInclude Include="Zombie02.h">
       <Filter>MainGame\Object\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>FrameWork\Animation</Filter>
+    </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>MainGame\UI\Inventory</Filter>
     </ClInclude>
@@ -436,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="Zombie02.cpp">
       <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>FrameWork\Animation</Filter>
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>MainGame\UI\Inventory</Filter>

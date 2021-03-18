@@ -15,8 +15,16 @@ Mouse::Mouse(wstring imageKey, ObjectLayer objectLayer)
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
 	mX = _mousePosition.x;
 	mY = _mousePosition.y ;
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+	if (mObjectType == ObjectLayer::InteractObject)
+	{
+		mSizeX = mImage->GetFrameWidth() * InteractObjectSize;
+		mSizeY = mImage->GetFrameHeight() * InteractObjectSize;
+	}
+	else
+	{
+		mSizeX = mImage->GetFrameWidth();
+		mSizeY = mImage->GetFrameHeight();
+	}
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
@@ -53,7 +61,7 @@ void Mouse::Update()
 		}
 		else if (mTileCountX * InteractObjectSize % 2 == 0)//X방향 짝수 타일
 		{
-			mX = _mousePosition.x + mTileCountX * InteractObjectSize / 2 * TileSize;
+			mX = _mousePosition.x + (mTileCountX * InteractObjectSize) / 2 * TileSize -TileSize/2;
 		}
 	}
 	else if (mObjectType == ObjectLayer::NoninteractObject)
@@ -114,7 +122,7 @@ void Mouse::Render(HDC hdc)
 				RenderRect(hdc, rc);
 			}
 		}
-		mImage->FrameRender(hdc, mRect.left, mRect.top,0,0);
+		mImage->ScaleFrameRender(hdc, mRect.left, mRect.top,0,0,mSizeX,mSizeY);
 	}
 	else if (mObjectType == ObjectLayer::NoninteractObject)
 	{

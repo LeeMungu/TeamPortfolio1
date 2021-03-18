@@ -1,18 +1,17 @@
 #pragma once
 #include "Animation.h"
+
 template<typename T>
 class Animations final
 {
 	map<T, Animation*> mAnimationList;
 	Animation* mCurrentAnimation;
-	typedef map<wstring, Animation*>::iterator Animationiter;
-	//typedef map<ObjectLayer, vector<class GameObject*>>::iterator ObjectIter;
 	
 public:
 	Animations() :mCurrentAnimation(nullptr) {}
 	~Animations()
 	{
-		Animationiter iter = mAnimationList.begin();
+		typename map<T, Animation*>::iterator iter = mAnimationList.begin();
 		for (; iter != mAnimationList.end(); ++iter)
 		{
 			SafeDelete(iter->second);

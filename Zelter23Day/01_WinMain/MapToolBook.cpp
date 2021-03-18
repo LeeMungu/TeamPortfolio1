@@ -1085,11 +1085,9 @@ void MapToolBook::ChangeMode(BookType bookType)
 			//mHouseObject = new HousingObject("House", 0, 0, SideType::InSide);
 			//ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
 
-			mPage = 0;
-			for (int i = 0; i < 3; ++i)
-			{
-				ObjectButton* objectButton = new ObjectButton(L"House" + to_wstring(i + 1), mX - 250 + 100 * (i % 3), mY - 210 + 145 * (i / 3), [i]() {
-					Mouse* mouse = new Mouse(L"House" + to_wstring(i + 1), ObjectLayer::InteractObject);
+				mPage = 0;
+				ObjectButton* objectButton = new ObjectButton(L"House3", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"House3" , ObjectLayer::HousingObject);
 					mouse->SetHpMax(10);
 					mouse->SetTileCountX(1);
 					mouse->SetTileCountY(1);
@@ -1098,7 +1096,7 @@ void MapToolBook::ChangeMode(BookType bookType)
 					});
 				objectButton->Init();
 				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
-			}
+			
 		}
 		else if (bookType == BookType::InterectObject)
 		{

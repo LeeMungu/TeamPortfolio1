@@ -89,7 +89,9 @@ void Mouse::Update()
 		//누르면 생성
 		if (mObjectType == ObjectLayer::HousingObject)
 		{
-			//이곳에서 하우징 생성넣어줄것
+			HousingObject* houseObject = new HousingObject(mImageKey, _mousePosition.x + cameraRc.left, mY + mSizeY / 2 + cameraRc.top, mTileCountX, mTileCountY);
+			houseObject->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::HousingObject, houseObject);
 		}
 		else if (mObjectType == ObjectLayer::InteractObject)
 		{

@@ -4,7 +4,7 @@
 KeyIcon::KeyIcon(const string& name) : UI(name)
 {
 	mX = -30;
-	mY = 650;
+	mY = WINSIZEY - 250;
 }
 
 void KeyIcon::Init()

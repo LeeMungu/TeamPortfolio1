@@ -17,6 +17,16 @@ void Inventory::Release()
 
 void Inventory::Update()
 {
+	/*
+	if (mIsOpened == false) {
+		if (Input::GetInstance()->GetKeyDown('I')) {
+
+		}
+	}
+	else {
+
+	}
+	*/
 }
 
 void Inventory::Render(HDC hdc)

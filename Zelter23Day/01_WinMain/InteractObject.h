@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "GameObject.h"
 
+#define InteractObjectSize 2
+
 enum class TypeLayer
 {
 	철,

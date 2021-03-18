@@ -26,7 +26,7 @@ void Zombie01::Init()
 	mAttack = 1;
 	mTargeting = false;
 	mTakenDamege = false;
-	mDelay = 1.f;
+	mDelay = 0.5f;
 
 	mLeftMove = new Animation;
 	mLeftMove->InitFrameByStartEnd(0, 1, 4, 1, true);
@@ -99,6 +99,11 @@ void Zombie01::Update()
 		Attack();
 	}
 
+	if (mZombistate != ZombieState::Attack) //좀비공격 렉트 초기화
+	{
+		mAttackBox = RectMakeCenter(0, 0, 0, 0);
+	}
+
 	if (mTargeting)
 	{
 		SearchPlayer();
@@ -148,11 +153,16 @@ void Zombie01::Render(HDC hdc)
 	{
 		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"주금", 30);
 	}
-	vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
-	for (int i = 0; i < Path.size(); ++i)
+
+	if (Input::GetInstance()->GetKey(VK_LCONTROL))
 	{
-		Gizmo::GetInstance()->DrawRect(hdc,(Path[i]->GetRect()), Gizmo::Color::Blue2);
+		vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
+		for (int i = 0; i < Path.size(); ++i)
+		{
+			CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, (Path[i]->GetRect()), Gizmo::Color::Blue2);
+		}
 	}
+
 }
 
 void Zombie01::Patrol()
@@ -210,13 +220,12 @@ void Zombie01::Attack()
 		mZombistate = ZombieState::Chase;
 	}
 	else
-	{
-		
+	{		
 		mDelayTime += Time::GetInstance()->DeltaTime();
 
 		if (mDelayTime >= mDelay && mIsAttackTrigger==false)
 		{
-			if (mPlayer->GetRect().left > mRect.right)
+			if (mPlayer->GetRect().right >= mRect.right)
 			{
 				mCurrentAnimation = mRightAttack;
 				mCurrentAnimation->Play();
@@ -224,7 +233,7 @@ void Zombie01::Attack()
 				mDelayTime = 0;
 				mIsAttackTrigger = true;
 			}
-			else if (mPlayer->GetRect().left < mRect.left)
+			else if (mPlayer->GetRect().left <= mRect.left)
 			{
 				mCurrentAnimation = mLeftAttack;
 				mCurrentAnimation->Play();
@@ -236,11 +245,11 @@ void Zombie01::Attack()
 
 		if (mCurrentAnimation == mRightAttack && mCurrentAnimation->GetNowFrameX() > 1 && mCurrentAnimation->GetNowFrameX() < 4)
 		{
-			mAttackBox = RectMakeCenter(mCollisionBox.right, mY, mSizeX, mSizeY);
+			mAttackBox = RectMakeCenter(mCollisionBox.right, mY, mSizeX, mSizeY*1.1);
 		}
 		else if (mCurrentAnimation == mLeftAttack && mCurrentAnimation->GetNowFrameX() > 1 && mCurrentAnimation->GetNowFrameX() < 4)
 		{
-			mAttackBox = RectMakeCenter(mCollisionBox.left, mY, mSizeX, mSizeY);
+			mAttackBox = RectMakeCenter(mCollisionBox.left, mY, mSizeX, mSizeY*1.1);
 		}
 	}
 
@@ -258,7 +267,11 @@ void Zombie01::MovetoPlayer()
 
 	if (Path.size() != NULL)
 	{
-		mAngle = Math::GetAngle(Path[1]->GetX(), Path[1]->GetY(), mX, mY);
+		if (Path.size() > 2)
+		{
+			mAngle = Math::GetAngle(Path[2]->GetX(), Path[2]->GetY(), mX, mY);
+		
+		}
 		mX -= cosf(mAngle) * mSpeed;
 		mY -= -sinf(mAngle) * mSpeed;
 	}

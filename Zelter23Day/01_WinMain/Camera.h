@@ -31,8 +31,10 @@ public:
 	void ScaleFrameRender(HDC hdc,class Image* image, int x, int y, int frameX, int frameY, int width, int height);
 	void AlphaScaleRender(HDC hdc,class Image* image, int x, int y, int width, int height, float alpha);
 	void AlphaScaleFrameRender(HDC hdc, class Image* image, int x, int y, int frameX, int frameY, int width, int height, float alpha);
+	//void 
 
 	void RenderRect(HDC hdc, RECT rc);
+	void RenderRect(HDC hdc, RECT rc, Gizmo::Color color);
 	void RenderEllipse(HDC hdc, float x, float y, float radius);
 
 	bool IsInCameraArea(float x, float y, float width, float height);

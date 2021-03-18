@@ -39,7 +39,7 @@ void scene1::Init()
 	KeyIcon* keyIcon = new KeyIcon("KeyIcon");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, keyIcon);
 
-	QuickSlot* quickSlot = new QuickSlot("QuickSlot", 800, 800);
+	QuickSlot* quickSlot = new QuickSlot("QuickSlot");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, quickSlot);
 
 	Load();
@@ -347,14 +347,17 @@ void scene1::Load()
 		{
 			for (int i = 0; i < tempInteractList.size(); ++i)
 			{
-				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
-				int y = 0;
-				int countx = tempInteract->GetTileCountX();
-				int county = tempInteract->GetTileCountY();
-				for (int x = 0; x < countx * county; ++x)
+				if (tempInteractList[i]->GetIsDestroy() != true)
 				{
-					if (mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->GetTileLayer() != TileLayer::wall)
-						mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->SetTileLayer(TileLayer::wall);
+					InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
+					int y = 0;
+					int countx = tempInteract->GetTileCountX() * InteractObjectSize;
+					int county = tempInteract->GetTileCountY() * InteractObjectSize;
+					for (int x = 0; x < countx * county; ++x)
+					{
+						if (mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->GetTileLayer() != TileLayer::wall)
+							mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->SetTileLayer(TileLayer::wall);
+					}
 				}
 			}
 		}

@@ -109,7 +109,6 @@ void MapToolScene::Update()
 						if (PtInRect(&palletRect, _mousePosition))
 						{
 							mCurrentPallete = palletList[y][x];
-							mToolBook->SetIsRoofOn(false);
 						}
 					}
 				}
@@ -252,14 +251,8 @@ void MapToolScene::Update()
 					mTileList[indexY][indexX]->mFrameIndexX != mCurrentPallete->mFrameIndexX ||
 					mTileList[indexY][indexX]->mFrameIndexY != mCurrentPallete->mFrameIndexY)
 				{
-					if (mToolBook->GetIsRoofOn() == true)
-					{
-						mToolBook->RoofOnMode(indexX, indexY);
-						mToolBook->SetIsRoofOn(false);
-					}
 					IBrushTile* command = new IBrushTile(mTileList[indexY][indexX], mCurrentPallete);
 					PushCommand(command);
-					mToolBook->SetIsRoofOn(false);
 					//cout << "OnPushCommand" << endl;
 				}
 				mTileList[indexY][indexX]->mTileLayer = mCurrentLayer;
@@ -322,14 +315,9 @@ void MapToolScene::Update()
 								mTileList[y][x]->mFrameIndexX != mCurrentPallete->mFrameIndexX ||
 								mTileList[y][x]->mFrameIndexY != mCurrentPallete->mFrameIndexY)
 							{
-								if (mToolBook->GetIsRoofOn() == true)
-								{
-									mToolBook->RoofOnMode(x, y);
-									mToolBook->SetIsRoofOn(false);
-								}
+								
 								IBrushTile* command = new IBrushTile(mTileList[y][x], mCurrentPallete);
 								PushCommand(command);
-								mToolBook->SetIsRoofOn(false);
 								//cout << "OnPushCommand" << endl;
 							}
 							mTileList[y][x]->mTileLayer = mCurrentLayer;
@@ -421,12 +409,12 @@ void MapToolScene::Update()
 			{
 				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
 				int y = 0;
-				int countx = tempInteract->GetTileCountX();
-				int county = tempInteract->GetTileCountY();
+				int countx = tempInteract->GetTileCountX() * InteractObjectSize;
+				int county = tempInteract->GetTileCountY() * InteractObjectSize;
 				for (int x = 0; x < countx * county; ++x)
 				{
-					if (mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->GetTileLayer() != TileLayer::wall)
-						mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->SetTileLayer(TileLayer::wall);
+					if (mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->GetTileLayer() != TileLayer::wall)
+						mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->SetTileLayer(TileLayer::wall);
 				}
 			}
 		}
@@ -833,15 +821,17 @@ void MapToolScene::Load()
 		{
 			for (int i = 0; i < tempInteractList.size(); ++i)
 			{
-				//후에 다중 타일 추가로 판정해줘야 한다.
-				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
-				int y = 0;
-				int countx = tempInteract->GetTileCountX();
-				int county = tempInteract->GetTileCountY();
-				for (int x = 0; x < countx * county; ++x)
+				if (tempInteractList[i]->GetIsDestroy() != true)
 				{
-					if (mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->GetTileLayer() != TileLayer::wall)
-						mTileList[tempInteract->GetTileIndexY() - (x / countx)][tempInteract->GetTileIndexX() + (x % countx)]->SetTileLayer(TileLayer::wall);
+					InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
+					int y = 0;
+					int countx = tempInteract->GetTileCountX() * InteractObjectSize;
+					int county = tempInteract->GetTileCountY() * InteractObjectSize;
+					for (int x = 0; x < countx * county; ++x)
+					{
+						if (mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->GetTileLayer() != TileLayer::wall)
+							mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->SetTileLayer(TileLayer::wall);
+					}
 				}
 			}
 		}

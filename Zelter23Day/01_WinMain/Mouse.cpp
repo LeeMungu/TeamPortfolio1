@@ -15,8 +15,16 @@ Mouse::Mouse(wstring imageKey, ObjectLayer objectLayer)
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
 	mX = _mousePosition.x;
 	mY = _mousePosition.y ;
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+	if (mObjectType == ObjectLayer::InteractObject)
+	{
+		mSizeX = mImage->GetFrameWidth() * InteractObjectSize;
+		mSizeY = mImage->GetFrameHeight() * InteractObjectSize;
+	}
+	else
+	{
+		mSizeX = mImage->GetFrameWidth();
+		mSizeY = mImage->GetFrameHeight();
+	}
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
@@ -47,13 +55,13 @@ void Mouse::Update()
 	else if (mObjectType == ObjectLayer::InteractObject)
 	{
 		mY = _mousePosition.y - mSizeY/2;
-		if (mTileCountX % 2 == 1)//X방향 홀수 타일
+		if (mTileCountX * InteractObjectSize % 2 == 1)//X방향 홀수 타일
 		{
-			mX = _mousePosition.x + (mTileCountX-1) / 2 * TileSize;
+			mX = _mousePosition.x + (mTileCountX * InteractObjectSize -1) / 2 * TileSize;
 		}
-		else if (mTileCountX % 2 == 0)//X방향 짝수 타일
+		else if (mTileCountX * InteractObjectSize % 2 == 0)//X방향 짝수 타일
 		{
-			mX = _mousePosition.x + mTileCountX / 2 * TileSize;
+			mX = _mousePosition.x + (mTileCountX * InteractObjectSize) / 2 * TileSize -TileSize/2;
 		}
 	}
 	else if (mObjectType == ObjectLayer::NoninteractObject)
@@ -106,19 +114,19 @@ void Mouse::Render(HDC hdc)
 	}
 	else if (mObjectType == ObjectLayer::InteractObject)
 	{
-		for (int y = 0; y < mTileCountY; ++y)
+		for (int y = 0; y < mTileCountY*InteractObjectSize; ++y)
 		{
-			for (int x = 0; x < mTileCountX; ++x)
+			for (int x = 0; x < mTileCountX * InteractObjectSize; ++x)
 			{
 				RECT rc = RectMakeCenter(_mousePosition.x + x * TileSize, mRect.bottom - y * TileSize, TileSize, TileSize);
 				RenderRect(hdc, rc);
 			}
 		}
-		mImage->FrameRender(hdc, mRect.left, mRect.top,0,0);
+		mImage->ScaleFrameRender(hdc, mRect.left, mRect.top,0,0,mSizeX,mSizeY);
 	}
 	else if (mObjectType == ObjectLayer::NoninteractObject)
 	{
-		mImage->Render(hdc, mRect.left, mRect.top);
+		mImage->ScaleRender(hdc, mRect.left, mRect.top,mSizeX,mSizeY);
 	}
 }
 

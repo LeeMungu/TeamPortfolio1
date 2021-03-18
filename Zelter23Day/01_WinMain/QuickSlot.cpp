@@ -33,18 +33,33 @@ void QuickSlot::Update()
 {
 	if (Input::GetInstance()->GetKeyDown('1')) {
 		mSelectedNum = 1;
+		if (mSlotList[0].isSelected == true) {
+			mSelectedNum = 0;
+		}
 	}
 	if (Input::GetInstance()->GetKeyDown('2')) {
 		mSelectedNum = 2;
+		if (mSlotList[1].isSelected == true) {
+			mSelectedNum = 0;
+		}
 	}
 	if (Input::GetInstance()->GetKeyDown('3')) {
 		mSelectedNum = 3;
+		if (mSlotList[2].isSelected == true) {
+			mSelectedNum = 0;
+		}
 	}
 	if (Input::GetInstance()->GetKeyDown('4')) {
 		mSelectedNum = 4;
+		if (mSlotList[3].isSelected == true) {
+			mSelectedNum = 0;
+		}
 	}
 	if (Input::GetInstance()->GetKeyDown('5')) {
 		mSelectedNum = 5;
+		if (mSlotList[4].isSelected == true) {
+			mSelectedNum = 0;
+		}
 	}
 
 	for (int i = 0; i < 5; i++) {

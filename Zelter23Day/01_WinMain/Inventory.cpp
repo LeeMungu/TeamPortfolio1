@@ -13,6 +13,13 @@ void Inventory::Init()
 	mBaseImage = IMAGEMANAGER->FindImage(L"Inventory_base");
 	mIsOpened = false;
 
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 2; j++) {
+			mSlotList[i][j].x = mX + i * 60 + 170;
+			mSlotList[i][j].y = mY + j * 60 + 250;
+			mSlotList[i][j].slotImage = IMAGEMANAGER->FindImage(L"Inventory_slot");
+		}
+	}
 }
 
 void Inventory::Release()
@@ -27,6 +34,13 @@ void Inventory::Update()
 			mX = WINSIZEX / 2 - 30;
 			mY = WINSIZEY - 255 * 2;
 			mIsOpened = true;
+
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 2; j++) {
+					mSlotList[i][j].x = mX + i * 60 + 170;
+					mSlotList[i][j].y = mY + j * 60 + 250;
+				}
+			}
 		}
 	}
 	else {
@@ -34,6 +48,13 @@ void Inventory::Update()
 			mX = -1000;
 			mY = -1000;
 			mIsOpened = false;
+
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 2; j++) {
+					mSlotList[i][j].x = mX + i * 60 + 170;
+					mSlotList[i][j].y = mY + j * 60 + 250;
+				}
+			}
 		}
 	}
 	
@@ -41,5 +62,13 @@ void Inventory::Update()
 
 void Inventory::Render(HDC hdc)
 {
-	if (mIsOpened == true) mBaseImage->ScaleRender(hdc, mX, mY, 295*2, 255*2);
+	if (mIsOpened == true) {
+		mBaseImage->ScaleRender(hdc, mX, mY, 295 * 2, 255 * 2);
+
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 2; j++) {
+				mSlotList[i][j].slotImage->ScaleRender(hdc, mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
+			}
+		}
+	}
 }

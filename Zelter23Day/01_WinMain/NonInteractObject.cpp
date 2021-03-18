@@ -31,7 +31,7 @@ void NonInteractObject::Release()
 
 void NonInteractObject::Update()
 {
-	//후에 스케일랜더로 뽀숑뽀숑 만들예정
+	//스케일랜더로 뽀숑뽀숑
 	if(mAngleX>3)
 	{
 		mIsAnglePlus = false;
@@ -49,7 +49,6 @@ void NonInteractObject::Update()
 	{
 		mAngleX -= 10*Time::GetInstance()->DeltaTime();
 	}
-	mAngleLange = mSizeY * tanf(mAngleX / 180.f * PI);
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
@@ -61,5 +60,6 @@ void NonInteractObject::Render(HDC hdc)
 		//	->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);
 		CameraManager::GetInstance()->GetMainCamera()
 			->ActivitScaleRender(hdc, mImage, mRect.left, mRect.top, mSizeX, mSizeY,mAngleX,0);
+		//Time::GetInstance()->GetSceneTime();이용해서 그림자 해보기
 	}
 }

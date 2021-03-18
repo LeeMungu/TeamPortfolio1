@@ -62,8 +62,11 @@ public:
 	//알파값 + 프레임렌더링 + 크기 조정
 	void AlphaScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float alpha);
 	//엑티브스케일렌더
-	void ActiveScaleRender(HDC hdc, int x, int y, int width, int height);
+	//void ActiveScaleRender(HDC hdc, int x, int y, int width, int height);
+	//이미지 어그러뜨리기
+	void ActivitScaleRender(HDC hdc, int x, int y, int width, int height, float angleX, float angleY);
 
+	//렌더 리셋
 	void ResetRenderOption();
 
 	void SetSize(const Vector2& vec) { this->mSize = vec; }

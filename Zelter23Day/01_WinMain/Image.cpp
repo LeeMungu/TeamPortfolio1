@@ -252,7 +252,28 @@ void Image::AlphaScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY,
 	this->ResetRenderOption();
 }
 
-void Image::ActiveScaleRender(HDC hdc, int x, int y, int width, int height)
+//void Image::ActiveScaleRender(HDC hdc, int x, int y, int width, int height)
+//{
+//	Vector2 size = Vector2(mSize.X * width / this->GetWidth(), mSize.Y * height / this->GetHeight());
+//
+//	//원래 사이즈
+//	//Vector2 size = mSize * mScale;
+//
+//	//스케일 행렬을 만들어준다
+//	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+//	//회전 행렬을 만들어준다. 
+//	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+//	//이동 행렬을 만들어준다.
+//	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
+//
+//	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
+//
+//	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
+//	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha);
+//	ResetRenderOption();
+//}
+
+void Image::ActivitScaleRender(HDC hdc, int x, int y, int width, int height, float angleX, float angleY)
 {
 	Vector2 size = Vector2(mSize.X * width / this->GetWidth(), mSize.Y * height / this->GetHeight());
 
@@ -267,9 +288,18 @@ void Image::ActiveScaleRender(HDC hdc, int x, int y, int width, int height)
 	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
+	
+	D2D_MATRIX_3X2_F skewMatrix = D2D1::Matrix3x2F::Skew(angleX, angleY, 
+		//회전기준->좌하단이란 의미
+		D2D1::Point2F(0.f,size.Y)); // centre being the origin of the screen
+	
+	//만들어진 사각형
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(skewMatrix * scaleMatrix * rotateMatrix * translateMatrix);
 
-	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
+	//그려주는 애
 	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha);
+
+	//리셋
 	ResetRenderOption();
 }
 

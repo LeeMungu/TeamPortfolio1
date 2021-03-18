@@ -9,6 +9,10 @@ class NonInteractObject : public GameObject
 	int mIndexX;
 	int mIndexY;
 	wstring mImageKey;
+
+	float mAngleX;
+	bool mIsAnglePlus;
+	float mAngleLange;
 public:
 	NonInteractObject(const wstring imageKey, float x, float y);
 	void Init()override;

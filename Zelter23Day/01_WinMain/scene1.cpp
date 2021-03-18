@@ -119,6 +119,38 @@ void scene1::Update()
 	//float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
 	//float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
 
+
+	//타일속성 바꿔주기전에 초기화해주기
+	for (int y = 0; y < mTileCountY; ++y)
+	{
+		for (int x = 0; x < mTileCountX; ++x)
+		{
+			mTileList[y][x]->SetTileLayer(TileLayer::normal);
+		}
+	}
+	//인터렉트 오브젝트에 따른 타일 속성 바꾸기(wall로 바꿔주기)
+	//로드 할때도 해줘야 할듯하다 -> 항상 적용되어야한다 -> 오브젝트매니져에서 해주고 싶지만 타일이 오브젝트매니져에 없다.
+	//->타일을 오브젝트매니져에 넣기는 메리트가 너무 적다(업데이트나 기타부분이 의미가 없다 타일은 타일로 남겨두는게 충돌이 적고 
+	//타일이 적게 들어갈듯
+	vector<GameObject*> tempInteractList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+	if (tempInteractList.size() != NULL)
+	{
+		for (int i = 0; i < tempInteractList.size(); ++i)
+		{
+			if (tempInteractList[i]->GetIsDestroy() != true)
+			{
+				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
+				int y = 0;
+				int countx = tempInteract->GetTileCountX() * InteractObjectSize;
+				int county = tempInteract->GetTileCountY() * InteractObjectSize;
+				for (int x = 0; x < countx * county; ++x)
+				{
+					if (mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->GetTileLayer() != TileLayer::wall)
+						mTileList[(int)(tempInteract->GetTileIndexY()) - (x / countx)][(int)(tempInteract->GetTileIndexX()) + (x % countx)]->SetTileLayer(TileLayer::wall);
+				}
+			}
+		}
+	}
 }
 
 void scene1::Render(HDC hdc)

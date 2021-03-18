@@ -77,7 +77,7 @@ vector<class Tile*> PathFinder::FindPath(const vector<vector<class Tile*>>& tile
 
 				if (dummyList[y][x].IsClose == true)continue;
 
-				if (tileList[y][x]->mTileLayer == TileLayer::wall)
+				if (tileList[y][x]->mTileLayer == TileLayer::wall && tileList[y][x]!=arrivalTile)
 				{
 					dummyList[y][x].IsClose = true;
 					dummyList[y][x].IsOpen = true;

@@ -70,12 +70,12 @@ class Player : public GameObject
 	Attacked mAttacked;
 
 	RECT mCollisionBox;
+	RECT mAttackBox;
 
 
 	
 public:
 	Player(const string& name, float x, float y);
-
 	void Init()override;
 	void Release()override;
 	void Update()override;
@@ -92,6 +92,7 @@ public:
 	bool GetIsInvincible() { return mIsInvincible; }
 	bool GetIsKnockback() {return mIsKnockback;	}
 	RECT GetCollisionBox() { return mCollisionBox; }
+	RECT GetAttackBox() { return mAttackBox; }
 	Attacked GetAttacked() { return mAttacked; }
 
 	void SetIsInvincible(bool invincible) { mIsInvincible = invincible; }

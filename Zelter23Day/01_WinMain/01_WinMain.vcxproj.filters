@@ -282,6 +282,9 @@
     <ClInclude Include="Inventory.h">
       <Filter>MainGame\UI\Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -445,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>MainGame\UI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>MainGame\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

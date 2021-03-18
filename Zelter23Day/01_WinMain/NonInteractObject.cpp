@@ -32,22 +32,22 @@ void NonInteractObject::Release()
 void NonInteractObject::Update()
 {
 	//ÈÄ¿¡ ½ºÄÉÀÏ·£´õ·Î »Ç¼õ»Ç¼õ ¸¸µé¿¹Á¤
-	if(mAngleX>15)
+	if(mAngleX>3)
 	{
 		mIsAnglePlus = false;
 	}
-	else if (mAngleX < -15)
+	else if (mAngleX < -3)
 	{
 		mIsAnglePlus = true;
 	}
 
 	if (mIsAnglePlus==true)
 	{
-		mAngleX += 80*Time::GetInstance()->DeltaTime();
+		mAngleX += 10*Time::GetInstance()->DeltaTime();
 	}
 	else if (mIsAnglePlus == false)
 	{
-		mAngleX -= 80*Time::GetInstance()->DeltaTime();
+		mAngleX -= 10*Time::GetInstance()->DeltaTime();
 	}
 	mAngleLange = mSizeY * tanf(mAngleX / 180.f * PI);
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);

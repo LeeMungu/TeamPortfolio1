@@ -6,7 +6,7 @@ class Player;
 class Weapon : public GameObject
 {
 public:
-	Weapon(const float x, float y, float sizeX, float sizeY);
+	Weapon(const float x, float y, int imageX, int imageY);
 	Image* mImage;
 
 	Player* mPlayer;
@@ -23,16 +23,12 @@ public:
 	//무기 생성 시 플레이어 좌표
 	//float mStartPlayerX;
 	//float mStartPlayerY;
-	// 
-	//플레이어의 위치
-	float mNowPlayerX;
-	float mNowPlayerY;
 
 	bool mIsEqip;
 
 	int mBullet;
 	float mAngle; //총알 궤적?
-	RECT mRect; //총 위치
+	 //총 위치
 
 	void Init()override;
 	void Release()override;

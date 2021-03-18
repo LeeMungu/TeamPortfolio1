@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Tile.h"
 #include "MapToolScene.h"
+#include "Weapon.h"
 
 Player::Player(const string& name, float x, float y)
 	:GameObject(name)
@@ -120,6 +121,10 @@ void Player::Init()
 	mPlayerState = PlayerState::idle;
 	mDash = 0;
 	mDashTime = 0;
+
+	Weapon* weapon = new Weapon(mX,mY,0,0);
+	weapon->SetPlayerPtr(this);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
 }
 
 void Player::Release()

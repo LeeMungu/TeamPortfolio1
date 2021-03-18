@@ -166,5 +166,41 @@ void CollisionManager::ZombieAttack()
 
 void CollisionManager::PlayerAttack()
 {
+	RECT temp;
+	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+	if (mPlayer != nullptr)
+	{
+		RECT playerAttackRC = mPlayer->GetAttackBox();
+		RECT enemyRC;
+		vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+		RECT objectRC;
+		vector<GameObject*> interactobject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
 
+		if (zombie.size() != NULL)
+		{
+			for (int i = 0; i < zombie.size(); ++i)
+			{
+				Enemy* enemy = (Enemy*)zombie[i];
+				enemyRC = enemy->GetRect();
+				if (IntersectRect(&temp, &playerAttackRC, &enemyRC))
+				{
+					enemy->SetHp(enemy->GetHP() - 1);
+
+				}
+			}
+		}
+
+		if (interactobject.size() != NULL)
+		{
+			for (int i = 0; i < interactobject.size(); ++i)
+			{
+				InteractObject* tempinteractobject = (InteractObject*)interactobject[i];
+				objectRC = tempinteractobject->GetInteractRect();
+				if (IntersectRect(&temp, &playerAttackRC, &objectRC))
+				{
+					tempinteractobject->SetHp(tempinteractobject->GetHp() - 1);
+				}
+			}
+		}
+	}
 }

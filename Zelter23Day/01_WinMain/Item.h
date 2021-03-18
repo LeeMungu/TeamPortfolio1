@@ -7,21 +7,20 @@ enum class ItemType
 	Equipment, // 장비
 	Weapon, // 무기
 	Food, // 음식
+	Drink, // 음료
 	Material // 재료
 
 };
 
-class Item : GameObject
+class Item : public GameObject
 {
 protected:
 	Image* mImage;
-	int mIndexX;
-	int mIndexY;
-	int mFrameCount;
-
-
+	ItemType mType;
+	wstring mKeyName;
 public:
-	void Init(float x, float y, ItemType type);
+	Item(wstring imageKey, float x, float y, ItemType type);
+	void Init();
 	void Release();
 	void Update();
 	void Render(HDC hdc);

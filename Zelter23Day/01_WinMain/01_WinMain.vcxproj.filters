@@ -109,6 +109,9 @@
     <Filter Include="MainGame\UI\Icon">
       <UniqueIdentifier>{e3566c09-1261-44d9-b8cf-59523b12951c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Items">
+      <UniqueIdentifier>{543fa8a9-1078-41fd-8c44-d510d75b49bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -237,9 +240,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>MainGame\Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>MainGame\Object</Filter>
-    </ClInclude>
     <ClInclude Include="PathFinder.h">
       <Filter>FrameWork\Pathfinder</Filter>
     </ClInclude>
@@ -284,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>MainGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>MainGame\Object\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -404,9 +407,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>MainGame\Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>MainGame\Object</Filter>
-    </ClCompile>
     <ClCompile Include="PathFinder.cpp">
       <Filter>FrameWork\Pathfinder</Filter>
     </ClCompile>
@@ -451,6 +451,9 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>MainGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>MainGame\Object\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

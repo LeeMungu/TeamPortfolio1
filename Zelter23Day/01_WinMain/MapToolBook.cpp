@@ -11,7 +11,7 @@
 
 void MapToolBook::Init()
 {
-	mX = WINSIZEX / 2;
+	mX = WINSIZEX;
 	mY = WINSIZEY / 2;
 	mImage = ImageManager::GetInstance()->FindImage(L"Book");
 	mSizeX = mImage->GetFrameWidth() * BookSize;
@@ -637,11 +637,11 @@ void MapToolBook::Update()
 						if (i >= 1)
 						{
 							mouse->SetTileCountX(2);
-							mouse->SetTileCountY(3);
+							mouse->SetTileCountY(4);
 						}
 						else
 						{
-							mouse->SetTileCountX(3);
+							mouse->SetTileCountX(4);
 							mouse->SetTileCountY(2);
 						}
 						mouse->Init();
@@ -1139,6 +1139,8 @@ void MapToolBook::ChangeMode(BookType bookType)
 					tempButton[i]->SetIsDestroy(true);
 				}
 			}
+			//페이지 초기화
+			mPage = 0;
 			//오브젝트버튼 생성
 			for (int i = 0; i < 8; ++i)
 			{
@@ -1171,6 +1173,8 @@ void MapToolBook::ChangeMode(BookType bookType)
 					tempButton[i]->SetIsDestroy(true);
 				}
 			}
+			//페이지 초기화
+			mPage = 0;
 			//오브젝트버튼 생성
 			for (int i = 0; i < 11; ++i)
 			{

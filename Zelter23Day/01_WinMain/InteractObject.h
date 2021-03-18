@@ -47,5 +47,8 @@ public:
 	int GetTileCountY()const { return mTileCountY; }
 
 	RECT GetInteractRect()const { return mInteractRect; }
+
+	bool GetIsInterRactive() { return mIsInteractive; }
+	void SetIsInterRactive(bool interactive) { mIsInteractive = interactive; }
 };
 

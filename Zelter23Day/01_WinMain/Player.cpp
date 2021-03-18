@@ -167,6 +167,15 @@ void Player::Update()
 			mDash = 0;
 		}
 	}
+
+	if (mIsInvincible == true) //플레이어 무적 확인 및 초기화
+	{
+		mInvincibleCount += Time::GetInstance()->DeltaTime();
+		if (mInvincibleCount >= 0.7f)
+		{
+			mIsInvincible = false;
+		}
+	}
 }
 
 void Player::Render(HDC hdc)

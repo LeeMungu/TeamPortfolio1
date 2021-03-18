@@ -15,26 +15,38 @@ void CollisionManager::Init()
 void CollisionManager::Update()
 {
 	ObjectCollision();
-	PlayerPhysics();
-	PlayerTakenDamaged();
+	ZombieCollision();
+	ZombieAttack();
+	PlayerCollision();
 }
 
 
-void CollisionManager::ObjectCollision()
+void CollisionManager::ObjectCollision()	
 {
+
+}
+
+void CollisionManager::ZombieCollision()
+{
+
+}
+
+void CollisionManager::PlayerCollision()
+{
+	//플레이어는 오브젝트를 통과하지 못합니다.
 	RECT temp;
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	if (mPlayer != nullptr)
 	{
 		RECT playerRC = mPlayer->GetCollisionBox();
-		RECT ObjectRC;
+		RECT objectRC;
 		vector<GameObject*> object = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
 		if (object.size() != NULL)
 		{
 			for (int i = 0; i < object.size(); ++i)
 			{
-				ObjectRC = ((InteractObject*)object[i])->GetInteractRect();
-				if (IntersectRect(&temp, &playerRC, &ObjectRC))	//플레이어 충돌박스와 오브젝트 충돌
+				objectRC = ((InteractObject*)object[i])->GetInteractRect();
+				if (IntersectRect(&temp, &playerRC, &objectRC))
 				{
 					float pX = mPlayer->GetX();
 					float pY = mPlayer->GetY();
@@ -45,24 +57,24 @@ void CollisionManager::ObjectCollision()
 					float tempH = temp.bottom - temp.top;
 					float tempX = temp.left + tempW / 2;
 					float tempY = temp.top + tempH / 2;
-					float ObjectX = ObjectRC.left + (ObjectRC.right - ObjectRC.left) / 2;
-					float ObjectY = ObjectRC.top + (ObjectRC.bottom - ObjectRC.top) / 2;
+					float ObjectX = objectRC.left + (objectRC.right - objectRC.left) / 2;
+					float ObjectY = objectRC.top + (objectRC.bottom - objectRC.top) / 2;
 
-					if (tempW < tempH && tempX > ObjectX && playerRC.left <= ObjectRC.right)
+					if (tempW < tempH && tempX > ObjectX && playerRC.left <= objectRC.right)
 					{
-						pX = ObjectRC.right + pSizeX / 2;
+						pX = objectRC.right + pSizeX / 2;
 					}
-					if (tempW < tempH && tempX < ObjectX && playerRC.right >= ObjectRC.left)
+					if (tempW < tempH && tempX < ObjectX && playerRC.right >= objectRC.left)
 					{
-						pX = ObjectRC.left - pSizeX / 2;
+						pX = objectRC.left - pSizeX / 2;
 					}
-					if (tempW > tempH && tempY > ObjectY && playerRC.top <= ObjectRC.bottom)
+					if (tempW > tempH && tempY > ObjectY && playerRC.top <= objectRC.bottom)
 					{
-						pY = ObjectRC.bottom + pSizeY / 2 ;
+						pY = objectRC.bottom + pSizeY / 2;
 					}
-					if (tempW > tempH && tempY < ObjectY && playerRC.bottom >= ObjectRC.top)
+					if (tempW > tempH && tempY < ObjectY && playerRC.bottom >= objectRC.top)
 					{
-						pY = ObjectRC.top - pSizeY / 2;
+						pY = objectRC.top - pSizeY / 2;
 					}
 
 					mPlayer->SetX(pX);
@@ -70,17 +82,8 @@ void CollisionManager::ObjectCollision()
 				}
 			}
 		}
-	}
-}
 
-void CollisionManager::PlayerPhysics()
-{
-	RECT temp;
-	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
-	if (mPlayer != nullptr)
-	{
-		float invincibleCount = mPlayer->GetInvincibleCount();
-		RECT playerRC = mPlayer->GetCollisionBox();
+		//플레이어는 좀비를 통과하지 못합니다.
 		RECT enemyRC;
 		vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
 		if (zombie.size() != NULL)
@@ -88,7 +91,7 @@ void CollisionManager::PlayerPhysics()
 			for (int i = 0; i < zombie.size(); ++i)
 			{
 				enemyRC = ((Enemy*)zombie[i])->GetCollisionBox();
-				if (IntersectRect(&temp, &playerRC, &enemyRC))	//플레이어 충돌박스와 좀비 충돌 처리
+				if (IntersectRect(&temp, &playerRC, &enemyRC))	
 				{
 					float pX = mPlayer->GetX();
 					float pY = mPlayer->GetY();
@@ -118,132 +121,57 @@ void CollisionManager::PlayerPhysics()
 					{
 						pY = enemyRC.top - pSizeY / 2;
 					}
-
 					mPlayer->SetX(pX);
 					mPlayer->SetY(pY);
-
 				}
 			}
-		}
-
-
-		if (mPlayer->GetIsInvincible() == false) //플레이어 HP 변동
-		{
-			mPlayer->SetNoDamage(true);
-			mPlayer->SetHP(mPlayer->GetHP() - 1);
-		}
-		if (mPlayer->GetInvincibleCount() == false)
-		{
-			invincibleCount += Time::GetInstance()->DeltaTime();
-		}
-		if (invincibleCount <= 0.3f && mPlayer->GetIsInvincible() == true)
-		{
-			//knockback(temp, 10.f);
-		}
-		if (invincibleCount > 1.5)
-		{
-			invincibleCount = 0;
-			mPlayer->SetNoDamage(true);
 		}
 	}
 }
 
-void CollisionManager::PlayerTakenDamaged()
+void CollisionManager::PlayerAttack()
+{
+}
+
+void CollisionManager::ZombieAttack()
 {
 	RECT temp;
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	if (mPlayer != nullptr)
 	{
-		float invincibleCount = mPlayer->GetInvincibleCount();
 		RECT playerRC = mPlayer->GetRect();
 		RECT enemyRC;
 		vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+		RECT objectRC;
+		vector<GameObject*> interactobject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+
+
 		if (zombie.size() != NULL)
 		{
 			for (int i = 0; i < zombie.size(); ++i)
 			{
 				enemyRC = ((Enemy*)zombie[i])->GetAttackBox();
-				if (IntersectRect(&temp, &playerRC, &enemyRC))	//플레이어 좀비 충돌 처리
+
+				if (IntersectRect(&temp, &playerRC, &enemyRC) && mPlayer->GetIsInvincible() == false)	//좀비가 플레이어를 공격하였다!
 				{
-					float mAnlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY()
-						, mPlayer->GetX(), mPlayer->GetY());
+					float mAnlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY() , mPlayer->GetX(), mPlayer->GetY());
 					mPlayer->ExecuteKnockback(mAnlge, 500.f);
-
-
-
+					mPlayer->SetHP(mPlayer->GetHP() - 1);
+					mPlayer->SetIsInvincible(true);
+				}
+				if (interactobject.size() != NULL)
+				{
+					for (int j = 0; j < interactobject.size(); ++j)
+					{
+						InteractObject* tempInteractObject =(InteractObject*)interactobject[j];
+						objectRC = tempInteractObject->GetInteractRect();
+						if (IntersectRect(&temp, &objectRC, &enemyRC) && tempInteractObject->GetIsInterRactive() == true)	//좀비가 오브젝트를 공격하였다!
+						{
+							tempInteractObject->SetHp(tempInteractObject->GetHp() - 1);
+						}
+					}
 				}
 			}
 		}
-
-
-		if (mPlayer->GetIsInvincible() == false) //플레이어 HP 변동
-		{
-			mPlayer->SetNoDamage(true);
-			mPlayer->SetHP(mPlayer->GetHP() - 1);
-		}
-		if (mPlayer->GetInvincibleCount() == false)
-		{
-			invincibleCount += Time::GetInstance()->DeltaTime();
-		}
-		if (invincibleCount <= 0.3f && mPlayer->GetIsInvincible() == true)
-		{
-			//knockback(temp, 10.f);
-		}
-		if (invincibleCount > 1.5)
-		{
-			invincibleCount = 0;
-			mPlayer->SetNoDamage(true);
-		}
 	}
-
-
-}
-
-void CollisionManager::knockback(RECT temp, float Distance) 
-{
-	//float tempW = temp.right - temp.left;
-	//float tempH = temp.bottom - temp.top;
-	//float tempX = temp.right - tempW / 2;
-	//float tempY = temp.bottom - tempH / 2;
-
-	//// 좌상단 충돌
-	//if(mPlayer->GetX() - tempX > 0 && mPlayer->GetY() - tempY > 0 && mPlayer->GetRect().top > temp.top) 
-	//{
-	//	mPlayer->SetAttacked(Attacked::lefttop);
-	//}
-	//// 좌하단 충돌
-	//if (mPlayer->GetX() - tempX > 0 && mPlayer->GetY() - tempY < 0 && mPlayer->GetRect().bottom < temp.bottom) 
-	//{
-	//	mPlayer->SetAttacked(Attacked::leftdown);
-	//}
-	//// 우상단 충돌
-	//if (mPlayer->GetX() - tempX < 0 && mPlayer->GetY() - tempY > 0 && mPlayer->GetRect().top > temp.top)
-	//{
-	//	mPlayer->SetAttacked(Attacked::righttop);
-	//}
-	//// 우하단 충돌
-	//if (mPlayer->GetX() - tempX < 0 && mPlayer->GetY() - tempY < 0 && mPlayer->GetRect().bottom < temp.bottom)
-	//{
-	//	mPlayer->SetAttacked(Attacked::rightdown);
-	//}
-	//// 상단 충돌
-	//if (mPlayer->GetRect().left <= temp.left && mPlayer->GetRect().right >= temp.right && mPlayer->GetY() > tempY)
-	//{
-	//	mPlayer->SetAttacked(Attacked::top);
-	//}
-	//// 하단 충돌
-	//if (mPlayer->GetRect().left <= temp.left && mPlayer->GetRect().right >= temp.right && mPlayer->GetY() < tempY)
-	//{
-	//	mPlayer->SetAttacked(Attacked::down);
-	//}
-	//// 우측 충돌
-	//if (mPlayer->GetRect().top <= temp.top && mPlayer->GetRect().bottom >= temp.bottom && mPlayer->GetX() > tempX)
-	//{
-	//	mPlayer->SetAttacked(Attacked::right);
-	//}
-	//// 좌측 충돌
-	//if (mPlayer->GetRect().top <= temp.top && mPlayer->GetRect().bottom >= temp.bottom && mPlayer->GetX() < tempX)
-	//{
-	//	mPlayer->SetAttacked(Attacked::left);
-	//}
 }

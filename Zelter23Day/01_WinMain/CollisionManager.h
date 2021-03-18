@@ -16,10 +16,11 @@ public:
 
 
 	void ObjectCollision(); //플레이어와 오브젝트 충돌
-	void PlayerPhysics(); //플레이어와 좀비 충돌
-	void PlayerTakenDamaged(); //플레이어 피격
-	void knockback(RECT temp, float Distance); //플레이어 넉백 (인터섹트렉트 temp값 기준)
+	void ZombieCollision(); //플레이어와 좀비 충돌
 
+	void PlayerCollision(); //플레이어의 이동충돌 (좀비, 오브젝트)
+	void PlayerAttack(); //플레이어의 공격 (좀비, 오브젝트)
+	void ZombieAttack(); //좀비의 공격 (플레이어, 오브젝트)
 
 };
 

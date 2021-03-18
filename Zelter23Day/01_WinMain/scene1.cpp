@@ -16,6 +16,7 @@
 #include "CollisionManager.h"
 #include "KeyIcon.h"
 #include "QuickSlot.h"
+#include "Inventory.h"
 void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
@@ -39,8 +40,12 @@ void scene1::Init()
 	KeyIcon* keyIcon = new KeyIcon("KeyIcon");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, keyIcon);
 
+	Inventory* inventory = new Inventory("Inventory");
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, inventory);
+
 	QuickSlot* quickSlot = new QuickSlot("QuickSlot");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, quickSlot);
+
 
 	Load();
 	Zombie01* mZombie01 = new Zombie01();

@@ -16,6 +16,7 @@ class QuickSlot : public UI
 
 	Slot mSlotList[5];
 
+	int mSelectedNum;
 public:
 	QuickSlot(const string& name);
 	void Init()override;

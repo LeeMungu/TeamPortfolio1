@@ -111,6 +111,19 @@ void Camera::RenderRect(HDC hdc, RECT rc)
 	}
 }
 
+void Camera::RenderRect(HDC hdc, RECT rc, Gizmo::Color color)
+{
+	if (IsInCameraArea(rc))
+	{
+		rc.left -= mRect.left;
+		rc.right -= mRect.left;
+		rc.top -= mRect.top;
+		rc.bottom -= mRect.top;
+		Gizmo::GetInstance()->DrawRect(hdc, rc, color);
+	}
+}
+
+
 void Camera::RenderEllipse(HDC hdc, float x, float y, float radius)
 {
 	RenderEllipse(hdc, x - mRect.left, y - mRect.top, radius);

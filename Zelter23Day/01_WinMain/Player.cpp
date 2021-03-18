@@ -31,6 +31,7 @@ void Player::Init()
 	mAttacked = Attacked::left;
 
 	mCollisionBox = RectMakeCenter(mX , mY , mSizeX / 2, mSizeY / 3);
+	mAttackBox = RectMakeCenter(0, 0, 0, 0);
 
 	//Run Animation
 	mUpRunAni = new Animation();
@@ -181,6 +182,11 @@ void Player::Update()
 			mIsInvincible = false;
 		}
 	}
+
+	if (mCurrentAnimation != mLeftAttack && mCurrentAnimation != mRightAttack)
+	{
+		mAttackBox = RectMakeCenter(0, 0, 0, 0);
+	}
 }
 
 void Player::Render(HDC hdc)
@@ -191,6 +197,7 @@ void Player::Render(HDC hdc)
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mCollisionBox);
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mAttackBox);
 	}
 
 }
@@ -360,12 +367,20 @@ void Player::PlayerCtrl() {
 				mImage = IMAGEMANAGER->FindImage(L"Player_attack");
 				mCurrentAnimation = mLeftAttack;
 				mSpeed = 0.f;
+				if (mCurrentAnimation->GetNowFrameX() < 5)
+				{
+					mAttackBox = RectMakeCenter(mRect.left, mY, mSizeX, mSizeY);
+				}
 			}
 			else
 			{
 				mImage = IMAGEMANAGER->FindImage(L"Player_attack");
 				mCurrentAnimation = mRightAttack;
 				mSpeed = 0.f;
+				if (mCurrentAnimation->GetNowFrameX() > 0)
+				{
+					mAttackBox = RectMakeCenter(mRect.right, mY, mSizeX, mSizeY);
+				}
 			}
 			mCurrentAnimation->Play();
 		}

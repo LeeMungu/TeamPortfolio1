@@ -14,22 +14,12 @@ void CollisionManager::Init()
 
 void CollisionManager::Update()
 {
-	ObjectCollision();
-	ZombieCollision();
-	ZombieAttack();
 	PlayerCollision();
+	ZombieAttack();
+	PlayerAttack();
 }
 
 
-void CollisionManager::ObjectCollision()	
-{
-
-}
-
-void CollisionManager::ZombieCollision()
-{
-
-}
 
 void CollisionManager::PlayerCollision()
 {
@@ -129,9 +119,6 @@ void CollisionManager::PlayerCollision()
 	}
 }
 
-void CollisionManager::PlayerAttack()
-{
-}
 
 void CollisionManager::ZombieAttack()
 {
@@ -174,4 +161,10 @@ void CollisionManager::ZombieAttack()
 			}
 		}
 	}
+}
+
+
+void CollisionManager::PlayerAttack()
+{
+
 }

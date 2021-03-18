@@ -24,9 +24,6 @@ void Weapon::Init()
 	mStartY = mY;
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 
-
-
-
 }
 
 void Weapon::Release()

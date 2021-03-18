@@ -24,7 +24,7 @@ public:
 	void Init(float x, float y, ItemType type);
 	void Release();
 	void Update();
-	void Render(HDC hdc, float cameraX, float cameraY);
+	void Render(HDC hdc);
 
 
 

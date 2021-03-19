@@ -3,9 +3,10 @@
 
 enum class HouseLayer : int
 {
-	Floor,
+	Roof,
 	HouseWall,
-	Roof
+	Floor
+	
 };
 
 class Tile;
@@ -35,6 +36,9 @@ public:
 	void Release()override;
 	void Update()override;
 	void Render(HDC hdc)override;
+
+	float GetAlpha() { return mAlpha; }
+	void SetAlpha(float alpha) { mAlpha = alpha; }
 
 };
 

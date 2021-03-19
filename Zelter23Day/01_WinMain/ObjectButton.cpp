@@ -7,17 +7,8 @@ ObjectButton::ObjectButton(wstring imageKey, float x, float y, function<void(voi
 	mImage = ImageManager::GetInstance()->FindImage(imageKey);
 	mX = x;
 	mY = y;
-	if (imageKey == L"House1")
-	{
-		mSizeX = mImage->GetFrameWidth()/3;
-		mSizeY = mImage->GetFrameHeight()/3;
-	}
-	else
-	{
-		mSizeX = mImage->GetFrameWidth();
-		mSizeY = mImage->GetFrameHeight();
-	}
-	
+	mSizeX = mImage->GetFrameWidth();
+	mSizeY = mImage->GetFrameHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mFunc = func;
 	mState = State::Normal;

@@ -83,6 +83,14 @@ void MapToolBook::Init()
 					mIsPageChange = true;
 				}
 			}
+			else if (mBookType == BookType::House)
+			{
+				if (mPage < 3)
+				{
+					mPage++;
+					mIsPageChange = true;
+				}
+			}
 		});
 		mPrevButton = new Button(L"Prev", mX - mSizeX / 3, mY + mSizeY / 3, 50, 50,
 			[this]() {
@@ -95,6 +103,14 @@ void MapToolBook::Init()
 				}
 			}
 			else if (mBookType == BookType::InterectObject)
+			{
+				if (mPage > 1)
+				{
+					mPage--;
+					mIsPageChange = true;
+				}
+			}
+			else if (mBookType == BookType::House)
 			{
 				if (mPage > 1)
 				{
@@ -899,6 +915,28 @@ void MapToolBook::Update()
 					}
 				}
 			
+				ObjectButton* objectButton = new ObjectButton(L"House3", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"House3", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+			}
+			if (mPage == 2)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+			
 				ObjectButton* objectButton = new ObjectButton(L"House2", mX - 250 + 100, mY - 210 + 145, []() {
 					Mouse* mouse = new Mouse(L"House2", ObjectLayer::HousingObject);
 					mouse->SetHpMax(10);
@@ -911,7 +949,7 @@ void MapToolBook::Update()
 				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
 				
 			}
-			if (mPage == 2)
+			if (mPage == 3)
 			{
 				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
 				if (tempButton.size() != NULL)

@@ -99,7 +99,7 @@ public:
 
 	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
 	void SetAttacked(Attacked attacked) { mAttacked = attacked; }
-	void SetHP(int hp) { mHP = hp; }
+	void SetHP(int hp) { if (mHP > 0) mHP = hp; else mHP = 0; }
 	void SetNoDamage(bool noDamage) { mIsInvincible = noDamage; }
 		
 	void PlayerCtrl();

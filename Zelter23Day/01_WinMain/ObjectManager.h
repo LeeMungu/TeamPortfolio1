@@ -19,11 +19,12 @@ enum class ObjectLayer : int
 	HousingObject = 5,
 	InteractObject = 6,
 	NoninteractObject = 7,
-	ToolBook = 8,
-	Button = 9,
-	ObjectButton = 10,
-	Mouse = 11,
-	UI = 12,
+	Bullet = 8,
+	ToolBook = 9,
+	Button = 10,
+	ObjectButton = 11,
+	Mouse = 12,
+	UI = 13,
 	End
 };
 

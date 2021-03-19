@@ -102,11 +102,22 @@ void Image::Render(HDC hdc, int x, int y)
 
 void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, int tempHeight)
 {
+	float ratioX = ((float)tempWidth) / mSize.X;
+	float ratioY = ((float)mFrameInfo[0].height)/((float)tempHeight);
 	mSize.X = (float)tempWidth;
 	mSize.Y = (float)tempHeight;
+
 	//원래 사이즈
 	Vector2 size = mSize;
-
+	//그릴 영역 세팅 
+	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
+	D2D1_RECT_F dxSrc = D2D1::RectF((float)mFrameInfo[0].x, 
+		((float)mFrameInfo[0].y)+ ((float)tempY)*ratioY/6.f, //시작점(
+		(float)(mFrameInfo[0].x + mFrameInfo[0].width), //뒷점
+		(float)(mFrameInfo[0].y + mFrameInfo[0].height)); 
+	//D2D1::RectF((float)tempX, (float)tempY,
+	//	(float)(tempX + tempWidth),
+	//	(float)(tempY + tempHeight));
 	//스케일 행렬을 만들어준다
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	//회전 행렬을 만들어준다. 
@@ -114,10 +125,17 @@ void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, i
 	//이동 행렬을 만들어준다.
 	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
 
-	D2D1_RECT_F dxArea = D2D1::RectF((float)tempX, (float)tempY, size.X, size.Y);
-
 	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
-	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha);
+	//렌더링 요청
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(
+		mBitmap,	//우리가 렌더링 작업을 수행할 이미지
+		dxArea,		//렌더링 작업을 수행할 화면의 영역을 설정 NULL 설정 시 렌더타겟의 원점에 그리게 됨
+		mAlpha,		//알파 값
+		D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,	//이미지가 회전을 하거나 크기가 조정되었을 때,
+															//어떻게 부드럽게 보일 것인가에 대한 옵션을 설정하는 부분입니다.
+															//즉, 보간(interpolation) 옵션
+		&dxSrc);	//원본 이미지에서 일정 영역을 보여주고 싶을 때 영역을 입력하는 옵션
+					//해당 이미지 파일의 사이즈를 기준으로 영역을 설정
 	ResetRenderOption();
 }
 
@@ -291,7 +309,7 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f);
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f); //중점 잡기
 
 	//그릴 영역 세팅 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
@@ -301,9 +319,16 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	//최종행렬 세팅
 	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
 	//렌더링 요청
-	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha,
-		D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, &dxSrc);
-
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(
+		mBitmap,	//우리가 렌더링 작업을 수행할 이미지
+		dxArea,		//렌더링 작업을 수행할 화면의 영역을 설정 NULL 설정 시 렌더타겟의 원점에 그리게 됨
+		mAlpha,		//알파 값
+		D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,	//이미지가 회전을 하거나 크기가 조정되었을 때,
+															//어떻게 부드럽게 보일 것인가에 대한 옵션을 설정하는 부분입니다.
+															//즉, 보간(interpolation) 옵션
+		&dxSrc);	//원본 이미지에서 일정 영역을 보여주고 싶을 때 영역을 입력하는 옵션
+					//해당 이미지 파일의 사이즈를 기준으로 영역을 설정
+	//리셋
 	this->ResetRenderOption();
 }
 

@@ -2,7 +2,7 @@
 #include "Item.h"
 #include "Image.h"
 #include "Camera.h"
-Item::Item(wstring imageKey, float x, float y, int count = 1, ItemKind kind = ItemKind::drop) {
+Item::Item(wstring imageKey, float x, float y, int count, ItemKind kind) {
 	mKeyName = imageKey;
 	mX = x;
 	mY = y;

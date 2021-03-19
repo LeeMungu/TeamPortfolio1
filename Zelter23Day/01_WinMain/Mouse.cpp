@@ -50,7 +50,8 @@ void Mouse::Update()
 	RECT cameraRc = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	if (mObjectType == ObjectLayer::HousingObject)
 	{
-		//이곳에서 하우징 생성넣어줄것
+		mX = _mousePosition.x;
+		mY = _mousePosition.y;
 	}
 	else if (mObjectType == ObjectLayer::InteractObject)
 	{
@@ -112,7 +113,7 @@ void Mouse::Render(HDC hdc)
 {
 	if (mObjectType == ObjectLayer::HousingObject)
 	{
-		//이곳에서 하우징 생성넣어줄것
+		mImage->ScaleRender(hdc, mRect.left, mRect.top, mSizeX, mSizeY);
 	}
 	else if (mObjectType == ObjectLayer::InteractObject)
 	{

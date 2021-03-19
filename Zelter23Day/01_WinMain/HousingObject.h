@@ -3,9 +3,10 @@
 
 enum class HouseLayer : int
 {
-	Floor,
+	Roof,
 	HouseWall,
-	Roof
+	Floor
+	
 };
 
 class Tile;

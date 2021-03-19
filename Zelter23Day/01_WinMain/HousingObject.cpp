@@ -12,6 +12,18 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 	mTileIndexY = y / TileSize;
 
 	mImageKey = name;
+	if (mImageKey == L"House1")
+	{
+		mHouselayer = HouseLayer::Floor;
+	}
+	else if (mImageKey == L"House2")
+	{
+		mHouselayer = HouseLayer::HouseWall;
+	}
+	else if (mImageKey == L"House3")
+	{
+		mHouselayer = HouseLayer::Roof;
+	}
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
 	mSizeX = mImage->GetFrameWidth();
 	mSizeY = mImage->GetFrameHeight();
@@ -28,6 +40,7 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 	}
 	mY = mTileIndexY * TileSize - mSizeY / 2 + TileSize / 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+
 }
 
 void HousingObject::Init()
@@ -74,6 +87,6 @@ void HousingObject::Render(HDC hdc)
 
 		//ÀÌ¹ÌÁö
 		CameraManager::GetInstance()->GetMainCamera()
-			->AlphaScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY, mAlpha);
+			->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY);
 	}
 }

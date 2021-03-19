@@ -90,7 +90,7 @@ void Mouse::Update()
 		//누르면 생성
 		if (mObjectType == ObjectLayer::HousingObject)
 		{
-			HousingObject* houseObject = new HousingObject(mImageKey, _mousePosition.x + cameraRc.left, mY + mSizeY / 2 + cameraRc.top, mTileCountX, mTileCountY);
+			HousingObject* houseObject = new HousingObject(mImageKey, _mousePosition.x + cameraRc.left , mY + mSizeY / 2 + cameraRc.top, mTileCountX, mTileCountY);
 			houseObject->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::HousingObject, houseObject);
 		}
@@ -113,7 +113,15 @@ void Mouse::Render(HDC hdc)
 {
 	if (mObjectType == ObjectLayer::HousingObject)
 	{
-		mImage->ScaleRender(hdc, mRect.left, mRect.top, mSizeX, mSizeY);
+		for (int y = 0; y < mTileCountY; ++y)
+		{
+			for (int x = 0; x < mTileCountX; ++x)
+			{
+				RECT rc = RectMakeCenter(_mousePosition.x + x * TileSize, mRect.bottom - y * TileSize, TileSize, TileSize);
+				RenderRect(hdc, rc);
+			}
+		}
+		mImage->ScaleFrameRender(hdc, mRect.left, mRect.top, 0, 0, mSizeX, mSizeY);
 	}
 	else if (mObjectType == ObjectLayer::InteractObject)
 	{

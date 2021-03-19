@@ -330,6 +330,7 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 															//즉, 보간(interpolation) 옵션
 		&dxSrc);	//원본 이미지에서 일정 영역을 보여주고 싶을 때 영역을 입력하는 옵션
 					//해당 이미지 파일의 사이즈를 기준으로 영역을 설정
+				
 	//리셋
 	this->ResetRenderOption();
 }

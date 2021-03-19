@@ -24,9 +24,9 @@ class HousingObject : public GameObject
 	//무슨변수인가? 필요한 변수인가?
 	bool mIsInteractive;
 	wstring mImageKey;
-	//인터렉트 렉트
-	RECT mInteractRect;
+	
 	HouseLayer mHouselayer;
+	float mAlpha;
 
 public:
 	HousingObject(const wstring& name, float x, float y, int tileCountX, int tileCountY);

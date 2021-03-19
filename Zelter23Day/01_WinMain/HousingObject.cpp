@@ -34,6 +34,7 @@ void HousingObject::Init()
 {
 	mIndexX = 0;
 	mIndexY = 0;
+	mAlpha = 1.f;
 }
 
 void HousingObject::Release()
@@ -73,6 +74,6 @@ void HousingObject::Render(HDC hdc)
 
 		//ÀÌ¹ÌÁö
 		CameraManager::GetInstance()->GetMainCamera()
-			->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY);
+			->AlphaScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY, mAlpha);
 	}
 }

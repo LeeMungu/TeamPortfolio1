@@ -43,6 +43,6 @@ void PlayerHPUI::Render(HDC hdc)
 	int temp = 50;
 	//hdc, 그릴 x , 그릴 y , 이미지 시작 x , 이미지 시작 y , 넓이, 높이 
 	//mFullGaugeImage->Render(hdc, mX, mRect.bottom - temp, 0, 76 - temp, 76, temp);
-	mFullGaugeImage->Render(hdc, mX, mY, 0, 0, mHP, mHP);
+	mFullGaugeImage->Render(hdc, mX, mY+(76-mHP), 0, 76-mHP, 76, mHP); //mHP가 풀일때가 76
 	mHeartImage->ScaleFrameRender(hdc, mX + 17, mY + 17, mHeartAnimation->GetNowFrameX(), mHeartAnimation->GetNowFrameY(), 40, 40);
 }

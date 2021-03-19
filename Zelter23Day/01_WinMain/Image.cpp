@@ -112,12 +112,9 @@ void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, i
 	//그릴 영역 세팅 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
 	D2D1_RECT_F dxSrc = D2D1::RectF((float)mFrameInfo[0].x, 
-		((float)mFrameInfo[0].y)+ ((float)tempY)*ratioY/6.f, //시작점(
+		((float)mFrameInfo[0].y)+ ((float)tempY)*ratioY/2.f, //시작점(
 		(float)(mFrameInfo[0].x + mFrameInfo[0].width), //뒷점
 		(float)(mFrameInfo[0].y + mFrameInfo[0].height)); 
-	//D2D1::RectF((float)tempX, (float)tempY,
-	//	(float)(tempX + tempWidth),
-	//	(float)(tempY + tempHeight));
 	//스케일 행렬을 만들어준다
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	//회전 행렬을 만들어준다. 
@@ -278,7 +275,9 @@ void Image::ActivitScaleRender(HDC hdc, int x, int y, int width, int height, flo
 	//Vector2 size = mSize * mScale;
 
 	//스케일 행렬을 만들어준다
-	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, 
+		//중심 좌표
+		D2D1::Point2F(size.X / 2.f, size.Y));
 	//회전 행렬을 만들어준다. 
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	//이동 행렬을 만들어준다.
@@ -308,7 +307,9 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(), mSize.Y * height / this->GetFrameHeight());
 
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
-	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, 
+		//앵글 돌리는 회전 중심점
+		D2D1::Point2F(size.X / 2.f, size.Y));
 	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f); //중점 잡기
 
 	//그릴 영역 세팅 

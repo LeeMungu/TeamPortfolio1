@@ -10,9 +10,12 @@ class NonInteractObject : public GameObject
 	int mIndexY;
 	wstring mImageKey;
 
+	//¾Þ±Û
 	float mAngleX;
 	bool mIsAnglePlus;
-	float mAngleLange;
+	//Up and Down
+	float mUpDownRatio;
+	bool mIsUp;
 public:
 	NonInteractObject(const wstring imageKey, float x, float y);
 	void Init()override;

@@ -24,7 +24,7 @@ void Zombie02::Init()
 	mSpeed = 1.f;
 	mAttack = 1;
 	mTargeting = false;
-	mTakenDamege = false;
+	mIsInvincible = false;
 	mDelay = 0.5f;
 
 	mLeftMove = new Animation;

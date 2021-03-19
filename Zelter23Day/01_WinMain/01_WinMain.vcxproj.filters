@@ -112,6 +112,9 @@
     <Filter Include="MainGame\Object\Items">
       <UniqueIdentifier>{543fa8a9-1078-41fd-8c44-d510d75b49bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\ItemManager">
+      <UniqueIdentifier>{587edc8e-d8d9-4024-b789-b0436cef3458}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -288,6 +291,9 @@
     <ClInclude Include="Item.h">
       <Filter>MainGame\Object\Items</Filter>
     </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>FrameWork\ItemManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -454,6 +460,9 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>MainGame\Object\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>FrameWork\ItemManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

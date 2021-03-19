@@ -19,6 +19,7 @@ void Bullet::Init()
 	mSizeX = mImage->GetFrameHeight();
 	mSizeY = mImage->GetFrameWidth();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mIsShot = false;
 }
 
 void Bullet::Release()
@@ -31,7 +32,7 @@ void Bullet::Update()
 	mX -= mSpeed * cosf(mAngle) * Time::GetInstance()->DeltaTime();
 	mY += mSpeed * sinf(mAngle) * Time::GetInstance()->DeltaTime();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-	if (Math::GetDistance(mX, mY, mStartX, mStartY) > 1000)
+	if (Math::GetDistance(mX, mY, mStartX, mStartY) > 1000 || mIsShot == true)
 	{
 		mIsDestroy = true;
 	}

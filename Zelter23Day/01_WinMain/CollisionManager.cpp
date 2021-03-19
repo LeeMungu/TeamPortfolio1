@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "InteractObject.h"
 #include "Enemy.h"
+#include "Bullet.h"
 
 
 void CollisionManager::Init()
@@ -17,6 +18,7 @@ void CollisionManager::Update()
 	PlayerCollision();
 	ZombieAttack();
 	PlayerAttack();
+	PlayerShoot();
 }
 
 
@@ -148,12 +150,12 @@ void CollisionManager::ZombieAttack()
 				{
 					for (int j = 0; j < interactobject.size(); ++j)
 					{
-						InteractObject* tempInteractObject =(InteractObject*)interactobject[j];
-						objectRC = tempInteractObject->GetInteractRect();
-						if (IntersectRect(&temp, &objectRC, &enemyRC) && tempInteractObject->GetIsInvincible() == false)	//좀비가 오브젝트를 공격하였다!
+						InteractObject* object =(InteractObject*)interactobject[j];
+						objectRC = object->GetInteractRect();
+						if (IntersectRect(&temp, &objectRC, &enemyRC) && object->GetIsInvincible() == false)	//좀비가 오브젝트를 공격하였다!
 						{
-							tempInteractObject->SetHp(tempInteractObject->GetHp() - 1);
-							tempInteractObject->SetIsInvincible(true);
+							object->SetHp(object->GetHp() - 1);
+							object->SetIsInvincible(true);
 						}
 					}
 				}
@@ -171,7 +173,6 @@ void CollisionManager::PlayerAttack()
 		RECT playerAttackRC = mPlayer->GetAttackBox();
 		RECT enemyRC;
 		vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
-
 		if (zombie.size() != NULL)
 		{
 			for (int i = 0; i < zombie.size(); ++i)
@@ -194,12 +195,60 @@ void CollisionManager::PlayerAttack()
 		{
 			for (int i = 0; i < interactobject.size(); ++i)
 			{
-				InteractObject* tempinteractobject = (InteractObject*)interactobject[i];
-				objectRC = tempinteractobject->GetInteractRect();
-				if (IntersectRect(&temp, &playerAttackRC, &objectRC) && tempinteractobject->GetIsInvincible() == false)
+				InteractObject* object = (InteractObject*)interactobject[i];
+				objectRC = object->GetInteractRect();
+				if (IntersectRect(&temp, &playerAttackRC, &objectRC) && object->GetIsInvincible() == false)
 				{
-					tempinteractobject->SetHp(tempinteractobject->GetHp() - 1);
-					tempinteractobject->SetIsInvincible(true);
+					object->SetHp(object->GetHp() - 1);
+					object->SetIsInvincible(true);
+				}
+			}
+		}
+	}
+}
+
+void CollisionManager::PlayerShoot()
+{
+	RECT temp;
+	RECT bulletRC;
+	vector<GameObject*> bulletList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Bullet);
+	RECT enemyRC;
+	vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	RECT objectRC;
+	vector<GameObject*> interactobject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+
+	if (bulletList.size() != NULL)
+	{
+		for (int i = 0; i < bulletList.size(); ++i)
+		{
+			Bullet* bullet  = (Bullet*) bulletList[i];
+			bulletRC = bullet->GetRect();
+			for (int j = 0; j < zombie.size(); j++)
+			{
+				Enemy* enemy = (Enemy*) zombie[j];
+				enemyRC = enemy->GetRect();
+				if (IntersectRect(&temp, &bulletRC, &enemyRC) &&  bullet->GetIsShot() == false)
+				{
+					if (enemy->GetIsInvincible() == false )
+					{
+						enemy->SetHp(enemy->GetHP() - 1);
+						enemy->SetIsInvincible(true);
+					}
+					bullet->SetIsShot(true);
+				}
+			}
+			for (int k = 0; k < interactobject.size(); ++k)
+			{
+				InteractObject* object = (InteractObject*)interactobject[k];
+				objectRC = object->GetInteractRect();
+				if (IntersectRect(&temp, &bulletRC, &objectRC) && bullet->GetIsShot() == false)
+				{
+					if (object->GetIsInvincible() == false)
+					{
+						object->SetHp(object->GetHp() - 1);
+						object->SetIsInvincible(true);
+					}
+					bullet->SetIsShot(true);
 				}
 			}
 		}

@@ -43,6 +43,5 @@ public:
 	void Update()override;
 	void Render(HDC hdc)override;
 
-	void SetPlayer(Player* p) { mPlayer = p; }
 };
 

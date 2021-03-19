@@ -1,6 +1,7 @@
 #pragma once
 #include "UI.h"
 class Image;
+class Item;
 struct BagSlot {
 	float x;
 	float y;
@@ -8,12 +9,15 @@ struct BagSlot {
 	RECT rect;
 	//bool isSelected;
 };
+
 class Inventory : public UI
 {
 	Image* mBaseImage;
 	bool mIsOpened;
 
 	BagSlot mSlotList[5][2];
+
+	//Item* mTestItem[5][2];
 
 public:
 	Inventory(const string& name);

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Inventory.h"
 #include "Image.h"
+#include "Item.h"
 Inventory::Inventory(const string & name) : UI(name)
 {
 }
@@ -21,6 +22,9 @@ void Inventory::Init()
 			mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 		}
 	}
+
+	//mTestItem[0][0] = new Item(L"Revolver", mSlotList[0][0].x, mSlotList[0][0].y, ItemKind::inventory);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mTestItem[0][0]);
 }
 
 void Inventory::Release()
@@ -43,6 +47,9 @@ void Inventory::Update()
 					mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 				}
 			}
+			
+			//mTestItem[0][0]->SetX(mSlotList[0][0].x + 25);
+			//mTestItem[0][0]->SetY(mSlotList[0][0].y + 15);
 		}
 	}
 	else {
@@ -58,6 +65,8 @@ void Inventory::Update()
 					mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 				}
 			}
+			//mTestItem[0][0]->SetX(mSlotList[0][0].x);
+			//mTestItem[0][0]->SetY(mSlotList[0][0].y);
 		}
 	}
 	

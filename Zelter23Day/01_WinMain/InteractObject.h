@@ -23,8 +23,14 @@ class InteractObject : public GameObject
 	int mTileIndexX, mTileIndexY;
 	//입력해주는 Y값
 	int mInputY;
+	//피격 시 무적 시간 (bool값 변경을 위한)
+	float mInvincibleCount;
+	//피격시 무적 판정 및 이펙트연출을 위한 변수
+	bool mIsInvincible;
+
 	//무슨변수인가? 필요한 변수인가?
 	bool mIsInteractive;
+
 	wstring mImageKey;
 	//인터렉트 렉트
 	RECT mInteractRect;
@@ -48,7 +54,7 @@ public:
 
 	RECT GetInteractRect()const { return mInteractRect; }
 
-	bool GetIsInterRactive() { return mIsInteractive; }
-	void SetIsInterRactive(bool interactive) { mIsInteractive = interactive; }
+	bool GetIsInvincible() { return mIsInvincible; }
+	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
 };
 

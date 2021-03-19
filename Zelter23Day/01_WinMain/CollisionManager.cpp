@@ -25,7 +25,6 @@ void CollisionManager::PlayerCollision()
 {
 	//플레이어는 오브젝트를 통과하지 못합니다.
 	RECT temp;
-	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	if (mPlayer != nullptr)
 	{
 		RECT playerRC = mPlayer->GetCollisionBox();
@@ -123,7 +122,6 @@ void CollisionManager::PlayerCollision()
 void CollisionManager::ZombieAttack()
 {
 	RECT temp;
-	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	if (mPlayer != nullptr)
 	{
 		RECT playerRC = mPlayer->GetRect();
@@ -152,9 +150,10 @@ void CollisionManager::ZombieAttack()
 					{
 						InteractObject* tempInteractObject =(InteractObject*)interactobject[j];
 						objectRC = tempInteractObject->GetInteractRect();
-						if (IntersectRect(&temp, &objectRC, &enemyRC) && tempInteractObject->GetIsInterRactive() == true)	//좀비가 오브젝트를 공격하였다!
+						if (IntersectRect(&temp, &objectRC, &enemyRC) && tempInteractObject->GetIsInvincible() == false)	//좀비가 오브젝트를 공격하였다!
 						{
 							tempInteractObject->SetHp(tempInteractObject->GetHp() - 1);
+							tempInteractObject->SetIsInvincible(true);
 						}
 					}
 				}
@@ -167,14 +166,11 @@ void CollisionManager::ZombieAttack()
 void CollisionManager::PlayerAttack()
 {
 	RECT temp;
-	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	if (mPlayer != nullptr)
 	{
 		RECT playerAttackRC = mPlayer->GetAttackBox();
 		RECT enemyRC;
 		vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
-		RECT objectRC;
-		vector<GameObject*> interactobject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
 
 		if (zombie.size() != NULL)
 		{
@@ -182,23 +178,26 @@ void CollisionManager::PlayerAttack()
 			{
 				Enemy* enemy = (Enemy*)zombie[i];
 				enemyRC = enemy->GetRect();
-				if (IntersectRect(&temp, &playerAttackRC, &enemyRC))
+				if (IntersectRect(&temp, &playerAttackRC, &enemyRC) && enemy->GetIsInvincible() == false)
 				{
 					enemy->SetHp(enemy->GetHP() - 1);
-
+					enemy->SetIsInvincible(true);
 				}
 			}
 		}
 
+		RECT objectRC;
+		vector<GameObject*> interactobject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
 		if (interactobject.size() != NULL)
 		{
 			for (int i = 0; i < interactobject.size(); ++i)
 			{
 				InteractObject* tempinteractobject = (InteractObject*)interactobject[i];
 				objectRC = tempinteractobject->GetInteractRect();
-				if (IntersectRect(&temp, &playerAttackRC, &objectRC))
+				if (IntersectRect(&temp, &playerAttackRC, &objectRC) && tempinteractobject->GetIsInvincible() == false)
 				{
 					tempinteractobject->SetHp(tempinteractobject->GetHp() - 1);
+					tempinteractobject->SetIsInvincible(true);
 				}
 			}
 		}

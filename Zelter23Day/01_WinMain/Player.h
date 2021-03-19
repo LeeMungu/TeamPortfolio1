@@ -95,7 +95,7 @@ public:
 	RECT GetAttackBox() { return mAttackBox; }
 	Attacked GetAttacked() { return mAttacked; }
 
-	void SetIsInvincible(bool invincible) { mIsInvincible = invincible; }
+	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
 	void SetAttacked(Attacked attacked) { mAttacked = attacked; }
 	void SetHP(int hp) { mHP = hp; }
 	void SetNoDamage(bool noDamage) { mIsInvincible = noDamage; }

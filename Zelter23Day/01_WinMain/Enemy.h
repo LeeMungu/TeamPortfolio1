@@ -42,7 +42,8 @@ protected:
 	int mSpeed;
 	int mAttack;
 	bool mTargeting;
-	bool mTakenDamege;
+	bool mIsInvincible;
+	float mInvincibleCount;
 	float mDelay;
 	RECT mCollisionBox;
 	RECT mAttackBox;
@@ -66,10 +67,14 @@ public:
 	virtual void Update()override = 0;
 	virtual void Render(HDC hdc)override = 0;
 	
+	int GetHP() { return mHp; }
 	int GetAttack() { return mAttack; }
 	RECT GetCollisionBox() { return mCollisionBox; }
 	RECT GetAttackBox() { return mAttackBox; }
-	int GetHP() { return mHp; }
+
+	bool GetIsInvincible() { return mIsInvincible; }
+	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
+
 	void SetHp(int hp) { mHp = hp; }
 	void DropItem(Item item);
 	void SetAnimation();

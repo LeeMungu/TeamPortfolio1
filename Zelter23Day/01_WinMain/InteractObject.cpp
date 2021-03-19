@@ -56,6 +56,8 @@ void InteractObject::Init()
 {
 	
 	mIsInteractive = true;
+	mIsInvincible = false;
+	mInvincibleCount = 0.f;
 	mIndexX = 0;
 	mIndexY = 0;
 }
@@ -66,6 +68,17 @@ void InteractObject::Release()
 
 void InteractObject::Update()
 {
+	//피격 판정 딜레이 확인.
+	if (mIsInvincible == true)
+	{
+		mInvincibleCount += Time::GetInstance()->DeltaTime();
+	}
+	if (mInvincibleCount > 0.4f && mIsInvincible == true)
+	{
+		mIsInvincible = false;
+		mInvincibleCount = 0.f;
+	}	
+
 	if (mImage->GetMaxFrameX()>1&& mHp <= 5)
 	{
 		mIndexX = 1;

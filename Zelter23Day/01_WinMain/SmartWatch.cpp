@@ -91,7 +91,7 @@ void SmartWatch::Update()
 	}
 
 	//플레이어 정보 셋팅
-	mPlayerHPUI->SetHP(mPlayer->GetHP() * 0.3f);
+	mPlayerHPUI->SetHP(mPlayer->GetHP() * 0.76f);
 	mThirstUI->SetThirst(mPlayer->GetThirst() * 0.3f);
 	mHungerUI->SetHunger(mPlayer->GetHunger() * 0.3f);
 	mSteminaUI->SetStemina(mPlayer->GetStemina() * 0.3f);

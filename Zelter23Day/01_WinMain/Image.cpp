@@ -112,7 +112,7 @@ void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, i
 	//그릴 영역 세팅 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
 	D2D1_RECT_F dxSrc = D2D1::RectF((float)mFrameInfo[0].x, 
-		((float)mFrameInfo[0].y)+ ((float)tempY)*ratioY/6.f, //시작점(
+		((float)mFrameInfo[0].y)+ ((float)tempY)*ratioY/2.f, //시작점(
 		(float)(mFrameInfo[0].x + mFrameInfo[0].width), //뒷점
 		(float)(mFrameInfo[0].y + mFrameInfo[0].height)); 
 	//스케일 행렬을 만들어준다

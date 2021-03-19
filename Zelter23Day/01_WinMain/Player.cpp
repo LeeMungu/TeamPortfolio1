@@ -160,6 +160,7 @@ void Player::Update()
 {
 	PlayerCtrl();
 	PlayerState();
+	AttackRectMake();
 
 	mCurrentAnimation->Update();
 	mSizeX = mImage->GetFrameWidth() * 2;
@@ -372,20 +373,14 @@ void Player::PlayerCtrl() {
 				mImage = IMAGEMANAGER->FindImage(L"Player_attack");
 				mCurrentAnimation = mLeftAttack;
 				mSpeed = 0.f;
-				if (mCurrentAnimation->GetNowFrameX() < 5)
-				{
-					mAttackBox = RectMakeCenter(mRect.left, mY, mSizeX, mSizeY);
-				}
+
 			}
 			else
 			{
 				mImage = IMAGEMANAGER->FindImage(L"Player_attack");
 				mCurrentAnimation = mRightAttack;
 				mSpeed = 0.f;
-				if (mCurrentAnimation->GetNowFrameX() > 0)
-				{
-					mAttackBox = RectMakeCenter(mRect.right, mY, mSizeX, mSizeY);
-				}
+
 			}
 			mCurrentAnimation->Play();
 		}
@@ -418,6 +413,18 @@ void Player::PlayerCtrl() {
 	}
 }
 
+void Player::AttackRectMake()
+{
+	if (mCurrentAnimation == mLeftAttack && mCurrentAnimation->GetNowFrameX() > 5)
+	{
+		mAttackBox = RectMakeCenter(mRect.left, mY, mSizeX / 3, mSizeY);
+	}
+	if (mCurrentAnimation == mRightAttack && mCurrentAnimation->GetNowFrameX() > 5)
+	{
+		mAttackBox = RectMakeCenter(mRect.right, mY, mSizeX / 3, mSizeY);
+	}
+}
+
 void Player::Knockback()
 {
 	if (mIsKnockback == true)
@@ -431,6 +438,15 @@ void Player::Knockback()
 		}
 	}
 }
+
+
+void Player::ExecuteKnockback(float angle, float force)
+{
+	mIsKnockback = true;
+	mAngle = angle;
+	mKnockbackDistance = force;
+}
+
 
 void Player::PlayerState() {
 	float sceneTime_hunger = Time::GetInstance()->GetSceneTime();

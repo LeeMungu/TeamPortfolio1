@@ -8,8 +8,8 @@ enum class ItemType
 	Weapon, // 무기
 	Food, // 음식
 	Drink, // 음료
-	Material // 재료
-
+	Material, // 재료
+	structure //설치물/장애물
 };
 
 class Item : public GameObject

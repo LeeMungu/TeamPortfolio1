@@ -50,7 +50,7 @@ void Weapon::Update()
 		ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mBullet);
 	}
 
-
+	
 
 }
 

@@ -76,9 +76,13 @@ void NonInteractObject::Render(HDC hdc)
 	if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mRect))
 	{
 		//CameraManager::GetInstance()->GetMainCamera()
+		//	->ShadowRender(hdc, mImage, mRect.left, mRect.top, 0, 0, mSizeX, mSizeY, 0.5f,
+		//		Time::GetInstance()->GetSceneTime());
+		//CameraManager::GetInstance()->GetMainCamera()
 		//	->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);
 		CameraManager::GetInstance()->GetMainCamera()
 			->ActivitScaleRender(hdc, mImage, mRect.left, mRect.top + mSizeY*(1.f-mUpDownRatio), mSizeX, mSizeY*mUpDownRatio,mAngleX,0);
 		//Time::GetInstance()->GetSceneTime();이용해서 그림자 해보기
+		
 	}
 }

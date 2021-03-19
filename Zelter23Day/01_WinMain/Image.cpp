@@ -301,6 +301,7 @@ void Image::ActivitScaleRender(HDC hdc, int x, int y, int width, int height, flo
 
 void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float alpha, float time)
 {
+	mAngle = 360.f / (60.f * 24.f) *time;
 	this->SetAlpha(alpha);
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;

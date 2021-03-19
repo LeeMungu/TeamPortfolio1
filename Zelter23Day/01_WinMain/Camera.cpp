@@ -104,6 +104,11 @@ void Camera::ActivitScaleRender(HDC hdc, Image* image, int x, int y, int width, 
 	image->ActivitScaleRender(hdc, x - mRect.left, y - mRect.top, width, height, angleX, angleY);
 }
 
+void Camera::ShadowRender(HDC hdc,Image* image, int x, int y, int frameX, int frameY, int width, int height, float alpha, float time)
+{
+	image->ShadowRender(hdc, x-mRect.left, y-mRect.top, frameX, frameY, width, height, alpha, time);
+}
+
 void Camera::RenderRect(HDC hdc, RECT rc)
 {
 	if(IsInCameraArea(rc))

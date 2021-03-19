@@ -33,6 +33,8 @@ public:
 	void AlphaScaleFrameRender(HDC hdc, class Image* image, int x, int y, int frameX, int frameY, int width, int height, float alpha);
 	//엑티브
 	void ActivitScaleRender(HDC hdc, class Image* image, int x, int y, int width, int height, float angleX, float angleY);
+	//그림자
+	void ShadowRender(HDC hdc,class Image* image, int x, int y, int frameX, int frameY, int width, int height, float alpha, float time);
 
 	void RenderRect(HDC hdc, RECT rc);
 	void RenderRect(HDC hdc, RECT rc, Gizmo::Color color);

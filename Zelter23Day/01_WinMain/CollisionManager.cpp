@@ -180,7 +180,9 @@ void CollisionManager::PlayerAttack()
 				enemyRC = enemy->GetRect();
 				if (IntersectRect(&temp, &playerAttackRC, &enemyRC) && enemy->GetIsInvincible() == false)
 				{
+					float mAngle = Math::GetAngle(mPlayer->GetX(), mPlayer->GetY(), enemy->GetX(), enemy->GetY());
 					enemy->SetHp(enemy->GetHP() - 1);
+					enemy->ExecuteKnockback(mAngle, 200.f);
 					enemy->SetIsInvincible(true);
 				}
 			}

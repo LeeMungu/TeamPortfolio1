@@ -113,13 +113,28 @@ void Zombie02::Update()
 		}
 	}
 
+	if (mIsInvincible == true)
+	{
+		mInvincibleCount += Time::GetInstance()->DeltaTime();
+	}
+	if (mInvincibleCount > 0.4f && mIsInvincible == true)
+	{
+		mIsInvincible = false;
+		mInvincibleCount = 0.f;
+	}
 
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mCollisionBox = RectMakeCenter(mX, mY, mSizeX / 2, mSizeY / 3);
 
+	Knockback();
 
 	mCurrentAnimation->Update();
+
+	if (mHp <= 0)
+	{
+		mIsDestroy = true;
+	}
 }
 
 void Zombie02::Render(HDC hdc)

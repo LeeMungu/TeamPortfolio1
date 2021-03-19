@@ -39,8 +39,8 @@ void CollisionManager::PlayerCollision()
 				{
 					float pX = mPlayer->GetX();
 					float pY = mPlayer->GetY();
-					float pSizeX = playerRC.bottom - playerRC.top;
-					float pSizeY = playerRC.right - playerRC.left;
+					float pSizeX = playerRC.right - playerRC.left;
+					float pSizeY = playerRC.bottom - playerRC.top;
 
 					float tempW = temp.right - temp.left;
 					float tempH = temp.bottom - temp.top;
@@ -49,19 +49,19 @@ void CollisionManager::PlayerCollision()
 					float ObjectX = objectRC.left + (objectRC.right - objectRC.left) / 2;
 					float ObjectY = objectRC.top + (objectRC.bottom - objectRC.top) / 2;
 
-					if (tempW < tempH && tempX > ObjectX && playerRC.left <= objectRC.right)
+					if (tempW < tempH && tempX > ObjectX && playerRC.left < objectRC.right)
 					{
 						pX = objectRC.right + pSizeX / 2;
 					}
-					if (tempW < tempH && tempX < ObjectX && playerRC.right >= objectRC.left)
+					if (tempW < tempH && tempX < ObjectX && playerRC.right > objectRC.left)
 					{
 						pX = objectRC.left - pSizeX / 2;
 					}
-					if (tempW > tempH && tempY > ObjectY && playerRC.top <= objectRC.bottom)
+					if (tempW > tempH && tempY > ObjectY && playerRC.top < objectRC.bottom)
 					{
 						pY = objectRC.bottom + pSizeY / 2;
 					}
-					if (tempW > tempH && tempY < ObjectY && playerRC.bottom >= objectRC.top)
+					if (tempW > tempH && tempY < ObjectY && playerRC.bottom > objectRC.top)
 					{
 						pY = objectRC.top - pSizeY / 2;
 					}
@@ -84,8 +84,8 @@ void CollisionManager::PlayerCollision()
 				{
 					float pX = mPlayer->GetX();
 					float pY = mPlayer->GetY();
-					float pSizeX = playerRC.bottom - playerRC.top;
-					float pSizeY = playerRC.right - playerRC.left;
+					float pSizeX = playerRC.right - playerRC.left;
+					float pSizeY = playerRC.bottom - playerRC.top;
 
 					float tempW = temp.right - temp.left;
 					float tempH = temp.bottom - temp.top;
@@ -102,11 +102,11 @@ void CollisionManager::PlayerCollision()
 					{
 						pX = enemyRC.left - pSizeX / 2;
 					}
-					if (tempW > tempH && tempY > enemyY && playerRC.top <= enemyRC.bottom)
+					if (tempW > tempH && tempY > enemyY && playerRC.top < enemyRC.bottom)
 					{
 						pY = enemyRC.bottom + pSizeY / 2;
 					}
-					if (tempW > tempH && tempY < enemyY && playerRC.bottom >= enemyRC.top)
+					if (tempW > tempH && tempY < enemyY && playerRC.bottom > enemyRC.top)
 					{
 						pY = enemyRC.top - pSizeY / 2;
 					}

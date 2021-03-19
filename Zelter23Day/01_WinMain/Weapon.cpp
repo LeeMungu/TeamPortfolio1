@@ -45,13 +45,10 @@ void Weapon::Update()
 
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
-		Bullet* mBullet = new Bullet(mX,mY, -mAngle*PI / 180.f);
-		mBullet->Init();
-		ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mBullet);
+		Bullet* bullet = new Bullet(mX,mY, -mAngle*PI / 180.f);
+		bullet->Init();
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Bullet, bullet);
 	}
-
-
-
 }
 
 void Weapon::Render(HDC hdc)

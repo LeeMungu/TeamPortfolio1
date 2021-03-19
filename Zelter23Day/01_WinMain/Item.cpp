@@ -15,6 +15,10 @@ void Item::Init()
 		mImage = IMAGEMANAGER->FindImage(L"Weapon_pistol");
 		mType = ItemType::Weapon;
 	}
+	else if (mKeyName == L"Apple") {
+		mImage = IMAGEMANAGER->FindImage(L"Apple");
+		mType = ItemType::Food;
+	}
 
 	mSizeX = mImage->GetFrameWidth();
 	mSizeX = mImage->GetFrameHeight();
@@ -28,7 +32,7 @@ void Item::Release() {
 void Item::Update()
 {
 	//캐릭터와 충돌하면 인벤토리에 저장
-	//인벤토리 슬롯
+	//인벤토리 슬롯에 이미 있는거면 카운트 증가
 }
 
 void Item::Render(HDC hdc)

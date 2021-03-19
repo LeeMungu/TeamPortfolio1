@@ -72,7 +72,9 @@ class Player : public GameObject
 	RECT mCollisionBox;
 	RECT mAttackBox;
 
-
+	float mStartTime_hunger;
+	float mStartTime_thirst;
+	float mStartTime_stemina;
 	
 public:
 	Player(const string& name, float x, float y);
@@ -111,5 +113,6 @@ public:
 
 	void PlayerCtrl();
 	void Knockback();
+	void PlayerState();
 };
 

@@ -6,7 +6,7 @@ class SteminaUI : public UI
 	Image* mFullGaugeImage;
 	Image* mIconImage;
 
-	int mStemina;
+	float mStemina;
 
 public:
 	SteminaUI(const string& name, int x, int y);

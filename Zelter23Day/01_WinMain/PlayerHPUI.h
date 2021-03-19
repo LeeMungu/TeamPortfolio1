@@ -10,7 +10,7 @@ class PlayerHPUI : public UI
 	Image* mFullGaugeImage;
 	Image* mHeartImage;
 
-	int mHP;
+	float mHP;
 
 	Animation* mHeartAnimation;
 public:

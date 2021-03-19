@@ -11,6 +11,10 @@ enum class ItemType
 	Material, // 재료
 	structure //설치물/장애물
 };
+enum class ItemKind {
+	drop,
+	inventory,
+};
 
 class Item : public GameObject
 {
@@ -19,15 +23,12 @@ protected:
 	ItemType mType;
 	wstring mKeyName;
 	int mCount;
-
+	ItemKind mItemKind;
 public:
-	Item(wstring imageKey, float x, float y, ItemType type);
+	Item(wstring imageKey, float x, float y, int count = 1 , ItemKind kind = ItemKind::drop);
 	void Init();
-	void Release();
+	void Release(); 
 	void Update();
 	void Render(HDC hdc);
-
-
-
 };
 

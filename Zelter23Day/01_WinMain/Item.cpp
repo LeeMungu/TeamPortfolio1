@@ -2,11 +2,12 @@
 #include "Item.h"
 #include "Image.h"
 #include "Camera.h"
-Item::Item(wstring imageKey, float x, float y, ItemType type) {
+Item::Item(wstring imageKey, float x, float y, int count = 1, ItemKind kind = ItemKind::drop) {
 	mKeyName = imageKey;
 	mX = x;
 	mY = y;
-	mType = type;
+	mCount = count;
+	mItemKind = kind;
 }
 void Item::Init()
 {
@@ -301,7 +302,6 @@ void Item::Init()
 	mSizeX = mImage->GetFrameWidth();
 	mSizeX = mImage->GetFrameHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-	mCount = 1;
 }
 
 void Item::Release() {
@@ -309,14 +309,18 @@ void Item::Release() {
 
 void Item::Update()
 {
-	//캐릭터와 충돌하면 인벤토리에 저장
-	//인벤토리 슬롯에 이미 있는거면 카운트 증가
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
 void Item::Render(HDC hdc)
 {
-	CameraManager::GetInstance()->GetMainCamera()->
-		Render(hdc, mImage, mRect.left, mRect.top);
+	if (mItemKind == ItemKind::drop) {
+		CameraManager::GetInstance()->GetMainCamera()->
+			Render(hdc, mImage, mRect.left, mRect.top);
+	}
+	else {
+		mImage->Render(hdc, mRect.left, mRect.top);
+	}
 
 	if (Input::GetInstance()->GetKey(VK_LCONTROL))
 	{

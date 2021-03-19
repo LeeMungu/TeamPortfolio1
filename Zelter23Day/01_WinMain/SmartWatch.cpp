@@ -15,6 +15,8 @@ SmartWatch::SmartWatch(const string& name, int x, int y) : UI (name)
 
 void SmartWatch::Init()
 {
+	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
+
 	mBaseImage = IMAGEMANAGER->FindImage(L"SmarWatch_base");
 	mGlassDark = IMAGEMANAGER->FindImage(L"SW_glass_dark");
 	mGlass = IMAGEMANAGER->FindImage(L"SW_glass");

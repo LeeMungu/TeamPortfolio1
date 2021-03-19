@@ -123,9 +123,9 @@ void Player::Init()
 	mDash = 0;
 	mDashTime = 0;
 
-	//Weapon* weapon = new Weapon(mX,mY,0,0);
-	//weapon->SetPlayerPtr(this);
-	//ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
+	Weapon* weapon = new Weapon(mX,mY,0,0);
+	weapon->SetPlayerPtr(this);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
 
 	mStartTime_hunger = Time::GetInstance()->GetSceneTime();
 	mStartTime_thirst = Time::GetInstance()->GetSceneTime();

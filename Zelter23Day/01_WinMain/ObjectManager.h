@@ -38,6 +38,7 @@ private:
 	map<ObjectLayer, vector<class GameObject*>> mObjectList;
 
 	vector<class GameObject*> mZorderList;
+	vector<class GameObject*> mZorderRenderList;
 public:
 	ObjectManager();
 

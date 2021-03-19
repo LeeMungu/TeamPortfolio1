@@ -389,9 +389,16 @@ void MapToolScene::Update()
 	}
 
 	//타일속성 바꿔주기전에 초기화해주기
-	for (int y = 0; y < mTileCountY; ++y)
+	Camera* mainCamera = CameraManager::GetInstance()->GetMainCamera();
+	//카메라에 맞춰서 타일을 그려줌
+	int leftIndex = Math::Clamp(mainCamera->GetRect().left / TileSize, 0, mTileCountX - 1);
+	int rightIndex = Math::Clamp(mainCamera->GetRect().right / TileSize, 0, mTileCountX - 1);
+	int topIndex = Math::Clamp(mainCamera->GetRect().top / TileSize, 0, mTileCountY - 1);
+	int bottomIndex = Math::Clamp(mainCamera->GetRect().bottom / TileSize, 0, mTileCountY - 1);
+
+	for (int y = topIndex; y < bottomIndex + 1; ++y)
 	{
-		for (int x = 0; x < mTileCountX; ++x)
+		for (int x = leftIndex; x < rightIndex + 1; ++x)
 		{
 			mTileList[y][x]->SetTileLayer(TileLayer::normal);
 		}
@@ -424,18 +431,19 @@ void MapToolScene::Update()
 void MapToolScene::Render(HDC hdc)
 {
 	Camera* mainCamera = CameraManager::GetInstance()->GetMainCamera();
-
-	//카메라의 스케일프레임렌더만 내부에서 클렘핑 판정해줌 봐서 기타 오브젝트도 고쳐볼것
 	int renderCount = 0;
-	for (int y = 0; y < mTileList.size(); ++y)
+	//카메라에 맞춰서 타일을 그려줌
+	int leftIndex = Math::Clamp(mainCamera->GetRect().left / TileSize, 0, mTileCountX - 1);
+	int rightIndex = Math::Clamp(mainCamera->GetRect().right / TileSize, 0, mTileCountX - 1);
+	int topIndex = Math::Clamp(mainCamera->GetRect().top / TileSize, 0, mTileCountY - 1);
+	int bottomIndex = Math::Clamp(mainCamera->GetRect().bottom / TileSize, 0, mTileCountY - 1);
+
+	for (int y = topIndex; y < bottomIndex + 1; ++y)
 	{
-		for (int x = 0; x < mTileCountX; ++x)
+		for (int x = leftIndex; x < rightIndex + 1; ++x)
 		{
 			mTileList[y][x]->Render(hdc);
-			if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mTileList[y][x]->GetRect()))
-			{
 				++renderCount;
-			}
 		}
 	}
 

@@ -49,8 +49,8 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"LoadingScene", new LoadingScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
-	SceneManager::GetInstance()->LoadScene(L"LoadingScene");
-	//SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
+	//SceneManager::GetInstance()->LoadScene(L"LoadingScene");
+	SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
 }
 
 /*
@@ -83,7 +83,7 @@ void MainGame::Render(HDC hdc)
 	//이 안에서 그려라
 	{
 		SceneManager::GetInstance()->Render(hdc);
-		//RenderTime(backDC);
+		RenderTime(hdc);
 	}
 	D2DRenderer::GetInstance()->EndRender();
 }
@@ -97,9 +97,11 @@ void MainGame::RenderTime(HDC hdc)
 	wstring strDeltaTime = L"DeltaTime : " + to_wstring(deltaTime);
 	wstring strFPS = L"FPS : " + to_wstring(fps);
 
+	//D2DRenderer::GetInstance()
+	//	->RenderText(10, 150, strWorldTime.c_str(),20);
+	//D2DRenderer::GetInstance()
+	//	->RenderText(10, 180, strDeltaTime.c_str(), 20);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 10, strWorldTime.c_str(),strWorldTime.length());
-	TextOut(hdc, 10, 25, strDeltaTime.c_str(), strDeltaTime.length());
-	TextOut(hdc, 10, 40, strFPS.c_str(), strFPS.length());
+		->RenderText(10, 250, strFPS.c_str(), 20);
 }
 

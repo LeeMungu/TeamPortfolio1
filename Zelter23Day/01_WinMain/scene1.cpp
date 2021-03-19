@@ -166,9 +166,9 @@ void scene1::Render(HDC hdc)
 
 	int renderCount = 0;
 
-	for (int y = 0; y < mTileList.size(); ++y)
+	for (int y = topIndex; y < bottomIndex+1; ++y)
 	{
-		for (int x = 0; x < mTileCountX; ++x)
+		for (int x = leftIndex; x < rightIndex+1; ++x)
 		{
 			if(CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mTileList[y][x]->GetRect()))
 				mTileList[y][x]->Render(hdc);

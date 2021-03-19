@@ -25,22 +25,22 @@ void ObjectManager::Init()
 		}
 	}
 
-	ObjectIter iter1 = mObjectList.begin();
-	for (; iter1 != mObjectList.end(); ++iter1)
+	ObjectIter iter1 = mObjectList.find(ObjectLayer::Enemy);
+	for (; iter1 != mObjectList.find(ObjectLayer::Item); ++iter1)
 	{
-		if (iter1->first == ObjectLayer::Enemy ||
-			iter1->first == ObjectLayer::Player ||
-			iter1->first == ObjectLayer::InteractObject ||
-			iter1->first == ObjectLayer::NoninteractObject ||
-			iter1->first == ObjectLayer::HousingObject)
+		//범위를 줄여서 필요없어졌다.
+		//if (iter1->first == ObjectLayer::Enemy ||
+		//	iter1->first == ObjectLayer::Player ||
+		//	iter1->first == ObjectLayer::InteractObject ||
+		//	iter1->first == ObjectLayer::NoninteractObject ||
+		//{
+		iter1->first == ObjectLayer::HousingObject;
+		for (int i = 0; i < iter1->second.size(); ++i)
 		{
-			for (int i = 0; i < iter1->second.size(); ++i)
-			{
-				mZorderList.push_back(iter1->second[i]);
-			}
+			mZorderList.push_back(iter1->second[i]);
 		}
+		//}
 	}
-
 }
 
 void ObjectManager::Release()
@@ -75,62 +75,44 @@ void ObjectManager::Update()
 				--i;
 				continue;
 			}
-
-			//클리핑테스트
-			//if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(iter->second[i]->GetRect()))
-			//{
-			//	iter->second[i]->SetIsActive(true);
-			//}
-			//else
-			//{
-			//	iter->second[i]->SetIsActive(false);
-			//}
 			if (iter->second[i]->GetIsActive() == true)
 			{
 				iter->second[i]->Update();
 			}
 		}
 	}
-	//♥
+	//업데이트 때 마다 새로 넣어줌<-필요한가?
 	mZorderList.clear();
-	ObjectIter iter1 = mObjectList.begin();
-	for (; iter1 != mObjectList.end(); ++iter1)
+	ObjectIter iter1 = mObjectList.find(ObjectLayer::Enemy);
+	for (; iter1 != mObjectList.find(ObjectLayer::Item); ++iter1)
 	{
-		if (iter1->first == ObjectLayer::Enemy ||
-			iter1->first == ObjectLayer::Player ||
-			iter1->first == ObjectLayer::InteractObject ||
-			iter1->first == ObjectLayer::NoninteractObject ||
-			iter1->first == ObjectLayer::HousingObject)
+		//범위를 줄여서 필요없어졌다.
+		//if (iter1->first == ObjectLayer::Enemy ||
+		//	iter1->first == ObjectLayer::Player ||
+		//	iter1->first == ObjectLayer::InteractObject ||
+		//	iter1->first == ObjectLayer::NoninteractObject ||
+		//{
+		iter1->first == ObjectLayer::HousingObject;
+		for (int i = 0; i < iter1->second.size(); ++i)
 		{
-			for (int i = 0; i < iter1->second.size(); ++i)
-			{
-				mZorderList.push_back(iter1->second[i]);
-			}
+			mZorderList.push_back(iter1->second[i]);
 		}
+		//}
 	}
-
-
-	Collision();
 	
-	mZorderList = Zorder();
+	mZorderRenderList = Zorder();
 }
 
 void ObjectManager::Render(HDC hdc)
 {
-	ObjectIter iter = mObjectList.begin();
+	//오브젝트레이어 앞에친구들은 안그려준다. 주의-
+	for (int i = 0; i < mZorderRenderList.size(); ++i)
+	{
+		mZorderRenderList[i]->Render(hdc);
+	}
+	ObjectIter iter = mObjectList.find(ObjectLayer::Item);
 	for (; iter != mObjectList.end(); ++iter)
 	{
-		if (iter->first == ObjectLayer::Enemy || iter->first == ObjectLayer::Player
-			|| iter->first == ObjectLayer::NoninteractObject
-			|| iter->first == ObjectLayer::InteractObject
-			|| iter->first == ObjectLayer::HousingObject)
-		{
-			for (int i = 0; i < mZorderList.size(); ++i)
-			{
-				mZorderList[i]->Render(hdc);
-			}
-			continue;
-		}
 		for (int i = 0; i < iter->second.size(); ++i)
 		{
 			if (iter->second[i]->GetIsActive() == true)
@@ -219,30 +201,6 @@ vector<class GameObject*> ObjectManager::GetObjectList(ObjectLayer layer)
 	return mObjectList[layer];
 }
 
-void ObjectManager::Collision()
-{
-	//RECT temp;
-	//RECT mZombieRC;
-	//if (ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player") != nullptr)
-	//{
-	//	RECT mPlayerRC = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
-	//	vector<GameObject*> mZombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
-
-	//	if (mZombie.size() != NULL)
-	//	{
-	//		for (int i = 0; i < mZombie.size(); ++i)
-	//		{
-	//			RECT mZombieRC = mZombie[i]->GetRect();
-	//			if (IntersectRect(&temp, &mPlayerRC, &mZombieRC))
-	//			{
-	//				int a = 1;
-	//			}
-
-	//		}
-	//	}
-	//}
-}
-
 vector<GameObject*> ObjectManager::Zorder()
 {
 	vector<GameObject*> tmp = mZorderList;
@@ -254,6 +212,23 @@ vector<GameObject*> ObjectManager::Zorder()
 
 	sort(tmp.begin(),tmp.end(), func);
 	
+	//카메라 영역 받아오기
+	RECT cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
+
+
+	for (int i = 0; i < tmp.size(); ++i)
+	{
+		//목록에서 카메라 안에 있는 애들만 남겨두고 싶음
+		if (tmp[i]->GetRect().top > cameraRect.bottom || tmp[i]->GetRect().bottom < cameraRect.top
+			|| tmp[i]->GetRect().left > cameraRect.right || tmp[i]->GetRect().right < cameraRect.left)
+		{
+			//이뒤로는 '목록에서만' 싹 지우기 <-세이프딜리트나 릴리즈 하면 완전히 지워저벼려서 안됨
+			tmp.erase(tmp.begin() + i);
+			--i;
+			continue;
+		}
+	}
+
 	return tmp;
 }
 

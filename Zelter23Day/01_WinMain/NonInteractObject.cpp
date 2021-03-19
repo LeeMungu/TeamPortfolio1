@@ -4,6 +4,8 @@
 #include "Animation.h"
 #include "Camera.h"
 
+#define NoninteractObjectSize 2
+
 NonInteractObject::NonInteractObject(const wstring imageKey, float x, float y)
 {
 	mX = x;
@@ -75,12 +77,18 @@ void NonInteractObject::Render(HDC hdc)
 {
 	if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mRect))
 	{
-		CameraManager::GetInstance()->GetMainCamera()
-			->ShadowRender(hdc, mImage, mX, mY, 0, 0, mSizeX, mSizeY, 0.3f,
-				Time::GetInstance()->GetSceneTime()*100);
-		CameraManager::GetInstance()->GetMainCamera()
-			->ActivitScaleRender(hdc, mImage, mRect.left, mRect.top + mSizeY*(1.f-mUpDownRatio), mSizeX, mSizeY*mUpDownRatio,mAngleX,0);
-		//Time::GetInstance()->GetSceneTime();이용해서 그림자 해보기
-		//mImage->GetBitmap()->d
+		if(mImageKey == L"Grass9" || mImageKey == L"Grass10" || mImageKey == L"Grass11")
+		{
+			CameraManager::GetInstance()->GetMainCamera()
+				->ScaleRender(hdc, mImage, mRect.left, mRect.top, mSizeX, mSizeY);
+		}
+		else
+		{
+			CameraManager::GetInstance()->GetMainCamera()
+				->ShadowRender(hdc, mImage, mX, mY, 0, 0, mSizeX, mSizeY, 0.3f,
+					Time::GetInstance()->GetSceneTime() * 100);
+			CameraManager::GetInstance()->GetMainCamera()
+				->ActivitScaleRender(hdc, mImage, mRect.left, mRect.top + mSizeY * (1.f - mUpDownRatio), mSizeX, mSizeY * mUpDownRatio, mAngleX, 0);
+		}
 	}
 }

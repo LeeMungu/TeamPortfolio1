@@ -43,6 +43,9 @@ protected:
 	int mAttack;
 	bool mTargeting;
 	bool mIsInvincible;
+	bool mIsKnockback;
+	float mKnockbackDistance;
+	float mAngle;
 	float mInvincibleCount;
 	float mDelay;
 	RECT mCollisionBox;
@@ -74,8 +77,12 @@ public:
 
 	bool GetIsInvincible() { return mIsInvincible; }
 	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
-
 	void SetHp(int hp) { mHp = hp; }
+
+	void Knockback();
+
+	void ExecuteKnockback(float angle, float force);
+
 	void DropItem(Item item);
 	void SetAnimation();
 	virtual void Attack() {};

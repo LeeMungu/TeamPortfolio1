@@ -28,26 +28,6 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 	}
 	mY = mTileIndexY * TileSize - mSizeY / 2 + TileSize / 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
-	int interactRectSizeX, interactRectSizeY;
-	if (mTileCountX == 1)
-	{
-		interactRectSizeX = TileSize / 2;
-	}
-	else
-	{
-		interactRectSizeX = TileSize * (mTileCountX - 1);
-	}
-	if (mTileCountY == 1)
-	{
-		interactRectSizeY = TileSize / 2;
-	}
-	else
-	{
-		interactRectSizeY = TileSize * (mTileCountY - 1);
-	}
-	mInteractRect = RectMakeCenter(mX, mRect.bottom - TileSize / 2 * (mTileCountY - 1),
-		interactRectSizeX, interactRectSizeY);
 }
 
 void HousingObject::Init()
@@ -86,9 +66,6 @@ void HousingObject::Render(HDC hdc)
 
 		if (Input::GetInstance()->GetKey(VK_LCONTROL))
 		{
-			//충돌 렉트
-			CameraManager::GetInstance()->GetMainCamera()
-				->RenderRect(hdc, mInteractRect);
 			//이미지 렉트
 			CameraManager::GetInstance()->GetMainCamera()
 				->RenderRect(hdc, mRect);

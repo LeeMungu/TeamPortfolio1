@@ -72,7 +72,9 @@ class Player : public GameObject
 	RECT mCollisionBox;
 	RECT mAttackBox;
 
-
+	float mStartTime_hunger;
+	float mStartTime_thirst;
+	float mStartTime_stemina;
 	
 public:
 	Player(const string& name, float x, float y);
@@ -99,17 +101,11 @@ public:
 	void SetAttacked(Attacked attacked) { mAttacked = attacked; }
 	void SetHP(int hp) { mHP = hp; }
 	void SetNoDamage(bool noDamage) { mIsInvincible = noDamage; }
-
-
-	
-	void ExecuteKnockback(float angle, float force)
-	{
-		mIsKnockback = true;
-		mAngle = angle;
-		mKnockbackDistance = force;
-	}
-
+		
 	void PlayerCtrl();
-	void Knockback();
+	void AttackRectMake();//공격시 어택렉트생성
+	void ExecuteKnockback(float angle, float force); // 충돌에서 넉백에 받아올 값
+	void Knockback();//넉백상태 후처리
+	void PlayerState();
 };
 

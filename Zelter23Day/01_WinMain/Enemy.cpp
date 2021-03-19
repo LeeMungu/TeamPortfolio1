@@ -15,6 +15,27 @@ Enemy::Enemy(float x, float y)
 }
 
 
+void Enemy::Knockback()
+{
+	if (mIsKnockback == true)
+	{
+		mX += cosf(mAngle) * mKnockbackDistance * Time::GetInstance()->DeltaTime();
+		mY -= sinf(mAngle) * mKnockbackDistance * Time::GetInstance()->DeltaTime();
+		mKnockbackDistance -= 1500.f * Time::GetInstance()->DeltaTime();
+		if (mKnockbackDistance <= 0.f)
+		{
+			mIsKnockback = false;
+		}
+	}
+}
+
+void Enemy::ExecuteKnockback(float angle, float force)
+{
+	mIsKnockback = true;
+	mAngle = angle;
+	mKnockbackDistance = force;
+}
+
 void Enemy::SetAnimation()
 {
 	if( mDirection == Direction::Left)

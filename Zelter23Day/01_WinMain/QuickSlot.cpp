@@ -17,6 +17,7 @@ void QuickSlot::Init()
 		mSlotList[i].tipOpenImg = IMAGEMANAGER->FindImage(L"QuickSlot_tip_open");
 		mSlotList[i].slotImg = IMAGEMANAGER->FindImage(L"QuickSlot_slotBase");
 		mSlotList[i].isSelected = false;
+		mSlotList[i].rect = RectMake(mSlotList[i].x, mSlotList[i].y, 56, 58);
 	}
 
 	mBackImage = IMAGEMANAGER->FindImage(L"QuickSlot_back");
@@ -72,6 +73,7 @@ void QuickSlot::Update()
 				mSlotList[i].y = mY - 20;
 				mSlotList[i].isSelected = true;
 			}
+			mSlotList[i].rect = RectMake(mSlotList[i].x, mSlotList[i].y, 56, 58);
 		}
 	}
 

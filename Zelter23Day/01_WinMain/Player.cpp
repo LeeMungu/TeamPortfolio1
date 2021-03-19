@@ -14,9 +14,9 @@ Player::Player(const string& name, float x, float y)
 	mY = y;
 	mSpeed = 3.f;
 	mHP = 100;
-	mThirst = 30;
-	mHunger = 30;
-	mStemina = 30;
+	mThirst = 100;
+	mHunger = 100;
+	mStemina = 100;
 }
 
 void Player::Init()
@@ -126,6 +126,10 @@ void Player::Init()
 	Weapon* weapon = new Weapon(mX,mY,0,0);
 	weapon->SetPlayerPtr(this);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
+
+	mStartTime_hunger = Time::GetInstance()->GetSceneTime();
+	mStartTime_thirst = Time::GetInstance()->GetSceneTime();
+	mStartTime_stemina = Time::GetInstance()->GetSceneTime();
 }
 
 void Player::Release()
@@ -155,6 +159,8 @@ void Player::Release()
 void Player::Update()
 {
 	PlayerCtrl();
+	PlayerState();
+	AttackRectMake();
 
 	mCurrentAnimation->Update();
 	mSizeX = mImage->GetFrameWidth() * 2;
@@ -367,20 +373,14 @@ void Player::PlayerCtrl() {
 				mImage = IMAGEMANAGER->FindImage(L"Player_attack");
 				mCurrentAnimation = mLeftAttack;
 				mSpeed = 0.f;
-				if (mCurrentAnimation->GetNowFrameX() < 5)
-				{
-					mAttackBox = RectMakeCenter(mRect.left, mY, mSizeX, mSizeY);
-				}
+
 			}
 			else
 			{
 				mImage = IMAGEMANAGER->FindImage(L"Player_attack");
 				mCurrentAnimation = mRightAttack;
 				mSpeed = 0.f;
-				if (mCurrentAnimation->GetNowFrameX() > 0)
-				{
-					mAttackBox = RectMakeCenter(mRect.right, mY, mSizeX, mSizeY);
-				}
+
 			}
 			mCurrentAnimation->Play();
 		}
@@ -413,6 +413,18 @@ void Player::PlayerCtrl() {
 	}
 }
 
+void Player::AttackRectMake()
+{
+	if (mCurrentAnimation == mLeftAttack && mCurrentAnimation->GetNowFrameX() > 5)
+	{
+		mAttackBox = RectMakeCenter(mRect.left, mY, mSizeX / 3, mSizeY);
+	}
+	if (mCurrentAnimation == mRightAttack && mCurrentAnimation->GetNowFrameX() > 5)
+	{
+		mAttackBox = RectMakeCenter(mRect.right, mY, mSizeX / 3, mSizeY);
+	}
+}
+
 void Player::Knockback()
 {
 	if (mIsKnockback == true)
@@ -423,6 +435,42 @@ void Player::Knockback()
 		if (mKnockbackDistance <= 0)
 		{
 			mIsKnockback = false;
+		}
+	}
+}
+
+
+void Player::ExecuteKnockback(float angle, float force)
+{
+	mIsKnockback = true;
+	mAngle = angle;
+	mKnockbackDistance = force;
+}
+
+
+void Player::PlayerState() {
+	float sceneTime_hunger = Time::GetInstance()->GetSceneTime();
+	float sceneTime_thirst = Time::GetInstance()->GetSceneTime();
+	float sceneTime_stemina = Time::GetInstance()->GetSceneTime();
+
+	if (mThirst > 0) {
+		if (sceneTime_thirst - mStartTime_thirst > 30) {
+			mThirst -= 5;
+			mStartTime_thirst = Time::GetInstance()->GetSceneTime();
+		}
+	}
+
+	if (mHunger > 0) {
+		if (sceneTime_hunger - mStartTime_hunger > 35) {
+			mHunger -= 5;
+			mStartTime_hunger = Time::GetInstance()->GetSceneTime();
+		}
+	}
+
+	if (mStemina > 0) {
+		if (sceneTime_stemina - mStartTime_stemina > 40) {
+			mStemina -= 5;
+			mStartTime_stemina = Time::GetInstance()->GetSceneTime();
 		}
 	}
 }

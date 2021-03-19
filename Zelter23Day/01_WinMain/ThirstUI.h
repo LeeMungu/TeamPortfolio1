@@ -7,7 +7,7 @@ class ThirstUI : public UI
 	Image* mFullGaugeImage;
 	Image* mIconImage;
 
-	int mThirst;
+	float mThirst;
 
 public:
 	ThirstUI(const string& name, int x, int y);

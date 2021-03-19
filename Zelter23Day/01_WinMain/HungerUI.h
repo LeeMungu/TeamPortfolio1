@@ -6,7 +6,7 @@ class HungerUI : public UI
 	Image* mFullGaugeImage;
 	Image* mIconImage;
 
-	int mHunger;
+	float mHunger;
 
 public:
 	HungerUI(const string& name, int x, int y);

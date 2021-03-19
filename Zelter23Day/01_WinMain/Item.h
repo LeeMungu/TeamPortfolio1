@@ -18,6 +18,8 @@ protected:
 	Image* mImage;
 	ItemType mType;
 	wstring mKeyName;
+	int mCount;
+
 public:
 	Item(wstring imageKey, float x, float y, ItemType type);
 	void Init();

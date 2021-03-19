@@ -18,6 +18,7 @@ void Inventory::Init()
 			mSlotList[i][j].x = mX + i * 60 + 170;
 			mSlotList[i][j].y = mY + j * 60 + 250;
 			mSlotList[i][j].slotImage = IMAGEMANAGER->FindImage(L"Inventory_slot");
+			mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 		}
 	}
 }
@@ -39,6 +40,7 @@ void Inventory::Update()
 				for (int j = 0; j < 2; j++) {
 					mSlotList[i][j].x = mX + i * 60 + 170;
 					mSlotList[i][j].y = mY + j * 60 + 250;
+					mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 				}
 			}
 		}
@@ -53,6 +55,7 @@ void Inventory::Update()
 				for (int j = 0; j < 2; j++) {
 					mSlotList[i][j].x = mX + i * 60 + 170;
 					mSlotList[i][j].y = mY + j * 60 + 250;
+					mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 				}
 			}
 		}

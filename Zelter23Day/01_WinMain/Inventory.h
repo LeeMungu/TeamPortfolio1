@@ -5,6 +5,7 @@ struct BagSlot {
 	float x;
 	float y;
 	Image* slotImage;
+	RECT rect;
 	//bool isSelected;
 };
 class Inventory : public UI

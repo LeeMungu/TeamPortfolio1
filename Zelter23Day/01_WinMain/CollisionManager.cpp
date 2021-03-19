@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "InteractObject.h"
 #include "Enemy.h"
+#include "Bullet.h"
 
 
 void CollisionManager::Init()
@@ -17,6 +18,7 @@ void CollisionManager::Update()
 	PlayerCollision();
 	ZombieAttack();
 	PlayerAttack();
+	PlayerShoot();
 }
 
 
@@ -171,7 +173,6 @@ void CollisionManager::PlayerAttack()
 		RECT playerAttackRC = mPlayer->GetAttackBox();
 		RECT enemyRC;
 		vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
-
 		if (zombie.size() != NULL)
 		{
 			for (int i = 0; i < zombie.size(); ++i)
@@ -200,6 +201,48 @@ void CollisionManager::PlayerAttack()
 				{
 					tempinteractobject->SetHp(tempinteractobject->GetHp() - 1);
 					tempinteractobject->SetIsInvincible(true);
+				}
+			}
+		}
+	}
+}
+
+void CollisionManager::PlayerShoot()
+{
+	RECT temp;
+	RECT bulletRC;
+	vector<GameObject*> bulletList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Bullet);
+	RECT enemyRC;
+	vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	RECT objectRC;
+	vector<GameObject*> interactobject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+
+	if (bulletList.size() != NULL)
+	{
+		for (int i = 0; i < bulletList.size(); ++i)
+		{
+			Bullet* bullet  = (Bullet*) bulletList[i];
+			bulletRC = bullet->GetRect();
+			for (int j = 0; j < zombie.size(); j++)
+			{
+				Enemy* enemy = (Enemy*) zombie[j];
+				enemyRC = enemy->GetRect();
+				if (IntersectRect(&temp, &bulletRC, &enemyRC) && enemy->GetIsInvincible() == false && bullet->GetIsShot() == false)
+				{
+					enemy->SetHp(enemy->GetHP() - 1);
+					enemy->SetIsInvincible(true);
+					bullet->SetIsShot(true);
+				}
+			}
+			for (int k = 0; k < interactobject.size(); ++k)
+			{
+				InteractObject* object = (InteractObject*)interactobject[k];
+				objectRC = object->GetRect();
+				if (IntersectRect(&temp, &bulletRC, &objectRC) &&object->GetIsInvincible() == false && bullet->GetIsShot() == false)
+				{
+					object->SetHp(object->GetHp() - 1);
+					object->SetIsInvincible(true);
+					bullet->SetIsShot(true);
 				}
 			}
 		}

@@ -7,6 +7,7 @@ class Bullet :public GameObject
 	float mAngle;
 	float mStartX;
 	float mStartY;
+	bool mIsShot;
 
 public:
 	Bullet(float x, float y, float mAngle);
@@ -14,5 +15,8 @@ public:
 	void Release()override;
 	void Render(HDC hdc)override;
 	void Update()override;
+
+	bool GetIsShot() { return mIsShot; }
+	void SetIsShot(bool isShot) { mIsShot = isShot; }
 };
 

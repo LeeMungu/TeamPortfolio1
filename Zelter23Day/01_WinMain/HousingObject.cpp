@@ -85,8 +85,19 @@ void HousingObject::Render(HDC hdc)
 				->RenderRect(hdc, mRect);
 		}
 
+
+
 		//ÀÌ¹ÌÁö
-		CameraManager::GetInstance()->GetMainCamera()
+		if (mHouselayer == HouseLayer::Roof)
+		{
+			CameraManager::GetInstance()->GetMainCamera()
+				->AlphaScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY,mAlpha);
+		}
+		else
+		{
+			CameraManager::GetInstance()->GetMainCamera()
 			->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY);
+		}
+		
 	}
 }

@@ -81,6 +81,6 @@ void NonInteractObject::Render(HDC hdc)
 		CameraManager::GetInstance()->GetMainCamera()
 			->ActivitScaleRender(hdc, mImage, mRect.left, mRect.top + mSizeY*(1.f-mUpDownRatio), mSizeX, mSizeY*mUpDownRatio,mAngleX,0);
 		//Time::GetInstance()->GetSceneTime();이용해서 그림자 해보기
-		
+		//mImage->GetBitmap()->d
 	}
 }

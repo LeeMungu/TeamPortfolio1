@@ -31,6 +31,7 @@ using namespace std;
 #pragma comment(lib,"d2d1.lib")
 #pragma comment(lib,"dwrite.lib")
 #pragma comment(lib,"dxguid.lib")
+
 #pragma comment(lib,"WindowsCodecs.lib")
 
 #include <D2D1.h>
@@ -38,6 +39,7 @@ using namespace std;
 #include <d2d1.h>
 #include <dwrite.h>
 #include <wincodec.h>
+#include <d2d1effects.h>
 
 #include "DefineHeader.h"
 #include "Figure.h"

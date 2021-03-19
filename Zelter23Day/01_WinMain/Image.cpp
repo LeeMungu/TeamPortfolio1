@@ -307,6 +307,15 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	int frame = frameY * mMaxFrameX + frameX;
 	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(), mSize.Y * height / this->GetFrameHeight());
 
+	//
+	ID2D1RenderTarget* renderTarget = D2DRenderer::GetInstance()->GetRenderTarget();
+	ID2D1SolidColorBrush* brush;
+	D2D1_COLOR_F color;
+	//r,g,b,a
+	color = { 0.0f,0.0f,0.0f,1.0f };
+	renderTarget->CreateSolidColorBrush(color, &brush);
+	//
+
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, 
 		//앵글 돌리는 회전 중심점

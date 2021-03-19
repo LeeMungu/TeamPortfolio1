@@ -10,7 +10,6 @@ NonInteractObject::NonInteractObject(const wstring imageKey, float x, float y)
 	mY = y;
 	mImageKey = imageKey;
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
-	
 }
 
 void NonInteractObject::Init()
@@ -20,8 +19,10 @@ void NonInteractObject::Init()
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mIndexX = 0;
 	mIndexY = 0;
-	mAngleX = 0;
+	mAngleX = ((float)Random::GetInstance()->RandomInt(-30, 30)) / ((float)10);
 	mIsAnglePlus = true;
+	mUpDownRatio = 0.9f + ((float)Random::GetInstance()->RandomInt(0,100))*0.2f/100.f;
+	mIsUp = true;
 }
 
 void NonInteractObject::Release()
@@ -32,22 +33,40 @@ void NonInteractObject::Release()
 void NonInteractObject::Update()
 {
 	//½ºÄÉÀÏ·£´õ·Î »Ç¼õ»Ç¼õ
-	if(mAngleX>3)
+	//À§¾Æ·¡ »Ç¼õ»Ç¼õ
+	if(mUpDownRatio > 1.1f)
+	{
+		mIsUp = false;
+	}
+	else if (mUpDownRatio < 0.9f)
+	{
+		mIsUp = true;
+	}
+	if(mIsUp == true)
+	{
+		mUpDownRatio += 0.05f * Time::GetInstance()->DeltaTime();
+	}
+	else if(mIsUp == false)
+	{ 
+		mUpDownRatio -= 0.05f * Time::GetInstance()->DeltaTime();
+	}
+
+	//ÁÂ¿ì »Ç¼õ»Ç¼õ
+	if(mAngleX>5)
 	{
 		mIsAnglePlus = false;
 	}
-	else if (mAngleX < -3)
+	else if (mAngleX < -5)
 	{
 		mIsAnglePlus = true;
 	}
-
 	if (mIsAnglePlus==true)
 	{
-		mAngleX += 10*Time::GetInstance()->DeltaTime();
+		mAngleX += 8*Time::GetInstance()->DeltaTime();
 	}
 	else if (mIsAnglePlus == false)
 	{
-		mAngleX -= 10*Time::GetInstance()->DeltaTime();
+		mAngleX -= 8*Time::GetInstance()->DeltaTime();
 	}
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
@@ -59,7 +78,7 @@ void NonInteractObject::Render(HDC hdc)
 		//CameraManager::GetInstance()->GetMainCamera()
 		//	->FrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY);
 		CameraManager::GetInstance()->GetMainCamera()
-			->ActivitScaleRender(hdc, mImage, mRect.left, mRect.top, mSizeX, mSizeY,mAngleX,0);
+			->ActivitScaleRender(hdc, mImage, mRect.left, mRect.top + mSizeY*(1.f-mUpDownRatio), mSizeX, mSizeY*mUpDownRatio,mAngleX,0);
 		//Time::GetInstance()->GetSceneTime();ÀÌ¿ëÇØ¼­ ±×¸²ÀÚ ÇØº¸±â
 	}
 }

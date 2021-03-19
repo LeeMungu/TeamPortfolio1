@@ -455,22 +455,31 @@ void Player::PlayerState() {
 
 	if (mThirst > 0) {
 		if (sceneTime_thirst - mStartTime_thirst > 30) {
-			mThirst -= 5;
+			mThirst -= 7;
 			mStartTime_thirst = Time::GetInstance()->GetSceneTime();
 		}
+	}
+	else {
+		mThirst = 0;
 	}
 
 	if (mHunger > 0) {
 		if (sceneTime_hunger - mStartTime_hunger > 35) {
-			mHunger -= 5;
+			mHunger -= 7;
 			mStartTime_hunger = Time::GetInstance()->GetSceneTime();
 		}
+	}
+	else {
+		mHunger = 0;
 	}
 
 	if (mStemina > 0) {
 		if (sceneTime_stemina - mStartTime_stemina > 40) {
-			mStemina -= 5;
+			mStemina -= 7;
 			mStartTime_stemina = Time::GetInstance()->GetSceneTime();
 		}
+	}
+	else {
+		mStemina = 0;
 	}
 }

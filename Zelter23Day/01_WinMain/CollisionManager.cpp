@@ -150,12 +150,12 @@ void CollisionManager::ZombieAttack()
 				{
 					for (int j = 0; j < interactobject.size(); ++j)
 					{
-						InteractObject* tempInteractObject =(InteractObject*)interactobject[j];
-						objectRC = tempInteractObject->GetInteractRect();
-						if (IntersectRect(&temp, &objectRC, &enemyRC) && tempInteractObject->GetIsInvincible() == false)	//좀비가 오브젝트를 공격하였다!
+						InteractObject* object =(InteractObject*)interactobject[j];
+						objectRC = object->GetInteractRect();
+						if (IntersectRect(&temp, &objectRC, &enemyRC) && object->GetIsInvincible() == false)	//좀비가 오브젝트를 공격하였다!
 						{
-							tempInteractObject->SetHp(tempInteractObject->GetHp() - 1);
-							tempInteractObject->SetIsInvincible(true);
+							object->SetHp(object->GetHp() - 1);
+							object->SetIsInvincible(true);
 						}
 					}
 				}
@@ -195,12 +195,12 @@ void CollisionManager::PlayerAttack()
 		{
 			for (int i = 0; i < interactobject.size(); ++i)
 			{
-				InteractObject* tempinteractobject = (InteractObject*)interactobject[i];
-				objectRC = tempinteractobject->GetInteractRect();
-				if (IntersectRect(&temp, &playerAttackRC, &objectRC) && tempinteractobject->GetIsInvincible() == false)
+				InteractObject* object = (InteractObject*)interactobject[i];
+				objectRC = object->GetInteractRect();
+				if (IntersectRect(&temp, &playerAttackRC, &objectRC) && object->GetIsInvincible() == false)
 				{
-					tempinteractobject->SetHp(tempinteractobject->GetHp() - 1);
-					tempinteractobject->SetIsInvincible(true);
+					object->SetHp(object->GetHp() - 1);
+					object->SetIsInvincible(true);
 				}
 			}
 		}
@@ -227,21 +227,27 @@ void CollisionManager::PlayerShoot()
 			{
 				Enemy* enemy = (Enemy*) zombie[j];
 				enemyRC = enemy->GetRect();
-				if (IntersectRect(&temp, &bulletRC, &enemyRC) && enemy->GetIsInvincible() == false && bullet->GetIsShot() == false)
+				if (IntersectRect(&temp, &bulletRC, &enemyRC) &&  bullet->GetIsShot() == false)
 				{
-					enemy->SetHp(enemy->GetHP() - 1);
-					enemy->SetIsInvincible(true);
+					if (enemy->GetIsInvincible() == false )
+					{
+						enemy->SetHp(enemy->GetHP() - 1);
+						enemy->SetIsInvincible(true);
+					}
 					bullet->SetIsShot(true);
 				}
 			}
 			for (int k = 0; k < interactobject.size(); ++k)
 			{
 				InteractObject* object = (InteractObject*)interactobject[k];
-				objectRC = object->GetRect();
-				if (IntersectRect(&temp, &bulletRC, &objectRC) &&object->GetIsInvincible() == false && bullet->GetIsShot() == false)
+				objectRC = object->GetInteractRect();
+				if (IntersectRect(&temp, &bulletRC, &objectRC) && bullet->GetIsShot() == false)
 				{
-					object->SetHp(object->GetHp() - 1);
-					object->SetIsInvincible(true);
+					if (object->GetIsInvincible() == false)
+					{
+						object->SetHp(object->GetHp() - 1);
+						object->SetIsInvincible(true);
+					}
 					bullet->SetIsShot(true);
 				}
 			}

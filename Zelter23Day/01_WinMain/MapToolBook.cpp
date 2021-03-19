@@ -886,6 +886,34 @@ void MapToolBook::Update()
 				}
 			}
 		}
+		if (mBookType == BookType::House)
+		{
+			if (mPage == 1)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				for (int i = 0; i < 1; i++)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"House2", mX - 250 + 100, mY - 210 + 145, []() {
+						Mouse* mouse = new Mouse(L"House2", ObjectLayer::HousingObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(1);
+						mouse->SetTileCountY(1);
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+						});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+		}
+
 		mIsPageChange = false;
 	}
 	//책안의 버튼들 업데이트

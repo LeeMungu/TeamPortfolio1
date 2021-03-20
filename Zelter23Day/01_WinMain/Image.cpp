@@ -305,7 +305,11 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	this->SetAlpha(alpha);
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;
-	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(), mSize.Y * height / this->GetFrameHeight());
+	//시간에 따른 길이 조정
+	//float heightSize = ((float)((((int)time) % (60 * 24))*100) / (60 * 24))/100.f;
+	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(),
+		mSize.Y * height / this->GetFrameHeight());//*heightSize);
+	
 
 	//
 	//ID2D1RenderTarget* renderTarget = D2DRenderer::GetInstance()->GetRenderTarget();
@@ -329,16 +333,32 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 		(float)(mFrameInfo[frame].y + mFrameInfo[frame].height));
 	//최종행렬 세팅
 	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
+
+	//그려
+	//{
+	ID2D1SolidColorBrush* brush;
+	D2D1_COLOR_F color;
+	//r,g,b,a
+	color = { 0.0f,0.0f,0.0f,1.0f };
+	D2DRenderer::GetInstance()->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
+	D2DRenderer::GetInstance()->GetRenderTarget()
+		->FillOpacityMask(mBitmap, brush, D2D1_OPACITY_MASK_CONTENT::D2D1_OPACITY_MASK_CONTENT_GRAPHICS,
+			dxArea,
+			dxSrc);
+		//DrawRectangle(rect, brush);
+	brush->Release();
+	//}
+
 	//렌더링 요청
-	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(
-		mBitmap,	//우리가 렌더링 작업을 수행할 이미지
-		dxArea,		//렌더링 작업을 수행할 화면의 영역을 설정 NULL 설정 시 렌더타겟의 원점에 그리게 됨
-		mAlpha,		//알파 값
-		D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,	//이미지가 회전을 하거나 크기가 조정되었을 때,
-															//어떻게 부드럽게 보일 것인가에 대한 옵션을 설정하는 부분입니다.
-															//즉, 보간(interpolation) 옵션
-		&dxSrc);	//원본 이미지에서 일정 영역을 보여주고 싶을 때 영역을 입력하는 옵션
-					//해당 이미지 파일의 사이즈를 기준으로 영역을 설정
+	//D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(
+	//	mBitmap,	//우리가 렌더링 작업을 수행할 이미지
+	//	dxArea,		//렌더링 작업을 수행할 화면의 영역을 설정 NULL 설정 시 렌더타겟의 원점에 그리게 됨
+	//	mAlpha,		//알파 값
+	//	D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,	//이미지가 회전을 하거나 크기가 조정되었을 때,
+	//														//어떻게 부드럽게 보일 것인가에 대한 옵션을 설정하는 부분입니다.
+	//														//즉, 보간(interpolation) 옵션
+	//	&dxSrc);	//원본 이미지에서 일정 영역을 보여주고 싶을 때 영역을 입력하는 옵션
+	//				//해당 이미지 파일의 사이즈를 기준으로 영역을 설정
 				
 	//리셋
 	this->ResetRenderOption();

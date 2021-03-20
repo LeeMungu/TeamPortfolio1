@@ -27,5 +27,6 @@ public:
 	void Render(HDC hdc)override;
 
 	void SetOpened(bool b) { mIsOpened = b; }
+	bool GetOpened() const { return mIsOpened; }
 };
 

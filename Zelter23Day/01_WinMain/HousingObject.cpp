@@ -12,15 +12,15 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 	mTileIndexY = y / TileSize;
 
 	mImageKey = name;
-	if (mImageKey == L"House1")
+	if (mImageKey == L"House1" || mImageKey == L"House4" || mImageKey == L"House7" || mImageKey == L"police1" || mImageKey== L"shop1")
 	{
 		mHouselayer = HouseLayer::Floor;
 	}
-	else if (mImageKey == L"House2")
+	else if (mImageKey == L"House2" || mImageKey == L"House5" || mImageKey == L"House8" || mImageKey == L"police2" || mImageKey == L"shop2")
 	{
 		mHouselayer = HouseLayer::HouseWall;
 	}
-	else if (mImageKey == L"House3")
+	else if (mImageKey == L"House3" || mImageKey == L"House6" || mImageKey == L"House9" || mImageKey == L"police3" || mImageKey == L"shop3")
 	{
 		mHouselayer = HouseLayer::Roof;
 	}

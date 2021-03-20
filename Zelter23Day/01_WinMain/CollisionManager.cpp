@@ -137,7 +137,8 @@ void CollisionManager::ZombieAttack()
 		{
 			for (int i = 0; i < zombie.size(); ++i)
 			{
-				enemyRC = ((Enemy*)zombie[i])->GetAttackBox();
+				Enemy* enemy = (Enemy*)zombie[i];
+				enemyRC = enemy->GetAttackBox();
 
 				if (IntersectRect(&temp, &playerRC, &enemyRC) && mPlayer->GetIsInvincible() == false)	//좀비가 플레이어를 공격하였다!
 				{
@@ -145,8 +146,10 @@ void CollisionManager::ZombieAttack()
 					mPlayer->ExecuteKnockback(mAnlge, 500.f);
 					mPlayer->SetHP(mPlayer->GetHP() - 1);
 					mPlayer->SetIsInvincible(true);
+					enemy->SetIsAttackCheck(true);
+					
 				}
-				if (interactobject.size() != NULL)
+				else if (interactobject.size() != NULL)
 				{
 					for (int j = 0; j < interactobject.size(); ++j)
 					{
@@ -156,6 +159,7 @@ void CollisionManager::ZombieAttack()
 						{
 							object->SetHp(object->GetHp() - 1);
 							object->SetIsInvincible(true);
+							enemy->SetIsAttackCheck(true);
 						}
 					}
 				}

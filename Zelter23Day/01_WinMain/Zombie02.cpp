@@ -24,6 +24,7 @@ void Zombie02::Init()
 	mSpeed = 1.f;
 	mAttack = 1;
 	mTargeting = false;
+	mIsAttackCheck = false;
 	mIsInvincible = false;
 	mDelay = 0.5f;
 
@@ -97,9 +98,10 @@ void Zombie02::Update()
 		Attack();
 	}
 
-	if (mZombistate != ZombieState::Attack) //좀비공격 렉트 초기화
+	if (mZombistate != ZombieState::Attack || mIsAttackCheck == true) //좀비공격 렉트 초기화
 	{
 		mAttackBox = RectMakeCenter(0, 0, 0, 0);
+		mIsAttackCheck = false;
 	}
 
 	if (mTargeting)

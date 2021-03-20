@@ -102,7 +102,7 @@ void Image::Render(HDC hdc, int x, int y)
 
 void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, int tempHeight)
 {
-	float ratioX = ((float)tempWidth) / mSize.X;
+	//float ratioX = ((float)tempWidth) / mSize.X;
 	float ratioY = ((float)mFrameInfo[0].height)/((float)tempHeight);
 	mSize.X = (float)tempWidth;
 	mSize.Y = (float)tempHeight;
@@ -251,7 +251,7 @@ void Image::AlphaScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY,
 
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f);
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
 
 	//그릴 영역 세팅 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
@@ -306,9 +306,9 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;
 	//시간에 따른 길이 조정
-	//float heightSize = ((float)((((int)time) % (60 * 24))*100) / (60 * 24))/100.f;
+	float heightSize = ((float)((((int)time) % (60 * 24))*100) / (60 * 24))/100.f;
 	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(),
-		mSize.Y * height / this->GetFrameHeight());//*heightSize);
+		mSize.Y * height / this->GetFrameHeight());// *heightSize);
 	
 
 	//
@@ -320,11 +320,13 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	//renderTarget->CreateSolidColorBrush(color, &brush);
 	//
 
-	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, 
+		//사이즈 중심
+		D2D1::Point2F(size.X / 2.f, size.Y/2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, 
 		//앵글 돌리는 회전 중심점
 		D2D1::Point2F(size.X / 2.f, size.Y));
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f); //중점 잡기
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y -size.Y / 2.f); //중점 잡기
 
 	//그릴 영역 세팅 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);

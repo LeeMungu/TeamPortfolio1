@@ -42,6 +42,7 @@ protected:
 	int mSpeed;
 	int mAttack;
 	bool mTargeting;
+	bool mIsAttackCheck;
 	bool mIsInvincible;
 	bool mIsKnockback;
 	float mKnockbackDistance;
@@ -75,6 +76,8 @@ public:
 	RECT GetCollisionBox() { return mCollisionBox; }
 	RECT GetAttackBox() { return mAttackBox; }
 
+	bool GetIsAttackCheck() { return mIsAttackCheck; }
+	void SetIsAttackCheck(bool isAttackCheck) { mIsAttackCheck = isAttackCheck; }
 	bool GetIsInvincible() { return mIsInvincible; }
 	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
 	void SetHp(int hp) { mHp = hp; }

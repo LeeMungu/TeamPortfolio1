@@ -301,11 +301,13 @@ void Image::ActivitScaleRender(HDC hdc, int x, int y, int width, int height, flo
 
 void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float alpha, float time)
 {
-	mAngle = 360.f / (60.f * 24.f) *time;
+	//회전하는 경우 
+	//mAngle = 360.f / (60.f * 24.f) *time;
+	
 	this->SetAlpha(alpha);
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;
-	//시간에 따른 길이 조정
+	//시간에 따른 길이 조정 : 0~1.f <-  1.f~0~1.f로 만들고 싶다.
 	float heightSize = ((float)((((int)time) % (60 * 24))*100) / (60 * 24))/100.f;
 	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(),
 		mSize.Y * height / this->GetFrameHeight());// *heightSize);
@@ -326,7 +328,14 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, 
 		//앵글 돌리는 회전 중심점
 		D2D1::Point2F(size.X / 2.f, size.Y));
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y -size.Y / 2.f); //중점 잡기
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y); //중점 잡기
+	
+	D2D_MATRIX_3X2_F skewMatrix = D2D1::Matrix3x2F::Skew(
+		//회전앵글0~180.f : 조건은 0~30, 150~180
+		-40.f+80.f* heightSize, 0,
+		//회전기준->좌하단이란 의미
+		D2D1::Point2F(0.f, size.Y));
+
 
 	//그릴 영역 세팅 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
@@ -334,14 +343,14 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 		(float)(mFrameInfo[frame].x + mFrameInfo[frame].width),
 		(float)(mFrameInfo[frame].y + mFrameInfo[frame].height));
 	//최종행렬 세팅
-	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(skewMatrix * scaleMatrix * rotateMatrix * translateMatrix);
 
 	//그려
 	//{
 	ID2D1SolidColorBrush* brush;
 	D2D1_COLOR_F color;
 	//r,g,b,a
-	color = { 0.0f,0.0f,0.0f,1.0f };
+	color = { 0.0f,0.0f,0.0f,alpha };
 	D2DRenderer::GetInstance()->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
 	D2DRenderer::GetInstance()->GetRenderTarget()
 		->FillOpacityMask(mBitmap, brush, D2D1_OPACITY_MASK_CONTENT::D2D1_OPACITY_MASK_CONTENT_GRAPHICS,

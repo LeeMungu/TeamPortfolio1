@@ -188,7 +188,6 @@ void Player::Update()
 			mIsInvincible = false;
 		}
 	}
-
 	if (mCurrentAnimation != mLeftAttack && mCurrentAnimation != mRightAttack)
 	{
 		mAttackBox = RectMakeCenter(0, 0, 0, 0);
@@ -197,6 +196,12 @@ void Player::Update()
 
 void Player::Render(HDC hdc)
 {
+	//그림자
+	CameraManager::GetInstance()->GetMainCamera()
+		->ShadowRender(hdc, mImage, mRect.left, mRect.top - 50, 
+			mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY, 0.3f,
+			Time::GetInstance()->GetSceneTime());
+	//이미지
 	CameraManager::GetInstance()->GetMainCamera()->
 		ScaleFrameRender(hdc, mImage, mRect.left, mRect.top-50, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
 	if (Input::GetInstance()->GetKey(VK_LCONTROL))

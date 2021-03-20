@@ -141,6 +141,12 @@ void Zombie01::Update()
 
 void Zombie01::Render(HDC hdc)
 {
+	//그림자
+	CameraManager::GetInstance()->GetMainCamera()
+		->ShadowRender(hdc, mImage, mRect.left, mRect.top,
+			mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY, 0.3f,
+			Time::GetInstance()->GetSceneTime());
+	//이미지
 	CameraManager::GetInstance()->GetMainCamera()->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top,
 		mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(),mSizeX,mSizeY);
 

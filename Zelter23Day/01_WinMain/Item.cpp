@@ -300,7 +300,7 @@ void Item::Init()
 
 
 	mSizeX = mImage->GetFrameWidth();
-	mSizeX = mImage->GetFrameHeight();
+	mSizeY = mImage->GetFrameHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 

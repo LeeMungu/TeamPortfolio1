@@ -222,6 +222,22 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House1", Resources(L"/02_House/NewHouse1_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House2", Resources(L"/02_House/NewHouse1_Wall.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House3", Resources(L"/02_House/NewHouse1_Roof.png")); });
+	
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House4", Resources(L"/02_House/NewHouse2_Bottom.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House5", Resources(L"/02_House/NewHouse2_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House6", Resources(L"/02_House/NewHouse2_Roof.png")); });
+	
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House7", Resources(L"/02_House/NewHouse3_Bottom.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House8", Resources(L"/02_House/NewHouse3_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House9", Resources(L"/02_House/NewHouse3_Roof.png")); });
+
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police1", Resources(L"/02_House/PoliceOffice_Bottom.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police2", Resources(L"/02_House/PoliceOffice_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police3", Resources(L"/02_House/PoliceOffice_Roof.png")); });
+
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop1", Resources(L"/02_House/Shop1_Bottom.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop2", Resources(L"/02_House/Shop1_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop3", Resources(L"/02_House/Shop1_Roof.png")); });
 
 	//ÀÌ¹ÌÁö (Loading Scene)
 	IMAGEMANAGER->LoadFromFile(L"LoadingCat", Resources(L"Cat1.png"), 10, 1);

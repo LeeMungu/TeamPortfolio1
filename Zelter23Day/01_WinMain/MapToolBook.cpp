@@ -85,7 +85,7 @@ void MapToolBook::Init()
 			}
 			else if (mBookType == BookType::House)
 			{
-				if (mPage < 3)
+				if (mPage < 15)
 				{
 					mPage++;
 					mIsPageChange = true;
@@ -972,6 +972,285 @@ void MapToolBook::Update()
 				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
 			
 			}
+			if (mPage == 4)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"House4", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"House4", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 5)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"House5", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"House5", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 6)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"House6", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"House6", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 7)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"House7", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"House7", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 8)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"House8", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"House8", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 9)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"House9", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"House9", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 10)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"police1", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"police1", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 11)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"police2", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"police2", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 12)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"police3", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"police3", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 13)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"shop1", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"shop1", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 14)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"shop2", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"shop2", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+			if (mPage == 15)
+			{
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+
+				ObjectButton* objectButton = new ObjectButton(L"shop3", mX - 250 + 100, mY - 210 + 145, []() {
+					Mouse* mouse = new Mouse(L"shop3", ObjectLayer::HousingObject);
+					mouse->SetHpMax(10);
+					mouse->SetTileCountX(1);
+					mouse->SetTileCountY(1);
+					mouse->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+				objectButton->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+
+			}
+
+
+
 		}
 
 		mIsPageChange = false;

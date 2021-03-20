@@ -149,7 +149,7 @@ void CollisionManager::ZombieAttack()
 					enemy->SetIsAttackCheck(true);
 					
 				}
-				if (interactobject.size() != NULL)
+				else if (interactobject.size() != NULL)
 				{
 					for (int j = 0; j < interactobject.size(); ++j)
 					{

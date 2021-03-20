@@ -17,6 +17,7 @@
 #include "KeyIcon.h"
 #include "QuickSlot.h"
 #include "Inventory.h"
+#include "HousingObject.h"
 void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
@@ -295,17 +296,22 @@ void scene1::Load()
 			{
 				wstring imageKey;
 				int x, y;
+				int tileCountX, tileCountY;
 				getline(loadStream, buffer, ',');
 				imageKey.assign(buffer.begin(), buffer.end());
 				getline(loadStream, buffer, ',');
 				x = stoi(buffer);
-				getline(loadStream, buffer);
+				getline(loadStream, buffer, ',');
 				y = stoi(buffer);
+				getline(loadStream, buffer, ',');
+				tileCountX = stoi(buffer);
+				getline(loadStream, buffer);
+				tileCountY = stoi(buffer);
 				//하우징 생성 <-추후에 밑에 예같이 생성해줄예정
 				// 생성자 매개변수는 더 늘릴 예정?
-				//HousingObject* temp = new HousingObject(imageKey, x, y);
-				//temp->Init();
-				//ObjectManager::GetInstance()->AddObject(objectLayer, temp);
+				HousingObject* temp = new HousingObject(imageKey, x, y, tileCountX, tileCountY);
+				temp->Init();
+				ObjectManager::GetInstance()->AddObject(objectLayer, temp);
 			}
 		}
 		//인터렉트 읽어오기

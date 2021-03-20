@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "InteractObject.h"
 #include "NonInteractObject.h"
+#include "HousingObject.h"
 
 void MapToolScene::Init()
 {
@@ -573,8 +574,20 @@ void MapToolScene::Save()
 			//각 오브젝트레이어의 이미지키, x좌표, y좌표
 			for (int i = 0; i < tempObject.size(); ++i)
 			{
-				//집은 어떻게 저장할지 더 생각해봐야한다...
-				//saveStream << (HousingObject*)tempObject[i]->
+				wstring imagekey;
+				string str;
+				imagekey = ((HousingObject*)tempObject[i])->GetImageKey();
+				str.assign(imagekey.begin(), imagekey.end());
+				saveStream << str;
+				saveStream << ",";
+				saveStream << tempObject[i]->GetX();
+				saveStream << ",";
+				saveStream << tempObject[i]->GetY();
+				saveStream << ",";
+				saveStream << ((HousingObject*)tempObject[i])->GetTileCountX();
+				saveStream << ",";
+				saveStream << ((HousingObject*)tempObject[i])->GetTileCountY();
+				saveStream << endl;
 			}
 		}
 		//인터랙트오브젝트레이어 구분, 갯수
@@ -741,17 +754,22 @@ void MapToolScene::Load()
 			{
 				wstring imageKey;
 				int x, y;
+				int tileCountX, tileCountY;
 				getline(loadStream, buffer, ',');
 				imageKey.assign(buffer.begin(), buffer.end());
 				getline(loadStream, buffer, ',');
 				x = stoi(buffer);
-				getline(loadStream, buffer);
+				getline(loadStream, buffer,',');
 				y = stoi(buffer);
+				getline(loadStream, buffer, ',');
+				tileCountX = stoi(buffer);
+				getline(loadStream, buffer);
+				tileCountY = stoi(buffer);
 				//하우징 생성 <-추후에 밑에 예같이 생성해줄예정
 				// 생성자 매개변수는 더 늘릴 예정?
-				//HousingObject* temp = new HousingObject(imageKey, x, y);
-				//temp->Init();
-				//ObjectManager::GetInstance()->AddObject(objectLayer, temp);
+				HousingObject* temp = new HousingObject(imageKey, x, y, tileCountX, tileCountY);
+				temp->Init();
+				ObjectManager::GetInstance()->AddObject(objectLayer, temp);
 			}
 		}
 		//인터렉트 읽어오기

@@ -39,6 +39,13 @@ public:
 
 	float GetAlpha() { return mAlpha; }
 	void SetAlpha(float alpha) { mAlpha = alpha; }
+	wstring GetImageKey()const { return mImageKey; }
+
+
+	int GetTileIndexX()const { return mTileIndexX; }
+	int GetTileIndexY()const { return mTileIndexY; }
+	int GetTileCountX()const { return mTileCountX; }
+	int GetTileCountY()const { return mTileCountY; }
 
 };
 

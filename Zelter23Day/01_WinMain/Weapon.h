@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Player.h"
+#include "ObjectManager.h"
 
 class Player;
 class Weapon : public GameObject
@@ -37,6 +38,6 @@ public:
 
 
 	void SetPlayerPtr(Player* player) { mPlayer = player; }
-
+	
 };
 

@@ -12,6 +12,7 @@ enum class PlayerState
 	roll,
 	attack,
 	die,
+	shot,
 };
 enum class Attacked
 {
@@ -28,6 +29,9 @@ enum class Attacked
 
 class Player : public GameObject
 {
+
+	Player* mPlayer;
+
 	Image* mImage;
 	Animation* mCurrentAnimation;
 
@@ -51,6 +55,11 @@ class Player : public GameObject
 
 	Animation* mRightRoll;
 	Animation* mLeftRoll;
+
+	Animation* mUpShotAni;
+	Animation* mLeftShotAni;
+	Animation* mRightShotAni;
+	Animation* mDownShotAni;
 
 	float mSpeed;
 	int mHP;

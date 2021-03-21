@@ -23,7 +23,7 @@
     <ProjectGuid>{ADD52605-596E-43E8-879D-E81A28A8BB13}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My01WinMain</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -157,6 +157,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="DefineHeader.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="framework.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="D2DRenderer+Draw.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameEventManager.cpp" />

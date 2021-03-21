@@ -26,6 +26,10 @@ void LoadingScene::Init()
 	//이미지 (총알)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bullet", Resources(L"/03_Player/Bullet.png"), 1, 1); });
 
+	//이미지 (이펙트)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"melee_attack", Resources(L"/08_Effect/effect_1.png"), 6, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"pistol_shoot", Resources(L"/08_Effect/effect_2.png"), 7, 1); });
+
 	//이미지 (플레이어HP UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon.png"), 12, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"CircleGage_empty", Resources(L"/01_UI/CircleGage_Status.png")); });

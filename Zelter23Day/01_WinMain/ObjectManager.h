@@ -21,12 +21,13 @@ enum class ObjectLayer : int
 	NoninteractObject = 7,
 	Item = 8,
 	Bullet = 9,
-	ToolBook = 10,
-	Button = 11,
-	ObjectButton = 12,
-	Mouse = 13,
-	UI = 14,
-	InventoryItem = 15,
+	Effect = 10,
+	ToolBook = 11,
+	Button = 12,
+	ObjectButton = 13,
+	Mouse = 14,
+	UI = 15,
+	InventoryItem = 16,
 	End
 };
 

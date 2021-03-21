@@ -205,13 +205,6 @@ vector<GameObject*> ObjectManager::Zorder()
 {
 	vector<GameObject*> tmp = mZorderList;
 
-	auto func = [](GameObject* a, GameObject* b)
-	{
-		return a->GetRect().bottom < b->GetRect().bottom;
-	};
-
-	sort(tmp.begin(),tmp.end(), func);
-	
 	//카메라 영역 받아오기
 	RECT cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 
@@ -228,6 +221,13 @@ vector<GameObject*> ObjectManager::Zorder()
 			continue;
 		}
 	}
+
+	auto func = [](GameObject* a, GameObject* b)
+	{
+		return a->GetRect().bottom < b->GetRect().bottom;
+	};
+
+	sort(tmp.begin(), tmp.end(), func);
 
 	return tmp;
 }

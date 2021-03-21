@@ -6,6 +6,7 @@
 #include "InteractObject.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "EffectManager.h"
 
 
 void CollisionManager::Init()
@@ -139,8 +140,8 @@ void CollisionManager::ZombieAttack()
 			{
 				Enemy* enemy = (Enemy*)zombie[i];
 				enemyRC = enemy->GetAttackBox();
-
-				if (IntersectRect(&temp, &playerRC, &enemyRC) && mPlayer->GetIsInvincible() == false)	//좀비가 플레이어를 공격하였다!
+				//좀비가 플레이어를 공격하였다!
+				if (IntersectRect(&temp, &playerRC, &enemyRC) && mPlayer->GetIsInvincible() == false)	
 				{
 					float mAnlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY() , mPlayer->GetX(), mPlayer->GetY());
 					mPlayer->ExecuteKnockback(mAnlge, 500.f);
@@ -155,7 +156,8 @@ void CollisionManager::ZombieAttack()
 					{
 						InteractObject* object =(InteractObject*)interactobject[j];
 						objectRC = object->GetInteractRect();
-						if (IntersectRect(&temp, &objectRC, &enemyRC) && object->GetIsInvincible() == false)	//좀비가 오브젝트를 공격하였다!
+						//좀비가 오브젝트를 공격하였다!
+						if (IntersectRect(&temp, &objectRC, &enemyRC) && object->GetIsInvincible() == false)	
 						{
 							object->SetHp(object->GetHp() - 1);
 							object->SetIsInvincible(true);
@@ -183,12 +185,17 @@ void CollisionManager::PlayerAttack()
 			{
 				Enemy* enemy = (Enemy*)zombie[i];
 				enemyRC = enemy->GetRect();
+				//플레이어가 좀비를 공격하였다!
 				if (IntersectRect(&temp, &playerAttackRC, &enemyRC) && enemy->GetIsInvincible() == false)
 				{
 					float mAngle = Math::GetAngle(mPlayer->GetX(), mPlayer->GetY(), enemy->GetX(), enemy->GetY());
 					enemy->SetHp(enemy->GetHP() - 1);
 					enemy->ExecuteKnockback(mAngle, 200.f);
 					enemy->SetIsInvincible(true);
+					EffectManager* effect = new EffectManager();
+					effect->Init(L"melee_attack", temp, 0, 5, 0.1f);
+
+
 				}
 			}
 		}
@@ -201,10 +208,14 @@ void CollisionManager::PlayerAttack()
 			{
 				InteractObject* object = (InteractObject*)interactobject[i];
 				objectRC = object->GetInteractRect();
+				//플레이어가 오브젝트를 공격하였다!
 				if (IntersectRect(&temp, &playerAttackRC, &objectRC) && object->GetIsInvincible() == false)
 				{
 					object->SetHp(object->GetHp() - 1);
 					object->SetIsInvincible(true);
+					EffectManager* effect = new EffectManager();
+					effect->Init(L"melee_attack", temp, 0, 5, 0.1f);
+
 				}
 			}
 		}

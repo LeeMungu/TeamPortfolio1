@@ -115,6 +115,9 @@
     <Filter Include="FrameWork\ItemManager">
       <UniqueIdentifier>{587edc8e-d8d9-4024-b789-b0436cef3458}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\EffectManager">
+      <UniqueIdentifier>{d00cc572-449e-4280-ba39-b174f56c35fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -294,6 +297,9 @@
     <ClInclude Include="ItemManager.h">
       <Filter>FrameWork\ItemManager</Filter>
     </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>FrameWork\EffectManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -463,6 +469,9 @@
     </ClCompile>
     <ClCompile Include="ItemManager.cpp">
       <Filter>FrameWork\ItemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>FrameWork\EffectManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

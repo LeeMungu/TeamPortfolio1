@@ -6,10 +6,11 @@ enum class ItemType
 {
 	Equipment, // 장비
 	Weapon, // 무기
+	bullet, // 총알
 	Food, // 음식
 	Drink, // 음료
 	Material, // 재료
-	structure //설치물/장애물
+	structure, //설치물/장애물
 };
 enum class ItemKind {
 	drop,

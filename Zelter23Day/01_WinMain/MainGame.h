@@ -9,8 +9,9 @@ class Image;
 
 class MainGame
 {
-	//d2d하면서 더블버퍼 필요없다.
-	//Image* mBackBuffer;	//후면버퍼(건들지마라)
+	
+	//저녁 노을 test
+	ID2D1BitmapRenderTarget* mFirstBuffer;
 public:
 	void Init();
 	void Release();

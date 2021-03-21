@@ -16,8 +16,8 @@ NonInteractObject::NonInteractObject(const wstring imageKey, float x, float y)
 
 void NonInteractObject::Init()
 {
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+	mSizeX = mImage->GetFrameWidth()* NoninteractObjectSize;
+	mSizeY = mImage->GetFrameHeight() * NoninteractObjectSize;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mIndexX = 0;
 	mIndexY = 0;

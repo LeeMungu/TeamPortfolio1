@@ -51,6 +51,9 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
 	SceneManager::GetInstance()->LoadScene(L"LoadingScene");
 	//SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
+
+	//기존 타겟과 다른 버퍼타겟 생성
+	D2DRenderer::GetInstance()->GetRenderTarget()->CreateCompatibleRenderTarget(&mFirstBuffer);
 }
 
 /*
@@ -82,8 +85,30 @@ void MainGame::Render(HDC hdc)
 	D2DRenderer::GetInstance()->BeginRender(D2D1::ColorF::White);
 	//이 안에서 그려라
 	{
-		SceneManager::GetInstance()->Render(hdc);
-		RenderTime(hdc);
+		////인게임렌더링 진행
+		//mFirstBuffer->BeginDraw();
+		//mFirstBuffer->Clear();
+		{
+			SceneManager::GetInstance()->Render(hdc);
+			RenderTime(hdc);
+		}
+		//mFirstBuffer->EndDraw();
+
+		//// {{ 후처리 시작 :: 화면 전체에 마스크로 컬러 멀티플 진행
+		//ID2D1RenderTarget* renderTarget = D2DRenderer::GetInstance()->GetRenderTarget();
+		//ID2D1SolidColorBrush* brush;
+		//renderTarget->CreateSolidColorBrush(D2D1::ColorF(0.2f, 0, 0.3f, 0.2f), &brush);
+		//
+		//ID2D1Bitmap* bitmap;
+		//mFirstBuffer->GetBitmap(&bitmap);
+		//D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, WINSIZEX, WINSIZEY);
+		//
+		//renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+		//renderTarget->DrawBitmap(bitmap, dxArea, 1.0f);
+		////그렸던 게임 장면을 Multiply 해서 백버퍼에 렌더링
+		//renderTarget->FillOpacityMask(bitmap, brush, D2D1_OPACITY_MASK_CONTENT::D2D1_OPACITY_MASK_CONTENT_GRAPHICS, dxArea, dxArea);
+		//brush->Release();
+		//// }} 
 	}
 	D2DRenderer::GetInstance()->EndRender();
 }

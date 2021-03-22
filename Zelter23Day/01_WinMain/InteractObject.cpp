@@ -6,8 +6,10 @@
 #include "Tile.h"
 
 
+
 InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY)
 {
+
 	//위치 판정해주기
 	mTileIndexX = x/TileSize;
 	mTileIndexY = y/TileSize;
@@ -85,6 +87,8 @@ void InteractObject::Update()
 	}
 	if (mHp <= 0)
 	{
+		ItemManager::GetInstance()->randomItem(mImageKey, mX, mY);
+
 		mIsDestroy = true;
 	}
 }

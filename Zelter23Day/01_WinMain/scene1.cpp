@@ -55,7 +55,7 @@ void scene1::Init()
 	mZombie02->SetTileList(mTileList);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie02);
 
-
+	ItemManager::GetInstance()->Init();
 	ObjectManager::GetInstance()->Init();
 	CollisionManager::GetInstance()->Init();
 	camera->ChangeMode(Camera::Mode::Follow);
@@ -63,6 +63,8 @@ void scene1::Init()
 	//true ¼³Á¤ÇÏ¸é ¾À ½Ã°£ Èå¸§
 	Time::GetInstance()->SetIsSceneStart(true);
 	mZombieCount = 0;
+
+
 }
 
 void scene1::Release()
@@ -83,7 +85,7 @@ void scene1::Update()
 {
 	ObjectManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
-
+	ItemManager::GetInstance()->Update();
 
 	Player* tempPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	int playerIndexX = tempPlayer->GetX() / TileSize;

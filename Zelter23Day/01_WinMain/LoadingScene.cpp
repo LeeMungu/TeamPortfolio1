@@ -29,6 +29,7 @@ void LoadingScene::Init()
 	//이미지 (이펙트)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"melee_attack", Resources(L"/08_Effect/effect_1.png"), 6, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"pistol_shoot", Resources(L"/08_Effect/effect_2.png"), 7, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"effect_impact", Resources(L"/08_Effect/effect_impact.png"), 8, 7); });
 
 	//이미지 (플레이어HP UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon.png"), 12, 1); });
@@ -242,6 +243,10 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop1", Resources(L"/02_House/Shop11_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop2", Resources(L"/02_House/Shop11_Wall.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop3", Resources(L"/02_House/Shop11_Roof.png")); });
+
+	//이미지 (아이템)
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WoodBrench1", Resources(L"/07_Item/WoodBrench1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Iron1", Resources(L"/07_Item/Iron1.png")); });
 
 	//이미지 (Loading Scene)
 	IMAGEMANAGER->LoadFromFile(L"LoadingCat", Resources(L"Cat1.png"), 10, 1);

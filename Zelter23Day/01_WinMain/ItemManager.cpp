@@ -53,6 +53,8 @@ ItemManager::ItemManager()
 	mItemImageList.insert(make_pair(L"Iron2", ItemType::Material));
 	mItemImageList.insert(make_pair(L"Steel", ItemType::Material));
 	mItemImageList.insert(make_pair(L"Stone1", ItemType::Material));
+	mItemImageList.insert(make_pair(L"WoodBrench1", ItemType::Material));
+	mItemImageList.insert(make_pair(L"WoodBoard", ItemType::Material));
 
 
 	mItemImageList.insert(make_pair(L"Barrigate", ItemType::structure));
@@ -65,7 +67,6 @@ ItemManager::ItemManager()
 	mItemImageList.insert(make_pair(L"StandTorch", ItemType::structure));
 	mItemImageList.insert(make_pair(L"StorageBox", ItemType::structure));
 	mItemImageList.insert(make_pair(L"Tent", ItemType::structure));
-	mItemImageList.insert(make_pair(L"WoodBoard", ItemType::structure));
 	mItemImageList.insert(make_pair(L"WoodBrench1", ItemType::structure));
 	mItemImageList.insert(make_pair(L"WoodWorkTable", ItemType::structure));
 
@@ -78,7 +79,6 @@ ItemManager::ItemManager()
 void ItemManager::Init()
 {
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
-
 }
 
 void ItemManager::Release()
@@ -98,18 +98,19 @@ void ItemManager::Render(HDC hdc)
 
 void ItemManager::randomItem(wstring objectKey, float x, float y)
 {
-	//앞에 세글자로 구분
+	//앞에 세글자로 오브젝트 구분
 	wstring str = objectKey.substr(0,3);
 
 	//오브젝트에 따라 랜덤으로 아이템 key를 정해준다
 	wstring key;
-
 	
-	if (str == L"Ben") { //벤치
-
+	if (str == L"Ben") { //벤치 - 나뭇가지
+		key = L"Iron1";
+		DropItems(key, x, y);
 	}
 	else if (str == L"Bus") { //버스
-
+		key = L"Iron1";
+		DropItems(key, x, y);
 	}
 	else if (str == L"Cab") { //캐비넷
 
@@ -187,7 +188,8 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 
 	}
 	else if (str == L"Tre") { //나무
-
+		key = L"WoodBrench1";
+		DropItems(key, x, y);
 	}
 	else if (str == L"Tru") { //트럭
 
@@ -204,18 +206,24 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	else if (str == L"Wor") { //작업대
 
 	}
+	else if (str == L"Zom") { //좀비
+
+	}
 	//재료 개수 랜덤
-	DropItems(key, x, y);
+	
 }
 
 void ItemManager::DropItems(wstring key, float x, float y)
 {
 	//아이템을 생성하고 드랍한다
 	Item* item = new Item(key, x, y);
+	item->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Item, item);
 }
 
 void ItemManager::PickUpItems()
 {
+
 	//아이템 줍기
 	//아이템 리스트 받아옴
 	vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Item);
@@ -230,7 +238,7 @@ void ItemManager::PickUpItems()
 			//플레이어와 아이템 충돌 처리
 			if (IntersectRect(&rc, &itemsRc, &playerRc)) {
 				//인벤토리에 어떻게 넣어줄까나?
-				PutInInventory();
+				PutInInventory(((Item*)items[i])->GetKeyName());
 				//아이템 지워줌
 				items[i]->SetIsDestroy(true);
 			}
@@ -238,7 +246,14 @@ void ItemManager::PickUpItems()
 	}
 }
 
-void ItemManager::PutInInventory()
+void ItemManager::PutInInventory(wstring key)
 {
-
+	if (mItemInventoryList.find(key) == mItemInventoryList.end()) { //처음 생성
+		//아이템 리스트 생성 후 인벤토리에서 불러와서 생성, 사용함
+		mItemInventoryList.insert(make_pair(key, 1));
+	}
+	else { //이미 있는 아이템은 count 증가
+		int num = mItemInventoryList[key];
+		mItemInventoryList[key] = num++;
+	}
 }

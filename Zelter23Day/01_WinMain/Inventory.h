@@ -17,6 +17,7 @@ class Inventory : public UI
 
 	BagSlot mSlotList[5][2];
 
+	map<wstring, int> mItemList;
 	//Item* mTestItem[5][2];
 
 public:

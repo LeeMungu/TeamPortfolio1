@@ -8,9 +8,11 @@ Item::Item(wstring imageKey, float x, float y, int count, ItemKind kind) {
 	mY = y;
 	mCount = count;
 	mItemKind = kind;
+
 }
 void Item::Init()
 {
+	
 	//keyName에 따라 이미지 정해줌
 	if (mKeyName == L"Revolver") {
 		mImage = IMAGEMANAGER->FindImage(L"Weapon_pistol");
@@ -288,19 +290,16 @@ void Item::Init()
 	else if (mKeyName == L"WoodBrench1")
 	{
 	mImage = IMAGEMANAGER->FindImage(L"WoodBrench1");
-	mType = ItemType::structure;
+	mType = ItemType::Material;
 	}
 	else if (mKeyName == L"WoodWorkTable")
 	{
 	mImage = IMAGEMANAGER->FindImage(L"WoodWorkTable");
 	mType = ItemType::structure;
 	}
-
-
-
-
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+	
+	mSizeX = mImage->GetWidth();
+	mSizeY = mImage->GetHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
@@ -320,6 +319,10 @@ void Item::Render(HDC hdc)
 	}
 	else {
 		mImage->Render(hdc, mRect.left, mRect.top);
+
+		wstring strSceneTime = to_wstring(mCount);
+		D2DRenderer::GetInstance()
+			->RenderText(mRect.right, mRect.bottom, strSceneTime.c_str(), 10);
 	}
 
 	if (Input::GetInstance()->GetKey(VK_LCONTROL))

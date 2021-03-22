@@ -58,6 +58,8 @@ using namespace std;
 #include "Vector2.h"
 #include "D2DRenderer.h"
 
+#include "ItemManager.h"
+
 //#ifdef UNICODE
 //#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 //#endif

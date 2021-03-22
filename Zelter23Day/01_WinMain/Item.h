@@ -32,5 +32,7 @@ public:
 	void Release(); 
 	void Update();
 	void Render(HDC hdc);
+
+	wstring GetKeyName() { return mKeyName; }
 };
 

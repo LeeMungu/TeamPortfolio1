@@ -41,16 +41,12 @@ void MainGame::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Tile16", Resources(L"04_Tile/Tile (16).png"), 3, 7);
 
 
-	//집 이미지
-	IMAGEMANAGER->LoadFromFile(L"House", Resources(L"/02_House/House01_INSIDE_1.png"),9,9);
-	IMAGEMANAGER->LoadFromFile(L"HouseRoof", Resources(L"/02_House/House01_Roof_1.png"),9,9);
-
 	SceneManager::GetInstance()->AddScene(L"MapToolLoadingScene", new MapToolLoadingScene);
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"LoadingScene", new LoadingScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
-	//SceneManager::GetInstance()->LoadScene(L"LoadingScene");
-	SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
+	SceneManager::GetInstance()->LoadScene(L"LoadingScene");
+	//SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
 
 	//기존 타겟과 다른 버퍼타겟 생성
 	D2DRenderer::GetInstance()->GetRenderTarget()->CreateCompatibleRenderTarget(&mFirstBuffer);

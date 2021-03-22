@@ -79,7 +79,6 @@ ItemManager::ItemManager()
 void ItemManager::Init()
 {
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
-
 }
 
 void ItemManager::Release()
@@ -188,6 +187,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 	else if (str == L"Tre") { //나무
 		key = L"WoodBrench1";
+		DropItems(key, x, y);
 	}
 	else if (str == L"Tru") { //트럭
 
@@ -208,7 +208,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 
 	}
 	//재료 개수 랜덤
-	DropItems(key, x, y);
+	
 }
 
 void ItemManager::DropItems(wstring key, float x, float y)
@@ -221,6 +221,7 @@ void ItemManager::DropItems(wstring key, float x, float y)
 
 void ItemManager::PickUpItems()
 {
+
 	//아이템 줍기
 	//아이템 리스트 받아옴
 	vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Item);

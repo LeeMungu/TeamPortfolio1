@@ -56,6 +56,7 @@ void HousingObject::Init()
 	mIndexX = 0;
 	mIndexY = 0;
 	mAlpha = 1.f;
+	
 }
 
 void HousingObject::Release()
@@ -65,6 +66,8 @@ void HousingObject::Release()
 
 void HousingObject::Update()
 {
+	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	if (mHouselayer == HouseLayer::Floor)
 	{
@@ -78,10 +81,25 @@ void HousingObject::Update()
 	{
 		mRect.bottom = mRect.bottom ;
 	}
-	if (mImageKey == L"House1")
+
+	
+	mHouse01Rect1 = RectMakeCenter(mX, mY - 20, mSizeX / 2 + 100, mSizeY / 2 - 18);
+	mHouse01Rect2 = RectMakeCenter(mX + 140, mY + 230, mSizeX / 4, mSizeY / 4);
+	
+	
+
+	RECT tempRc;
+	RECT playerRc = mPlayer->GetRect();
+	if (IntersectRect(&tempRc, &mHouse01Rect1, &playerRc) || IntersectRect(&tempRc, &mHouse01Rect2, &playerRc))
 	{
-		mHouse01Rect1 = RectMakeCenter(mX, mY - 20, mSizeX / 2 + 100, mSizeY / 2 - 18);
+		mAlpha = 0.f;
 	}
+	else
+	{
+		mAlpha = 1.f;
+	}
+	
+	
 }
 
 void HousingObject::Render(HDC hdc)
@@ -106,25 +124,27 @@ void HousingObject::Render(HDC hdc)
 		if (mHouselayer == HouseLayer::Roof)
 		{
 			CameraManager::GetInstance()->GetMainCamera()
-				->AlphaScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY,mAlpha);
+				->AlphaScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY, mAlpha);
 		}
 		else
 		{
 			CameraManager::GetInstance()->GetMainCamera()
-			->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY);
+				->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY);
+
 		}
-		
+
+		if (Input::GetInstance()->GetKey(VK_LCONTROL))
+		{
+			//이미지 렉트
+			CameraManager::GetInstance()->GetMainCamera()
+				->RenderRect(hdc, mRect);
+
+			CameraManager::GetInstance()->GetMainCamera()
+				->RenderRect(hdc, mHouse01Rect1, Gizmo::Color::Blue2);
+			CameraManager::GetInstance()->GetMainCamera()
+				->RenderRect(hdc, mHouse01Rect2, Gizmo::Color::Blue2);
+		}
 	}
 
-	if (Input::GetInstance()->GetKey(VK_LCONTROL))
-	{
-		//이미지 렉트
-		CameraManager::GetInstance()->GetMainCamera()
-			->RenderRect(hdc, mRect);
-
-		CameraManager::GetInstance()->GetMainCamera()
-			->RenderRect(hdc, mHouse01Rect1, Gizmo::Color::Blue2);
-		CameraManager::GetInstance()->GetMainCamera()
-			->RenderRect(hdc, mHouse01Rect2, Gizmo::Color::Blue2);
-	}
+	
 }

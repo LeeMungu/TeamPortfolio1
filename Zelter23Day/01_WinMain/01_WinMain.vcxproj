@@ -200,6 +200,7 @@
     <ClInclude Include="SmartWatch.h" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="SteminaUI.h" />
+    <ClInclude Include="Tablet.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ThirstUI.h" />
     <ClInclude Include="Tile.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="SmartWatch.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="SteminaUI.cpp" />
+    <ClCompile Include="Tablet.cpp" />
     <ClCompile Include="ThirstUI.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Time.cpp" />

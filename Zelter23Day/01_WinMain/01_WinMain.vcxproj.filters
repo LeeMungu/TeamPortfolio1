@@ -303,6 +303,9 @@
     <ClInclude Include="EffectImpact.h">
       <Filter>FrameWork\EffectManager</Filter>
     </ClInclude>
+    <ClInclude Include="EffectImpactManager.h">
+      <Filter>FrameWork\EffectManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -477,6 +480,9 @@
       <Filter>FrameWork\EffectManager</Filter>
     </ClCompile>
     <ClCompile Include="EffectImpact.cpp">
+      <Filter>FrameWork\EffectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectImpactManager.cpp">
       <Filter>FrameWork\EffectManager</Filter>
     </ClCompile>
   </ItemGroup>

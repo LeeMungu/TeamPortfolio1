@@ -4,20 +4,21 @@
 #include "Camera.h"
 #include "Animation.h"
 
+#define effectscale 2
 EffectImpact::EffectImpact(int x, int y, int indexX, int indexY)
 {
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Effect, this);
 	mImage = IMAGEMANAGER->GetInstance()->FindImage(L"effect_impact");
 	mX = x;
 	mY = y;	
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+	mSizeX = mImage->GetFrameWidth() * effectscale;
+	mSizeY = mImage->GetFrameHeight() * effectscale;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mIndexX = indexX;
 	mIndexY = indexY;
-	mAngle = Random::GetInstance()->RandomInt(50, 100) * 0.01f;
-	mSpeed = Random::GetInstance()->RandomInt(30, 70);
-	mGravity = 10.f;
+	mAngle = Random::GetInstance()->RandomInt(70, 240) * 0.01f;
+	mSpeed = Random::GetInstance()->RandomInt(100, 130);
+	mGravity = 150.f;
 
 }
 
@@ -34,6 +35,10 @@ void EffectImpact::Update()
 	mX += cosf(mAngle) * mSpeed * Time::GetInstance()->DeltaTime();
 	mY -= sinf(mAngle) * mSpeed * Time::GetInstance()->DeltaTime();
 	mSpeed -= mGravity * Time::GetInstance()->DeltaTime();
+	if (mSpeed <= 0)
+	{
+		mIsDestroy = true;
+	}
 
 }
 

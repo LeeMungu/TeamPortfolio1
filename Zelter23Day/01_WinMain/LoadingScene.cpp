@@ -246,6 +246,7 @@ void LoadingScene::Init()
 
 	//이미지 (아이템)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WoodBrench1", Resources(L"/07_Item/WoodBrench1.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Iron1", Resources(L"/07_Item/Iron1.png")); });
 
 	//이미지 (Loading Scene)
 	IMAGEMANAGER->LoadFromFile(L"LoadingCat", Resources(L"Cat1.png"), 10, 1);

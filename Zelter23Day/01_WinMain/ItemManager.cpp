@@ -105,10 +105,12 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	wstring key;
 	
 	if (str == L"Ben") { //벤치 - 나뭇가지
-		key = L"WoodBrench1";
+		key = L"Iron1";
+		DropItems(key, x, y);
 	}
 	else if (str == L"Bus") { //버스
 		key = L"Iron1";
+		DropItems(key, x, y);
 	}
 	else if (str == L"Cab") { //캐비넷
 
@@ -236,7 +238,7 @@ void ItemManager::PickUpItems()
 			//플레이어와 아이템 충돌 처리
 			if (IntersectRect(&rc, &itemsRc, &playerRc)) {
 				//인벤토리에 어떻게 넣어줄까나?
-				PutInInventory();
+				PutInInventory(((Item*)items[i])->GetKeyName());
 				//아이템 지워줌
 				items[i]->SetIsDestroy(true);
 			}
@@ -244,7 +246,14 @@ void ItemManager::PickUpItems()
 	}
 }
 
-void ItemManager::PutInInventory()
+void ItemManager::PutInInventory(wstring key)
 {
-
+	if (mItemInventoryList.find(key) == mItemInventoryList.end()) { //처음 생성
+		//아이템 리스트 생성 후 인벤토리에서 불러와서 생성, 사용함
+		mItemInventoryList.insert(make_pair(key, 1));
+	}
+	else { //이미 있는 아이템은 count 증가
+		int num = mItemInventoryList[key];
+		mItemInventoryList[key] = num++;
+	}
 }

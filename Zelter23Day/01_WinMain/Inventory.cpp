@@ -13,7 +13,7 @@ void Inventory::Init()
 
 	mBaseImage = IMAGEMANAGER->FindImage(L"Inventory_base");
 	mIsOpened = false;
-
+	mIsItem = false;
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 2; j++) {
 			mSlotList[i][j].x = mX + i * 60 + 170;
@@ -55,19 +55,24 @@ void Inventory::Update()
 		}
 		
 		//아이템 리스트 불러옴
-		int k = 0;
-		int q = 0;
-		for (iter; iter != mItemList.end(); iter++) {
-			Item* item = new Item(iter->first, mSlotList[k][q].x +30, mSlotList[k][q].y + 30,
-				iter->second, ItemKind::inventory);
-			item->Init();
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
-			k++;
-			if (k >= 5) {
-				k = 0;
-				q++;
+		if (mIsOpened==true && mIsItem == false)
+		{
+			int k = 0;
+			int q = 0;
+			for (iter; iter != mItemList.end(); iter++) {
+				Item* item = new Item(iter->first, mSlotList[k][q].x + 30, mSlotList[k][q].y + 30,
+					iter->second, ItemKind::inventory);
+				item->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
+				k++;
+				if (k >= 5) {
+					k = 0;
+					q++;
+				}
 			}
+			mIsItem = true;
 		}
+		
 		
 	}
 	else { //인벤토리 열려있을 때
@@ -76,7 +81,7 @@ void Inventory::Update()
 			mX = -1000;
 			mY = -1000;
 			mIsOpened = false;
-
+			mIsItem = false;
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 2; j++) {
 					mSlotList[i][j].x = mX + i * 60 + 170;

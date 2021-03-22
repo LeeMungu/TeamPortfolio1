@@ -83,7 +83,7 @@ void scene1::Update()
 {
 	ObjectManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
-	//ItemManager::GetInstance()->Update();
+	ItemManager::GetInstance()->Update();
 	
 
 	Player* tempPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");

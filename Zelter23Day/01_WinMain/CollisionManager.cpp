@@ -13,6 +13,7 @@
 void CollisionManager::Init()
 {
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+
 }
 
 void CollisionManager::Update()
@@ -195,7 +196,11 @@ void CollisionManager::PlayerAttack()
 					enemy->SetIsInvincible(true);
 					EffectManager* effect = new EffectManager(L"melee_attack", temp, 0, 5, 0.1f);
 
-					EffectImpact* impact = new EffectImpact(enemy->GetX(), enemy->GetY(), 0, 0);
+					for (int i = 0; i < 8; ++i)
+					{
+						EffectImpact* impact = new EffectImpact(enemy->GetX(), enemy->GetY(), i, 3);
+					}
+
 
 				}
 			}
@@ -215,7 +220,12 @@ void CollisionManager::PlayerAttack()
 					object->SetHp(object->GetHp() - 1);
 					object->SetIsInvincible(true);
 					EffectManager* effect = new EffectManager(L"melee_attack",temp,0,5,0.1f);
-					EffectImpact* impact = new EffectImpact(object->GetX(), object->GetY(), 0, 0);
+					for (int i = 0; i < 8; ++i)
+					{
+						EffectImpact* impact = new EffectImpact(object->GetX(), object->GetY(), i, 1);
+					}
+
+
 				}
 			}
 		}
@@ -252,6 +262,11 @@ void CollisionManager::PlayerShoot()
 					}
 					EffectManager* effect = new EffectManager(L"pistol_shoot", temp, 0, 6, 0.1f);
 					bullet->SetIsShot(true);
+
+					for (int i = 0; i < 8; ++i)
+					{
+						EffectImpact* impact = new EffectImpact(enemy->GetX(), enemy->GetY(), i, 3);
+					}
 				}
 			}
 			for (int k = 0; k < interactobject.size(); ++k)
@@ -267,6 +282,11 @@ void CollisionManager::PlayerShoot()
 					}
 					EffectManager* effect = new EffectManager(L"pistol_shoot", temp, 0, 6, 0.1f);
 					bullet->SetIsShot(true);
+
+					for (int i = 0; i < 8; ++i)
+					{
+						EffectImpact* impact = new EffectImpact(object->GetX(), object->GetY(), i, 1);
+					}
 				}
 			}
 		}

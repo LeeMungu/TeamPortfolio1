@@ -18,6 +18,7 @@ public:
 
 public:
 	EffectImpact(int x, int y, int indexX, int indexY);
+
 	void Init()override;
 	void Release()override;
 	void Update()override;

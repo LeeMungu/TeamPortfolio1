@@ -438,23 +438,27 @@ void Player::PlayerCtrl() {
 			//공격모션
 			if (Input::GetInstance()->GetKeyDown('F'))
 			{
-				mPlayerState = PlayerState::attack;
-
-				if (_mousePosition.x < playerPoint.x)
+				mIsMousePosition = false;
+				if (mIsMousePosition == false)
 				{
-					mImage = IMAGEMANAGER->FindImage(L"Player_attack");
-					mCurrentAnimation = mLeftAttack;
-					mSpeed = 0.f;
+					mPlayerState = PlayerState::attack;
 
-				}
-				else
-				{
-					mImage = IMAGEMANAGER->FindImage(L"Player_attack");
-					mCurrentAnimation = mRightAttack;
-					mSpeed = 0.f;
+					if (_mousePosition.x < playerPoint.x)
+					{
+						mImage = IMAGEMANAGER->FindImage(L"Player_attack");
+						mCurrentAnimation = mLeftAttack;
+						mSpeed = 0.f;
 
+					}
+					else
+					{
+						mImage = IMAGEMANAGER->FindImage(L"Player_attack");
+						mCurrentAnimation = mRightAttack;
+						mSpeed = 0.f;
+
+					}
+					mCurrentAnimation->Play();
 				}
-				mCurrentAnimation->Play();
 			}
 		
 	}//공격모션 끝나면

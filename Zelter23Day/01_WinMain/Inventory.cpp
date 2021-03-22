@@ -60,7 +60,7 @@ void Inventory::Update()
 			int k = 0;
 			int q = 0;
 			for (iter; iter != mItemList.end(); iter++) {
-				Item* item = new Item(iter->first, mSlotList[k][q].x + 20, mSlotList[k][q].y + 10,
+				Item* item = new Item(iter->first, mSlotList[k][q].x - 500, mSlotList[k][q].y + 10,
 					iter->second, ItemKind::inventory);
 				item->Init();
 				ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);

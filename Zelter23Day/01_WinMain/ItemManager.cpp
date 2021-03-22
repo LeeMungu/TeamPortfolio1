@@ -189,7 +189,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 	else if (str == L"Tre") { //나무
 		key = L"WoodBrench1";
-		DropItems(key, x, y);
+		DropItems(key, x, y + 95);
 	}
 	else if (str == L"Tru") { //트럭
 

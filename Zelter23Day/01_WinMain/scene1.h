@@ -8,6 +8,7 @@ class Player;
 class Zombie01;
 class SmartWatch;
 class PlayerHPUI;
+class Tablet;
 
 #define TileSize 32
 #define Pallette 64
@@ -31,6 +32,7 @@ class scene1 : public Scene
 	Zombie01* mZombie01;
 	SmartWatch* mSmartWatch;
 	PlayerHPUI* mPlayerHPUI;
+	Tablet* mTablet;
 
 	int mZombieCount;
 	float mZombieCoolTime;

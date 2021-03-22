@@ -310,7 +310,7 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	//시간에 따른 길이 조정 : 0~1.f <-  1.f~0~1.f로 만들고 싶다.
 	float heightSize = ((float)((((int)time) % (60 * 24))*100) / (60 * 24))/100.f;
 	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(),
-		mSize.Y * height / this->GetFrameHeight());// *heightSize);
+		mSize.Y * height / this->GetFrameHeight() *heightSize);
 	
 
 	//
@@ -322,14 +322,15 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	//renderTarget->CreateSolidColorBrush(color, &brush);
 	//
 
-	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, 
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale,
 		//사이즈 중심
-		D2D1::Point2F(size.X / 2.f, size.Y/2.f));
+		D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, 
 		//앵글 돌리는 회전 중심점
 		D2D1::Point2F(size.X / 2.f, size.Y));
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y); //중점 잡기
-	
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
+		//*(1.f+size.Y*(1.f- heightSize))); //중점 잡기
+
 	D2D_MATRIX_3X2_F skewMatrix = D2D1::Matrix3x2F::Skew(
 		//회전앵글0~180.f : 조건은 0~30, 150~180
 		-40.f+80.f* heightSize, 0,

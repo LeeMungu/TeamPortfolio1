@@ -48,5 +48,7 @@ public:
 	int GetTileCountX()const { return mTileCountX; }
 	int GetTileCountY()const { return mTileCountY; }
 
+	HouseLayer GethouseLayer() { return mHouselayer; }
+
 };
 

@@ -4,6 +4,7 @@
 #include "Image.h"
 #include <fstream>
 #include "Camera.h"
+#include "Player.h"
 
 
 HousingObject::HousingObject(const wstring& name, float x, float y, int tileCountX, int tileCountY)

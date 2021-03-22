@@ -244,6 +244,9 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop2", Resources(L"/02_House/Shop11_Wall.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop3", Resources(L"/02_House/Shop11_Roof.png")); });
 
+	//이미지 (아이템)
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WoodBrench1", Resources(L"/07_Item/WoodBrench1.png")); });
+
 	//이미지 (Loading Scene)
 	IMAGEMANAGER->LoadFromFile(L"LoadingCat", Resources(L"Cat1.png"), 10, 1);
 

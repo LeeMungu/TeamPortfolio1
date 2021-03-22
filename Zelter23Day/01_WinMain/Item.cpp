@@ -319,10 +319,10 @@ void Item::Render(HDC hdc)
 	}
 	else {
 		mImage->Render(hdc, mRect.left, mRect.top);
-
+		
 		wstring strSceneTime = to_wstring(mCount);
 		D2DRenderer::GetInstance()
-			->RenderText(mRect.right, mRect.bottom, strSceneTime.c_str(), 10);
+			->RenderText(mX, mY, strSceneTime.c_str(), 10);
 	}
 
 	if (Input::GetInstance()->GetKey(VK_LCONTROL))

@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "EffectManager.h"
+#include "EffectImpact.h"
 
 
 void CollisionManager::Init()
@@ -194,7 +195,7 @@ void CollisionManager::PlayerAttack()
 					enemy->SetIsInvincible(true);
 					EffectManager* effect = new EffectManager(L"melee_attack", temp, 0, 5, 0.1f);
 
-
+					EffectImpact* impact = new EffectImpact(enemy->GetX(), enemy->GetY(), 0, 0);
 
 				}
 			}
@@ -214,7 +215,7 @@ void CollisionManager::PlayerAttack()
 					object->SetHp(object->GetHp() - 1);
 					object->SetIsInvincible(true);
 					EffectManager* effect = new EffectManager(L"melee_attack",temp,0,5,0.1f);
-
+					EffectImpact* impact = new EffectImpact(object->GetX(), object->GetY(), 0, 0);
 				}
 			}
 		}

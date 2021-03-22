@@ -17,6 +17,7 @@ class InteractObject : public GameObject
 	int mHp;
 	int mIndexX;
 	int mIndexY;
+	int mImpactY;
 	//차지하는 타일 갯수
 	int mTileCountX, mTileCountY;
 	//시작 타일 배열값

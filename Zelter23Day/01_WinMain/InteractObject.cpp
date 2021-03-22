@@ -74,12 +74,21 @@ void InteractObject::Update()
 	if (mIsInvincible == true)
 	{
 		mInvincibleCount += Time::GetInstance()->DeltaTime();
+
+		mSizeY -= 20 * Time::GetInstance()->DeltaTime();
+		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+
 	}
 	if (mInvincibleCount > 0.4f && mIsInvincible == true)
 	{
 		mIsInvincible = false;
 		mInvincibleCount = 0.f;
-	}	
+	}
+	if (mIsInvincible == false)
+	{
+		mSizeY = mImage->GetFrameHeight() * InteractObjectSize;
+		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	}
 
 	if (mImage->GetMaxFrameX()>1&& mHp <= 5)
 	{

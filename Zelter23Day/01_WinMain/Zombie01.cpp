@@ -80,6 +80,7 @@ void Zombie01::Init()
 	mIsAttackTrigger = false;
 	mSwithtime = 0;
 	mDelayTime = 0;
+	mChaseDistance = 150;
 }
 
 void Zombie01::Release()
@@ -98,7 +99,7 @@ void Zombie01::Update()
 	
 	mDistance = Math::GetDistance(mPlayer->GetX(), mPlayer->GetY(), mX, mY);
 
-	if (mDistance < 150 && mTargeting==false)
+	if (mDistance < mChaseDistance && mTargeting==false)
 	{
 		mTargeting = true;
 		mZombistate = ZombieState::Chase;
@@ -141,6 +142,10 @@ void Zombie01::Update()
 		mInvincibleCount = 0.f;
 	}
 
+	if (mChaseDistance > 1300)
+	{
+		mChaseDistance = 150;
+	}
 
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
@@ -172,8 +177,8 @@ void Zombie01::Render(HDC hdc)
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mAttackBox);
 	}
 	
-	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mAngle), 30);
-	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mDistance), 30);
+	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, to_wstring(mChaseDistance), 30);
+	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mDistance), 30);
 	//if (mZombistate == ZombieState::Patrol)
 	//{
 	//	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"Б¤Вы", 30);

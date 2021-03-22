@@ -10,6 +10,7 @@ class Zombie01 : public Enemy
 	vector<vector<Tile*>> mTileList;
 	float mAngle;
 	float mDistance;
+	//float mChaseDistance;
 	ZombieState mZombistate;
 
 	bool mIsSwichPos;
@@ -39,5 +40,8 @@ public:
 
 	RECT GetAttackRect() { return mAttackRect;}
 	void SetAttackRect(RECT rect) { mAttackRect = rect; }
+
+	//float GetChaseDistance() { return mChaseDistance; }
+	//void SetChaseDistance(int x) { mChaseDistance *= x; }
 };
 

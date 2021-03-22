@@ -49,6 +49,7 @@ protected:
 	float mAngle;
 	float mInvincibleCount;
 	float mDelay;
+	float mChaseDistance;
 	RECT mCollisionBox;
 	RECT mAttackBox;
 
@@ -89,6 +90,9 @@ public:
 	void DropItem(Item item);
 	void SetAnimation();
 	virtual void Attack() {};
+
+	float GetChaseDistance() { return mChaseDistance; }
+	void SetChaseDistance(int x) { mChaseDistance = mChaseDistance * x; }
 
 
 };

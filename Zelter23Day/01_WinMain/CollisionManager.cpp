@@ -194,6 +194,7 @@ void CollisionManager::PlayerAttack()
 					enemy->SetHp(enemy->GetHP() - 1);
 					enemy->ExecuteKnockback(mAngle, 200.f);
 					enemy->SetIsInvincible(true);
+					
 					EffectManager* effect = new EffectManager(L"melee_attack", temp, 0, 5, 0.1f);
 
 					for (int i = 0; i < 8; ++i)
@@ -258,7 +259,7 @@ void CollisionManager::PlayerShoot()
 					{
 						enemy->SetHp(enemy->GetHP() - 1);
 						enemy->SetIsInvincible(true);
-
+						enemy->SetChaseDistance(4);
 					}
 					EffectManager* effect = new EffectManager(L"pistol_shoot", temp, 0, 6, 0.1f);
 					bullet->SetIsShot(true);

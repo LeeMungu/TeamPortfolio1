@@ -5,6 +5,7 @@
 
 
 #include "GameObject.h"
+#include "HousingObject.h"
 ObjectManager::ObjectManager()
 {
 	//ObjectLayer 별로 벡터 하나씩 맵에 집어 넣는다.
@@ -87,17 +88,16 @@ void ObjectManager::Update()
 	for (; iter1 != mObjectList.find(ObjectLayer::Item); ++iter1)
 	{
 		//범위를 줄여서 필요없어졌다.
-		//if (iter1->first == ObjectLayer::Enemy ||
-		//	iter1->first == ObjectLayer::Player ||
-		//	iter1->first == ObjectLayer::InteractObject ||
-		//	iter1->first == ObjectLayer::NoninteractObject ||
-		//{
-		iter1->first == ObjectLayer::HousingObject;
-		for (int i = 0; i < iter1->second.size(); ++i)
+		if (iter1->first == ObjectLayer::Enemy ||
+			iter1->first == ObjectLayer::Player ||
+			iter1->first == ObjectLayer::InteractObject ||
+			iter1->first == ObjectLayer::NoninteractObject )
 		{
-			mZorderList.push_back(iter1->second[i]);
+			for (int i = 0; i < iter1->second.size(); ++i)
+			{
+				mZorderList.push_back(iter1->second[i]);
+			}
 		}
-		//}
 	}
 	
 	mZorderRenderList = Zorder();
@@ -105,11 +105,35 @@ void ObjectManager::Update()
 
 void ObjectManager::Render(HDC hdc)
 {
+	ObjectIter iterhouse = mObjectList.find(ObjectLayer::HousingObject);
+	for (int i = 0; i < iterhouse->second.size(); ++i)
+	{
+		if (iterhouse->second[i]->GetIsActive() == true)
+		{
+			if (((HousingObject*)iterhouse->second[i])->GethouseLayer() != HouseLayer::Roof)
+			{
+				iterhouse->second[i]->Render(hdc);
+			}
+		}
+	}
+
 	//오브젝트레이어 앞에친구들은 안그려준다. 주의-
 	for (int i = 0; i < mZorderRenderList.size(); ++i)
 	{
 		mZorderRenderList[i]->Render(hdc);
 	}
+
+	for (int i = 0; i < iterhouse->second.size(); ++i)
+	{
+		if (iterhouse->second[i]->GetIsActive() == true)
+		{
+			if (((HousingObject*)iterhouse->second[i])->GethouseLayer() == HouseLayer::Roof)
+			{
+				iterhouse->second[i]->Render(hdc);
+			}
+		}
+	}
+
 	ObjectIter iter = mObjectList.find(ObjectLayer::Item);
 	for (; iter != mObjectList.end(); ++iter)
 	{

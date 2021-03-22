@@ -11,6 +11,7 @@ enum class HouseLayer : int
 
 class Tile;
 class Image;
+class Player;
 class HousingObject : public GameObject
 {
 	Image* mImage;
@@ -28,7 +29,9 @@ class HousingObject : public GameObject
 	
 	HouseLayer mHouselayer;
 	float mAlpha;
-
+	RECT mHouse01Rect1;
+	RECT mHouse01Rect2;
+	Player* mPlayer;
 public:
 	HousingObject(const wstring& name, float x, float y, int tileCountX, int tileCountY);
 
@@ -46,6 +49,8 @@ public:
 	int GetTileIndexY()const { return mTileIndexY; }
 	int GetTileCountX()const { return mTileCountX; }
 	int GetTileCountY()const { return mTileCountY; }
+
+	HouseLayer GethouseLayer() { return mHouselayer; }
 
 };
 

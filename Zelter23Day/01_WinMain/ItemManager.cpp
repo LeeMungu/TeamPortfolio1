@@ -254,6 +254,6 @@ void ItemManager::PutInInventory(wstring key)
 	}
 	else { //이미 있는 아이템은 count 증가
 		int num = mItemInventoryList[key];
-		mItemInventoryList[key] = num++;
+		mItemInventoryList[key] = ++num;
 	}
 }

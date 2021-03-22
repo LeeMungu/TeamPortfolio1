@@ -5,10 +5,19 @@ class Image;
 class Animation;
 class EffectImpact : public GameObject
 {
+public:
 	Image* mImage;
 	Animation* mAnimation;
+	Animation* mCurrentAnimation;
+	int mIndexX;
+	int mIndexY;
+	float mAngle;
+	float mSpeed;
+	float mGravity;
+
+
 public:
-	EffectImpact(float x, float y, int startframeY);
+	EffectImpact(int x, int y, int indexX, int indexY);
 	void Init()override;
 	void Release()override;
 	void Update()override;

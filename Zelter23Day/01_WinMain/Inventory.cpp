@@ -22,10 +22,6 @@ void Inventory::Init()
 			mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 		}
 	}
-
-
-	//mTestItem[0][0] = new Item(L"Revolver", mSlotList[0][0].x, mSlotList[0][0].y, ItemKind::inventory);
-	//ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mTestItem[0][0]);
 }
 
 void Inventory::Release()
@@ -40,8 +36,8 @@ void Inventory::Update()
 	
 
 	//임시로 위치 조정해서 열고 닫는것처럼 보임
-	if (mIsOpened == false) {
-		if (Input::GetInstance()->GetKeyDown('I')) {
+	if (mIsOpened == false) { //인벤토리 닫혀있을때 
+		if (Input::GetInstance()->GetKeyDown('I')) { //i 누르면
 			mX = WINSIZEX / 2 - 30;
 			mY = WINSIZEY - 255 * 2;
 			mIsOpened = true;
@@ -56,24 +52,27 @@ void Inventory::Update()
 					
 				}
 			}
-
-			int k = 0;
-			int q = 0;
-			for (iter; iter != mItemList.end(); iter++) {
-				Item* item = new Item(iter->first, mSlotList[k][q].x + 20, mSlotList[k][q].y + 10,
-					iter->second, ItemKind::inventory);
-				item->Init();
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
-				k++;
-				if (k >= 5) {
-					k = 0;
-					q++;
-				}
+		}
+		
+		//아이템 리스트 불러옴
+		int k = 0;
+		int q = 0;
+		for (iter; iter != mItemList.end(); iter++) {
+			Item* item = new Item(iter->first, mSlotList[k][q].x +30, mSlotList[k][q].y + 30,
+				iter->second, ItemKind::inventory);
+			item->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
+			k++;
+			if (k >= 5) {
+				k = 0;
+				q++;
 			}
 		}
+		
 	}
-	else {
-		if (Input::GetInstance()->GetKeyDown('I')) {
+	else { //인벤토리 열려있을 때
+		//열려있을 때 숫자 늘어나고 줄어들고....
+		if (Input::GetInstance()->GetKeyDown('I')) {//i키 누르면
 			mX = -1000;
 			mY = -1000;
 			mIsOpened = false;
@@ -87,15 +86,12 @@ void Inventory::Update()
 			}
 
 			mItemList.clear();
-			
+
 			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 			for (int i = 0; i < items.size(); ++i) {
 					items[i]->SetIsDestroy(true);
 			}
-
-			//mTestItem[0][0]->SetX(mSlotList[0][0].x);
-			//mTestItem[0][0]->SetY(mSlotList[0][0].y);
 		}
 	}
 	

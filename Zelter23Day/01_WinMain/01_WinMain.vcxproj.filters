@@ -303,8 +303,13 @@
     <ClInclude Include="EffectImpact.h">
       <Filter>FrameWork\EffectManager</Filter>
     </ClInclude>
+
+    <ClInclude Include="EffectImpactManager.h">
+      <Filter>FrameWork\EffectManager</Filter>
+    </ClInclude>
     <ClInclude Include="Tablet.h">
       <Filter>MainGame\UI\Statu</Filter>
+
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -482,8 +487,13 @@
     <ClCompile Include="EffectImpact.cpp">
       <Filter>FrameWork\EffectManager</Filter>
     </ClCompile>
+
+    <ClCompile Include="EffectImpactManager.cpp">
+      <Filter>FrameWork\EffectManager</Filter>
+      </ClCompile>
     <ClCompile Include="Tablet.cpp">
       <Filter>MainGame\UI\Statu</Filter>
+
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

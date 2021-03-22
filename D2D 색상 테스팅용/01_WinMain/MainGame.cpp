@@ -30,46 +30,46 @@ void MainGame::Update()
     mAngle += 360.f * Time::GetInstance()->DeltaTime();
     if(Input::GetInstance()->GetKey('A'))
     { 
-        mR += 0.1f*Time::GetInstance()->DeltaTime();
+        mR += 0.5f*Time::GetInstance()->DeltaTime();
     }
     else if (Input::GetInstance()->GetKey('Z'))
     {
-        mR -= 0.1f * Time::GetInstance()->DeltaTime();
+        mR -= 0.5f * Time::GetInstance()->DeltaTime();
     }
     if (Input::GetInstance()->GetKey('S'))
     {
-        mG += 0.1f * Time::GetInstance()->DeltaTime();
+        mG += 0.5f * Time::GetInstance()->DeltaTime();
     }
     else if (Input::GetInstance()->GetKey('X'))
     {
-        mG -= 0.1f * Time::GetInstance()->DeltaTime();
+        mG -= 0.5f * Time::GetInstance()->DeltaTime();
     }
     if (Input::GetInstance()->GetKey('D'))
     {
-        mB += 0.1f * Time::GetInstance()->DeltaTime();
+        mB += 0.5f * Time::GetInstance()->DeltaTime();
     }
     else if (Input::GetInstance()->GetKey('C'))
     {
-        mB -= 0.1f * Time::GetInstance()->DeltaTime();
+        mB -= 0.5f * Time::GetInstance()->DeltaTime();
     }
     if (Input::GetInstance()->GetKey('F'))
     {
-        mA += 0.1f * Time::GetInstance()->DeltaTime();
+        mA += 0.5f * Time::GetInstance()->DeltaTime();
     }
     else if (Input::GetInstance()->GetKey('V'))
     {
-        mA -= 0.1f * Time::GetInstance()->DeltaTime();
+        mA -= 0.5f * Time::GetInstance()->DeltaTime();
     }
     
     //º¸Á¤
-    if (mR > 1.f) mR = 0;
-    else if (mR < 0) mR = 1.f;
-    if (mG > 1.f) mG = 0;
-    else if (mG < 0) mG = 1.f;    
-    if (mB > 1.f) mB = 0;
-    else if (mB < 0) mB = 1.f;
-    if (mA > 1.f) mA = 0;
-    else if (mA < 0) mA = 1.f;
+    if (mR > 1.f) mR = 1.f;
+    else if (mR < 0) mR = 0.f;
+    if (mG > 1.f) mG = 1.f;
+    else if (mG < 0) mG = 0.f;    
+    if (mB > 1.f) mB = 1.f;
+    else if (mB < 0) mB = 0.f;
+    if (mA > 1.f) mA = 1.f;
+    else if (mA < 0) mA = 0.f;
 }
 
 

@@ -564,7 +564,7 @@ void MapToolScene::Save()
 		//오브젝트레이어 구분, 갯수 <- *없으면 아에 기록도 하지 않는다.
 		int intObjectLayer = (int)ObjectLayer::HousingObject;
 		vector<GameObject*> tempObject = ObjectManager::GetInstance()->GetObjectList((ObjectLayer)intObjectLayer);
-		
+		//mTileIndexX = x / TileSize;
 		saveStream << intObjectLayer;
 		saveStream << ',';
 		saveStream << tempObject.size();
@@ -580,9 +580,9 @@ void MapToolScene::Save()
 				str.assign(imagekey.begin(), imagekey.end());
 				saveStream << str;
 				saveStream << ",";
-				saveStream << tempObject[i]->GetX();
+				saveStream << ((HousingObject*)tempObject[i])->GetTileIndexX()*TileSize;
 				saveStream << ",";
-				saveStream << tempObject[i]->GetY();
+				saveStream << ((HousingObject*)tempObject[i])->GetTileIndexY()*TileSize;
 				saveStream << ",";
 				saveStream << ((HousingObject*)tempObject[i])->GetTileCountX();
 				saveStream << ",";

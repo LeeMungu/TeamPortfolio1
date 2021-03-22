@@ -31,12 +31,15 @@ class scene1 : public Scene
 	Zombie01* mZombie01;
 	SmartWatch* mSmartWatch;
 	PlayerHPUI* mPlayerHPUI;
+
+	int mZombieCount;
 public:
 	void Init()override;
 	void Release()override;
 	void Update()override;
 	void Render(HDC hdc)override;
 	void Load();
+	void EnemyRespown(float x, float y);
 
 private:
 

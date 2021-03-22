@@ -57,6 +57,19 @@ void HousingObject::Release()
 
 void HousingObject::Update()
 {
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	if (mHouselayer == HouseLayer::Floor)
+	{
+		mRect.bottom = mRect.bottom-2;
+	}
+	else if (mHouselayer == HouseLayer::HouseWall)
+	{
+		mRect.bottom = mRect.bottom - 1;
+	}
+	else if(mHouselayer == HouseLayer::Roof)
+	{
+		mRect.bottom = mRect.bottom ;
+	}
 
 }
 

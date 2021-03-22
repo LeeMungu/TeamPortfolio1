@@ -73,7 +73,7 @@ void Weapon::Update()
 
 void Weapon::Render(HDC hdc)
 {
-	mImage->SetAngle(mAngle);
-	CameraManager::GetInstance()->GetMainCamera()
-		->ScaleFrameRender(hdc, mImage, mRect.left,mRect.top, mImageX, mImageY, mSizeX, mSizeY);
+	//mImage->SetAngle(mAngle);
+	//CameraManager::GetInstance()->GetMainCamera()
+	//	->ScaleFrameRender(hdc, mImage, mRect.left,mRect.top, mImageX, mImageY, mSizeX, mSizeY);
 }

@@ -170,6 +170,7 @@ void Player::Update()
 		if (mIsMousePosition == true)
 		{
 			mCurrentAnimation->Stop();
+			mImage = IMAGEMANAGER->FindImage(L"Player_run");
 			mCurrentAnimation = mUpIdleAni;
 			mCurrentAnimation->Play();
 		}
@@ -180,6 +181,7 @@ void Player::Update()
 		if (mIsMousePosition == true)
 		{
 			mCurrentAnimation->Stop();
+			mImage = IMAGEMANAGER->FindImage(L"Player_run");
 			mCurrentAnimation = mLeftIdleAni;
 			mCurrentAnimation->Play();
 		}
@@ -190,6 +192,7 @@ void Player::Update()
 		if (mIsMousePosition == true)
 		{
 			mCurrentAnimation->Stop();
+			mImage = IMAGEMANAGER->FindImage(L"Player_run");
 			mCurrentAnimation = mDownIdleAni;
 			mCurrentAnimation->Play();
 		}
@@ -199,6 +202,7 @@ void Player::Update()
 		if (mIsMousePosition == true)
 		{
 			mCurrentAnimation->Stop();
+			mImage = IMAGEMANAGER->FindImage(L"Player_run");
 			mCurrentAnimation = mRightIdleAni;
 			mCurrentAnimation->Play();
 		}

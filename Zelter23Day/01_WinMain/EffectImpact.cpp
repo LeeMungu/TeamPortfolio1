@@ -19,7 +19,6 @@ EffectImpact::EffectImpact(int x, int y, int indexX, int indexY)
 	mAngle = Random::GetInstance()->RandomInt(70, 240) * 0.01f;
 	mSpeed = Random::GetInstance()->RandomInt(100, 130);
 	mGravity = 150.f;
-
 }
 
 void EffectImpact::Init()
@@ -44,5 +43,7 @@ void EffectImpact::Update()
 
 void EffectImpact::Render(HDC hdc)
 {
-	CameraManager::GetInstance()->GetMainCamera()->Render(hdc, mImage, mX, mY, mIndexX, mIndexY, mSizeX, mSizeY);
+	//CameraManager::GetInstance()->GetMainCamera()->Render(hdc, mImage, mX, mY, mIndexX, mIndexY, mSizeX, mSizeY);
+
+	CameraManager::GetInstance()->GetMainCamera()->FrameRender(hdc, mImage, mX, mY, mIndexX, mIndexY);
 }

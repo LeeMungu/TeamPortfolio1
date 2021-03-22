@@ -25,8 +25,8 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 		mHouselayer = HouseLayer::Roof;
 	}
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+	mSizeX = mImage->GetFrameWidth()*2;
+	mSizeY = mImage->GetFrameHeight()*2;
 	mTileCountX = tileCountX;
 	mTileCountY = tileCountY;
 

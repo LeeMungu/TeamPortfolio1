@@ -13,7 +13,7 @@ public:
 	Animation* mCurrentAnimation;
 
 public:
-	void Init(wstring imagename, RECT temp, int frameStartX, int frameEndX, float frameTime);
+	EffectManager(wstring imagename, RECT temp, int frameStartX, int frameEndX, float frameTime);
 	void Init()override {};
 	void Release()override;
 	void Update()override;

@@ -78,9 +78,9 @@ void MapToolLoadingScene::Init()
 	
 
 	//이미지 (집)
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House1", Resources(L"/02_House/NewHouse1_Bottom.png")); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House2", Resources(L"/02_House/NewHouse1_Wall.png")); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House3", Resources(L"/02_House/NewHouse1_Roof.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House1", Resources(L"/02_House/NewHouse11_Bottom.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House2", Resources(L"/02_House/NewHouse11_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House3", Resources(L"/02_House/NewHouse11_Roof.png")); });
 	
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House4", Resources(L"/02_House/NewHouse2_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House5", Resources(L"/02_House/NewHouse2_Wall.png")); });

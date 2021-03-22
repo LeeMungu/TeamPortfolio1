@@ -39,6 +39,13 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 		mX = mTileIndexX * TileSize + mTileCountX / 2 * TileSize;
 	}
 	mY = mTileIndexY * TileSize - mSizeY / 2 + TileSize / 2;
+
+	if (mImageKey == L"House1")
+	{
+		mHouse01Rect1 = RectMakeCenter(mX, mY-20, mSizeX/2+100, mSizeY / 2-18);
+		mHouse01Rect2 = RectMakeCenter(mX+140, mY+230, mSizeX/4, mSizeY/4);
+	}
+
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 }
@@ -70,7 +77,10 @@ void HousingObject::Update()
 	{
 		mRect.bottom = mRect.bottom ;
 	}
-
+	if (mImageKey == L"House1")
+	{
+		mHouse01Rect1 = RectMakeCenter(mX, mY - 20, mSizeX / 2 + 100, mSizeY / 2 - 18);
+	}
 }
 
 void HousingObject::Render(HDC hdc)
@@ -91,15 +101,6 @@ void HousingObject::Render(HDC hdc)
 			}
 		}
 
-		if (Input::GetInstance()->GetKey(VK_LCONTROL))
-		{
-			//이미지 렉트
-			CameraManager::GetInstance()->GetMainCamera()
-				->RenderRect(hdc, mRect);
-		}
-
-
-
 		//이미지
 		if (mHouselayer == HouseLayer::Roof)
 		{
@@ -112,5 +113,17 @@ void HousingObject::Render(HDC hdc)
 			->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY);
 		}
 		
+	}
+
+	if (Input::GetInstance()->GetKey(VK_LCONTROL))
+	{
+		//이미지 렉트
+		CameraManager::GetInstance()->GetMainCamera()
+			->RenderRect(hdc, mRect);
+
+		CameraManager::GetInstance()->GetMainCamera()
+			->RenderRect(hdc, mHouse01Rect1, Gizmo::Color::Blue2);
+		CameraManager::GetInstance()->GetMainCamera()
+			->RenderRect(hdc, mHouse01Rect2, Gizmo::Color::Blue2);
 	}
 }

@@ -28,7 +28,8 @@ class HousingObject : public GameObject
 	
 	HouseLayer mHouselayer;
 	float mAlpha;
-
+	RECT mHouse01Rect1;
+	RECT mHouse01Rect2;
 public:
 	HousingObject(const wstring& name, float x, float y, int tileCountX, int tileCountY);
 

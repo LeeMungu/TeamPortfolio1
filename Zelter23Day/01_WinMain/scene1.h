@@ -33,6 +33,8 @@ class scene1 : public Scene
 	PlayerHPUI* mPlayerHPUI;
 
 	int mZombieCount;
+	float mZombieCoolTime;
+	float mZombieCoolTimer;
 public:
 	void Init()override;
 	void Release()override;

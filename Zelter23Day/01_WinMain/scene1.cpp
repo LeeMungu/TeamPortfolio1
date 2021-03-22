@@ -62,8 +62,9 @@ void scene1::Init()
 
 	//true 설정하면 씬 시간 흐름
 	Time::GetInstance()->SetIsSceneStart(true);
-	mZombieCount = 0;
-
+	mZombieCount = 15;
+	mZombieCoolTime = 10; // 좀비 쿨타임
+	mZombieCoolTimer = 0;//델타타임 더해줄 타이머
 
 }
 
@@ -85,7 +86,7 @@ void scene1::Update()
 {
 	ObjectManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
-	ItemManager::GetInstance()->Update();
+	//ItemManager::GetInstance()->Update();
 
 	Player* tempPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	int playerIndexX = tempPlayer->GetX() / TileSize;
@@ -157,9 +158,15 @@ void scene1::Update()
 	float randomX = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountX-1));
 	float randomY = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountY-1));
 	
-	if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).size() < 15)
+	if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).size() < mZombieCount)
 	{
-		EnemyRespown(randomX, randomY);
+		mZombieCoolTimer += Time::GetInstance()->DeltaTime();
+		if (mZombieCoolTimer > mZombieCoolTime)
+		{
+			EnemyRespown(randomX, randomY);
+			mZombieCoolTimer = 0;
+		}
+		
 	}
 }
 

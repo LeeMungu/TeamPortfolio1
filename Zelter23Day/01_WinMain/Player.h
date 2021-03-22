@@ -73,6 +73,9 @@ class Player : public GameObject
 	float mAngle;
 	float mDash;
 
+	bool mIsMousePosition;
+
+
 	float mDashTime;
 
 	PlayerState mPlayerState;

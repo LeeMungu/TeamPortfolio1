@@ -51,12 +51,6 @@ void scene1::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, tablet);
 
 	Load();
-	Zombie01* mZombie01 = new Zombie01(500, 500);
-	mZombie01->SetTileList(mTileList);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
-	Zombie02* mZombie02 = new Zombie02();
-	mZombie02->SetTileList(mTileList);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie02);
 
 	ItemManager::GetInstance()->Init();
 	ObjectManager::GetInstance()->Init();
@@ -90,6 +84,7 @@ void scene1::Update()
 	ObjectManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
 	//ItemManager::GetInstance()->Update();
+	
 
 	Player* tempPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	int playerIndexX = tempPlayer->GetX() / TileSize;
@@ -200,7 +195,6 @@ void scene1::Render(HDC hdc)
 	//TextOut(hdc, 10, 10, to_wstring(renderCount).c_str(), to_wstring(renderCount).length());
 
 	ObjectManager::GetInstance()->Render(hdc);
-
 	//¾À ½Ã°£ º¸±â
 	float worldTime = Time::GetInstance()->GetWorldTime();
 	float sceneTime = Time::GetInstance()->GetSceneTime();

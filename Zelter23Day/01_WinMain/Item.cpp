@@ -8,10 +8,11 @@ Item::Item(wstring imageKey, float x, float y, int count, ItemKind kind) {
 	mY = y;
 	mCount = count;
 	mItemKind = kind;
+
 }
 void Item::Init()
 {
-	/*
+	
 	//keyName에 따라 이미지 정해줌
 	if (mKeyName == L"Revolver") {
 		mImage = IMAGEMANAGER->FindImage(L"Weapon_pistol");
@@ -296,11 +297,7 @@ void Item::Init()
 	mImage = IMAGEMANAGER->FindImage(L"WoodWorkTable");
 	mType = ItemType::structure;
 	}
-	*/
-
-	mImage = IMAGEMANAGER->FindImage(L"WoodBrench1");
-	mType = ItemType::Material;
-
+	
 	mSizeX = mImage->GetWidth();
 	mSizeY = mImage->GetHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);

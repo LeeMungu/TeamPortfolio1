@@ -14,7 +14,7 @@ class Inventory : public UI
 {
 	Image* mBaseImage;
 	bool mIsOpened;
-	bool mIsItem;
+
 	BagSlot mSlotList[5][2];
 
 	map<wstring, int> mItemList;

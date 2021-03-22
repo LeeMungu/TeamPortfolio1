@@ -301,6 +301,8 @@ void Item::Init()
 	mSizeX = mImage->GetWidth();
 	mSizeY = mImage->GetHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+
+	mNumImage = IMAGEMANAGER->FindImage(L"SW_num");
 }
 
 void Item::Release() {
@@ -319,10 +321,9 @@ void Item::Render(HDC hdc)
 	}
 	else {
 		mImage->Render(hdc, mRect.left, mRect.top);
-		
-		wstring strSceneTime = to_wstring(mCount);
-		D2DRenderer::GetInstance()
-			->RenderText(mX, mY, strSceneTime.c_str(), 10);
+
+		mNumImage->ScaleFrameRender(hdc, mX , mY + 5, mCount / 10 % 10, 0, 10, 10);
+		mNumImage->ScaleFrameRender(hdc, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
 	}
 
 	if (Input::GetInstance()->GetKey(VK_LCONTROL))

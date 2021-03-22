@@ -26,6 +26,7 @@ protected:
 	wstring mKeyName;
 	int mCount;
 	ItemKind mItemKind;
+	Image* mNumImage;
 public:
 	Item(wstring imageKey, float x, float y, int count = 1 , ItemKind kind = ItemKind::drop);
 	void Init();

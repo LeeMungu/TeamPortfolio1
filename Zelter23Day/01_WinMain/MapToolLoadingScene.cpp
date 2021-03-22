@@ -132,6 +132,9 @@ void MapToolLoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"SW_night", Resources(L"/01_UI/Night.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"BlackBase", Resources(L"/01_UI/black_base_status.png")); });
 
+	//이미지 (Tablet UI)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Tablet_base", Resources(L"/01_UI/Tablet_Base.png")); });
+
 	//이미지 (몬스터)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie01", Resources(L"/06_Zombie/zombie01.png"), 5, 6); });
 

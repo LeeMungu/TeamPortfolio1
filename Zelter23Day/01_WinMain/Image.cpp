@@ -328,12 +328,12 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, 
 		//앵글 돌리는 회전 중심점
 		D2D1::Point2F(size.X / 2.f, size.Y));
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y + height*(1.f-heightSize));
 		//*(1.f+size.Y*(1.f- heightSize))); //중점 잡기
 
 	D2D_MATRIX_3X2_F skewMatrix = D2D1::Matrix3x2F::Skew(
 		//회전앵글0~180.f : 조건은 0~30, 150~180
-		-40.f+80.f* heightSize, 0,
+		40.f-80.f* heightSize, 0,
 		//회전기준->좌하단이란 의미
 		D2D1::Point2F(0.f, size.Y));
 

@@ -18,14 +18,14 @@
 #include "QuickSlot.h"
 #include "Inventory.h"
 #include "HousingObject.h"
+#include "Tablet.h"
+
 void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 
 	mPlayer = new Player("Player", 150, 150);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
- 
-
 
 	
 	mSmartWatch = new SmartWatch("SmartWatch", 5, 5);
@@ -46,6 +46,9 @@ void scene1::Init()
 	QuickSlot* quickSlot = new QuickSlot("QuickSlot");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, quickSlot);
 
+
+	Tablet* tablet = new Tablet("Tablet");
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, tablet);
 
 	Load();
 	Zombie01* mZombie01 = new Zombie01(500, 500);

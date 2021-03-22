@@ -8,12 +8,25 @@
 #include "scene1.h"
 #include "Gizmo.h"
 
+Zombie01::Zombie01(float x, float y)
+{
+	mX = x;
+	mY = y;
+}
+
 void Zombie01::Init()
 {
-	mImage = IMAGEMANAGER->FindImage(L"Zombie01");
+	float RandomImage = Random::GetInstance()->RandomInt(2);
+	if (RandomImage == 1)
+	{
+		mImage = IMAGEMANAGER->FindImage(L"Zombie01");
+	}
+	else
+	{
+		mImage = IMAGEMANAGER->FindImage(L"Zombie02");
+	}
+	
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
-	mX =  500;
-	mY =  500;
 	mSizeX = mImage->GetFrameWidth()*2;
 	mSizeY = mImage->GetFrameHeight()*2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
@@ -159,24 +172,24 @@ void Zombie01::Render(HDC hdc)
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mAttackBox);
 	}
 	
-	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mAngle), 30);
+	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mAngle), 30);
 	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mDistance), 30);
-	if (mZombistate == ZombieState::Patrol)
-	{
-		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"정찰", 30);
-	}
-	else if (mZombistate == ZombieState::Attack)
-	{
-		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"공격", 30);
-	}
-	else if (mZombistate == ZombieState::Chase)
-	{
-		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"추격", 30);
-	}
-	else if (mZombistate == ZombieState::Die)
-	{
-		D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"주금", 30);
-	}
+	//if (mZombistate == ZombieState::Patrol)
+	//{
+	//	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"정찰", 30);
+	//}
+	//else if (mZombistate == ZombieState::Attack)
+	//{
+	//	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"공격", 30);
+	//}
+	//else if (mZombistate == ZombieState::Chase)
+	//{
+	//	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"추격", 30);
+	//}
+	//else if (mZombistate == ZombieState::Die)
+	//{
+	//	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"주금", 30);
+	//}
 
 	if (Input::GetInstance()->GetKey(VK_LCONTROL))
 	{

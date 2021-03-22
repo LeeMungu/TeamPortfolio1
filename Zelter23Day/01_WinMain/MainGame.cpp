@@ -49,8 +49,8 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"LoadingScene", new LoadingScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
-	SceneManager::GetInstance()->LoadScene(L"LoadingScene");
-	//SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
+	//SceneManager::GetInstance()->LoadScene(L"LoadingScene");
+	SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
 
 	//기존 타겟과 다른 버퍼타겟 생성
 	D2DRenderer::GetInstance()->GetRenderTarget()->CreateCompatibleRenderTarget(&mFirstBuffer);

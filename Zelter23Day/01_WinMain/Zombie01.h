@@ -20,6 +20,7 @@ class Zombie01 : public Enemy
 
 	RECT mAttackRect;
 public:
+	Zombie01(float x, float y);
 	void Init()override;
 	void Release()override;
 	void Update()override;

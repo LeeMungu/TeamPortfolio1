@@ -48,7 +48,7 @@ void scene1::Init()
 
 
 	Load();
-	Zombie01* mZombie01 = new Zombie01();
+	Zombie01* mZombie01 = new Zombie01(500, 500);
 	mZombie01->SetTileList(mTileList);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
 	Zombie02* mZombie02 = new Zombie02();
@@ -62,6 +62,7 @@ void scene1::Init()
 
 	//true ¼³Á¤ÇÏ¸é ¾À ½Ã°£ Èå¸§
 	Time::GetInstance()->SetIsSceneStart(true);
+	mZombieCount = 0;
 }
 
 void scene1::Release()
@@ -150,6 +151,13 @@ void scene1::Update()
 				}
 			}
 		}
+	}
+	float randomX = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountX-1));
+	float randomY = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountY-1));
+	
+	if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).size() < 15)
+	{
+		EnemyRespown(randomX, randomY);
 	}
 }
 
@@ -404,4 +412,18 @@ void scene1::Load()
 			}
 		}
 	}
+}
+
+void scene1::EnemyRespown(float x, float y)
+{
+	float RandomZom = Random::GetInstance()->RandomInt(2);
+	if (RandomZom == 0)
+	{
+		Zombie01* zombie01 = new Zombie01(x, y);
+		zombie01->SetTileList(mTileList);
+		zombie01->Init();
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, zombie01);
+	}
+	
+
 }

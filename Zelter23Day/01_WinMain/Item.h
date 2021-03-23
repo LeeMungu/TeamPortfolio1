@@ -30,6 +30,7 @@ protected:
 	ItemKind mItemKind;
 	Image* mNumImage;
 	bool mIsClicking;
+	bool mIsOpened;
 	POINT mPrePosition;
 public:
 	Item(wstring imageKey, float x, float y, int count = 1 , ItemKind kind = ItemKind::drop);

@@ -251,6 +251,22 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"WoodBrench1", Resources(L"/07_Item/WoodBrench1.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Iron1", Resources(L"/07_Item/Iron1.png")); });
 
+	//사운드
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"BGM", Resources(L"/09_Sound/BGM.mp3"), true); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"CrossBowShot", Resources(L"/09_Sound/CrossBowShot.wav"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"ForestSound", Resources(L"/09_Sound/ForestSound.mp3"), true); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"DoorSound", Resources(L"/09_Sound/Door.mp3"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"EatSound", Resources(L"/09_Sound/Eat.wav"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"DrinkSound", Resources(L"/09_Sound/EatWater.mp3"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"EndingBGM", Resources(L"/09_Sound/EndingBGM.mp3"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"PunchSound", Resources(L"/09_Sound/Punch.mp3"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"ShotSound", Resources(L"/09_Sound/Shot.mp3"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"Siren1", Resources(L"/09_Sound/Siren1.mp3"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"Siren2", Resources(L"/09_Sound/Siren2.mp3"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"ZombieSound", Resources(L"/09_Sound/Zombie.mp3"), false); });
+
+
+
 	//이미지 (Loading Scene)
 	IMAGEMANAGER->LoadFromFile(L"LoadingCat", Resources(L"Cat1.png"), 10, 1);
 

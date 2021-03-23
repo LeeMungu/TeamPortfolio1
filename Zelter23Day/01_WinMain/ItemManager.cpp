@@ -324,6 +324,7 @@ void ItemManager::PutInInventory(wstring key)
 					ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
 					slotList[i][j].isFill = true;
 					isFill = true;
+
 				}
 				break;
 			}
@@ -343,8 +344,17 @@ void ItemManager::PutInInventory(wstring key)
 	}
 }
 
+void ItemManager::MoveItems()
+{
+	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
+	BagSlot(*slotList)[2] = inventory->GetSlotList();
+	vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+	//아이템을 슬롯으로 드로그 앤 드롭해서 옮길 수 있음
+	//아이템이 있는 슬롯과 아이템이 부딪치면 아이템 위치 swap
+}
+
 
 void ItemManager::PutInQuickSlot()
 {
-
+	
 }

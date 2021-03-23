@@ -18,6 +18,7 @@ void QuickSlot::Init()
 		mSlotList[i].slotImg = IMAGEMANAGER->FindImage(L"QuickSlot_slotBase");
 		mSlotList[i].isSelected = false;
 		mSlotList[i].rect = RectMake(mSlotList[i].x, mSlotList[i].y, 56, 58);
+		mSlotList[i].isFill = false;
 	}
 
 	mBackImage = IMAGEMANAGER->FindImage(L"QuickSlot_back");

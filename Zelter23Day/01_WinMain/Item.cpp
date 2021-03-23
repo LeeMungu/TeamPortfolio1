@@ -2,6 +2,7 @@
 #include "Item.h"
 #include "Image.h"
 #include "Camera.h"
+#include "Inventory.h"
 Item::Item(wstring imageKey, float x, float y, int count, ItemKind kind) {
 	mKeyName = imageKey;
 	mX = x;
@@ -343,11 +344,48 @@ void Item::Update()
 			mX = _mousePosition.x;
 			mY = _mousePosition.y;
 
-			if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
+			if (Input::GetInstance()->GetKeyUp(VK_LBUTTON)) //왼쪽 버튼 땠을 때
 			{
-				mX = mPrePosition.x;
-				mY = mPrePosition.y;
-				mIsClicking = false;
+				Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
+				BagSlot(*slotList)[2] = inventory->GetSlotList();
+
+				bool isMoved = false;
+
+				for (int i = 0; i < 5; i++) {
+					for (int j = 0; j < 2; j++) {
+						RECT rc;
+						RECT slotRc = slotList[i][j].rect;
+						if (IntersectRect(&rc, &mRect, &slotRc)) {
+							if (slotList[i][j].isFill == true) {
+								//원래 자리로 돌아감(스왑해야함)
+								mX = mPrePosition.x;
+								mY = mPrePosition.y;
+								mIsClicking = false;
+								isMoved = true;
+								slotList[i][j].isFill = true;
+								break;
+							}
+							else {
+								mX = slotList[i][j].x + 25;
+								mY = slotList[i][j].y + 25;
+								slotList[i][j].isFill = true;
+								mIsClicking = false;
+								isMoved = true;
+								break;
+							}
+						}
+						else {
+							slotList[i][j].isFill = false;
+						}
+					}
+				}
+
+				if (isMoved == false) {
+					//원래 자리로 돌아감
+					mX = mPrePosition.x;
+					mY = mPrePosition.y;
+					mIsClicking = false;
+				}
 			}
 		}
 	}

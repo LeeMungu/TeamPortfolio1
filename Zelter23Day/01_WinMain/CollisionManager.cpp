@@ -199,7 +199,7 @@ void CollisionManager::PlayerAttack()
 
 					for (int i = 0; i < 8; ++i)
 					{
-						EffectImpact* impact = new EffectImpact(enemy->GetImageKey(), enemy->GetX(), enemy->GetY(), i, 3);
+						EffectImpact* impact = new EffectImpact(enemy->GetImageKey(), enemy->GetX(), enemy->GetY(), i);
 					}
 
 
@@ -224,19 +224,7 @@ void CollisionManager::PlayerAttack()
 
 					for (int i = 0; i < 8; ++i)
 					{
-						EffectImpact* impact = new EffectImpact(object->GetImageKey(),object->GetX(), object->GetY(), i, 1);
-					}
-
-					if (object->GetImageKey() == L"Bench1" || object->GetImageKey() == L"Bench2")
-					{
-						for (int i = 0; i < 8; ++i)
-						{
-							EffectImpact* impact = new EffectImpact(object->GetImageKey(),object->GetX(), object->GetY(), i, 1);
-						}
-					}
-					for (int i = 0; i < 8; ++i)
-					{
-						EffectImpact* impact = new EffectImpact(object->GetImageKey(), object->GetX(), object->GetY(), i, 3);
+						EffectImpact* impact = new EffectImpact(object->GetImageKey(), object->GetX(), object->GetY(), i);
 					}
 				}
 			}
@@ -277,7 +265,7 @@ void CollisionManager::PlayerShoot()
 
 					for (int i = 0; i < 8; ++i)
 					{
-						EffectImpact* impact = new EffectImpact(enemy->GetImageKey(), enemy->GetX(), enemy->GetY(), i, 3);
+						EffectImpact* impact = new EffectImpact(enemy->GetImageKey(), enemy->GetX(), enemy->GetY(), i);
 					}
 				}
 			}
@@ -297,7 +285,7 @@ void CollisionManager::PlayerShoot()
 
 					for (int i = 0; i < 8; ++i)
 					{
-						EffectImpact* impact = new EffectImpact(object->GetImageKey(), object->GetX(), object->GetY(), i, 1);
+						EffectImpact* impact = new EffectImpact(object->GetImageKey(), object->GetX(), object->GetY(), i);
 					}
 				}
 			}

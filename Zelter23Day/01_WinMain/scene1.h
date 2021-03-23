@@ -35,6 +35,8 @@ class scene1 : public Scene
 	Tablet* mTablet;
 
 	int mZombieCount;
+	float mZombieCoolTime;
+	float mZombieCoolTimer;
 public:
 	void Init()override;
 	void Release()override;

@@ -51,12 +51,6 @@ void scene1::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, tablet);
 
 	Load();
-	Zombie01* mZombie01 = new Zombie01(500, 500);
-	mZombie01->SetTileList(mTileList);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie01);
-	Zombie02* mZombie02 = new Zombie02();
-	mZombie02->SetTileList(mTileList);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie02);
 
 	ItemManager::GetInstance()->Init();
 	ObjectManager::GetInstance()->Init();
@@ -65,9 +59,12 @@ void scene1::Init()
 
 	//true 설정하면 씬 시간 흐름
 	Time::GetInstance()->SetIsSceneStart(true);
-	mZombieCount = 0;
+	mZombieCount = 15;
+	mZombieCoolTime = 10; // 좀비 쿨타임
+	mZombieCoolTimer = 0;//델타타임 더해줄 타이머
 
-
+	SoundPlayer::GetInstance()->Play(L"BGM", 0.5f * SoundPlayer::GetInstance()->GetBgmVolume());
+	SoundPlayer::GetInstance()->Play(L"ForestSound", 0.2f * SoundPlayer::GetInstance()->GetBgmVolume());
 }
 
 void scene1::Release()
@@ -88,7 +85,9 @@ void scene1::Update()
 {
 	ObjectManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
-	//ItemManager::GetInstance()->Update();
+
+	ItemManager::GetInstance()->Update();
+	
 
 	Player* tempPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	int playerIndexX = tempPlayer->GetX() / TileSize;
@@ -160,9 +159,15 @@ void scene1::Update()
 	float randomX = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountX-1));
 	float randomY = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountY-1));
 	
-	if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).size() < 15)
+	if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).size() < mZombieCount)
 	{
-		EnemyRespown(randomX, randomY);
+		mZombieCoolTimer += Time::GetInstance()->DeltaTime();
+		if (mZombieCoolTimer > mZombieCoolTime)
+		{
+			EnemyRespown(randomX, randomY);
+			mZombieCoolTimer = 0;
+		}
+		
 	}
 }
 
@@ -193,7 +198,6 @@ void scene1::Render(HDC hdc)
 	//TextOut(hdc, 10, 10, to_wstring(renderCount).c_str(), to_wstring(renderCount).length());
 
 	ObjectManager::GetInstance()->Render(hdc);
-
 	//씬 시간 보기
 	float worldTime = Time::GetInstance()->GetWorldTime();
 	float sceneTime = Time::GetInstance()->GetSceneTime();

@@ -108,6 +108,7 @@ public:
 	RECT GetCollisionBox() { return mCollisionBox; }
 	RECT GetAttackBox() { return mAttackBox; }
 	Attacked GetAttacked() { return mAttacked; }
+	PlayerState GetPlayerState() { return mPlayerState; }
 
 	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
 	void SetAttacked(Attacked attacked) { mAttacked = attacked; }

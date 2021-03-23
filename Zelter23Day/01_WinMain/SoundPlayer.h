@@ -22,6 +22,10 @@ private:
 	map<wstring, FMOD::Sound*> mSoundList;
 	vector<ChannelInfo> mActiveChannels;		//현재 활성화 되어 있는 채널
 	FMOD::System* mSystem;
+
+	float mBGMVolume;
+	float mEffectVolume;
+
 private:
 	SoundPlayer();
 	~SoundPlayer();
@@ -31,6 +35,14 @@ public:
 	void Play(const wstring& keyName, float volume);
 	void Pause(const wstring& keyName);
 	void Stop(const wstring& keyName);
+
+	void SetBgmVolume(float vol) { mBGMVolume += vol; }
+	float GetBgmVolume() { return mBGMVolume; }
+	void SetBgmVolumeUpdate(const wstring& keyName, float volume);
+
+	void SetEffectVolume(float vol) { mEffectVolume += vol; }
+	float GetEffectVolume() { return mEffectVolume; }
+	void SetEffectVolumeUpdate(const wstring& keyname, float volume);
 
 	//과제~ MP3플레이어 만들어오기
 	//void SetVolume(const wstring& keyName, float volume);

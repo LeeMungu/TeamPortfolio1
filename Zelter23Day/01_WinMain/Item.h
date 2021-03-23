@@ -4,18 +4,20 @@
 
 enum class ItemType
 {
-	Equipment, // 장비
-	Weapon, // 무기
-	Gun, // 총
-	Bullet, // 총알
-	Food, // 음식
-	Drink, // 음료
-	Material, // 재료
+	equipment, // 장비
+	weapon, // 무기
+	gun, // 총
+	bullet, // 총알
+	food, // 음식
+	drink, // 음료
+	material, // 재료
 	structure, //설치물/장애물
 };
 enum class ItemKind {
 	drop,
 	inventory,
+	quickSlot,
+	holding,
 };
 
 class Item : public GameObject
@@ -26,6 +28,9 @@ protected:
 	wstring mKeyName;
 	int mCount;
 	ItemKind mItemKind;
+	Image* mNumImage;
+	bool mIsClicking;
+	POINT mPrePosition;
 public:
 	Item(wstring imageKey, float x, float y, int count = 1 , ItemKind kind = ItemKind::drop);
 	void Init();

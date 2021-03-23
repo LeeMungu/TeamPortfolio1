@@ -28,8 +28,8 @@ void Tablet::Update()
 	{
 		if (Input::GetInstance()->GetKeyDown('T'))
 		{
-			mX = WINSIZEX / 2 - 30;
-			mY = WINSIZEY - 255 * 2;
+			mX = WINSIZEX / 2 - 300;
+			mY = WINSIZEY / 2 - 300;
 			mIsOpened = true;
 		}
 	}
@@ -45,6 +45,6 @@ void Tablet::Render(HDC hdc)
 {
 	if (mIsOpened == true)
 	{
-		mBaseImage->ScaleRender(hdc, mX, mY, 675, 421);
+		mBaseImage->ScaleRender(hdc, mX, mY, 450 * 2 , 281 * 2);
 	}
 }

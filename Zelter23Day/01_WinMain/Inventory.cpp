@@ -30,14 +30,10 @@ void Inventory::Release()
 
 void Inventory::Update()
 {
-	//아이템 이미지 키값하고 개수를 가진 리스트 가져옴
-	mItemList = ItemManager::GetInstance()->GetmItemInventoryList();
-	map<wstring, int>::iterator iter = mItemList.begin();
-	
-
 	//임시로 위치 조정해서 열고 닫는것처럼 보임
 	if (mIsOpened == false) { //인벤토리 닫혀있을때 
-		if (Input::GetInstance()->GetKeyDown('I')) { //i 누르면
+		if (Input::GetInstance()->GetKeyDown('I')) 
+		{ //i 누르면
 			mX = WINSIZEX / 2 - 30;
 			mY = WINSIZEY - 255 * 2;
 			mIsOpened = true;
@@ -52,22 +48,30 @@ void Inventory::Update()
 					
 				}
 			}
+
+			//아이템 이미지 키값하고 개수를 가진 리스트 가져옴
+			mItemList = ItemManager::GetInstance()->GetmItemInventoryList();
+			map<wstring, int>::iterator iter = mItemList.begin();
+
+			int k = 0;
+			int q = 0;
+
+			for (iter; iter != mItemList.end(); iter++) {
+				Item* item = new Item(iter->first, mSlotList[k][q].x + 30, mSlotList[k][q].y + 30,
+					iter->second, ItemKind::inventory);
+				item->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
+				k++;
+				if (k >= 5) {
+					k = 0;
+					q++;
+				}
+			}
+
 		}
 		
-		//아이템 리스트 불러옴
-		int k = 0;
-		int q = 0;
-		for (iter; iter != mItemList.end(); iter++) {
-			Item* item = new Item(iter->first, mSlotList[k][q].x +30, mSlotList[k][q].y + 30,
-				iter->second, ItemKind::inventory);
-			item->Init();
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
-			k++;
-			if (k >= 5) {
-				k = 0;
-				q++;
-			}
-		}
+	
+		
 		
 	}
 	else { //인벤토리 열려있을 때
@@ -76,7 +80,7 @@ void Inventory::Update()
 			mX = -1000;
 			mY = -1000;
 			mIsOpened = false;
-
+	
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 2; j++) {
 					mSlotList[i][j].x = mX + i * 60 + 170;

@@ -75,7 +75,7 @@ void Inventory::Update()
 
 			for (int i = 0; i < items.size(); ++i) {
 				items[i]->SetX(items[i]->GetX() + 1635);
-				items[i]->SetY(items[i]->GetY() + 1230);
+				items[i]->SetY(items[i]->GetY() + 1235);
 			}
 		}
 		
@@ -110,7 +110,7 @@ void Inventory::Update()
 
 			for (int i = 0; i < items.size(); ++i) {
 				items[i]->SetX(items[i]->GetX() - 1635);
-				items[i]->SetY(items[i]->GetY() - 1230);
+				items[i]->SetY(items[i]->GetY() - 1235);
 			}
 		}
 	}

@@ -9,6 +9,7 @@ struct Slot {
 	Image* slotImg;
 	bool isSelected;
 	RECT rect;
+	bool isFill;
 };
 class QuickSlot : public UI
 {

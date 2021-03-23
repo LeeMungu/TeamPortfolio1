@@ -5,9 +5,13 @@
 
 enum class TypeLayer
 {
-	철,
-	나무,
-	헝겁,
+	stone,
+	wood,
+	glass,
+	fabric,
+	Iron,
+	Leather,
+	plastic,
 	end
 };
 class Image;
@@ -35,6 +39,9 @@ class InteractObject : public GameObject
 	wstring mImageKey;
 	//인터렉트 렉트
 	RECT mInteractRect;
+
+	map<wstring, TypeLayer> mObjectLayerList;
+
 public:
 	InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY);
 

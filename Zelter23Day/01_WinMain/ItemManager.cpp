@@ -2,6 +2,7 @@
 #include "ItemManager.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "Inventory.h"
 ItemManager::ItemManager()
 {
 	mItemImageList.insert(make_pair(L"Blade", ItemType::weapon));
@@ -290,7 +291,7 @@ void ItemManager::PickUpItems()
 				//플레이어와 아이템 충돌 처리
 				if (IntersectRect(&rc, &itemsRc, &playerRc))
 				{
-					//인벤토리에 어떻게 넣어줄까나?
+					//인벤토리에 넣어줌
 					PutInInventory(((Item*)items[i])->GetKeyName());
 					//아이템 지워줌
 					items[i]->SetIsDestroy(true);
@@ -302,12 +303,48 @@ void ItemManager::PickUpItems()
 
 void ItemManager::PutInInventory(wstring key)
 {
+	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
+	BagSlot (*slotList)[2] = inventory->GetSlotList();
+
+	Item* item;
+
 	if (mItemInventoryList.find(key) == mItemInventoryList.end()) { //처음 생성
 		//아이템 리스트 생성 후 인벤토리에서 불러와서 생성, 사용함
 		mItemInventoryList.insert(make_pair(key, 1));
+
+		bool isFill = false;
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 2; j++) {
+				if (slotList[i][j].isFill == false) {
+					string str;
+					str.assign(key.begin(), key.end());
+	
+					item = new Item(key, str, slotList[i][j].x, slotList[i][j].y, mItemInventoryList[key], ItemKind::inventory);
+					item->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
+					slotList[i][j].isFill = true;
+					isFill = true;
+				}
+				break;
+			}
+			if (isFill == true) break;
+		}
 	}
 	else { //이미 있는 아이템은 count 증가
 		int num = mItemInventoryList[key];
-		mItemInventoryList[key] = ++num;
+		if (num < 99) {
+			mItemInventoryList[key] = ++num;
+		}
+
+		string str;
+		str.assign(key.begin(), key.end());
+		item = (Item*)ObjectManager::GetInstance()->FindObject(str);
+		item->SetCount(num);
 	}
+}
+
+
+void ItemManager::PutInQuickSlot()
+{
+
 }

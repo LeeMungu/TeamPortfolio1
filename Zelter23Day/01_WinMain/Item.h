@@ -33,11 +33,13 @@ protected:
 	POINT mPrePosition;
 public:
 	Item(wstring imageKey, float x, float y, int count = 1 , ItemKind kind = ItemKind::drop);
+	Item(wstring imageKey, string name, float x, float y, int count = 1 , ItemKind kind = ItemKind::inventory);
 	void Init();
 	void Release(); 
 	void Update();
 	void Render(HDC hdc);
 
 	wstring GetKeyName() { return mKeyName; }
+	void SetCount(int n) { mCount = n; }
 };
 

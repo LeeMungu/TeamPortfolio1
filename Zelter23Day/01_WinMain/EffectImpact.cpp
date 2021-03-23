@@ -169,6 +169,14 @@ void EffectImpact::Update()
 
 	if (mObjectLayerList.size() != NULL)
 	{
+
+		//못찾았다. - 급한대로 예외처리함 후속 처리 필요
+		if (mObjectLayerList.find(mImageKey) == mObjectLayerList.end())
+		{
+			mIndexY = 0;
+			mIsDestroy = true;
+			return;
+		}
 		if (mObjectLayerList.find(mImageKey)->second == TypeLayer::stone)
 		{
 			mIndexY = 0;

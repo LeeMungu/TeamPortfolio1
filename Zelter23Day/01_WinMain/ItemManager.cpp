@@ -327,7 +327,7 @@ void ItemManager::PutInInventory(wstring key)
 					string str;
 					str.assign(key.begin(), key.end());
 	
-					item = new Item(key, str, slotList[i][j].x, slotList[i][j].y, mItemInventoryList[key], ItemKind::inventory);
+					item = new Item(key, str, slotList[i][j].x + 25, slotList[i][j].y + 25, mItemInventoryList[key], ItemKind::inventory);
 					item->Init();
 					ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
 					slotList[i][j].isFill = true;
@@ -412,11 +412,15 @@ void ItemManager::MoveItems()
 								//슬롯이 비어있으면
 								else if (slotList[j][k].isFill == false)
 								{
+									//아이템의 위치를 슬롯위치로 지정해주고 isFill true로 해줌
 									items[i]->SetX(slotList[j][k].x + 25);
 									items[i]->SetY(slotList[j][k].y + 25);
 									slotList[j][k].isFill = true;
 									((Item*)items[i])->SetIsClicking(false);
 									isMoved = true;
+
+									//아이템이 원래 있던 슬롯은 isFill false를 해준다
+									
 									break;
 								}
 							}
@@ -433,6 +437,8 @@ void ItemManager::MoveItems()
 				}
 			}
 			
+			//아이템 비어있는 부분은 isFill false로 셋팅해줌
+			/*
 			for (int j = 0; j < 5; j++)
 			{
 				for (int k = 0; k < 2; k++)
@@ -450,7 +456,8 @@ void ItemManager::MoveItems()
 					}
 				}
 			}
-		}//for문 끝
+			*/
+		}//items.size() for문 끝
 	}
 }
 

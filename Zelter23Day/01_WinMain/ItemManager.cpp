@@ -104,114 +104,163 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	//오브젝트에 따라 랜덤으로 아이템 key를 정해준다
 	wstring key;
 	wstring key2;
-	
-	if (str == L"Ben") { //벤치 - 나뭇가지
+
+	if (str == L"Ben") //벤치 - 나뭇가지
+	{ 
 		key = L"WoodBrench1";
-		DropItems(key, x, y);
 	}
-	else if (str == L"Bus") { //버스
-		key = L"Iron1";
-		DropItems(key, x, y);
-	}
-	else if (str == L"Cab") { //캐비넷
-
-	}
-	else if (str == L"Car") { //자동차
-
-	}
-	else if (str == L"Cha") { //의자
+	else if (str == L"Bus") //버스
+	{ 
 		key = L"Iron1";
 	}
-	else if (str == L"Clo") { //옷장
-
-	}
-	else if (str == L"Com") { //컴퓨터
-
-	}
-	else if (str == L"Dea") { //dead tree
-
-	}
-	else if (str == L"Des") { //책상
-
-	}
-	else if (str == L"dis") { //디스팬서
-
-	}
-	else if (str == L"Dol") { //인형
-
-	}
-	else if (str == L"Dus") { //더스트 박스
-
-	}
-	else if (str == L"Fan") { //선풍기
-
-	}
-	else if (str == L"Han") { //세면대
-
-	}
-	else if (str == L"Mot") { //오토바이
-
-	}
-	else if (str == L"Pla") {
-
-	}
-	else if (str == L"Ref") { //냉장고
-
-	}
-	else if (str == L"Roc") { //돌
+	else if (str == L"Cab") //캐비넷
+	{ 
 		key = L"Iron1";
 	}
-	else if (str == L"She") { //선반
+	else if (str == L"Car") //자동차
+	{ 
+		key = L"Iron1";
+	}
+	else if (str == L"Cha") //의자
+	{ 
+		key = L"WoodBrench1";
+	}
+	else if (str == L"Clo") //옷장
+	{ 
+		key = L"WoodBrench1";
+	}
+	else if (str == L"Com") //컴퓨터
+	{ 
+		key = L"Iron1";
+	}
+	else if (str == L"Dea") //dead tree
+	{ 
+		key = L"Charcol1";
+	}
+	else if (str == L"Des") //책상
+	{
+		key = L"WoodBrench1";
+	}
+	else if (str == L"dis") //자판기
+	{ 
+		key = L"Iron1";
+	}
+	else if (str == L"Dol") //인형
+	{ 
+		key = L"ClothPiece";
+	}
+	else if (str == L"Dus") //쓰레기통
+	{ 
 
 	}
-	else if (str == L"Sho") {
+	else if (str == L"Fan") //선풍기
+	{ 
+		key = L"Iron1";
+	}
+	else if (str == L"Han") //세면대
+	{ 
+
+	}
+	else if (str == L"Mot") //오토바이
+	{ 
+		key = L"Iron1";
+	}
+	else if (str == L"Pla")  //화분
+	{
+		key = L"WoodBrench1";
+	}
+	else if (str == L"Ref")  //냉장고
+	{
+		key = L"Iron1";
+	}
+	else if (str == L"Roc")  //돌
+	{
+		key = L"Stone1";
+	}
+	else if (str == L"She")  //선반
+	{
+		key = L"WoodBrench1";
+	}
+	else if (str == L"Sho") 
+	{
 		wstring str2 = objectKey.substr(3, 1);
-		if (str2 == L"e") { //신발장
-
+		if (str2 == L"e")  //신발장
+		{
+			key = L"WoodBrench1";
 		}
-		else { //쇼케이스
-
+		else  //쇼케이스
+		{
+			key = L"Iron1";
 		}
 	}
-	else if (str == L"Sig") { //전광판
-
+	else if (str == L"Sig") //전광판
+	{ 
+		key = L"Iron1";
 	}
-	else if (str == L"Sof") { //소파
-
-	}
-	else if (str == L"Suv") { //suv 자동차
-
-	}
-	else if (str == L"Tab") { //테이블
-
-	}
-	else if (str == L"Toi") { //변기
-
-	}
-	else if (str == L"Tre") { //나무
+	else if (str == L"Sof") //소파
+	{ 
 		key = L"WoodBrench1";
-		DropItems(key, x, y + 95);
 	}
-	else if (str == L"Tru") { //트럭
+	else if (str == L"Suv") //suv 자동차
+	{ 
+		key = L"Iron1";
+	}
+	else if (str == L"Tab") //테이블
+	{ 
+		key = L"WoodBrench1";
+	}
+	else if (str == L"Toi") //변기
+	{ 
 
 	}
-	else if (str == L"Tv1") { //tv
+	else if (str == L"Tre") //나무
+	{ 
+		wstring str2 = objectKey.substr(4, 1);
+		if (str2 == L"2")  //사과나무
+		{
+			key = L"RawApple";
+		}
+		else  //나머지
+		{
+			key = L"WoodBrench1";
+		}
+		y += 100;
+	}
+	else if (str == L"Tru") //트럭
+	{ 
+		key = L"Iron1";
+	}
+	else if (str == L"Tv1") //tv
+	{ 
+		key = L"Iron1";
+	}
+	else if (str == L"Was") //세탁기
+	{ 
+		key = L"Iron1";
+	}
+	else if (str == L"Wat") //식수대
+	{ 
 
 	}
-	else if (str == L"Was") { //세탁기
-
+	else if (str == L"Wor") //작업대
+	{ 
+		key = L"WoodBrench1";
 	}
-	else if (str == L"Wat") { //식수대
-
-	}
-	else if (str == L"Wor") { //작업대
-
-	}
-	else if (str == L"Zom") { //좀비
-
+	else if (str == L"Zom") //좀비
+	{ 
+		key = L"RawMeat";
 	}
 	//재료 개수 랜덤
-	
+	if (key != L"") 
+	{
+		int randCount = Random::GetInstance()->RandomInt(1, 4);
+
+		for (int i = 0; i < randCount; i++) 
+		{
+			DropItems(key, x - 50 + Random::GetInstance()->RandomInt(0, 100), 
+				y - 50 + Random::GetInstance()->RandomInt(0, 100) );
+		}
+	}
 }
 
 void ItemManager::DropItems(wstring key, float x, float y)
@@ -224,24 +273,28 @@ void ItemManager::DropItems(wstring key, float x, float y)
 
 void ItemManager::PickUpItems()
 {
-
 	//아이템 줍기
 	//아이템 리스트 받아옴
-	vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Item);
-
-	if (items.size() != NULL)
+	if (mPlayer->GetPlayerState() != PlayerState::attack)
 	{
-		for (int i = 0; i < items.size(); ++i) {
-			RECT rc;
-			RECT itemsRc = ((Item*)items[i])->GetRect();
-			RECT playerRc = mPlayer->GetRect();
-			
-			//플레이어와 아이템 충돌 처리
-			if (IntersectRect(&rc, &itemsRc, &playerRc)) {
-				//인벤토리에 어떻게 넣어줄까나?
-				PutInInventory(((Item*)items[i])->GetKeyName());
-				//아이템 지워줌
-				items[i]->SetIsDestroy(true);
+		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Item);
+
+		if (items.size() != NULL)
+		{
+			for (int i = 0; i < items.size(); ++i)
+			{
+				RECT rc;
+				RECT itemsRc = ((Item*)items[i])->GetRect();
+				RECT playerRc = mPlayer->GetRect();
+
+				//플레이어와 아이템 충돌 처리
+				if (IntersectRect(&rc, &itemsRc, &playerRc))
+				{
+					//인벤토리에 어떻게 넣어줄까나?
+					PutInInventory(((Item*)items[i])->GetKeyName());
+					//아이템 지워줌
+					items[i]->SetIsDestroy(true);
+				}
 			}
 		}
 	}

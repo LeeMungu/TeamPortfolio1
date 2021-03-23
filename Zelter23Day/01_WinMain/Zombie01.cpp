@@ -26,6 +26,7 @@ void Zombie01::Init()
 		mImage = IMAGEMANAGER->FindImage(L"Zombie02");
 	}
 	
+	mImageKey = mImage->GetKey();
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	mSizeX = mImage->GetFrameWidth()*2;
 	mSizeY = mImage->GetFrameHeight()*2;

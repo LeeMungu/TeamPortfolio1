@@ -50,6 +50,7 @@ protected:
 	float mInvincibleCount;
 	float mDelay;
 	float mChaseDistance;
+	wstring mImageKey;
 	RECT mCollisionBox;
 	RECT mAttackBox;
 
@@ -74,6 +75,7 @@ public:
 	
 	int GetHP() { return mHp; }
 	int GetAttack() { return mAttack; }
+	wstring GetImageKey()const { return mImageKey; }
 	RECT GetCollisionBox() { return mCollisionBox; }
 	RECT GetAttackBox() { return mAttackBox; }
 

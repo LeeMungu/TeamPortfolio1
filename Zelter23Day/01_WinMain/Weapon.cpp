@@ -47,9 +47,6 @@ void Weapon::Update()
 
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
-		SoundPlayer::GetInstance()->Play(L"ShotSound", 0.5f
-			* SoundPlayer::GetInstance()->GetEffectVolume());
-
 		if ((Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory") != NULL)
 		{
 
@@ -63,6 +60,9 @@ void Weapon::Update()
 				Bullet* bullet = new Bullet(mX, mY, -mAngle * PI / 180.f);
 				bullet->Init();
 				ObjectManager::GetInstance()->AddObject(ObjectLayer::Bullet, bullet);
+
+				SoundPlayer::GetInstance()->Play(L"ShotSound", 0.5f
+					* SoundPlayer::GetInstance()->GetEffectVolume());
 			}
 		}
 		else
@@ -70,6 +70,9 @@ void Weapon::Update()
 			Bullet* bullet = new Bullet(mX, mY, -mAngle * PI / 180.f);
 			bullet->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Bullet, bullet);
+
+			SoundPlayer::GetInstance()->Play(L"ShotSound", 0.5f
+				* SoundPlayer::GetInstance()->GetEffectVolume());
 		}
 	}
 }

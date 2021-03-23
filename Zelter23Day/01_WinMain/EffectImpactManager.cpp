@@ -2,9 +2,9 @@
 #include "EffectImpactManager.h"
 #include "EffectImpact.h"
 
-void EffectImpactManager::Init(wstring imagekey, int x, int y, int indexX, int indexY)
+void EffectImpactManager::Init(wstring imagekey, int x, int y, int indexX)
 {
-	mEffectImpact = new EffectImpact(imagekey, x, y, indexX, indexY);
+	mEffectImpact = new EffectImpact(imagekey, x, y, indexX);
 
 	mEffectImpact->Init();
 

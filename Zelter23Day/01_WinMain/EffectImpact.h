@@ -1,6 +1,18 @@
 #pragma once
 #include "GameObject.h"
 
+enum class TypeLayer
+{
+	stone,
+	wood,
+	glass,
+	fabric,
+	Iron,
+	Leather,
+	plastic,
+	end
+};
+
 class Image;
 class Animation;
 class InteractObject;
@@ -12,6 +24,9 @@ public:
 	Animation* mCurrentAnimation;
 	InteractObject* mInteractObject;
 	wstring mImageKey;
+
+	map<wstring, TypeLayer> mObjectLayerList;
+
 	int mIndexX;
 	int mIndexY;
 	float mAngle;
@@ -20,7 +35,7 @@ public:
 
 
 public:
-	EffectImpact(wstring imagekey, int x, int y, int indexX, int indexY);
+	EffectImpact(wstring imagekey, int x, int y, int indexX);
 
 	void Init()override;
 	void Release()override;

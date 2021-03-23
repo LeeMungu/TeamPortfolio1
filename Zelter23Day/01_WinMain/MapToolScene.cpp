@@ -373,6 +373,15 @@ void MapToolScene::Update()
 				tempObjectList[tempObjectList.size() - 1]->SetIsDestroy(true);
 			}
 		}
+		//인터렉트 지우기
+		if (Input::GetInstance()->GetKeyDown('C'))
+		{
+			vector<GameObject*>tempHousingObjectList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::HousingObject);
+			if (tempHousingObjectList.size() != NULL)
+			{
+				tempHousingObjectList[tempHousingObjectList.size() - 1]->SetIsDestroy(true);
+			}
+		}
 	}
 	//팔레트 픽 지우기
 	if (Input::GetInstance()->GetKeyDown(VK_BACK))

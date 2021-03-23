@@ -3,17 +3,6 @@
 
 #define InteractObjectSize 2
 
-enum class TypeLayer
-{
-	stone,
-	wood,
-	glass,
-	fabric,
-	Iron,
-	Leather,
-	plastic,
-	end
-};
 class Image;
 class InteractObject : public GameObject
 {
@@ -40,7 +29,6 @@ class InteractObject : public GameObject
 	//인터렉트 렉트
 	RECT mInteractRect;
 
-	map<wstring, TypeLayer> mObjectLayerList;
 
 public:
 	InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY);
@@ -64,5 +52,6 @@ public:
 
 	bool GetIsInvincible() { return mIsInvincible; }
 	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
+
 };
 

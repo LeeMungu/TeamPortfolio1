@@ -32,44 +32,59 @@ void QuickSlot::Release()
 
 void QuickSlot::Update()
 {
-	if (Input::GetInstance()->GetKeyDown('1')) {
+	//¼ýÀÚÅ°·Î Äü½½·Ô ¼±ÅÃ
+	if (Input::GetInstance()->GetKeyDown('1')) 
+	{
 		mSelectedNum = 1;
-		if (mSlotList[0].isSelected == true) {
+		if (mSlotList[0].isSelected == true) 
+		{
 			mSelectedNum = 0;
 		}
 	}
-	if (Input::GetInstance()->GetKeyDown('2')) {
+	if (Input::GetInstance()->GetKeyDown('2')) 
+	{
 		mSelectedNum = 2;
-		if (mSlotList[1].isSelected == true) {
+		if (mSlotList[1].isSelected == true) 
+		{
 			mSelectedNum = 0;
 		}
 	}
-	if (Input::GetInstance()->GetKeyDown('3')) {
+	if (Input::GetInstance()->GetKeyDown('3')) 
+	{
 		mSelectedNum = 3;
-		if (mSlotList[2].isSelected == true) {
+		if (mSlotList[2].isSelected == true) 
+		{
 			mSelectedNum = 0;
 		}
 	}
-	if (Input::GetInstance()->GetKeyDown('4')) {
+	if (Input::GetInstance()->GetKeyDown('4')) 
+	{
 		mSelectedNum = 4;
-		if (mSlotList[3].isSelected == true) {
+		if (mSlotList[3].isSelected == true) 
+		{
 			mSelectedNum = 0;
 		}
 	}
-	if (Input::GetInstance()->GetKeyDown('5')) {
+	if (Input::GetInstance()->GetKeyDown('5')) 
+	{
 		mSelectedNum = 5;
-		if (mSlotList[4].isSelected == true) {
+		if (mSlotList[4].isSelected == true) 
+		{
 			mSelectedNum = 0;
 		}
 	}
 
-	for (int i = 0; i < 5; i++) {
-		for (int i = 0; i < 5; i++) {
-			if (i != (mSelectedNum - 1)) {
+	for (int i = 0; i < 5; i++) 
+	{
+		for (int i = 0; i < 5; i++) 
+		{
+			if (i != (mSelectedNum - 1)) 
+			{
 				mSlotList[i].y = mY;
 				mSlotList[i].isSelected = false;
 			}
-			else {
+			else 
+			{
 				mSlotList[i].y = mY - 20;
 				mSlotList[i].isSelected = true;
 			}

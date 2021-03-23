@@ -30,11 +30,6 @@ void Inventory::Release()
 
 void Inventory::Update()
 {
-	//아이템 이미지 키값하고 개수를 가진 리스트 가져옴
-	mItemList = ItemManager::GetInstance()->GetmItemInventoryList();
-	map<wstring, int>::iterator iter = mItemList.begin();
-	
-
 	//임시로 위치 조정해서 열고 닫는것처럼 보임
 	if (mIsOpened == false) { //인벤토리 닫혀있을때 
 		if (Input::GetInstance()->GetKeyDown('I')) 
@@ -54,8 +49,13 @@ void Inventory::Update()
 				}
 			}
 
+			//아이템 이미지 키값하고 개수를 가진 리스트 가져옴
+			mItemList = ItemManager::GetInstance()->GetmItemInventoryList();
+			map<wstring, int>::iterator iter = mItemList.begin();
+
 			int k = 0;
 			int q = 0;
+
 			for (iter; iter != mItemList.end(); iter++) {
 				Item* item = new Item(iter->first, mSlotList[k][q].x + 30, mSlotList[k][q].y + 30,
 					iter->second, ItemKind::inventory);

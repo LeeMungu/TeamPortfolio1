@@ -4,57 +4,57 @@
 #include "Player.h"
 ItemManager::ItemManager()
 {
-	mItemImageList.insert(make_pair(L"Blade", ItemType::Weapon));
-	mItemImageList.insert(make_pair(L"CrowBar", ItemType::Weapon));
-	mItemImageList.insert(make_pair(L"IronAxe", ItemType::Weapon));
-	mItemImageList.insert(make_pair(L"IronHammer", ItemType::Weapon));
-	mItemImageList.insert(make_pair(L"Pipe", ItemType::Weapon));
-	mItemImageList.insert(make_pair(L"StoneAxe", ItemType::Weapon));
-	mItemImageList.insert(make_pair(L"StoneHammer", ItemType::Weapon));
-	mItemImageList.insert(make_pair(L"Torch", ItemType::Weapon));
+	mItemImageList.insert(make_pair(L"Blade", ItemType::weapon));
+	mItemImageList.insert(make_pair(L"CrowBar", ItemType::weapon));
+	mItemImageList.insert(make_pair(L"IronAxe", ItemType::weapon));
+	mItemImageList.insert(make_pair(L"IronHammer", ItemType::weapon));
+	mItemImageList.insert(make_pair(L"Pipe", ItemType::weapon));
+	mItemImageList.insert(make_pair(L"StoneAxe", ItemType::weapon));
+	mItemImageList.insert(make_pair(L"StoneHammer", ItemType::weapon));
+	mItemImageList.insert(make_pair(L"Torch", ItemType::weapon));
 
-	mItemImageList.insert(make_pair(L"Rifle", ItemType::Gun));
-	mItemImageList.insert(make_pair(L"Rifle2", ItemType::Gun));
-	mItemImageList.insert(make_pair(L"Shotgun", ItemType::Gun));
-	mItemImageList.insert(make_pair(L"CrossBow", ItemType::Gun));
-	mItemImageList.insert(make_pair(L"Revolver", ItemType::Gun));
-
-
-	mItemImageList.insert(make_pair(L"PistolBullet", ItemType::Bullet));
-	mItemImageList.insert(make_pair(L"ShotgunBullet", ItemType::Bullet));
-	mItemImageList.insert(make_pair(L"RifleBullet", ItemType::Bullet));
-	mItemImageList.insert(make_pair(L"Arrow", ItemType::Bullet));
-	mItemImageList.insert(make_pair(L"SMGBullet", ItemType::Bullet));
+	mItemImageList.insert(make_pair(L"Rifle", ItemType::gun));
+	mItemImageList.insert(make_pair(L"Rifle2", ItemType::gun));
+	mItemImageList.insert(make_pair(L"Shotgun", ItemType::gun));
+	mItemImageList.insert(make_pair(L"CrossBow", ItemType::gun));
+	mItemImageList.insert(make_pair(L"Revolver", ItemType::gun));
 
 
-	mItemImageList.insert(make_pair(L"GrilApple", ItemType::Food));
-	mItemImageList.insert(make_pair(L"GrilMeat1", ItemType::Food));
-	mItemImageList.insert(make_pair(L"GrilStickMeat", ItemType::Food));
-	mItemImageList.insert(make_pair(L"RawApple", ItemType::Food));
-	mItemImageList.insert(make_pair(L"RawMeat", ItemType::Food));
-
-	mItemImageList.insert(make_pair(L"BackPack", ItemType::Equipment));
-	mItemImageList.insert(make_pair(L"CrossBag", ItemType::Equipment));
-	mItemImageList.insert(make_pair(L"Hats1", ItemType::Equipment));
-	mItemImageList.insert(make_pair(L"Hats3", ItemType::Equipment));
-	mItemImageList.insert(make_pair(L"Cloth1", ItemType::Equipment));
-	mItemImageList.insert(make_pair(L"Pants1", ItemType::Equipment));
-	mItemImageList.insert(make_pair(L"Pants2", ItemType::Equipment));
-	mItemImageList.insert(make_pair(L"Uniform", ItemType::Equipment));
-	mItemImageList.insert(make_pair(L"WaistBag", ItemType::Equipment));
+	mItemImageList.insert(make_pair(L"PistolBullet", ItemType::bullet));
+	mItemImageList.insert(make_pair(L"ShotgunBullet", ItemType::bullet));
+	mItemImageList.insert(make_pair(L"RifleBullet", ItemType::bullet));
+	mItemImageList.insert(make_pair(L"Arrow", ItemType::bullet));
+	mItemImageList.insert(make_pair(L"SMGBullet", ItemType::bullet));
 
 
-	mItemImageList.insert(make_pair(L"Bandage", ItemType::Material));
-	mItemImageList.insert(make_pair(L"Charcol1", ItemType::Material));
-	mItemImageList.insert(make_pair(L"ClothPiece", ItemType::Material));
-	mItemImageList.insert(make_pair(L"ClothRag", ItemType::Material));
-	mItemImageList.insert(make_pair(L"Cup", ItemType::Material));
-	mItemImageList.insert(make_pair(L"Iron1", ItemType::Material));
-	mItemImageList.insert(make_pair(L"Iron2", ItemType::Material));
-	mItemImageList.insert(make_pair(L"Steel", ItemType::Material));
-	mItemImageList.insert(make_pair(L"Stone1", ItemType::Material));
-	mItemImageList.insert(make_pair(L"WoodBrench1", ItemType::Material));
-	mItemImageList.insert(make_pair(L"WoodBoard", ItemType::Material));
+	mItemImageList.insert(make_pair(L"GrilApple", ItemType::food));
+	mItemImageList.insert(make_pair(L"GrilMeat1", ItemType::food));
+	mItemImageList.insert(make_pair(L"GrilStickMeat", ItemType::food));
+	mItemImageList.insert(make_pair(L"RawApple", ItemType::food));
+	mItemImageList.insert(make_pair(L"Bandage", ItemType::food));
+	mItemImageList.insert(make_pair(L"RawMeat", ItemType::food));
+
+	mItemImageList.insert(make_pair(L"BackPack", ItemType::equipment));
+	mItemImageList.insert(make_pair(L"CrossBag", ItemType::equipment));
+	mItemImageList.insert(make_pair(L"Hats1", ItemType::equipment));
+	mItemImageList.insert(make_pair(L"Hats3", ItemType::equipment));
+	mItemImageList.insert(make_pair(L"Cloth1", ItemType::equipment));
+	mItemImageList.insert(make_pair(L"Pants1", ItemType::equipment));
+	mItemImageList.insert(make_pair(L"Pants2", ItemType::equipment));
+	mItemImageList.insert(make_pair(L"Uniform", ItemType::equipment));
+	mItemImageList.insert(make_pair(L"WaistBag", ItemType::equipment));
+
+
+	mItemImageList.insert(make_pair(L"Charcol1", ItemType::material));
+	mItemImageList.insert(make_pair(L"ClothPiece", ItemType::material));
+	mItemImageList.insert(make_pair(L"ClothRag", ItemType::material));
+	mItemImageList.insert(make_pair(L"Cup", ItemType::material));
+	mItemImageList.insert(make_pair(L"Iron1", ItemType::material));
+	mItemImageList.insert(make_pair(L"Iron2", ItemType::material));
+	mItemImageList.insert(make_pair(L"Steel", ItemType::material));
+	mItemImageList.insert(make_pair(L"Stone1", ItemType::material));
+	mItemImageList.insert(make_pair(L"WoodBrench1", ItemType::material));
+	mItemImageList.insert(make_pair(L"WoodBoard", ItemType::material));
 
 
 	mItemImageList.insert(make_pair(L"Barrigate", ItemType::structure));
@@ -71,8 +71,8 @@ ItemManager::ItemManager()
 	mItemImageList.insert(make_pair(L"WoodWorkTable", ItemType::structure));
 
 
-	mItemImageList.insert(make_pair(L"Bottle", ItemType::Drink));
-	mItemImageList.insert(make_pair(L"Can", ItemType::Drink));
+	mItemImageList.insert(make_pair(L"Bottle", ItemType::drink));
+	mItemImageList.insert(make_pair(L"Can", ItemType::drink));
 
 
 }
@@ -240,7 +240,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 	else if (str == L"Wat") //식수대
 	{ 
-
+		key = L"Iron1";
 	}
 	else if (str == L"Wor") //작업대
 	{ 

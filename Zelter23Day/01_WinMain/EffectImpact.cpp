@@ -81,7 +81,7 @@ void EffectImpact::Init()
 	mObjectLayerList.insert(make_pair(L"Desk2", TypeLayer::Iron));
 	mObjectLayerList.insert(make_pair(L"Desk3", TypeLayer::Iron));
 	mObjectLayerList.insert(make_pair(L"Desk4", TypeLayer::Iron));
-	mObjectLayerList.insert(make_pair(L"dispenser", TypeLayer::Iron));
+	mObjectLayerList.insert(make_pair(L"dispenser1", TypeLayer::Iron));
 	mObjectLayerList.insert(make_pair(L"dispenser2", TypeLayer::Iron));
 	mObjectLayerList.insert(make_pair(L"dispenser3", TypeLayer::Iron));
 	mObjectLayerList.insert(make_pair(L"dispenser4", TypeLayer::Iron));

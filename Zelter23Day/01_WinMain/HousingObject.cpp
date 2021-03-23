@@ -93,7 +93,7 @@ void HousingObject::Update()
 	}
 	else if (mHouselayer == HouseLayer::HouseWall)
 	{
-		//mRect.bottom = mRect.bottom - 1;
+		mRect.bottom = mRect.bottom - 1;
 	}
 	else if(mHouselayer == HouseLayer::Roof)
 	{

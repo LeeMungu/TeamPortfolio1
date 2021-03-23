@@ -178,8 +178,8 @@ void Zombie01::Render(HDC hdc)
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mAttackBox);
 	}
 	
-	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, to_wstring(mChaseDistance), 30);
-	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mDistance), 30);
+	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, to_wstring(mChaseDistance), 30);
+	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2-100, to_wstring(mDistance), 30);
 	//if (mZombistate == ZombieState::Patrol)
 	//{
 	//	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, L"Б¤Вы", 30);

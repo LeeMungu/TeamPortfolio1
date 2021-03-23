@@ -14,6 +14,7 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 	mTileIndexX = x/TileSize;
 	mTileIndexY = y/TileSize;
 	//인풋값 저장
+	mInputX = x;
 	mInputY = y;
 	mHp = hp;
 	mImageKey = imageKey;

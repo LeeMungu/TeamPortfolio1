@@ -619,7 +619,7 @@ void MapToolScene::Save()
 				str.assign(imagekey.begin(), imagekey.end());
 				saveStream << str;
 				saveStream << ",";
-				saveStream << tempObject[i]->GetX();
+				saveStream << ((InteractObject*)tempObject[i])->GetInputX();
 				saveStream << ",";
 				saveStream << ((InteractObject*)tempObject[i])->GetInputY();
 				saveStream << ",";

@@ -26,8 +26,8 @@ class InteractObject : public GameObject
 	int mTileCountX, mTileCountY;
 	//시작 타일 배열값
 	int mTileIndexX, mTileIndexY;
-	//입력해주는 Y값
-	int mInputY;
+	//입력해주는 값
+	int mInputX, mInputY;
 	//피격 시 무적 시간 (bool값 변경을 위한)
 	float mInvincibleCount;
 	//피격시 무적 판정 및 이펙트연출을 위한 변수
@@ -54,6 +54,7 @@ public:
 	void SetHp(int hp) { mHp = hp; }
 	wstring GetImageKey()const { return mImageKey; }
 	
+	int GetInputX()const { return mInputX; }
 	int GetInputY()const { return mInputY; }
 	int GetTileIndexX()const { return mTileIndexX; }
 	int GetTileIndexY()const { return mTileIndexY; }

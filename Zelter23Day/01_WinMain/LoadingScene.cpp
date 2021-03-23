@@ -134,7 +134,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Desk2", Resources(L"/05_Object/Desk2.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Desk3", Resources(L"/05_Object/Desk3.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Desk4", Resources(L"/05_Object/Desk4.png"), 2, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"dispenser", Resources(L"/05_Object/dispenser.png"), 2, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"dispenser1", Resources(L"/05_Object/dispenser.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"dispenser2", Resources(L"/05_Object/dispenser2.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"dispenser3", Resources(L"/05_Object/dispenser3.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"dispenser4", Resources(L"/05_Object/dispenser4.png"), 2, 1); });

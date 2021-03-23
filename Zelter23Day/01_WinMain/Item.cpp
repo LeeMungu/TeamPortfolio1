@@ -10,6 +10,14 @@ Item::Item(wstring imageKey, float x, float y, int count, ItemKind kind) {
 	mItemKind = kind;
 
 }
+Item::Item(wstring imageKey, string name, float x, float y, int count, ItemKind kind) : GameObject(name)
+{
+	mKeyName = imageKey;
+	mX = x;
+	mY = y;
+	mCount = count;
+	mItemKind = kind;
+}
 void Item::Init()
 {
 	

@@ -24,7 +24,7 @@ void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 
-	mPlayer = new Player("Player", 150, 150);
+	mPlayer = new Player("Player", 1300, 1400);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
 	
@@ -85,6 +85,7 @@ void scene1::Update()
 {
 	ObjectManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
+
 	ItemManager::GetInstance()->Update();
 	
 

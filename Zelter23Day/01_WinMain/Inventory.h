@@ -7,7 +7,7 @@ struct BagSlot {
 	float y;
 	Image* slotImage;
 	RECT rect;
-	//bool isSelected;
+	bool isFill;
 };
 
 class Inventory : public UI
@@ -29,5 +29,6 @@ public:
 
 	void SetOpened(bool b) { mIsOpened = b; }
 	bool GetOpened() const { return mIsOpened; }
+	BagSlot(*GetSlotList(void))[2]{	return mSlotList; }
 };
 

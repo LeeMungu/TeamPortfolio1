@@ -14,8 +14,8 @@
 
 void MapToolScene::Init()
 {
-	mTileCountX = 100;
-	mTileCountY = 100;
+	mTileCountX = 300;
+	mTileCountY = 300;
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 	Image* houseImage = ImageManager::GetInstance()->FindImage(L"House");
 
@@ -371,6 +371,15 @@ void MapToolScene::Update()
 			if (tempObjectList.size() != NULL)
 			{
 				tempObjectList[tempObjectList.size() - 1]->SetIsDestroy(true);
+			}
+		}
+		//인터렉트 지우기
+		if (Input::GetInstance()->GetKeyDown('C'))
+		{
+			vector<GameObject*>tempHousingObjectList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::HousingObject);
+			if (tempHousingObjectList.size() != NULL)
+			{
+				tempHousingObjectList[tempHousingObjectList.size() - 1]->SetIsDestroy(true);
 			}
 		}
 	}

@@ -20,6 +20,7 @@ void Inventory::Init()
 			mSlotList[i][j].y = mY + j * 60 + 250;
 			mSlotList[i][j].slotImage = IMAGEMANAGER->FindImage(L"Inventory_slot");
 			mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
+			mSlotList[i][j].isFill = false;
 		}
 	}
 }
@@ -38,7 +39,7 @@ void Inventory::Update()
 			mY = WINSIZEY - 255 * 2;
 			mIsOpened = true;
 
-			bool isEnd = false;
+			//bool isEnd = false;
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 2; j++) {
 					mSlotList[i][j].x = mX + i * 60 + 170;
@@ -49,6 +50,7 @@ void Inventory::Update()
 				}
 			}
 
+			/*
 			//아이템 이미지 키값하고 개수를 가진 리스트 가져옴
 			mItemList = ItemManager::GetInstance()->GetmItemInventoryList();
 			map<wstring, int>::iterator iter = mItemList.begin();
@@ -67,7 +69,14 @@ void Inventory::Update()
 					q++;
 				}
 			}
+			*/
 
+			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+
+			for (int i = 0; i < items.size(); ++i) {
+				items[i]->SetX(items[i]->GetX() + 1635);
+				items[i]->SetY(items[i]->GetY() + 1230);
+			}
 		}
 		
 	
@@ -88,13 +97,20 @@ void Inventory::Update()
 					mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 				}
 			}
-
+			/*
 			mItemList.clear();
 
 			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 			for (int i = 0; i < items.size(); ++i) {
 					items[i]->SetIsDestroy(true);
+			}
+			*/
+			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+
+			for (int i = 0; i < items.size(); ++i) {
+				items[i]->SetX(items[i]->GetX() - 1635);
+				items[i]->SetY(items[i]->GetY() - 1230);
 			}
 		}
 	}

@@ -32,6 +32,14 @@ class HousingObject : public GameObject
 	RECT mHouse01Rect1;
 	RECT mHouse01Rect2;
 	Player* mPlayer;
+
+	RECT mHouse04Rect1;
+
+	RECT mHouse07Rect1;
+
+	RECT mPoliceRect;
+	RECT mShopRect1;
+	RECT mShopRect2;
 public:
 	HousingObject(const wstring& name, float x, float y, int tileCountX, int tileCountY);
 

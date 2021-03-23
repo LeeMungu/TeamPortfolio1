@@ -19,6 +19,7 @@
 #include "Inventory.h"
 #include "HousingObject.h"
 #include "Tablet.h"
+#include "WorkTable.h"
 
 void scene1::Init()
 {
@@ -49,6 +50,9 @@ void scene1::Init()
 
 	Tablet* tablet = new Tablet("Tablet");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, tablet);
+
+	WorkTable* workTable = new WorkTable("WorkTable");
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, workTable);
 
 	Load();
 

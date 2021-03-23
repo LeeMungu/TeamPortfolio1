@@ -25,6 +25,9 @@ public:
 	void DropItems(wstring key, float x, float y);
 	void PickUpItems();
 	void PutInInventory(wstring key);
+	void InventoryItems();
+	void PutInQuickSlot();
+
 	//아이템 인벤토리 리스트 리턴
 	map<wstring, int> GetmItemInventoryList() { return mItemInventoryList; }
 };

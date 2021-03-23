@@ -118,6 +118,9 @@
     <Filter Include="FrameWork\EffectManager">
       <UniqueIdentifier>{d00cc572-449e-4280-ba39-b174f56c35fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\UI\WorkTable">
+      <UniqueIdentifier>{4819def5-e8b4-4ff1-81c4-1cbbc91be862}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -303,13 +306,14 @@
     <ClInclude Include="EffectImpact.h">
       <Filter>FrameWork\EffectManager</Filter>
     </ClInclude>
-
     <ClInclude Include="EffectImpactManager.h">
       <Filter>FrameWork\EffectManager</Filter>
     </ClInclude>
     <ClInclude Include="Tablet.h">
       <Filter>MainGame\UI\Statu</Filter>
-
+    </ClInclude>
+    <ClInclude Include="WorkTable.h">
+      <Filter>MainGame\UI\WorkTable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -487,13 +491,14 @@
     <ClCompile Include="EffectImpact.cpp">
       <Filter>FrameWork\EffectManager</Filter>
     </ClCompile>
-
     <ClCompile Include="EffectImpactManager.cpp">
       <Filter>FrameWork\EffectManager</Filter>
-      </ClCompile>
+    </ClCompile>
     <ClCompile Include="Tablet.cpp">
       <Filter>MainGame\UI\Statu</Filter>
-
+    </ClCompile>
+    <ClCompile Include="WorkTable.cpp">
+      <Filter>MainGame\UI\WorkTable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

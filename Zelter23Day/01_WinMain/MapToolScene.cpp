@@ -14,8 +14,8 @@
 
 void MapToolScene::Init()
 {
-	mTileCountX = 100;
-	mTileCountY = 100;
+	mTileCountX = 300;
+	mTileCountY = 300;
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
 	Image* houseImage = ImageManager::GetInstance()->FindImage(L"House");
 

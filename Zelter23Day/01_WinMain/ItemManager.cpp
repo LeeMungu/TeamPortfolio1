@@ -103,9 +103,10 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 
 	//오브젝트에 따라 랜덤으로 아이템 key를 정해준다
 	wstring key;
+	wstring key2;
 	
 	if (str == L"Ben") { //벤치 - 나뭇가지
-		key = L"Iron1";
+		key = L"WoodBrench1";
 		DropItems(key, x, y);
 	}
 	else if (str == L"Bus") { //버스
@@ -119,7 +120,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 
 	}
 	else if (str == L"Cha") { //의자
-
+		key = L"Iron1";
 	}
 	else if (str == L"Clo") { //옷장
 
@@ -158,7 +159,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 
 	}
 	else if (str == L"Roc") { //돌
-
+		key = L"Iron1";
 	}
 	else if (str == L"She") { //선반
 

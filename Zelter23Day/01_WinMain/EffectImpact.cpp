@@ -3,12 +3,14 @@
 #include "Image.h"
 #include "Camera.h"
 #include "Animation.h"
+#include "InteractObject.h"
 
 #define effectscale 2
-EffectImpact::EffectImpact(int x, int y, int indexX, int indexY)
+EffectImpact::EffectImpact(wstring imagekey, int x, int y, int indexX, int indexY)
 {
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Effect, this);
 	mImage = IMAGEMANAGER->GetInstance()->FindImage(L"effect_impact");
+	mImageKey = imagekey;
 	mX = x;
 	mY = y;	
 	mSizeX = mImage->GetFrameWidth() * effectscale;
@@ -19,6 +21,16 @@ EffectImpact::EffectImpact(int x, int y, int indexX, int indexY)
 	mAngle = Random::GetInstance()->RandomInt(70, 240) * 0.01f;
 	mSpeed = Random::GetInstance()->RandomInt(100, 130);
 	mGravity = 150.f;
+
+	//vector<GameObject*> tempObject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+	//if (tempObject.size() != NULL)
+	//{
+	//	for (int i = 0; i < tempObject.size(); ++i)
+	//	{
+	//		mInteractObject = (InteractObject*)tempObject[i];
+	//	}
+	//}
+
 }
 
 void EffectImpact::Init()
@@ -38,6 +50,10 @@ void EffectImpact::Update()
 	{
 		mIsDestroy = true;
 	}
+
+
+
+
 
 }
 

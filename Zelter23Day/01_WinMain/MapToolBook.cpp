@@ -1452,7 +1452,7 @@ void MapToolBook::ChangeMode(BookType bookType)
 			//mHouseObject = new HousingObject("House", 0, 0, SideType::InSide);
 			//ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mHouseObject);
 
-				mPage = 0;
+				mPage = 1;
 				ObjectButton* objectButton = new ObjectButton(L"House3", mX - 250 + 100, mY - 210 + 145, []() {
 					Mouse* mouse = new Mouse(L"House3" , ObjectLayer::HousingObject);
 					mouse->SetHpMax(10);
@@ -1483,7 +1483,7 @@ void MapToolBook::ChangeMode(BookType bookType)
 				}
 			}
 			//페이지 초기화
-			mPage = 0;
+			mPage = 1;
 			//오브젝트버튼 생성
 			for (int i = 0; i < 8; ++i)
 			{
@@ -1517,7 +1517,7 @@ void MapToolBook::ChangeMode(BookType bookType)
 				}
 			}
 			//페이지 초기화
-			mPage = 0;
+			mPage = 1;
 			//오브젝트버튼 생성
 			for (int i = 0; i < 11; ++i)
 			{

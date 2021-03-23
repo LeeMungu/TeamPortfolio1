@@ -85,6 +85,7 @@ void scene1::Update()
 {
 	ObjectManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
+
 	ItemManager::GetInstance()->Update();
 	
 

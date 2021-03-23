@@ -9,6 +9,8 @@ SoundPlayer::SoundPlayer()
 	//그래서 팩토리패턴이라는 디자인 패턴을 사용해서 생성하게 끔 유도함
 	FMOD::System_Create(&mSystem);
 	mSystem->init(MaxChannelBuffer, FMOD_INIT_NORMAL, NULL);
+	mBGMVolume = 0.5f;
+	mEffectVolume = 0.5f;
 }
 
 SoundPlayer::~SoundPlayer()

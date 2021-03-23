@@ -47,6 +47,9 @@ void Weapon::Update()
 
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
+		SoundPlayer::GetInstance()->Play(L"ShotSound", 0.5f
+			* SoundPlayer::GetInstance()->GetEffectVolume());
+
 		if ((Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory") != NULL)
 		{
 

@@ -63,6 +63,8 @@ void scene1::Init()
 	mZombieCoolTime = 10; // 좀비 쿨타임
 	mZombieCoolTimer = 0;//델타타임 더해줄 타이머
 
+	SoundPlayer::GetInstance()->Play(L"BGM", 0.5f * SoundPlayer::GetInstance()->GetBgmVolume());
+	SoundPlayer::GetInstance()->Play(L"ForestSound", 0.2f * SoundPlayer::GetInstance()->GetBgmVolume());
 }
 
 void scene1::Release()

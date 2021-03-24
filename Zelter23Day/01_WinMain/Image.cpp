@@ -306,13 +306,12 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;
-	//시간에 따른 길이 조정 : 0~1.f <-  1.f~0~1.f로 만들고 싶다.
+	//시간에 따른 길이 조정 : 0~1.f <-  1.f~0~1.f로 만들고 싶다. 기울기
 	float timePercent = ((float)((((int)time) % (60 * 24))*100) / (60 * 24))/100.f;
 	
-	//0.2+ 0.5-0-0.5
+	//0.2+ 0.5-0-0.5 길이
 	float downUpPercent = 0.2f+abs(timePercent-0.5f);
-	//0-0.5-0
-	//0-1.5 그림자
+	//0-0.5-0 그림자
 	float upDownPercent = abs(0.5f -(downUpPercent-0.2f));
 
 	//크기

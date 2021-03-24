@@ -9,7 +9,6 @@ struct BagSlot {
 	Image* slotImage2;
 	RECT rect;
 	bool isFill;
-	bool isChecked;
 };
 
 class Inventory : public UI

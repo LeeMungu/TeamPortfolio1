@@ -417,7 +417,7 @@ void MapToolScene::Update()
 	//로드 할때도 해줘야 할듯하다 -> 항상 적용되어야한다 -> 오브젝트매니져에서 해주고 싶지만 타일이 오브젝트매니져에 없다.
 	//->타일을 오브젝트매니져에 넣기는 메리트가 너무 적다(업데이트나 기타부분이 의미가 없다 타일은 타일로 남겨두는게 충돌이 적고 
 	//타일이 적게 들어갈듯
-	vector<GameObject*> tempInteractList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+	vector<GameObject*> tempInteractList = ObjectManager::GetInstance()->GetClipingInteraceList();
 	if (tempInteractList.size() != NULL)
 	{
 		for(int i=0; i<tempInteractList.size();++i)

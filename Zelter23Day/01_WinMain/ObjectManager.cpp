@@ -27,7 +27,7 @@ void ObjectManager::Init()
 	}
 
 	ObjectIter iter1 = mObjectList.find(ObjectLayer::Enemy);
-	for (; iter1 != mObjectList.find(ObjectLayer::Item); ++iter1)
+	for (; iter1 != mObjectList.find(ObjectLayer::Bullet); ++iter1)
 	{
 		//범위를 줄여서 필요없어졌다.
 		//if (iter1->first == ObjectLayer::Enemy ||
@@ -83,23 +83,38 @@ void ObjectManager::Update()
 	}
 	//업데이트 때 마다 새로 넣어줌<-필요한가?
 	mZorderList.clear();
+	mClipingInteractList.clear();
 	ObjectIter iter1 = mObjectList.find(ObjectLayer::Enemy);
-	for (; iter1 != mObjectList.find(ObjectLayer::Item); ++iter1)
+	for (; iter1 != mObjectList.find(ObjectLayer::Bullet); ++iter1)
 	{
-		//범위를 줄여서 필요없어졌다.
-		if (iter1->first == ObjectLayer::Enemy ||
-			iter1->first == ObjectLayer::Player ||
-			iter1->first == ObjectLayer::InteractObject ||
-			iter1->first == ObjectLayer::NoninteractObject )
+		//집만 재외 하자
+		if (iter1->first != ObjectLayer::HousingObject )
 		{
 			for (int i = 0; i < iter1->second.size(); ++i)
 			{
 				mZorderList.push_back(iter1->second[i]);
 			}
 		}
+		if (iter1->first == ObjectLayer::InteractObject)
+		{
+			//카메라 영역 받아오기
+			RECT cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
+			for (int i = 0; i < iter1->second.size(); ++i)
+			{
+				//카메라 영역 밖의 것들
+				if (iter1->second[i]->GetRect().top > cameraRect.bottom || iter1->second[i]->GetRect().bottom < cameraRect.top
+					|| iter1->second[i]->GetRect().left > cameraRect.right || iter1->second[i]->GetRect().right < cameraRect.left)
+				{
+				}
+				else
+				{
+					mClipingInteractList.push_back(iter1->second[i]);
+				}
+			}
+		}
 	}
-	
-	mZorderRenderList = Zorder();
+
+	Zorder(mZorderRenderList);
 }
 
 void ObjectManager::Render(HDC hdc)
@@ -224,22 +239,22 @@ vector<class GameObject*> ObjectManager::GetObjectList(ObjectLayer layer)
 	return mObjectList[layer];
 }
 
-vector<GameObject*> ObjectManager::Zorder()
+void ObjectManager::Zorder(vector<GameObject*> &zorderRenderList)
 {
-	vector<GameObject*> tmp = mZorderList;
+	zorderRenderList = mZorderList;
 
 	//카메라 영역 받아오기
 	RECT cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 
 
-	for (int i = 0; i < tmp.size(); ++i)
+	for (int i = 0; i < zorderRenderList.size(); ++i)
 	{
 		//목록에서 카메라 안에 있는 애들만 남겨두고 싶음
-		if (tmp[i]->GetRect().top > cameraRect.bottom || tmp[i]->GetRect().bottom < cameraRect.top
-			|| tmp[i]->GetRect().left > cameraRect.right || tmp[i]->GetRect().right < cameraRect.left)
+		if (zorderRenderList[i]->GetRect().top > cameraRect.bottom || zorderRenderList[i]->GetRect().bottom < cameraRect.top
+			|| zorderRenderList[i]->GetRect().left > cameraRect.right || zorderRenderList[i]->GetRect().right < cameraRect.left)
 		{
 			//이뒤로는 '목록에서만' 싹 지우기 <-세이프딜리트나 릴리즈 하면 완전히 지워저벼려서 안됨
-			tmp.erase(tmp.begin() + i);
+			zorderRenderList.erase(zorderRenderList.begin() + i);
 			--i;
 			continue;
 		}
@@ -250,8 +265,8 @@ vector<GameObject*> ObjectManager::Zorder()
 		return a->GetRect().bottom < b->GetRect().bottom;
 	};
 
-	sort(tmp.begin(), tmp.end(), func);
+	sort(zorderRenderList.begin(), zorderRenderList.end(), func);
 
-	return tmp;
+	return ;
 }
 

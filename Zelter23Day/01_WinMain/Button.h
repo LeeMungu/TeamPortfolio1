@@ -32,7 +32,7 @@ class Button final
 public:
 	Button(wstring text,float x, float y, float sizeX, float sizeY, function<void(void)> func);
 	Button(wstring imageKey,int indexY, wstring text, float x, float y, float sizeX, float sizeY, function<void(void)> func);
-
+	Button(wstring imageKey, float x, float y, float multiply, function<void(void)> func);
 	void Update();
 	void Render(HDC hdc);
 

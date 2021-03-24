@@ -6,8 +6,9 @@
 class Player;
 class Weapon : public GameObject
 {
+	bool mIsUse;
 public:
-	Weapon(const float x, float y, int imageX, int imageY);
+	Weapon(const string& name,const float x, float y, int imageX, int imageY);
 	Image* mImage;
 
 	Player* mPlayer;
@@ -39,5 +40,7 @@ public:
 
 	void SetPlayerPtr(Player* player) { mPlayer = player; }
 	
+	bool GetIsUse() { return mIsUse; }
+	void SetIsUse(bool isUse) { mIsUse = isUse; }
 };
 

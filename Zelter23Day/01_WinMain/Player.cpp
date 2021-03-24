@@ -125,7 +125,7 @@ void Player::Init()
 	mDash = 0;
 	mDashTime = 0;
 
-	Weapon* weapon = new Weapon(mX,mY,0,0);
+	Weapon* weapon = new Weapon("weapon",mX,mY,0,0);
 	weapon->SetPlayerPtr(this);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
 
@@ -698,4 +698,10 @@ void Player::PlayerState() {
 	else {
 		mStemina = 0;
 	}
+}
+
+void Player::weaponUse(bool a)
+{
+	Weapon* tempweapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "weapon");
+	tempweapon->SetIsUse(a);
 }

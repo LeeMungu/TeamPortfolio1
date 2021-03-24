@@ -2,13 +2,15 @@
 #include "UI.h"
 class Image;
 class Item;
-
+class Button;
 class WorkTable : public UI
 {
 	Image* mWorkTable;
-	Image* mStartBtn;
-	Image* mUpTimerBtn;
-	Image* mDownTimerBtn;
+
+	Button* mStartBtn;
+	Button* mTimeUpBtn;
+	Button* mTimeDownBtn;
+
 	bool mIsTableOpen;
 
 public:

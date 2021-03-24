@@ -89,6 +89,7 @@ void ItemManager::Release()
 void ItemManager::Update()
 {
 	PickUpItems();
+	MoveItems();
 }
 
 void ItemManager::Render(HDC hdc)
@@ -96,6 +97,13 @@ void ItemManager::Render(HDC hdc)
 }
 
 
+
+ItemType ItemManager::SetItemType(wstring key)
+{
+	if (!mItemImageList.empty()) {
+		return mItemImageList.find(key)->second;
+	}
+}
 
 void ItemManager::randomItem(wstring objectKey, float x, float y)
 {
@@ -319,7 +327,7 @@ void ItemManager::PutInInventory(wstring key)
 					string str;
 					str.assign(key.begin(), key.end());
 	
-					item = new Item(key, str, slotList[i][j].x, slotList[i][j].y, mItemInventoryList[key], ItemKind::inventory);
+					item = new Item(key, str, slotList[i][j].x + 25, slotList[i][j].y + 25, mItemInventoryList[key], ItemKind::inventory);
 					item->Init();
 					ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
 					slotList[i][j].isFill = true;
@@ -348,9 +356,109 @@ void ItemManager::MoveItems()
 {
 	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
 	BagSlot(*slotList)[2] = inventory->GetSlotList();
+	bool isOpened = inventory->GetOpened();
 	vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 	//아이템을 슬롯으로 드로그 앤 드롭해서 옮길 수 있음
-	//아이템이 있는 슬롯과 아이템이 부딪치면 아이템 위치 swap
+
+	if (isOpened == true) //인벤토리 열려있을 때만
+	{
+		for (int i = 0; i < items.size(); ++i)
+		{
+			if (((Item*)items[i])->GetIsClicking() == false) //드래그 중 아닐 때
+			{
+				RECT itemRc = items[i]->GetRect();
+				if (PtInRect(&itemRc, _mousePosition) == true && Input::GetInstance()->GetKeyDown(VK_LBUTTON))
+				{
+					((Item*)items[i])->SetIsClicking(true);
+				}
+				else
+				{
+					((Item*)items[i])->mPrePosition.x = items[i]->GetX();
+					((Item*)items[i])->mPrePosition.y = items[i]->GetY();
+				}
+			}
+			else //드래그 중일 때
+			{
+				items[i]->SetX(_mousePosition.x);
+				items[i]->SetY(_mousePosition.y);
+
+				if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
+				{
+					bool isMoved = false;
+
+					//아이템과 슬롯 충돌 처리
+					for(int j = 0; j<5; j++)
+					{
+						for (int k = 0; k < 2; k++)
+						{
+							RECT rc;
+							RECT slotRc = slotList[j][k].rect;
+							RECT itemRc = items[i]->GetRect();
+
+							//왼쪽키를 뗀 순간 슬롯과 충돌
+							if (IntersectRect(&rc, &slotRc, &itemRc))
+							{
+								//슬롯이 차있으면
+								if (slotList[j][k].isFill == true)
+								{
+									//나중에 스왑하는 걸로 수정
+									items[i]->SetX(((Item*)items[i])->mPrePosition.x);
+									items[i]->SetY(((Item*)items[i])->mPrePosition.y);
+									((Item*)items[i])->SetIsClicking(false);
+									isMoved = true;
+									slotList[j][k].isFill = true;
+									break;
+								}
+								//슬롯이 비어있으면
+								else if (slotList[j][k].isFill == false)
+								{
+									//아이템의 위치를 슬롯위치로 지정해주고 isFill true로 해줌
+									items[i]->SetX(slotList[j][k].x + 25);
+									items[i]->SetY(slotList[j][k].y + 25);
+									slotList[j][k].isFill = true;
+									((Item*)items[i])->SetIsClicking(false);
+									isMoved = true;
+
+									//아이템이 원래 있던 슬롯은 isFill false를 해준다
+									
+									break;
+								}
+							}
+							
+						}
+					}
+
+					if (isMoved == false)
+					{
+						items[i]->SetX(((Item*)items[i])->mPrePosition.x);
+						items[i]->SetY(((Item*)items[i])->mPrePosition.y);
+						((Item*)items[i])->SetIsClicking(false);
+					}
+				}
+			}
+			
+			//아이템 비어있는 부분은 isFill false로 셋팅해줌
+			/*
+			for (int j = 0; j < 5; j++)
+			{
+				for (int k = 0; k < 2; k++)
+				{
+					RECT rc;
+					RECT slotRc = slotList[j][k].rect;
+					RECT itemRc = items[i]->GetRect();
+					if (IntersectRect(&rc, &slotRc, &itemRc))
+					{
+						slotList[j][k].isFill = true;
+					}
+					else
+					{
+						slotList[j][k].isFill = false;
+					}
+				}
+			}
+			*/
+		}//items.size() for문 끝
+	}
 }
 
 

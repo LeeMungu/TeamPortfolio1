@@ -9,7 +9,6 @@ private:
 	map<wstring, ItemType> mItemImageList;
 	Player* mPlayer;
 
-
 	map<wstring, int> mItemInventoryList; //인벤토리 아이템 이미지 key값과 value: count
 
 public:
@@ -21,6 +20,7 @@ public:
 	void Update();
 	void Render(HDC hdc);
 
+	ItemType SetItemType(wstring key);
 	void randomItem(wstring objectKey, float x, float y);
 	void DropItems(wstring key, float x, float y);
 	void PickUpItems();

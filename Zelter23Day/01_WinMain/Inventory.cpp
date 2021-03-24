@@ -19,6 +19,7 @@ void Inventory::Init()
 			mSlotList[i][j].x = mX + i * 60 + 170;
 			mSlotList[i][j].y = mY + j * 60 + 250;
 			mSlotList[i][j].slotImage = IMAGEMANAGER->FindImage(L"Inventory_slot");
+			mSlotList[i][j].slotImage2 = IMAGEMANAGER->FindImage(L"QuickSlot_slotBase");
 			mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 			mSlotList[i][j].isFill = false;
 		}
@@ -74,8 +75,8 @@ void Inventory::Update()
 			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 			for (int i = 0; i < items.size(); ++i) {
-				items[i]->SetX(items[i]->GetX() + 1635);
-				items[i]->SetY(items[i]->GetY() + 1235);
+				items[i]->SetX(items[i]->GetX() + 1610);
+				items[i]->SetY(items[i]->GetY() + 1210);
 			}
 		}
 		
@@ -109,8 +110,8 @@ void Inventory::Update()
 			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 			for (int i = 0; i < items.size(); ++i) {
-				items[i]->SetX(items[i]->GetX() - 1635);
-				items[i]->SetY(items[i]->GetY() - 1235);
+				items[i]->SetX(items[i]->GetX() - 1610);
+				items[i]->SetY(items[i]->GetY() - 1210);
 			}
 		}
 	}
@@ -125,6 +126,9 @@ void Inventory::Render(HDC hdc)
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 2; j++) {
 				mSlotList[i][j].slotImage->ScaleRender(hdc, mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
+				if (mSlotList[i][j].isFill == true) {
+					mSlotList[i][j].slotImage2->ScaleRender(hdc, mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
+				}
 			}
 		}
 	}

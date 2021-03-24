@@ -29,10 +29,12 @@ protected:
 	int mCount;
 	ItemKind mItemKind;
 	Image* mNumImage;
-	bool mIsClicking;
 	bool mIsOpened;
-	POINT mPrePosition;
+	bool mIsClicking;
+
 public:
+	POINT mPrePosition;
+
 	Item(wstring imageKey, float x, float y, int count = 1 , ItemKind kind = ItemKind::drop);
 	Item(wstring imageKey, string name, float x, float y, int count = 1 , ItemKind kind = ItemKind::inventory);
 	void Init();
@@ -42,5 +44,8 @@ public:
 
 	wstring GetKeyName() { return mKeyName; }
 	void SetCount(int n) { mCount = n; }
+	ItemKind GetItemKind() { return mItemKind; }
+	bool GetIsClicking() { return mIsClicking; }
+	void SetIsClicking(bool b) { mIsClicking = b; }
 };
 

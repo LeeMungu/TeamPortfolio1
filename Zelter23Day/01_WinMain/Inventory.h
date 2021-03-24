@@ -6,6 +6,7 @@ struct BagSlot {
 	float x;
 	float y;
 	Image* slotImage;
+	Image* slotImage2;
 	RECT rect;
 	bool isFill;
 };

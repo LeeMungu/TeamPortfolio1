@@ -130,9 +130,16 @@ void scene1::Update()
 
 
 	//타일속성 바꿔주기전에 초기화해주기
-	for (int y = 0; y < mTileCountY; ++y)
+	//카메라에 맞춰서 타일을 그려줌
+	Camera* mainCamera = CameraManager::GetInstance()->GetMainCamera();
+	int leftIndex = Math::Clamp(mainCamera->GetRect().left / TileSize, 0, mTileCountX - 1);
+	int rightIndex = Math::Clamp(mainCamera->GetRect().right / TileSize, 0, mTileCountX - 1);
+	int topIndex = Math::Clamp(mainCamera->GetRect().top / TileSize, 0, mTileCountY - 1);
+	int bottomIndex = Math::Clamp(mainCamera->GetRect().bottom / TileSize, 0, mTileCountY - 1);
+
+	for (int y = topIndex; y < bottomIndex; ++y)
 	{
-		for (int x = 0; x < mTileCountX; ++x)
+		for (int x = leftIndex; x < rightIndex; ++x)
 		{
 			mTileList[y][x]->SetTileLayer(TileLayer::normal);
 		}
@@ -141,7 +148,7 @@ void scene1::Update()
 	//로드 할때도 해줘야 할듯하다 -> 항상 적용되어야한다 -> 오브젝트매니져에서 해주고 싶지만 타일이 오브젝트매니져에 없다.
 	//->타일을 오브젝트매니져에 넣기는 메리트가 너무 적다(업데이트나 기타부분이 의미가 없다 타일은 타일로 남겨두는게 충돌이 적고 
 	//타일이 적게 들어갈듯
-	vector<GameObject*> tempInteractList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+	vector<GameObject*> tempInteractList = ObjectManager::GetInstance()->GetClipingInteraceList();
 	if (tempInteractList.size() != NULL)
 	{
 		for (int i = 0; i < tempInteractList.size(); ++i)
@@ -178,10 +185,8 @@ void scene1::Update()
 void scene1::Render(HDC hdc)
 {
 
-	Camera* mainCamera = CameraManager::GetInstance()->GetMainCamera();
-
-
 	//카메라에 맞춰서 타일을 그려줌
+	Camera* mainCamera = CameraManager::GetInstance()->GetMainCamera();
 	int leftIndex = Math::Clamp(mainCamera->GetRect().left / TileSize, 0, mTileCountX - 1);
 	int rightIndex = Math::Clamp(mainCamera->GetRect().right / TileSize, 0, mTileCountX - 1);
 	int topIndex = Math::Clamp(mainCamera->GetRect().top / TileSize, 0, mTileCountY - 1);
@@ -394,9 +399,16 @@ void scene1::Load()
 			}
 		}
 		//타일속성 바꿔주기전에 초기화해주기
-		for (int y = 0; y < mTileCountY; ++y)
+		//카메라에 맞춰서 타일을 그려줌
+		Camera* mainCamera = CameraManager::GetInstance()->GetMainCamera();
+		int leftIndex = Math::Clamp(mainCamera->GetRect().left / TileSize, 0, mTileCountX - 1);
+		int rightIndex = Math::Clamp(mainCamera->GetRect().right / TileSize, 0, mTileCountX - 1);
+		int topIndex = Math::Clamp(mainCamera->GetRect().top / TileSize, 0, mTileCountY - 1);
+		int bottomIndex = Math::Clamp(mainCamera->GetRect().bottom / TileSize, 0, mTileCountY - 1);
+
+		for (int y = topIndex; y < bottomIndex; ++y)
 		{
-			for (int x = 0; x < mTileCountX; ++x)
+			for (int x = leftIndex; x < rightIndex; ++x)
 			{
 				mTileList[y][x]->SetTileLayer(TileLayer::normal);
 			}
@@ -405,7 +417,7 @@ void scene1::Load()
 		//로드 할때도 해줘야 할듯하다 -> 항상 적용되어야한다 -> 오브젝트매니져에서 해주고 싶지만 타일이 오브젝트매니져에 없다.
 		//->타일을 오브젝트매니져에 넣기는 메리트가 너무 적다(업데이트나 기타부분이 의미가 없다 타일은 타일로 남겨두는게 충돌이 적고 
 		//타일이 적게 들어갈듯
-		vector<GameObject*> tempInteractList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+		vector<GameObject*> tempInteractList = ObjectManager::GetInstance()->GetClipingInteraceList();
 		if (tempInteractList.size() != NULL)
 		{
 			for (int i = 0; i < tempInteractList.size(); ++i)

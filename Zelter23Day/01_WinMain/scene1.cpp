@@ -20,9 +20,10 @@
 #include "HousingObject.h"
 #include "Tablet.h"
 #include "WorkTable.h"
+
 //ÀÌº¥Æ®
 #include "GameEvent.h"
-
+#include "Weapon.h"
 void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
@@ -53,8 +54,7 @@ void scene1::Init()
 	Tablet* tablet = new Tablet("Tablet");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, tablet);
 
-	//WorkTable* workTable = new WorkTable("WorkTable");
-	//ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, workTable);
+
 
 	Load();
 
@@ -188,6 +188,27 @@ void scene1::Update()
 			mZombieCoolTimer = 0;
 		}
 		
+	}
+
+	if (Input::GetInstance()->GetKeyDown('C'))
+	{
+		if (mIsWorkTable == false)
+		{
+			WorkTable* workTable = new WorkTable("WorkTable");
+			workTable->Init();
+			workTable->SetTableOpen(true);
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, workTable);
+			mIsWorkTable = true;
+			mPlayer->weaponUse(false);
+		}
+		else
+		{
+			WorkTable* tempTable = (WorkTable*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "WorkTable");
+			tempTable->SetTableOpen(false);
+			tempTable->SetIsDestroy(true);
+			mIsWorkTable = false;
+			mPlayer->weaponUse(true);
+		}
 	}
 }
 

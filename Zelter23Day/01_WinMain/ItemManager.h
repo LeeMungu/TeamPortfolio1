@@ -26,8 +26,8 @@ public:
 	void PickUpItems();
 	void PutInInventory(wstring key);
 	void MoveItems();
-	void PutInQuickSlot();
-
+	void ItemRePositioning();
+	void QuickSlotRePositioning(int num);
 	//아이템 인벤토리 리스트 리턴
 	map<wstring, int> GetmItemInventoryList() { return mItemInventoryList; }
 };

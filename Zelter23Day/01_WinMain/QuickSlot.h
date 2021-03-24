@@ -27,5 +27,8 @@ public:
 	void Release()override;
 	void Update()override;
 	void Render(HDC hdc)override;
+
+	Slot *GetSlotList(){ return mSlotList; }
+	int GetSelectedSlot() { return mSelectedNum; }
 };
 

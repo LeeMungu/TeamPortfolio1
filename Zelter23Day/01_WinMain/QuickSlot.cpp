@@ -74,25 +74,22 @@ void QuickSlot::Update()
 			mSelectedNum = 0;
 		}
 	}
-
-	for (int i = 0; i < 5; i++) 
+ 
+	for (int i = 0; i < 5; i++)
 	{
-		for (int i = 0; i < 5; i++) 
+		if (i != (mSelectedNum - 1))
 		{
-			if (i != (mSelectedNum - 1)) 
-			{
-				mSlotList[i].y = mY;
-				mSlotList[i].isSelected = false;
-			}
-			else 
-			{
-				mSlotList[i].y = mY - 20;
-				mSlotList[i].isSelected = true;
-			}
-			mSlotList[i].rect = RectMake(mSlotList[i].x, mSlotList[i].y, 56, 58);
+			mSlotList[i].y = mY;
+			mSlotList[i].isSelected = false;
 		}
+		else
+		{
+			mSlotList[i].y = mY - 20;
+			mSlotList[i].isSelected = true;
+		}
+		mSlotList[i].rect = RectMake(mSlotList[i].x, mSlotList[i].y, 56, 58);
 	}
-
+	
 }
 
 void QuickSlot::Render(HDC hdc)

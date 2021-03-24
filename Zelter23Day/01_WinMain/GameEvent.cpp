@@ -46,3 +46,23 @@ bool IDelayEvent::Update()
 
 	return false;
 }
+
+ITextEvent::ITextEvent(float textDelayTime, wstring textContent)
+{
+	mTextDelayTime = textDelayTime;
+	mTextContent = textContent;
+	mCurrentTime = 0;
+}
+
+void ITextEvent::Start()
+{
+}
+
+bool ITextEvent::Update()
+{
+	mCurrentTime += Time::GetInstance()->DeltaTime();
+
+
+
+	return false;
+}

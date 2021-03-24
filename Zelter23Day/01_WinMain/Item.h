@@ -44,6 +44,8 @@ public:
 
 	wstring GetKeyName() { return mKeyName; }
 	void SetCount(int n) { mCount = n; }
+	void SetKind(ItemKind kind) { mItemKind = kind; }
+	ItemType GetType() { return mType; }
 	ItemKind GetItemKind() { return mItemKind; }
 	bool GetIsClicking() { return mIsClicking; }
 	void SetIsClicking(bool b) { mIsClicking = b; }

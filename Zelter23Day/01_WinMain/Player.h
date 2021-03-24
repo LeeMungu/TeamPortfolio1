@@ -55,6 +55,8 @@ class Player : public GameObject
 
 	Animation* mRightRoll;
 	Animation* mLeftRoll;
+	Animation* mUpRoll;
+	Animation* mDownRoll;
 
 	Animation* mUpShotAni;
 	Animation* mLeftShotAni;

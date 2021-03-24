@@ -537,8 +537,6 @@ void ItemManager::ItemRePositioning()
 	{
 		QuickSlotRePositioning(5);
 	}
-
-
 }
 
 void ItemManager::QuickSlotRePositioning(int num)
@@ -556,8 +554,13 @@ void ItemManager::QuickSlotRePositioning(int num)
 		if (((Item*)items[i])->GetItemKind() == ItemKind::quickSlot) {
 			if (IntersectRect(&rc, &slotRc, &itemRc))
 			{
-				items[i]->SetX(quickSlotList[num - 1].x + 27);
 				items[i]->SetY(quickSlotList[num - 1].y + 27);
+			}
+			else {
+				for (int j = 0; j < 5; j++) {
+					
+					items[i]->SetY(quickSlotList[j].y + 27);
+				}
 			}
 		}
 	}

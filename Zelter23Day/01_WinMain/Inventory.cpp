@@ -54,8 +54,11 @@ void Inventory::Update()
 			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 			for (int i = 0; i < items.size(); ++i) {
-				items[i]->SetX(items[i]->GetX() + 1610);
-				items[i]->SetY(items[i]->GetY() + 1210);
+				if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+				{
+					items[i]->SetX(items[i]->GetX() + 1610);
+					items[i]->SetY(items[i]->GetY() + 1210);
+				}
 			}
 		}
 		
@@ -81,8 +84,14 @@ void Inventory::Update()
 			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 			for (int i = 0; i < items.size(); ++i) {
-				items[i]->SetX(items[i]->GetX() - 1610);
-				items[i]->SetY(items[i]->GetY() - 1210);
+				if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+				{
+					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+					{
+						items[i]->SetX(items[i]->GetX() - 1610);
+						items[i]->SetY(items[i]->GetY() - 1210);
+					}
+				}
 			}
 		}
 	}

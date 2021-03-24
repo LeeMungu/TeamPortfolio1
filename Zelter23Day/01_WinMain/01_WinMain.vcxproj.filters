@@ -318,6 +318,9 @@
     <ClInclude Include="TextBox.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -505,6 +508,9 @@
     </ClCompile>
     <ClCompile Include="TextBox.cpp">
       <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,12 +7,13 @@ class Image;
 class LoadingScene : public Scene
 {
 	Image* mLoadingImage;
+	Image* mLoadingImage2;
 	Animation* mLoadingAnimation;
-
 
 	vector<function<void(void)>> mLoadList;
 	int mLoadIndex;
 	bool mIsEndLoading;
+	float mTime;
 public:
 	void AddLoadFunc(const function<void(void)>& func);
 

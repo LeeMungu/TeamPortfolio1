@@ -5,6 +5,7 @@
 #include "MapToolLoadingScene.h"
 #include "MapToolScene.h"
 #include "LoadingScene.h"
+#include "MainScene.h"
 #include "scene1.h"
 #include "Camera.h"
 
@@ -19,6 +20,7 @@ void MainGame::Init()
 	Camera* main = new Camera();
 	main->Init();
 	CameraManager::GetInstance()->SetMainCamera(main);
+
 
 	ImageManager::GetInstance()->LoadFromFile(L"Book", Resources(L"book.png"), 9, 5);
 	ImageManager::GetInstance()->LoadFromFile(L"BookButton", Resources(L"bookUI.png"), 3, 4);
@@ -39,6 +41,10 @@ void MainGame::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Tile14", Resources(L"04_Tile/Tile (14).png"), 8, 8);
 	ImageManager::GetInstance()->LoadFromFile(L"Tile15", Resources(L"04_Tile/Tile (15).png"), 8, 8);
 	ImageManager::GetInstance()->LoadFromFile(L"Tile16", Resources(L"04_Tile/Tile (16).png"), 3, 7);
+	
+	//로딩화면
+	ImageManager::GetInstance()->LoadFromFile(L"LoadingCat", Resources(L"LoadingImage.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"LoadingImage2", Resources(L"LoadingImage-1.png"));
 
 	//텍스트 박스
 	ImageManager::GetInstance()->LoadFromFile(L"TextBox", Resources(L"TextBox.png"));
@@ -47,8 +53,10 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);
 	SceneManager::GetInstance()->AddScene(L"LoadingScene", new LoadingScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
-	SceneManager::GetInstance()->LoadScene(L"LoadingScene");
+	SceneManager::GetInstance()->AddScene(L"MainScene", new MainScene);
+	SceneManager::GetInstance()->LoadScene(L"MainScene");
 	//SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
+	//SceneManager::GetInstance()->LoadScene(L"LoadingScene");
 
 	//기존 타겟과 다른 버퍼타겟 생성
 	D2DRenderer::GetInstance()->GetRenderTarget()->CreateCompatibleRenderTarget(&mFirstBuffer);

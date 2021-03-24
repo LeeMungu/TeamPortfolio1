@@ -179,6 +179,7 @@
     <ClInclude Include="KeyIcon.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MainScene.h" />
     <ClInclude Include="MapToolBook.h" />
     <ClInclude Include="MapToolLoadingScene.h" />
     <ClInclude Include="MapToolScene.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="MainGame + MainProc.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="MapToolBook.cpp" />
     <ClCompile Include="MapToolLoadingScene.cpp" />
     <ClCompile Include="MapToolScene.cpp" />

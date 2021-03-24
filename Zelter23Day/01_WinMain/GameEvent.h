@@ -68,3 +68,31 @@ public:
 	void Start()override;
 	bool Update()override;
 };
+
+//모든유닛 특정시간 스탑
+class IAllUnitStopTime : public IEvent
+{
+	float mDelayTime;
+	float mCurrentTime;
+public:
+	IAllUnitStopTime(float DelayTime);
+	void Start()override;
+	bool Update()override;
+};
+
+//모든 유닛 정지 1회만 반드시 다시 움직이기와 같이 써주기
+class IAllUnitStop : public IEvent
+{
+public:
+	IAllUnitStop();
+	void Start()override;
+	bool Update()override;
+};
+//모든 유닛 다시 움직이기
+class IAllUnitActive : public IEvent
+{
+public:
+	IAllUnitActive();
+	void Start()override;
+	bool Update()override;
+};

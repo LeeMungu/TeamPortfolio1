@@ -52,6 +52,8 @@ void SceneManager::LoadScene(const wstring & sceneName)
 	
 	Scene* targetScene = iter->second;
 
+	//update돌리는 중 여부 물어봐서 예외를 줘야한다.
+	//update가 아직 다 안돌았으면 다돌게 하고 릴리즈 해줘야한다.
 	if (mCurrentScene)
 		mCurrentScene->Release();
 

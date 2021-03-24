@@ -128,3 +128,138 @@ bool ITileEvent::Update()
 	}
 	return false;
 }
+
+IAllUnitStopTime::IAllUnitStopTime(float DelayTime)
+{
+	mDelayTime = DelayTime;
+	mCurrentTime = 0;
+
+}
+
+void IAllUnitStopTime::Start()
+{
+	GameObject* player = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+	vector<GameObject*> monster = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	if (monster.size() != NULL)
+	{
+		for (int i = 0; i < monster.size(); ++i)
+		{
+			monster[i]->SetIsActive(false);
+		}
+	}
+	player->SetIsActive(false);
+}
+
+bool IAllUnitStopTime::Update()
+{
+	if (mDelayTime < mCurrentTime)
+	{
+		GameObject* player = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+		vector<GameObject*> monster = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+		if (monster.size() != NULL)
+		{
+			for (int i = 0; i < monster.size(); ++i)
+			{
+				monster[i]->SetIsActive(true);
+			}
+		}
+		player->SetIsActive(true);
+		return true;
+	}
+	else if (mDelayTime >= mCurrentTime)
+	{
+		mCurrentTime += Time::GetInstance()->DeltaTime();
+		return false;
+	}
+}
+
+IAllUnitActive::IAllUnitActive()
+{
+}
+
+void IAllUnitActive::Start()
+{
+	GameObject* player = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+	vector<GameObject*> monster = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	if (monster.size() != NULL)
+	{
+		for (int i = 0; i < monster.size(); ++i)
+		{
+			monster[i]->SetIsActive(true);
+		}
+	}
+	player->SetIsActive(true);
+}
+
+bool IAllUnitActive::Update()
+{
+	GameObject* player = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+	vector<GameObject*> monster = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	if (player->GetIsActive() == true)
+	{
+		if (monster.size() != NULL)
+		{
+			for (int i = 0; i < monster.size(); ++i)
+			{
+				if (monster[i]->GetIsActive() == false)
+				{
+					monster[i]->SetIsActive(true);
+					return false;
+				}
+			}
+			//여기까지 왔다면 모두 트루다.
+			return true;
+		}
+	}
+	else if (player->GetIsActive() == false)
+	{
+		player->SetIsActive(true);
+		return false;
+	}
+}
+
+IAllUnitStop::IAllUnitStop()
+{
+}
+
+void IAllUnitStop::Start()
+{
+	GameObject* player = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+	vector<GameObject*> monster = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	if (monster.size() != NULL)
+	{
+		for (int i = 0; i < monster.size(); ++i)
+		{
+			monster[i]->SetIsActive(false);
+		}
+	}
+	player->SetIsActive(false);
+}
+
+bool IAllUnitStop::Update()
+{
+
+	GameObject* player = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+	vector<GameObject*> monster = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	if (player->GetIsActive() == false)
+	{
+		if (monster.size() != NULL)
+		{
+			for (int i = 0; i < monster.size(); ++i)
+			{
+				if (monster[i]->GetIsActive() == true)
+				{
+					monster[i]->SetIsActive(false);
+					return false;
+				}
+			}
+			//for를 다돌았다면 모두 정지상태
+			return true;
+		}
+	}
+	else if (player->GetIsActive() == true)
+	{
+		player->SetIsActive(false);
+		return false;
+	}
+}

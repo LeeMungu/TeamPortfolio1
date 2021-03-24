@@ -76,7 +76,9 @@ void scene1::Init()
 	GameEventManager::GetInstance()->RemoveAllEvent();
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"지훈이는 이 일을 기억해둡니다."));
 	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*132));
+	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"특정 좌표에 도달했습니다."));
+	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 }
 
 void scene1::Release()

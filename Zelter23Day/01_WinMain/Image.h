@@ -65,6 +65,8 @@ public:
 	void ActivitScaleRender(HDC hdc, int x, int y, int width, int height, float angleX, float angleY);
 	//그림자 이미지 그리기
 	void ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float alpha, float time);
+	//로딩용 이미지 그리기
+	void LoadingRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float time);
 
 	//렌더 리셋
 	void ResetRenderOption();

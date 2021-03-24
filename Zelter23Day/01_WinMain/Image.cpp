@@ -379,6 +379,48 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	this->ResetRenderOption();
 }
 
+void Image::LoadingRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float time)
+{
+	Vector2 size = Vector2(mSize.X * width / this->GetWidth(), mSize.Y * height / this->GetHeight());
+	//현재 프레임인덱스 
+	int frame = frameY * mMaxFrameX + frameX;
+
+	//원래 사이즈
+	//Vector2 size = mSize * mScale;
+
+	//스케일 행렬을 만들어준다
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale,
+		//중심 좌표
+		D2D1::Point2F(size.X / 2.f, size.Y));
+	//회전 행렬을 만들어준다. 
+	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	//이동 행렬을 만들어준다.
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
+
+	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
+	D2D1_RECT_F dxSrc = D2D1::RectF((float)mFrameInfo[frame].x, (float)mFrameInfo[frame].y,
+		(float)(mFrameInfo[frame].x + mFrameInfo[frame].width),
+		(float)(mFrameInfo[frame].y + mFrameInfo[frame].height));
+	//만들어진 사각형
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform( scaleMatrix * rotateMatrix * translateMatrix);
+	//그려
+	//{
+	ID2D1SolidColorBrush* brush;
+	D2D1_COLOR_F color;
+	//r,g,b,a
+	color = { 1.0f,0.0f,0.0f,
+		//투명도
+		time };
+	D2DRenderer::GetInstance()->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
+	D2DRenderer::GetInstance()->GetRenderTarget()
+		->FillOpacityMask(mBitmap, brush, D2D1_OPACITY_MASK_CONTENT::D2D1_OPACITY_MASK_CONTENT_GRAPHICS,
+			dxArea,
+			dxSrc);
+
+	//리셋
+	ResetRenderOption();
+}
+
 /********************************************************************************
 ## ResetRenderOption ##
 이미지 클래스 렌더 관련 옵션들 전부 초기화

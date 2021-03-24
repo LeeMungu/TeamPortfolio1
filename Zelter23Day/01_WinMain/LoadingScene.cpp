@@ -326,17 +326,15 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"Siren2", Resources(L"/09_Sound/Siren2.mp3"), false); });
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"ZombieSound", Resources(L"/09_Sound/Zombie.mp3"), false); });
 
-
-
-	//이미지 (Loading Scene)
-	IMAGEMANAGER->LoadFromFile(L"LoadingCat", Resources(L"LoadingImage.png"), 0, 0);
-
 	mLoadingImage = IMAGEMANAGER->FindImage(L"LoadingCat");
+	mLoadingImage2 = ImageManager::GetInstance()->FindImage(L"LoadingImage2");
 	//mLoadingAnimation = new Animation();
 	//mLoadingAnimation->InitFrameByStartEnd(0, 0, 9, 0, false);
 	//mLoadingAnimation->SetIsLoop(true);
 	//mLoadingAnimation->SetFrameUpdateTime(0.1f);
 	//mLoadingAnimation->Play();
+
+	mTime = 0;
 }
 
 void LoadingScene::Release()
@@ -358,6 +356,12 @@ void LoadingScene::Update()
 		return;
 	}
 
+	mTime += Time::GetInstance()->DeltaTime()/2;
+	
+	if (mTime > 1.0f)
+	{
+		mTime -= 1.0f;
+	}
 	function<void(void)> func = mLoadList[mLoadIndex];
 	func();
 	mLoadIndex++;
@@ -374,5 +378,9 @@ void LoadingScene::Render(HDC hdc)
 		//	mLoadingAnimation->GetNowFrameY(),
 		//	mLoadingImage->GetFrameWidth()*5,
 		//	mLoadingImage->GetFrameHeight()*5);
+		mLoadingImage2->LoadingRender(hdc, 0, 0, 0, 0, WINSIZEX, WINSIZEY, mTime);
+
+		D2DRenderer::GetInstance()->RenderText(
+			WINSIZEX/3,WINSIZEY/5*2,L"로딩 중 ~ ~ ♥",50 );
 	}
 }

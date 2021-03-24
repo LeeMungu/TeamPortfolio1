@@ -30,3 +30,15 @@ public:
 	void Start()override;
 	bool Update()override;
 };
+
+class ITextEvent : public IEvent
+{
+	float mTextDelayTime;
+	wstring mTextContent;
+	float mCurrentTime;
+public:
+	ITextEvent(float textDelayTime, wstring textContent);
+
+	void Start()override;
+	bool Update()override;
+};

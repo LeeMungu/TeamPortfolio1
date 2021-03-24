@@ -19,7 +19,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_GunRun.png"), 7, 4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_GunWalk.png"), 7, 4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_attack", Resources(L"/03_Player/Player_attack.png"), 10, 2); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_roll", Resources(L"/03_Player/Player_roll.png"), 7, 2); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_roll", Resources(L"/03_Player/Player_roll1.png"), 7, 4); });
 
 	//이미지 (무기 /총)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Weapon_pistol", Resources(L"/03_Player/Weapon_pistol.png"), 1, 1); });
@@ -329,25 +329,25 @@ void LoadingScene::Init()
 
 
 	//이미지 (Loading Scene)
-	IMAGEMANAGER->LoadFromFile(L"LoadingCat", Resources(L"Cat1.png"), 10, 1);
+	IMAGEMANAGER->LoadFromFile(L"LoadingCat", Resources(L"LoadingImage.png"), 0, 0);
 
 	mLoadingImage = IMAGEMANAGER->FindImage(L"LoadingCat");
-	mLoadingAnimation = new Animation();
-	mLoadingAnimation->InitFrameByStartEnd(0, 0, 9, 0, false);
-	mLoadingAnimation->SetIsLoop(true);
-	mLoadingAnimation->SetFrameUpdateTime(0.1f);
-	mLoadingAnimation->Play();
+	//mLoadingAnimation = new Animation();
+	//mLoadingAnimation->InitFrameByStartEnd(0, 0, 9, 0, false);
+	//mLoadingAnimation->SetIsLoop(true);
+	//mLoadingAnimation->SetFrameUpdateTime(0.1f);
+	//mLoadingAnimation->Play();
 }
 
 void LoadingScene::Release()
 {
-	SafeDelete(mLoadingAnimation);
+	//SafeDelete(mLoadingAnimation);
 
 }
 
 void LoadingScene::Update()
 {
-	mLoadingAnimation->Update();
+	//mLoadingAnimation->Update();
 	if (mIsEndLoading == true)
 	{
 		SceneManager::GetInstance()->LoadScene(L"Scene1");
@@ -367,11 +367,12 @@ void LoadingScene::Render(HDC hdc)
 {
 	if (mIsEndLoading == false)
 	{
-		mLoadingImage->ScaleFrameRender(hdc, (WINSIZEX - mLoadingImage->GetFrameWidth()*5) / 2,
-			(WINSIZEY - mLoadingImage->GetFrameHeight()*5) / 2,
-			mLoadingAnimation->GetNowFrameX(),
-			mLoadingAnimation->GetNowFrameY(),
-			mLoadingImage->GetFrameWidth()*5,
-			mLoadingImage->GetFrameHeight()*5);
+		mLoadingImage->Render(hdc, 0, 0);
+		//mLoadingImage->ScaleFrameRender(hdc, (WINSIZEX - mLoadingImage->GetFrameWidth()*5) / 2,
+		//	(WINSIZEY - mLoadingImage->GetFrameHeight()*5) / 2,
+		//	mLoadingAnimation->GetNowFrameX(),
+		//	mLoadingAnimation->GetNowFrameY(),
+		//	mLoadingImage->GetFrameWidth()*5,
+		//	mLoadingImage->GetFrameHeight()*5);
 	}
 }

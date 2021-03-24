@@ -19,5 +19,8 @@ public:
 	void Release();
 	void Update();
 	void Render(HDC hdc);
+
+	bool GetTableOpen() { return mIsTableOpen; }
+	void SetTableOpen(bool istable) { mIsTableOpen = istable; }
 };
 

@@ -20,9 +20,9 @@ void WorkTable::Init()
 	mSizeY = mWorkTable->GetFrameHeight() * 2;
 
 	mIsTableOpen = false;
-	mStartBtn = new Button(L"WorkTable_start_btn", mX, mY, 100, 100, [this]() {});
-	mTimeUpBtn = new Button(L"WorkTable_Timer_up", mX, mY-10, 50, 50, [this]() {});
-	mTimeDownBtn = new Button(L"WorkTable_Timer_down", mX, mY+10, 50, 50, [this]() {});
+	//mStartBtn = new Button(L"WorkTable_start_btn", mX+550, mY+330,2, [this]() {});
+	//mTimeUpBtn = new Button(L"WorkTable_Timer_up", mX+490, mY+10+330,2, [this]() {});
+	//mTimeDownBtn = new Button(L"WorkTable_Timer_down", mX+490, mY-10+330,2, [this]() {});
 
 }
 
@@ -32,10 +32,20 @@ void WorkTable::Release()
 
 void WorkTable::Update()
 {
-
+	if (mIsTableOpen)
+	{
+		mIsTableOpen = false;
+	}
+	else
+	{
+		mIsTableOpen = true;
+	}
 }
 
 void WorkTable::Render(HDC hdc)
 {
 	mWorkTable->ScaleRender(hdc, mX, mY, mSizeX, mSizeY);
+	mStartBtn->Render(hdc);
+	mTimeUpBtn->Render(hdc);
+	mTimeDownBtn->Render(hdc);
 }

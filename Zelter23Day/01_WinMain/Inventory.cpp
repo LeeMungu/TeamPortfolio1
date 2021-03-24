@@ -17,7 +17,7 @@ void Inventory::Init()
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 5; j++) {
 			mSlotList[i][j].x = mX + j * 60 + 170;
-			mSlotList[i][j].y = mY + i * 60 + 250;
+			mSlotList[i][j].y = mY + i * 70 + 250;
 			mSlotList[i][j].slotImage = IMAGEMANAGER->FindImage(L"Inventory_slot");
 			mSlotList[i][j].slotImage2 = IMAGEMANAGER->FindImage(L"QuickSlot_slotBase");
 			mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
@@ -44,7 +44,7 @@ void Inventory::Update()
 			for (int i = 0; i < 2; i++) {
 				for (int j = 0; j < 5; j++) {
 					mSlotList[i][j].x = mX + j * 60 + 170;
-					mSlotList[i][j].y = mY + i * 60 + 250;
+					mSlotList[i][j].y = mY + i * 70 + 250;
 					mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 
 					
@@ -73,7 +73,7 @@ void Inventory::Update()
 			for (int i = 0; i < 2; i++) {
 				for (int j = 0; j < 5; j++) {
 					mSlotList[i][j].x = mX + j * 60 + 170;
-					mSlotList[i][j].y = mY + i * 60 + 250;
+					mSlotList[i][j].y = mY + i * 70 + 250;
 					mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 				}
 			}

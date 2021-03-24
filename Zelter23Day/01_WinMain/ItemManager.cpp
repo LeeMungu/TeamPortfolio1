@@ -362,6 +362,8 @@ void ItemManager::MoveItems()
 
 	if (isOpened == true) //인벤토리 열려있을 때만
 	{
+		
+
 		for (int i = 0; i < items.size(); ++i)
 		{
 			if (((Item*)items[i])->GetIsClicking() == false) //드래그 중 아닐 때
@@ -375,6 +377,32 @@ void ItemManager::MoveItems()
 				{
 					((Item*)items[i])->mPrePosition.x = items[i]->GetX();
 					((Item*)items[i])->mPrePosition.y = items[i]->GetY();
+
+					//아이템 비어있는 부분은 isFill false로 셋팅해줌
+					for (int j = 0; j < 5; j++)
+					{
+						for (int k = 0; k < 2; k++)
+						{
+							RECT rc;
+							RECT slotRc = slotList[j][k].rect;
+							RECT itemRc = items[i]->GetRect();
+
+							if (slotList[j][k].isChecked == false) {
+								if (IntersectRect(&rc, &slotRc, &itemRc))
+								{
+
+									slotList[j][k].isFill = true;
+									slotList[j][k].isChecked = true;
+
+								}
+								else {
+
+									slotList[j][k].isFill = false;
+									slotList[j][k].isChecked = true;
+								}
+							}
+						}
+					}
 				}
 			}
 			else //드래그 중일 때
@@ -420,7 +448,6 @@ void ItemManager::MoveItems()
 									isMoved = true;
 
 									//아이템이 원래 있던 슬롯은 isFill false를 해준다
-									
 									break;
 								}
 							}
@@ -433,30 +460,18 @@ void ItemManager::MoveItems()
 						items[i]->SetX(((Item*)items[i])->mPrePosition.x);
 						items[i]->SetY(((Item*)items[i])->mPrePosition.y);
 						((Item*)items[i])->SetIsClicking(false);
+
+						for (int j = 0; j < 5; j++)
+						{
+							for (int k = 0; k < 2; k++)
+							{
+								slotList[j][k].isChecked = false;
+							}
+						}
 					}
 				}
 			}
 			
-			//아이템 비어있는 부분은 isFill false로 셋팅해줌
-			/*
-			for (int j = 0; j < 5; j++)
-			{
-				for (int k = 0; k < 2; k++)
-				{
-					RECT rc;
-					RECT slotRc = slotList[j][k].rect;
-					RECT itemRc = items[i]->GetRect();
-					if (IntersectRect(&rc, &slotRc, &itemRc))
-					{
-						slotList[j][k].isFill = true;
-					}
-					else
-					{
-						slotList[j][k].isFill = false;
-					}
-				}
-			}
-			*/
 		}//items.size() for문 끝
 	}
 }

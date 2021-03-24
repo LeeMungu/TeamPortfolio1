@@ -22,6 +22,7 @@ void Inventory::Init()
 			mSlotList[i][j].slotImage2 = IMAGEMANAGER->FindImage(L"QuickSlot_slotBase");
 			mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 			mSlotList[i][j].isFill = false;
+			mSlotList[i][j].isChecked = false;
 		}
 	}
 }

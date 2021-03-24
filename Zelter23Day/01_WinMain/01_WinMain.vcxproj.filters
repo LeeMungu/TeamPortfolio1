@@ -315,6 +315,9 @@
     <ClInclude Include="WorkTable.h">
       <Filter>MainGame\UI\WorkTable</Filter>
     </ClInclude>
+    <ClInclude Include="TextBox.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -499,6 +502,9 @@
     </ClCompile>
     <ClCompile Include="WorkTable.cpp">
       <Filter>MainGame\UI\WorkTable</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBox.cpp">
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

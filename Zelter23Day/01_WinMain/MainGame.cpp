@@ -40,6 +40,8 @@ void MainGame::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Tile15", Resources(L"04_Tile/Tile (15).png"), 8, 8);
 	ImageManager::GetInstance()->LoadFromFile(L"Tile16", Resources(L"04_Tile/Tile (16).png"), 3, 7);
 
+	//텍스트 박스
+	ImageManager::GetInstance()->LoadFromFile(L"TextBox", Resources(L"TextBox.png"));
 
 	SceneManager::GetInstance()->AddScene(L"MapToolLoadingScene", new MapToolLoadingScene);
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);

@@ -20,8 +20,10 @@
 #include "HousingObject.h"
 #include "Tablet.h"
 #include "WorkTable.h"
-#include "Weapon.h"
 
+//이벤트
+#include "GameEvent.h"
+#include "Weapon.h"
 void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
@@ -69,10 +71,15 @@ void scene1::Init()
 
 	SoundPlayer::GetInstance()->Play(L"BGM", 0.5f * SoundPlayer::GetInstance()->GetBgmVolume());
 	SoundPlayer::GetInstance()->Play(L"ForestSound", 0.2f * SoundPlayer::GetInstance()->GetBgmVolume());
+
+	//이벤트 초기화
+	GameEventManager::GetInstance()->RemoveAllEvent();
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(10.f, L"지훈이는 이 일을 기억해둡니다."));
 }
 
 void scene1::Release()
 {
+	GameEventManager::GetInstance()->RemoveAllEvent();
 	ObjectManager::GetInstance()->Release();
 	//알아서해
 	for (int y = 0; y < mTileList.size(); ++y)
@@ -87,6 +94,8 @@ void scene1::Release()
 
 void scene1::Update()
 {
+	//이벤트
+	GameEventManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
 

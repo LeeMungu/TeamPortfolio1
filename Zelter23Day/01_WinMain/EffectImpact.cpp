@@ -149,6 +149,19 @@ void EffectImpact::Init()
 	mObjectLayerList.insert(make_pair(L"WorkTable1", TypeLayer::Iron));
 	mObjectLayerList.insert(make_pair(L"Zombie01", TypeLayer::fabric));
 	mObjectLayerList.insert(make_pair(L"Zombie02", TypeLayer::fabric));
+	mObjectLayerList.insert(make_pair(L"Barricade1", TypeLayer::stone));
+	mObjectLayerList.insert(make_pair(L"Barricade2", TypeLayer::stone));
+	mObjectLayerList.insert(make_pair(L"Barricade3", TypeLayer::stone));
+	mObjectLayerList.insert(make_pair(L"Barricade4", TypeLayer::stone));
+	mObjectLayerList.insert(make_pair(L"Barricade5", TypeLayer::Iron));
+	mObjectLayerList.insert(make_pair(L"Barricade6", TypeLayer::wood));
+	mObjectLayerList.insert(make_pair(L"Barricade7", TypeLayer::wood));
+	mObjectLayerList.insert(make_pair(L"Barricade8", TypeLayer::Iron));
+	mObjectLayerList.insert(make_pair(L"Bollard1", TypeLayer::Iron));
+	mObjectLayerList.insert(make_pair(L"Bollard2", TypeLayer::Iron));
+	mObjectLayerList.insert(make_pair(L"Bollard3", TypeLayer::Iron));
+	mObjectLayerList.insert(make_pair(L"Bollard4", TypeLayer::Iron));
+
 }
 
 void EffectImpact::Release()
@@ -165,47 +178,85 @@ void EffectImpact::Update()
 		mIsDestroy = true;
 	}
 
+	wstring temp = mImageKey.substr(0, 3);
+
+	if (temp == L"Ben") { mIndexY = 1; }
+	else if (temp == L"Bus") { mIndexY = 4; }
+	else if (temp == L"Cab") { mIndexY = 4; }
+	else if (temp == L"Car") { mIndexY = 4; }
+	else if (temp == L"Cha") { mIndexY = 1; }
+	else if (temp == L"Clo") { mIndexY = 1; }
+	else if (temp == L"Com") { mIndexY = 2; }
+	else if (temp == L"Dea") { mIndexY = 1; }
+	else if (temp == L"Des") { mIndexY = 4; }
+	else if (temp == L"dis") { mIndexY = 4; }
+	else if (temp == L"Dol") { mIndexY = 3; }
+	else if (temp == L"Dus") { mIndexY = 6; }
+	else if (temp == L"Fan") { mIndexY = 6; }
+	else if (temp == L"Han") { mIndexY = 2; }
+	else if (temp == L"Mot") { mIndexY = 4; }
+	else if (temp == L"Pla") { mIndexY = 1; }
+	else if (temp == L"Ref") { mIndexY = 4; }
+	else if (temp == L"Roc") { mIndexY = 0; }
+	else if (temp == L"She") { mIndexY = 1; }
+	else if (temp == L"Sho") { mIndexY = 2; }
+	else if (temp == L"Sig") { mIndexY = 1; }
+	else if (temp == L"Sof") { mIndexY = 5; }
+	else if (temp == L"Suv") { mIndexY = 4; }
+	else if (temp == L"Tab") { mIndexY = 1; }
+	else if (temp == L"Toi") { mIndexY = 2; }
+	else if (temp == L"Tre") { mIndexY = 1; }
+	else if (temp == L"Tru") { mIndexY = 4; }
+	else if (temp == L"Tv1") { mIndexY = 2; }
+	else if (temp == L"Was") { mIndexY = 4; }
+	else if (temp == L"Wat") { mIndexY = 4; }
+	else if (temp == L"Wor") { mIndexY = 4; }
+	else if (temp == L"Zom") { mIndexY = 3; }
+	else if (temp == L"Bar") { mIndexY = 0; }
+	else if (temp == L"Bol") { mIndexY = 4; }
 
 
-	if (mObjectLayerList.size() != NULL)
-	{
 
-		//못찾았다. - 급한대로 예외처리함 후속 처리 필요
-		if (mObjectLayerList.find(mImageKey) == mObjectLayerList.end())
-		{
-			mIndexY = 0;
-			mIsDestroy = true;
-			return;
-		}
-		if (mObjectLayerList.find(mImageKey)->second == TypeLayer::stone)
-		{
-			mIndexY = 0;
-		}
-		else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::wood)
-		{
-			mIndexY = 1;
-		}
-		else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::glass)
-		{
-			mIndexY = 2;
-		}
-		else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::fabric)
-		{
-			mIndexY = 3;
-		}
-		else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::Iron)
-		{
-			mIndexY = 4;
-		}
-		else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::Leather)
-		{
-			mIndexY = 5;
-		}
-		else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::plastic)
-		{
-			mIndexY = 6;
-		}
-	}
+
+	//if (mObjectLayerList.size() != NULL)
+	//{
+
+	//	//못찾았다. - 급한대로 예외처리함 후속 처리 필요
+	//	if (mObjectLayerList.find(mImageKey) == mObjectLayerList.end())
+	//	{
+	//		mIndexY = 0;
+	//		mIsDestroy = true;
+	//		return;
+	//	}
+	//	if (mObjectLayerList.find(mImageKey)->second == TypeLayer::stone)
+	//	{
+	//		mIndexY = 0;
+	//	}
+	//	else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::wood)
+	//	{
+	//		mIndexY = 1;
+	//	}
+	//	else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::glass)
+	//	{
+	//		mIndexY = 2;
+	//	}
+	//	else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::fabric)
+	//	{
+	//		mIndexY = 3;
+	//	}
+	//	else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::Iron)
+	//	{
+	//		mIndexY = 4;
+	//	}
+	//	else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::Leather)
+	//	{
+	//		mIndexY = 5;
+	//	}
+	//	else if (mObjectLayerList.find(mImageKey)->second == TypeLayer::plastic)
+	//	{
+	//		mIndexY = 6;
+	//	}
+	//}
 
 
 

@@ -22,6 +22,7 @@ public:
 	void SetTarget(GameObject* target) { mTarget = target; }
 	void ChangeMode(Mode mode) { mMode = mode; }
 public:
+	void RenderText(float x, float y, wstring textContext, float fontSize);
 	void Render(HDC hdc, class Image* image, int x, int y);
 	void Render(HDC hdc, class Image* image, int x, int y, int tempX, int tempY, int tempWidth, int tempHeight);
 	void FrameRender(HDC hdc, class Image* image, int x, int y, int frameX, int frameY);

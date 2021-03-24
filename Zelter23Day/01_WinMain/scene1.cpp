@@ -74,8 +74,9 @@ void scene1::Init()
 
 	//이벤트 초기화
 	GameEventManager::GetInstance()->RemoveAllEvent();
-	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*100,TileSize*100));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(10.f, L"지훈이는 이 일을 기억해둡니다."));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"지훈이는 이 일을 기억해둡니다."));
+	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*132));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"특정 좌표에 도달했습니다."));
 }
 
 void scene1::Release()
@@ -232,6 +233,11 @@ void scene1::Render(HDC hdc)
 			if(CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mTileList[y][x]->GetRect()))
 				mTileList[y][x]->Render(hdc);
 			++renderCount;
+			//이벤트 테스팅용 지우지 말것!
+			//CameraManager::GetInstance()->GetMainCamera()->RenderText(
+			//	mTileList[y][x]->GetX(), mTileList[y][x]->GetY(),
+			//	to_wstring(x)+L","+ to_wstring(y),
+			//	10);
 		}
 	}
 

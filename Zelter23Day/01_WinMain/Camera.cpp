@@ -51,6 +51,11 @@ void Camera::Render(HDC hdc)
 	//쓸일이 없다 . . . . 
 }
 
+void Camera::RenderText( float x, float y, wstring textContext, float fontSize)
+{
+	D2DRenderer::GetInstance()->RenderText(x - mRect.left, y - mRect.top, textContext, fontSize);
+}
+
 void Camera::Render(HDC hdc, Image * image, int x, int y)
 {
 	image->Render(hdc, x - mRect.left, y - mRect.top);

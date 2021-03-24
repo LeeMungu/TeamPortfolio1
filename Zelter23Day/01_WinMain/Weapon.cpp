@@ -42,7 +42,7 @@ void Weapon::Update()
 {
 	float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
 	float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
-	mX = mPlayer->GetRect().left;
+	mX = mPlayer->GetRect().left + 50;
 	mY = mPlayer->GetRect().top;
 	mAngle = -(Math::GetAngle( _mousePosition.x+cameraX, _mousePosition.y+cameraY, mX, mY))/PI *180.f;
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);

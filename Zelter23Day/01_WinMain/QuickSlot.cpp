@@ -41,6 +41,7 @@ void QuickSlot::Update()
 		{
 			mSelectedNum = 0;
 		}
+		ItemManager::GetInstance()->QuickSlotRePositioning(1);
 	}
 	if (Input::GetInstance()->GetKeyDown('2')) 
 	{
@@ -49,6 +50,7 @@ void QuickSlot::Update()
 		{
 			mSelectedNum = 0;
 		}
+		ItemManager::GetInstance()->QuickSlotRePositioning(2);
 	}
 	if (Input::GetInstance()->GetKeyDown('3')) 
 	{
@@ -57,6 +59,7 @@ void QuickSlot::Update()
 		{
 			mSelectedNum = 0;
 		}
+		ItemManager::GetInstance()->QuickSlotRePositioning(3);
 	}
 	if (Input::GetInstance()->GetKeyDown('4')) 
 	{
@@ -65,6 +68,7 @@ void QuickSlot::Update()
 		{
 			mSelectedNum = 0;
 		}
+		ItemManager::GetInstance()->QuickSlotRePositioning(4);
 	}
 	if (Input::GetInstance()->GetKeyDown('5')) 
 	{
@@ -73,6 +77,7 @@ void QuickSlot::Update()
 		{
 			mSelectedNum = 0;
 		}
+		ItemManager::GetInstance()->QuickSlotRePositioning(5);
 	}
  
 	for (int i = 0; i < 5; i++)

@@ -31,7 +31,7 @@ protected:
 	Image* mNumImage;
 	bool mIsOpened;
 	bool mIsClicking;
-
+	bool mIsSeleted;
 public:
 	POINT mPrePosition;
 
@@ -49,5 +49,7 @@ public:
 	ItemKind GetItemKind() { return mItemKind; }
 	bool GetIsClicking() { return mIsClicking; }
 	void SetIsClicking(bool b) { mIsClicking = b; }
+	void SetIsSelected(bool b) { mIsSeleted = b; }
+	bool GetIsSelected() { return mIsSeleted; }
 };
 

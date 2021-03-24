@@ -93,7 +93,7 @@ void ItemManager::Update()
 {
 	PickUpItems();
 	MoveItems();
-	ItemRePositioning();
+	//ItemRePositioning();
 }
 
 void ItemManager::Render(HDC hdc)
@@ -547,20 +547,24 @@ void ItemManager::QuickSlotRePositioning(int num)
 
 	for (int i = 0; i < items.size(); ++i)
 	{
-		RECT rc;
-		RECT slotRc = quickSlotList[num - 1].rect;
-		RECT itemRc = items[i]->GetRect();
-
-		if (((Item*)items[i])->GetItemKind() == ItemKind::quickSlot) {
-			if (IntersectRect(&rc, &slotRc, &itemRc))
+		
+		if (((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
+		{
+			if (items[i]->GetX() == quickSlot->GetX() + (num - 1) * 63 + 90 + 27)
 			{
-				items[i]->SetY(quickSlotList[num - 1].y + 27);
-			}
-			else {
-				for (int j = 0; j < 5; j++) {
-					
-					items[i]->SetY(quickSlotList[j].y + 27);
+				
+				if (((Item*)items[i])->GetIsSelected())
+				{
+					((Item*)items[i])->SetIsSelected(false);
 				}
+				else
+				{
+					((Item*)items[i])->SetIsSelected(true);
+				}
+			}
+			else
+			{
+				((Item*)items[i])->SetIsSelected(false);
 			}
 		}
 	}

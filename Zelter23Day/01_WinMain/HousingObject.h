@@ -9,6 +9,7 @@ enum class HouseLayer : int
 	
 };
 
+
 class Tile;
 class Image;
 class Player;
@@ -26,20 +27,48 @@ class HousingObject : public GameObject
 	//무슨변수인가? 필요한 변수인가?
 	bool mIsInteractive;
 	wstring mImageKey;
-	
+	Player* mPlayer;
 	HouseLayer mHouselayer;
 	float mAlpha;
+
+	vector<RECT> mCollisionList;
+
 	RECT mHouse01Rect1;
+	RECT mHouse01Rect1_Left;
+	RECT mHouse01Rect1_Top;
+	RECT mHouse01Rect1_Right;
+	RECT mHouse01Rect1_Bottom;
 	RECT mHouse01Rect2;
-	Player* mPlayer;
-
+	RECT mHouse01Rect2_Left;
+	RECT mHouse01Rect2_Top;
+	RECT mHouse01Rect2_Right;
+	RECT mHouse01Rect2_Bottom;
 	RECT mHouse04Rect1;
-
+	RECT mHouse04Rect1_Left;
+	RECT mHouse04Rect1_Top;
+	RECT mHouse04Rect1_Right;
+	RECT mHouse04Rect1_Bottom;
 	RECT mHouse07Rect1;
-
+	RECT mHouse07Rect1_Left;
+	RECT mHouse07Rect1_Top;
+	RECT mHouse07Rect1_Right;
+	RECT mHouse07Rect1_Bottom;
 	RECT mPoliceRect;
+	RECT mPoliceRect_Left;
+	RECT mPoliceRect_Top;
+	RECT mPoliceRect_Right;
+	RECT mPoliceRect_Bottom;
 	RECT mShopRect1;
+	RECT mShopRect1_Left;
+	RECT mShopRect1_Top;
+	RECT mShopRect1_Right;
+	RECT mShopRect1_Bottom;
 	RECT mShopRect2;
+	RECT mShopRect2_Left;
+	RECT mShopRect2_Top;
+	RECT mShopRect2_Right;
+	RECT mShopRect2_Bottom;
+
 public:
 	HousingObject(const wstring& name, float x, float y, int tileCountX, int tileCountY);
 

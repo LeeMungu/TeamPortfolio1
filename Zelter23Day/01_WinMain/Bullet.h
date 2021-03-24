@@ -8,6 +8,7 @@ class Bullet :public GameObject
 	float mStartX;
 	float mStartY;
 	bool mIsShot;
+	float mResize;
 
 public:
 	Bullet(float x, float y, float mAngle);

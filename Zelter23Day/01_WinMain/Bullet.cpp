@@ -11,6 +11,7 @@ Bullet::Bullet(float x, float y, float angle)
 	mStartY = mY;
 	mSpeed = 800.f;
 	mAngle = angle;
+	mResize = 8.f;
 }
 
 void Bullet::Init()
@@ -18,7 +19,7 @@ void Bullet::Init()
 	mImage = IMAGEMANAGER->FindImage(L"Bullet");
 	mSizeX = mImage->GetFrameHeight();
 	mSizeY = mImage->GetFrameWidth();
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mRect = RectMakeCenter(mX, mY, mSizeX- mResize, mSizeY- mResize);
 	mIsShot = false;
 }
 
@@ -31,7 +32,7 @@ void Bullet::Update()
 {
 	mX -= mSpeed * cosf(mAngle) * Time::GetInstance()->DeltaTime();
 	mY += mSpeed * sinf(mAngle) * Time::GetInstance()->DeltaTime();
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mRect = RectMakeCenter(mX, mY, mSizeX- mResize, mSizeY- mResize);
 	if (Math::GetDistance(mX, mY, mStartX, mStartY) > 1000 || mIsShot == true)
 	{
 		mIsDestroy = true;

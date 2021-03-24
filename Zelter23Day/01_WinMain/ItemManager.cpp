@@ -80,6 +80,8 @@ ItemManager::ItemManager()
 void ItemManager::Init()
 {
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+	indexX = 0;
+	indexY = 0;
 }
 
 void ItemManager::Release()
@@ -353,7 +355,7 @@ void ItemManager::PutInInventory(wstring key)
 }
 
 void ItemManager::MoveItems()
-{/*
+{
 	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
 	BagSlot(*slotList)[5] = inventory->GetSlotList();
 	bool isOpened = inventory->GetOpened();
@@ -371,6 +373,26 @@ void ItemManager::MoveItems()
 				RECT itemRc = items[i]->GetRect();
 				if (PtInRect(&itemRc, _mousePosition) == true && Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 				{
+					bool isChecked = false;
+					for (int j = 0; j < 2; j++)
+					{
+						for (int k = 0; k < 5; k++)
+						{
+
+							RECT rc;
+							RECT slotRc = slotList[j][k].rect;
+							RECT itemRc = items[i]->GetRect();
+
+							if (IntersectRect(&rc, &slotRc, &itemRc)) {
+								indexX = j;
+								indexY = k;
+								isChecked = true;
+								break;
+							}
+						}
+						if (isChecked == true) break;
+					}
+
 					((Item*)items[i])->SetIsClicking(true);
 				}
 				else
@@ -378,31 +400,6 @@ void ItemManager::MoveItems()
 					((Item*)items[i])->mPrePosition.x = items[i]->GetX();
 					((Item*)items[i])->mPrePosition.y = items[i]->GetY();
 
-					//아이템 비어있는 부분은 isFill false로 셋팅해줌
-					for (int j = 0; j < 2; j++)
-					{
-						for (int k = 0; k < 5; k++)
-						{
-							RECT rc;
-							RECT slotRc = slotList[j][k].rect;
-							RECT itemRc = items[i]->GetRect();
-
-							if (slotList[j][k].isChecked == false) {
-								if (IntersectRect(&rc, &slotRc, &itemRc))
-								{
-
-									slotList[j][k].isFill = true;
-									slotList[j][k].isChecked = true;
-
-								}
-								else {
-
-									slotList[j][k].isFill = false;
-									slotList[j][k].isChecked = true;
-								}
-							}
-						}
-					}
 				}
 			}
 			else //드래그 중일 때
@@ -448,6 +445,7 @@ void ItemManager::MoveItems()
 									isMoved = true;
 
 									//아이템이 원래 있던 슬롯은 isFill false를 해준다
+									slotList[indexX][indexY].isFill = false;
 									break;
 								}
 							}
@@ -460,20 +458,12 @@ void ItemManager::MoveItems()
 						items[i]->SetX(((Item*)items[i])->mPrePosition.x);
 						items[i]->SetY(((Item*)items[i])->mPrePosition.y);
 						((Item*)items[i])->SetIsClicking(false);
-
-						for (int j = 0; j < 2; j++)
-						{
-							for (int k = 0; k < 5; k++)
-							{
-								slotList[j][k].isChecked = false;
-							}
-						}
 					}
 				}
 			}
 			
 		}//items.size() for문 끝
-	}*/
+	}
 }
 
 

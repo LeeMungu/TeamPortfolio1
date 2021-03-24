@@ -32,6 +32,20 @@ Button::Button(wstring imageKey, int indexY, wstring text, float x, float y, flo
 	mIsSelect = false;
 }
 
+Button::Button(wstring imageKey, float x, float y, float multiply, function<void(void)> func)
+{
+	mImage = ImageManager::GetInstance()->FindImage(imageKey);
+	mX = x;
+	mY = y;
+	mSizeX = mImage->GetFrameWidth()*multiply;
+	mSizeY = mImage->GetFrameHeight()* multiply;
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mFunc = func;
+	mState = State::Normal;
+	mButtonType = Type::SelectButton;
+	mIsSelect = false;
+}
+
 void Button::Update()
 {
 	if (mButtonType == Type::OnOffButton)

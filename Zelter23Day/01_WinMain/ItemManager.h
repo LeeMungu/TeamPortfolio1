@@ -10,7 +10,7 @@ private:
 	Player* mPlayer;
 
 	map<wstring, int> mItemInventoryList; //인벤토리 아이템 이미지 key값과 value: count
-
+	int indexX, indexY;
 public:
 
 	ItemManager();

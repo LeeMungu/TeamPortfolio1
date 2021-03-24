@@ -304,16 +304,20 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	//회전하는 경우 
 	//mAngle = 360.f / (60.f * 24.f) *time;
 	
-	//투명도 
-	this->SetAlpha(alpha);
 	//현재 프레임인덱스 
 	int frame = frameY * mMaxFrameX + frameX;
 	//시간에 따른 길이 조정 : 0~1.f <-  1.f~0~1.f로 만들고 싶다.
 	float timePercent = ((float)((((int)time) % (60 * 24))*100) / (60 * 24))/100.f;
 	
+	//0.2+ 0.5-0-0.5
+	float downUpPercent = 0.2f+abs(timePercent-0.5f);
+	//0-0.5-0
+	//0-1.5 그림자
+	float upDownPercent = abs(0.5f -(downUpPercent-0.2f));
+
 	//크기
 	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(),
-		mSize.Y * height / this->GetFrameHeight() * timePercent);
+		mSize.Y * height / this->GetFrameHeight() * downUpPercent);
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale,
 		//사이즈 중심
 		D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
@@ -326,7 +330,7 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	//위치
 	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, 
 		//중점 잡기
-		y + height*(1.f- timePercent));
+		y + height*(1.f- downUpPercent));
 
 	//기울기
 	D2D_MATRIX_3X2_F skewMatrix = D2D1::Matrix3x2F::Skew(
@@ -349,7 +353,9 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	ID2D1SolidColorBrush* brush;
 	D2D1_COLOR_F color;
 	//r,g,b,a
-	color = { 0.0f,0.0f,0.0f,alpha };
+	color = { 0.0f,0.0f,0.0f,
+		//투명도
+		upDownPercent };
 	D2DRenderer::GetInstance()->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
 	D2DRenderer::GetInstance()->GetRenderTarget()
 		->FillOpacityMask(mBitmap, brush, D2D1_OPACITY_MASK_CONTENT::D2D1_OPACITY_MASK_CONTENT_GRAPHICS,

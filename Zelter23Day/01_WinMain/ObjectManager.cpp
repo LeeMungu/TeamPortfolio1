@@ -35,7 +35,6 @@ void ObjectManager::Init()
 		//	iter1->first == ObjectLayer::InteractObject ||
 		//	iter1->first == ObjectLayer::NoninteractObject ||
 		//{
-		iter1->first == ObjectLayer::HousingObject;
 		for (int i = 0; i < iter1->second.size(); ++i)
 		{
 			mZorderList.push_back(iter1->second[i]);

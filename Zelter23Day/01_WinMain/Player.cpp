@@ -99,6 +99,17 @@ void Player::Init()
 	mRightRoll->SetIsLoop(false);
 	mRightRoll->SetFrameUpdateTime(0.08f);
 
+	mUpRoll = new Animation();
+	mUpRoll->InitFrameByStartEnd(0, 2, 6, 2, false);
+	mUpRoll->SetIsLoop(false);
+	mUpRoll->SetFrameUpdateTime(0.08f);
+
+	mDownRoll = new Animation();
+	mDownRoll->InitFrameByEndStart(6, 3, 0, 3, false);
+	mDownRoll->SetIsLoop(false);
+	mDownRoll->SetFrameUpdateTime(0.08f);
+
+
 	//Idle Animation
 	mUpIdleAni = new Animation();
 	mUpIdleAni->InitFrameByStartEnd(0, 0, 0, 0, false);
@@ -156,6 +167,8 @@ void Player::Release()
 
 	SafeDelete(mLeftRoll);
 	SafeDelete(mRightRoll);
+	SafeDelete(mDownRoll);
+	SafeDelete(mUpRoll);
 }
 
 void Player::Update()
@@ -306,11 +319,11 @@ void Player::PlayerCtrl() {
 					mCurrentAnimation->Play();
 				}
 				else if (mCurrentAnimation == mDownRunAni) {
-					mCurrentAnimation = mRightRoll;
+					mCurrentAnimation = mDownRoll;
 					mCurrentAnimation->Play();
 				}
 				else {
-					mCurrentAnimation = mLeftRoll;
+					mCurrentAnimation = mUpRoll;
 					mCurrentAnimation->Play();
 				}
 

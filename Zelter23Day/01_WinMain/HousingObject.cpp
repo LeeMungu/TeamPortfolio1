@@ -11,7 +11,7 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 {
 	mTileIndexX = x / TileSize;
 	mTileIndexY = y / TileSize;
-
+	mThick = 20;
 	mImageKey = name;
 	if (mImageKey == L"House1" || mImageKey == L"House4" || mImageKey == L"House7" || mImageKey == L"police1" || mImageKey== L"shop1")
 	{
@@ -43,54 +43,91 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 
 	if (mImageKey == L"House3")
 	{
-
-
 		mHouse01Rect1 = RectMakeCenter(mX, mY-20, mSizeX/2+100, mSizeY / 2-18);
 
-		mHouse01Rect1_Left = RectMakeCenter(mHouse01Rect1.left, mY - 20, 10, mSizeY / 2 - 18);
+		mHouse01Rect1_Left = RectMakeCenter(mHouse01Rect1.left, mY - 20, mThick, mSizeY / 2 - 18);
 		mCollisionList.push_back(mHouse01Rect1_Left);
-		mHouse01Rect1_Right = RectMakeCenter(mHouse01Rect1.right, mY - 20, 10, mSizeY / 2 - 18);
+		mHouse01Rect1_Right = RectMakeCenter(mHouse01Rect1.right, mY - 20, mThick, mSizeY / 2 - 18);
 		mCollisionList.push_back(mHouse01Rect1_Right);
-		mHouse01Rect1_Top = RectMakeCenter(mX, mHouse01Rect1.top, mSizeX / 2 + 100, 10);
+		mHouse01Rect1_Top = RectMakeCenter(mX, mHouse01Rect1.top, mSizeX / 2 + 100, mThick);
 		mCollisionList.push_back(mHouse01Rect1_Top);
-		mHouse01Rect1_Bottom = RectMakeCenter(mX, mHouse01Rect1.bottom, mSizeX / 2 + 100, 10);	// 수정필요
+		mHouse01Rect1_Bottom = RectMakeCenter(mX, mHouse01Rect1.bottom, mSizeX / 2 + 100, mThick);	// 수정필요
 		mCollisionList.push_back(mHouse01Rect1_Bottom);
 
 		mHouse01Rect2 = RectMakeCenter(mX+140, mY+230, mSizeX/4, mSizeY/4);
 
-		mHouse01Rect2_Left = RectMakeCenter(mHouse01Rect2.left, mY + 230, 10, mSizeY / 4);
+		mHouse01Rect2_Left = RectMakeCenter(mHouse01Rect2.left, mY + 230, mThick, mSizeY / 4);
 		mCollisionList.push_back(mHouse01Rect2_Left);
-		mHouse01Rect2_Right = RectMakeCenter(mHouse01Rect2.right, mY + 230, 10, mSizeY / 4);
+		mHouse01Rect2_Right = RectMakeCenter(mHouse01Rect2.right, mY + 230, mThick, mSizeY / 4);
 		mCollisionList.push_back(mHouse01Rect2_Right);
-		mHouse01Rect2_Top = RectMakeCenter(mX, mHouse01Rect2.top, mSizeX / 4, 10);	// 수정필요
+		mHouse01Rect2_Top = RectMakeCenter(mX + 140, mHouse01Rect2.top, mSizeX / 4, mThick);	// 수정필요
 		mCollisionList.push_back(mHouse01Rect2_Top);
-		mHouse01Rect2_Bottom = RectMakeCenter(mX, mHouse01Rect2.bottom, mSizeX / 4, 10);
+		mHouse01Rect2_Bottom = RectMakeCenter(mX + 140, mHouse01Rect2.bottom, mSizeX / 4, mThick);
 		mCollisionList.push_back(mHouse01Rect2_Bottom);
 	}
 	if (mImageKey == L"House6")
 	{
 		mHouse04Rect1 = RectMakeCenter(mX, mY+50, mSizeX/2+280, mSizeY / 2+20);
 
-		mHouse04Rect1_Left = RectMakeCenter(mHouse04Rect1.left, mY + 50, 10, mSizeY / 2 + 20);
-		mHouse04Rect1_Right = RectMakeCenter(mHouse04Rect1.right, mY + 50, 10, mSizeY / 2 + 20);
-		mHouse04Rect1_Top = RectMakeCenter(mX, mHouse04Rect1.top, mSizeX / 2 + 280, 10);
-		mHouse04Rect1_Bottom = RectMakeCenter(mX, mHouse04Rect1.bottom, mSizeX / 2 + 280, 10);
-
+		mHouse04Rect1_Left = RectMakeCenter(mHouse04Rect1.left, mY + 50, mThick, mSizeY / 2 + 20);
+		mCollisionList.push_back(mHouse04Rect1_Left);
+		mHouse04Rect1_Right = RectMakeCenter(mHouse04Rect1.right, mY + 50, mThick, mSizeY / 2 + 20);
+		mCollisionList.push_back(mHouse04Rect1_Right);
+		mHouse04Rect1_Top = RectMakeCenter(mX, mHouse04Rect1.top, mSizeX / 2 + 280, mThick);
+		mCollisionList.push_back(mHouse04Rect1_Top);
+		mHouse04Rect1_Bottom = RectMakeCenter(mX, mHouse04Rect1.bottom, mSizeX / 2 + 280, mThick);
+		mCollisionList.push_back(mHouse04Rect1_Bottom);
 	}
 	if (mImageKey == L"House9")
 	{
 		mHouse07Rect1 = RectMakeCenter(mX, mY, mSizeX/1.5, mSizeY/1.5);
-		mHouse07Rect1_Left = RectMakeCenter(mHouse07Rect1.left, mY, 10, mSizeY / 1.5);
 
+		mHouse07Rect1_Left = RectMakeCenter(mHouse07Rect1.left, mY, mThick, mSizeY / 1.5 + 100);
+		mCollisionList.push_back(mHouse07Rect1_Left);
+		mHouse07Rect1_Right = RectMakeCenter(mHouse07Rect1.right, mY, mThick, mSizeY / 1.5 + 100);
+		mCollisionList.push_back(mHouse07Rect1_Right);
+		mHouse07Rect1_Top = RectMakeCenter(mX, mHouse07Rect1.top, mSizeX / 1.5, mThick);
+		mCollisionList.push_back(mHouse07Rect1_Top);
+		mHouse07Rect1_Bottom = RectMakeCenter(mX, mHouse07Rect1.bottom, mSizeX / 1.5, mThick);
+		mCollisionList.push_back(mHouse07Rect1_Bottom);
 	}
 	if (mImageKey == L"police3")
 	{
 		mPoliceRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+
+		mPoliceRect_Left = RectMakeCenter(mPoliceRect.left, mY + 80, mThick, mSizeY - 250);
+		mCollisionList.push_back(mPoliceRect_Left);
+		mPoliceRect_Right = RectMakeCenter(mPoliceRect.right, mY + 80, mThick, mSizeY - 250);
+		mCollisionList.push_back(mPoliceRect_Right);
+		mPoliceRect_Top = RectMakeCenter(mX, mPoliceRect.top, mSizeX - 250, mThick);
+		mCollisionList.push_back(mPoliceRect_Top);
+		mPoliceRect_Bottom = RectMakeCenter(mX, mPoliceRect.bottom, mSizeX - 250, mThick);
+		mCollisionList.push_back(mPoliceRect_Bottom);
 	}
 	if (mImageKey == L"shop3")
 	{
+
+
 		mShopRect1 = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+
+		mShopRect1_Left = RectMakeCenter(mShopRect1.left, mY + 150 , mThick, mSizeY / 2);
+		mCollisionList.push_back(mShopRect1_Left);
+		mShopRect1_Right = RectMakeCenter(mShopRect1.right, mY + 150, mThick, mSizeY / 2);
+		mCollisionList.push_back(mShopRect1_Right);
+		mShopRect1_Top = RectMakeCenter(mX + 220, mShopRect1.top, mSizeX / 2 - 70, mThick);
+		mCollisionList.push_back(mShopRect1_Top);
+		mShopRect1_Bottom = RectMakeCenter(mX + 220, mShopRect1.bottom, mSizeX / 2 - 70, mThick);
+		mCollisionList.push_back(mShopRect1_Bottom);
+
 		mShopRect2 = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+		mShopRect2_Left = RectMakeCenter(mShopRect2.left, mY - 150, mThick, mSizeY / 3 - 50);
+		mCollisionList.push_back(mShopRect2_Left);
+		mShopRect2_Right = RectMakeCenter(mShopRect2.right, mY - 150, mThick, mSizeY / 3 - 50);
+		mCollisionList.push_back(mShopRect2_Right);
+		mShopRect2_Top = RectMakeCenter(mX - 200, mShopRect2.top, mSizeX / 2 - 50, mThick);
+		mCollisionList.push_back(mShopRect2_Top);
+		mShopRect2_Bottom = RectMakeCenter(mX - 200, mShopRect2.bottom, mSizeX / 2 - 50, mThick);
+		mCollisionList.push_back(mShopRect2_Bottom);
 	}
 
 
@@ -224,6 +261,13 @@ void HousingObject::Render(HDC hdc)
 				->RenderRect(hdc, mShopRect1, Gizmo::Color::Blue2);
 			CameraManager::GetInstance()->GetMainCamera()
 				->RenderRect(hdc, mShopRect2, Gizmo::Color::Blue2);
+
+
+			for (int i = 0; i < mCollisionList.size(); ++i)
+			{
+				CameraManager::GetInstance()->GetMainCamera()
+					->RenderRect(hdc, mCollisionList[i], Gizmo::Color::Blue2);
+			}
 		}
 	}
 

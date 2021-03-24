@@ -8,11 +8,14 @@
 #include "Bullet.h"
 #include "EffectManager.h"
 #include "EffectImpact.h"
+#include "HousingObject.h"
 
 
 void CollisionManager::Init()
 {
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+
+
 
 }
 
@@ -95,7 +98,7 @@ void CollisionManager::PlayerCollision()
 					float tempW = temp.right - temp.left;
 					float tempH = temp.bottom - temp.top;
 					float tempX = temp.left + tempW / 2;
-					float tempY = temp.top + tempW / 2;
+					float tempY = temp.top + tempH / 2;
 					float enemyX = enemyRC.left + (enemyRC.right - enemyRC.left) / 2;
 					float enemyY = enemyRC.top + (enemyRC.bottom - enemyRC.top) / 2;
 
@@ -120,6 +123,62 @@ void CollisionManager::PlayerCollision()
 				}
 			}
 		}
+
+		HousingObject* house;
+		vector<RECT> houseVectorRC;
+		RECT houseRC;
+		vector<GameObject*> houseObject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::HousingObject);
+		if (houseObject.size() != NULL)
+		{
+			for (int i = 0; i < houseObject.size(); ++i)
+			{
+				house = (HousingObject*)houseObject[i];
+				houseVectorRC = house->GetCollisionList();
+				if (houseVectorRC.size() != NULL)
+				{
+					for (int i = 0; i < houseVectorRC.size(); ++i)
+					{
+						houseRC = houseVectorRC[i];
+						if (IntersectRect(&temp, &playerRC, &houseRC))
+						{
+							float pX = mPlayer->GetX();
+							float pY = mPlayer->GetY();
+							float pSizeX = playerRC.right - playerRC.left;
+							float pSizeY = playerRC.bottom - playerRC.top;
+
+							float tempW = temp.right - temp.left;
+							float tempH = temp.bottom - temp.top;
+							float tempX = temp.left + tempW / 2;
+							float tempY = temp.top + tempH / 2;
+							float houseX = houseRC.left + (houseRC.right - houseRC.left) / 2;
+							float houseY = houseRC.top + (houseRC.bottom - houseRC.top) / 2;
+
+							if (tempW < tempH && tempX > houseX && playerRC.left < houseRC.right)
+							{
+								pX = houseRC.right + pSizeX / 2;
+							}
+							if (tempW < tempH && tempX < houseX && playerRC.right > houseRC.left)
+							{
+								pX = houseRC.left - pSizeX / 2;
+							}
+							if (tempW > tempH && tempY > houseY && playerRC.top < houseRC.bottom)
+							{
+								pY = houseRC.bottom + pSizeY / 2;
+							}
+							if (tempW > tempH && tempY < houseY && playerRC.bottom > houseRC.top)
+							{
+								pY = houseRC.top - pSizeY / 2;
+							}
+							mPlayer->SetX(pX);
+							mPlayer->SetY(pY);
+						}
+
+					}
+				}
+
+			}
+		}
+
 	}
 }
 
@@ -246,15 +305,15 @@ void CollisionManager::PlayerShoot()
 	{
 		for (int i = 0; i < bulletList.size(); ++i)
 		{
-			Bullet* bullet  = (Bullet*) bulletList[i];
+			Bullet* bullet = (Bullet*)bulletList[i];
 			bulletRC = bullet->GetRect();
 			for (int j = 0; j < zombie.size(); j++)
 			{
-				Enemy* enemy = (Enemy*) zombie[j];
+				Enemy* enemy = (Enemy*)zombie[j];
 				enemyRC = enemy->GetRect();
-				if (IntersectRect(&temp, &bulletRC, &enemyRC) &&  bullet->GetIsShot() == false)
+				if (IntersectRect(&temp, &bulletRC, &enemyRC) && bullet->GetIsShot() == false)
 				{
-					if (enemy->GetIsInvincible() == false )
+					if (enemy->GetIsInvincible() == false)
 					{
 						enemy->SetHp(enemy->GetHP() - 1);
 						enemy->SetIsInvincible(true);
@@ -286,6 +345,30 @@ void CollisionManager::PlayerShoot()
 					for (int i = 0; i < 8; ++i)
 					{
 						EffectImpact* impact = new EffectImpact(object->GetImageKey(), object->GetX(), object->GetY(), i);
+					}
+				}
+			}
+			HousingObject* house;
+			vector<RECT> houseVectorRC;
+			RECT houseRC;
+			vector<GameObject*> houseObject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::HousingObject);
+			if (houseObject.size() != NULL)
+			{
+				for (int i = 0; i < houseObject.size(); ++i)
+				{
+					house = (HousingObject*)houseObject[i];
+					houseVectorRC = house->GetCollisionList();
+					if (houseVectorRC.size() != NULL)
+					{
+						for (int i = 0; i < houseVectorRC.size(); ++i)
+						{
+							houseRC = houseVectorRC[i];
+							if (IntersectRect(&temp, &bulletRC, &houseRC))
+							{
+								EffectManager* effect = new EffectManager(L"pistol_shoot", temp, 0, 6, 0.1f);
+								bullet->SetIsDestroy(true);
+							}
+						}
 					}
 				}
 			}

@@ -16,6 +16,7 @@ class Player;
 class HousingObject : public GameObject
 {
 	Image* mImage;
+	int mThick;
 	int mIndexX;
 	int mIndexY;
 	//차지하는 타일 갯수
@@ -79,6 +80,8 @@ public:
 
 	float GetAlpha() { return mAlpha; }
 	void SetAlpha(float alpha) { mAlpha = alpha; }
+	
+	vector<RECT> GetCollisionList() { return mCollisionList; }
 	wstring GetImageKey()const { return mImageKey; }
 
 

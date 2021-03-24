@@ -22,7 +22,6 @@ void Inventory::Init()
 			mSlotList[i][j].slotImage2 = IMAGEMANAGER->FindImage(L"QuickSlot_slotBase");
 			mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 			mSlotList[i][j].isFill = false;
-			mSlotList[i][j].isChecked = false;
 		}
 	}
 }
@@ -52,27 +51,6 @@ void Inventory::Update()
 				}
 			}
 
-			/*
-			//아이템 이미지 키값하고 개수를 가진 리스트 가져옴
-			mItemList = ItemManager::GetInstance()->GetmItemInventoryList();
-			map<wstring, int>::iterator iter = mItemList.begin();
-
-			int k = 0;
-			int q = 0;
-
-			for (iter; iter != mItemList.end(); iter++) {
-				Item* item = new Item(iter->first, mSlotList[k][q].x + 30, mSlotList[k][q].y + 30,
-					iter->second, ItemKind::inventory);
-				item->Init();
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
-				k++;
-				if (k >= 5) {
-					k = 0;
-					q++;
-				}
-			}
-			*/
-
 			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 			for (int i = 0; i < items.size(); ++i) {
@@ -99,15 +77,7 @@ void Inventory::Update()
 					mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 				}
 			}
-			/*
-			mItemList.clear();
 
-			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
-
-			for (int i = 0; i < items.size(); ++i) {
-					items[i]->SetIsDestroy(true);
-			}
-			*/
 			vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 			for (int i = 0; i < items.size(); ++i) {
@@ -122,12 +92,12 @@ void Inventory::Update()
 void Inventory::Render(HDC hdc)
 {
 	if (mIsOpened == true) {
-		//mBaseImage->ScaleRender(hdc, mX, mY, 295 * 2, 255 * 2);
+		mBaseImage->ScaleRender(hdc, mX, mY, 295 * 2, 255 * 2);
 
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 5; j++) {
-				//mSlotList[i][j].slotImage->ScaleRender(hdc, mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
-				RenderRect(hdc, mSlotList[i][j].rect);
+				mSlotList[i][j].slotImage->ScaleRender(hdc, mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
+				//RenderRect(hdc, mSlotList[i][j].rect);
 				
 				if (mSlotList[i][j].isFill == true) {
 					mSlotList[i][j].slotImage2->ScaleRender(hdc, mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);

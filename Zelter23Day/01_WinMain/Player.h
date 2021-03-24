@@ -122,5 +122,7 @@ public:
 	void ExecuteKnockback(float angle, float force); // 충돌에서 넉백에 받아올 값
 	void Knockback();//넉백상태 후처리
 	void PlayerState();
+
+	void weaponUse(bool a);
 };
 

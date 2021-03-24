@@ -1,17 +1,17 @@
 #pragma once
 #include "GameObject.h"
 
-enum class TypeLayer
-{
-	stone,
-	wood,
-	glass,
-	fabric,
-	Iron,
-	Leather,
-	plastic,
-	end
-};
+//enum class TypeLayer
+//{
+//	stone,
+//	wood,
+//	glass,
+//	fabric,
+//	Iron,
+//	Leather,
+//	plastic,
+//	end
+//};
 
 class Image;
 class Animation;
@@ -25,7 +25,7 @@ public:
 	InteractObject* mInteractObject;
 	wstring mImageKey;
 
-	map<wstring, TypeLayer> mObjectLayerList;
+	//map<wstring, TypeLayer> mObjectLayerList;
 
 	int mIndexX;
 	int mIndexY;

@@ -312,7 +312,7 @@ void ItemManager::PickUpItems()
 void ItemManager::PutInInventory(wstring key)
 {
 	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
-	BagSlot (*slotList)[2] = inventory->GetSlotList();
+	BagSlot (*slotList)[5] = inventory->GetSlotList();
 
 	Item* item;
 
@@ -320,21 +320,21 @@ void ItemManager::PutInInventory(wstring key)
 		//아이템 리스트 생성 후 인벤토리에서 불러와서 생성, 사용함
 		mItemInventoryList.insert(make_pair(key, 1));
 
-		bool isFill = false;
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 2; j++) {
-				if (slotList[i][j].isFill == false) {
+		
+		for (int y = 0; y < 2; y++) {
+			bool isFill = false;
+			for (int x = 0; x < 5; x++) {
+				if (slotList[y][x].isFill == false) {
 					string str;
 					str.assign(key.begin(), key.end());
 	
-					item = new Item(key, str, slotList[i][j].x + 25, slotList[i][j].y + 25, mItemInventoryList[key], ItemKind::inventory);
+					item = new Item(key, str, slotList[y][x].x + 25, slotList[y][x].y + 25, mItemInventoryList[key], ItemKind::inventory);
 					item->Init();
 					ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
-					slotList[i][j].isFill = true;
+					slotList[y][x].isFill = true;
 					isFill = true;
-
+					break;
 				}
-				break;
 			}
 			if (isFill == true) break;
 		}
@@ -353,15 +353,17 @@ void ItemManager::PutInInventory(wstring key)
 }
 
 void ItemManager::MoveItems()
-{
+{/*
 	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
-	BagSlot(*slotList)[2] = inventory->GetSlotList();
+	BagSlot(*slotList)[5] = inventory->GetSlotList();
 	bool isOpened = inventory->GetOpened();
 	vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 	//아이템을 슬롯으로 드로그 앤 드롭해서 옮길 수 있음
 
 	if (isOpened == true) //인벤토리 열려있을 때만
 	{
+		
+
 		for (int i = 0; i < items.size(); ++i)
 		{
 			if (((Item*)items[i])->GetIsClicking() == false) //드래그 중 아닐 때
@@ -375,6 +377,32 @@ void ItemManager::MoveItems()
 				{
 					((Item*)items[i])->mPrePosition.x = items[i]->GetX();
 					((Item*)items[i])->mPrePosition.y = items[i]->GetY();
+
+					//아이템 비어있는 부분은 isFill false로 셋팅해줌
+					for (int j = 0; j < 2; j++)
+					{
+						for (int k = 0; k < 5; k++)
+						{
+							RECT rc;
+							RECT slotRc = slotList[j][k].rect;
+							RECT itemRc = items[i]->GetRect();
+
+							if (slotList[j][k].isChecked == false) {
+								if (IntersectRect(&rc, &slotRc, &itemRc))
+								{
+
+									slotList[j][k].isFill = true;
+									slotList[j][k].isChecked = true;
+
+								}
+								else {
+
+									slotList[j][k].isFill = false;
+									slotList[j][k].isChecked = true;
+								}
+							}
+						}
+					}
 				}
 			}
 			else //드래그 중일 때
@@ -387,9 +415,9 @@ void ItemManager::MoveItems()
 					bool isMoved = false;
 
 					//아이템과 슬롯 충돌 처리
-					for(int j = 0; j<5; j++)
+					for(int j = 0; j<2; j++)
 					{
-						for (int k = 0; k < 2; k++)
+						for (int k = 0; k < 5; k++)
 						{
 							RECT rc;
 							RECT slotRc = slotList[j][k].rect;
@@ -420,7 +448,6 @@ void ItemManager::MoveItems()
 									isMoved = true;
 
 									//아이템이 원래 있던 슬롯은 isFill false를 해준다
-									
 									break;
 								}
 							}
@@ -433,32 +460,20 @@ void ItemManager::MoveItems()
 						items[i]->SetX(((Item*)items[i])->mPrePosition.x);
 						items[i]->SetY(((Item*)items[i])->mPrePosition.y);
 						((Item*)items[i])->SetIsClicking(false);
+
+						for (int j = 0; j < 2; j++)
+						{
+							for (int k = 0; k < 5; k++)
+							{
+								slotList[j][k].isChecked = false;
+							}
+						}
 					}
 				}
 			}
 			
-			//아이템 비어있는 부분은 isFill false로 셋팅해줌
-			/*
-			for (int j = 0; j < 5; j++)
-			{
-				for (int k = 0; k < 2; k++)
-				{
-					RECT rc;
-					RECT slotRc = slotList[j][k].rect;
-					RECT itemRc = items[i]->GetRect();
-					if (IntersectRect(&rc, &slotRc, &itemRc))
-					{
-						slotList[j][k].isFill = true;
-					}
-					else
-					{
-						slotList[j][k].isFill = false;
-					}
-				}
-			}
-			*/
 		}//items.size() for문 끝
-	}
+	}*/
 }
 
 

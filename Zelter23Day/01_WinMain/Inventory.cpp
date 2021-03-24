@@ -14,14 +14,15 @@ void Inventory::Init()
 	mBaseImage = IMAGEMANAGER->FindImage(L"Inventory_base");
 	mIsOpened = false;
 
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 2; j++) {
-			mSlotList[i][j].x = mX + i * 60 + 170;
-			mSlotList[i][j].y = mY + j * 60 + 250;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 5; j++) {
+			mSlotList[i][j].x = mX + j * 60 + 170;
+			mSlotList[i][j].y = mY + i * 60 + 250;
 			mSlotList[i][j].slotImage = IMAGEMANAGER->FindImage(L"Inventory_slot");
 			mSlotList[i][j].slotImage2 = IMAGEMANAGER->FindImage(L"QuickSlot_slotBase");
 			mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 			mSlotList[i][j].isFill = false;
+			mSlotList[i][j].isChecked = false;
 		}
 	}
 }
@@ -41,10 +42,10 @@ void Inventory::Update()
 			mIsOpened = true;
 
 			//bool isEnd = false;
-			for (int i = 0; i < 5; i++) {
-				for (int j = 0; j < 2; j++) {
-					mSlotList[i][j].x = mX + i * 60 + 170;
-					mSlotList[i][j].y = mY + j * 60 + 250;
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 5; j++) {
+					mSlotList[i][j].x = mX + j * 60 + 170;
+					mSlotList[i][j].y = mY + i * 60 + 250;
 					mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 
 					
@@ -91,10 +92,10 @@ void Inventory::Update()
 			mY = -1000;
 			mIsOpened = false;
 	
-			for (int i = 0; i < 5; i++) {
-				for (int j = 0; j < 2; j++) {
-					mSlotList[i][j].x = mX + i * 60 + 170;
-					mSlotList[i][j].y = mY + j * 60 + 250;
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 5; j++) {
+					mSlotList[i][j].x = mX + j * 60 + 170;
+					mSlotList[i][j].y = mY + i * 60 + 250;
 					mSlotList[i][j].rect = RectMake(mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 				}
 			}
@@ -121,11 +122,13 @@ void Inventory::Update()
 void Inventory::Render(HDC hdc)
 {
 	if (mIsOpened == true) {
-		mBaseImage->ScaleRender(hdc, mX, mY, 295 * 2, 255 * 2);
+		//mBaseImage->ScaleRender(hdc, mX, mY, 295 * 2, 255 * 2);
 
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 2; j++) {
-				mSlotList[i][j].slotImage->ScaleRender(hdc, mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 5; j++) {
+				//mSlotList[i][j].slotImage->ScaleRender(hdc, mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
+				RenderRect(hdc, mSlotList[i][j].rect);
+				
 				if (mSlotList[i][j].isFill == true) {
 					mSlotList[i][j].slotImage2->ScaleRender(hdc, mSlotList[i][j].x, mSlotList[i][j].y, 55, 55);
 				}

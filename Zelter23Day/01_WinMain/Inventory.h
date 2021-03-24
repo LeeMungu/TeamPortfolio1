@@ -9,6 +9,7 @@ struct BagSlot {
 	Image* slotImage2;
 	RECT rect;
 	bool isFill;
+	bool isChecked;
 };
 
 class Inventory : public UI
@@ -16,7 +17,7 @@ class Inventory : public UI
 	Image* mBaseImage;
 	bool mIsOpened;
 
-	BagSlot mSlotList[5][2];
+	BagSlot mSlotList[2][5];
 
 	map<wstring, int> mItemList;
 	//Item* mTestItem[5][2];
@@ -30,6 +31,6 @@ public:
 
 	void SetOpened(bool b) { mIsOpened = b; }
 	bool GetOpened() const { return mIsOpened; }
-	BagSlot(*GetSlotList(void))[2]{	return mSlotList; }
+	BagSlot(*GetSlotList(void))[5]{	return mSlotList; }
 };
 

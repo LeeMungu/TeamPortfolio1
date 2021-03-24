@@ -4,20 +4,20 @@
 #include "Camera.h"
 
 
-TextBox::TextBox(const string& name, wstring textContext)
-	:UI(name)
+TextBox::TextBox(wstring textContext)
+	:UI("TextBox")
 {
-	mImage;
-	mSizeX = mImage->GetWidth();
-	mSizeY = mImage->GetHeight();
-	mX = WINSIZEX/4;
+	mImage = ImageManager::GetInstance()->FindImage(L"TextBox");
+	mSizeX = mImage->GetWidth()*6;
+	mSizeY = mImage->GetHeight()*4;
+	mX = WINSIZEX/5*2;
 	mY = WINSIZEY/4*3;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mTextContext = textContext;
 }
 
 void TextBox::Init()
 {
-
 }
 
 void TextBox::Release()
@@ -32,6 +32,11 @@ void TextBox::Update()
 
 void TextBox::Render(HDC hdc)
 {
-	CameraManager::GetInstance()->GetMainCamera()
-		->ScaleRender(hdc, mImage, mX, mY, mSizeX, mSizeY);
+	//텍스트 박스
+	mImage->ScaleRender(hdc, mRect.left, mRect.top, mSizeX, mSizeY);
+	
+	//글씨 출력
+	D2DRenderer::GetInstance()->RenderText(
+		mRect.left+mSizeX/8, mRect.top+mSizeY/4, mTextContext.c_str(), 25);
+
 }

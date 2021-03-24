@@ -2,6 +2,7 @@
 #include "GameEvent.h"
 
 #include "Camera.h"
+#include "TextBox.h"
 IChangeCameraTargetEvent::IChangeCameraTargetEvent(GameObject * target)
 {
 	mTarget = target;
@@ -56,13 +57,33 @@ ITextEvent::ITextEvent(float textDelayTime, wstring textContent)
 
 void ITextEvent::Start()
 {
+	mTextBox = new TextBox(mTextContent);
+	mTextBox->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, mTextBox);
 }
 
 bool ITextEvent::Update()
 {
 	mCurrentTime += Time::GetInstance()->DeltaTime();
 
+	if (mCurrentTime >= mTextDelayTime)
+	{
+		mTextBox->SetIsDestroy(true);
+		return true;
+	}
 
+	return false;
+}
 
+ITileEvent::ITileEvent()
+{
+}
+
+void ITileEvent::Start()
+{
+}
+
+bool ITileEvent::Update()
+{
 	return false;
 }

@@ -36,8 +36,19 @@ class ITextEvent : public IEvent
 	float mTextDelayTime;
 	wstring mTextContent;
 	float mCurrentTime;
+	class TextBox* mTextBox;
 public:
 	ITextEvent(float textDelayTime, wstring textContent);
+
+	void Start()override;
+	bool Update()override;
+};
+
+//특정 타일에 접근해야 이벤트가 시작된다.
+class ITileEvent : public IEvent
+{
+public:
+	ITileEvent();
 
 	void Start()override;
 	bool Update()override;

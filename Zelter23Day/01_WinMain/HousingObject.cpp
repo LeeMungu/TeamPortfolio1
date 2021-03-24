@@ -43,16 +43,45 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 
 	if (mImageKey == L"House3")
 	{
+
+
 		mHouse01Rect1 = RectMakeCenter(mX, mY-20, mSizeX/2+100, mSizeY / 2-18);
+
+		mHouse01Rect1_Left = RectMakeCenter(mHouse01Rect1.left, mY - 20, 10, mSizeY / 2 - 18);
+		mCollisionList.push_back(mHouse01Rect1_Left);
+		mHouse01Rect1_Right = RectMakeCenter(mHouse01Rect1.right, mY - 20, 10, mSizeY / 2 - 18);
+		mCollisionList.push_back(mHouse01Rect1_Right);
+		mHouse01Rect1_Top = RectMakeCenter(mX, mHouse01Rect1.top, mSizeX / 2 + 100, 10);
+		mCollisionList.push_back(mHouse01Rect1_Top);
+		mHouse01Rect1_Bottom = RectMakeCenter(mX, mHouse01Rect1.bottom, mSizeX / 2 + 100, 10);	// 수정필요
+		mCollisionList.push_back(mHouse01Rect1_Bottom);
+
 		mHouse01Rect2 = RectMakeCenter(mX+140, mY+230, mSizeX/4, mSizeY/4);
+
+		mHouse01Rect2_Left = RectMakeCenter(mHouse01Rect2.left, mY + 230, 10, mSizeY / 4);
+		mCollisionList.push_back(mHouse01Rect2_Left);
+		mHouse01Rect2_Right = RectMakeCenter(mHouse01Rect2.right, mY + 230, 10, mSizeY / 4);
+		mCollisionList.push_back(mHouse01Rect2_Right);
+		mHouse01Rect2_Top = RectMakeCenter(mX, mHouse01Rect2.top, mSizeX / 4, 10);	// 수정필요
+		mCollisionList.push_back(mHouse01Rect2_Top);
+		mHouse01Rect2_Bottom = RectMakeCenter(mX, mHouse01Rect2.bottom, mSizeX / 4, 10);
+		mCollisionList.push_back(mHouse01Rect2_Bottom);
 	}
 	if (mImageKey == L"House6")
 	{
 		mHouse04Rect1 = RectMakeCenter(mX, mY+50, mSizeX/2+280, mSizeY / 2+20);
+
+		mHouse04Rect1_Left = RectMakeCenter(mHouse04Rect1.left, mY + 50, 10, mSizeY / 2 + 20);
+		mHouse04Rect1_Right = RectMakeCenter(mHouse04Rect1.right, mY + 50, 10, mSizeY / 2 + 20);
+		mHouse04Rect1_Top = RectMakeCenter(mX, mHouse04Rect1.top, mSizeX / 2 + 280, 10);
+		mHouse04Rect1_Bottom = RectMakeCenter(mX, mHouse04Rect1.bottom, mSizeX / 2 + 280, 10);
+
 	}
 	if (mImageKey == L"House9")
 	{
 		mHouse07Rect1 = RectMakeCenter(mX, mY, mSizeX/1.5, mSizeY/1.5);
+		mHouse07Rect1_Left = RectMakeCenter(mHouse07Rect1.left, mY, 10, mSizeY / 1.5);
+
 	}
 	if (mImageKey == L"police3")
 	{

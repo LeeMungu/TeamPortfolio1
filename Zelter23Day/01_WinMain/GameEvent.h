@@ -48,8 +48,23 @@ public:
 class ITileEvent : public IEvent
 {
 public:
-	ITileEvent();
-
+	//플레이어가 이 위치에 있으면 실행
+	enum class Mode
+	{
+		UpLeft,
+		UpRight,
+		DownLeft,
+		DownRight,
+		End
+	};
+private:
+	Mode mMode;
+	float mControlPointX;
+	float mCoutrolPointY;
+	float mPlayerX;
+	float mPlayerY;
+public:
+	ITileEvent(ITileEvent::Mode mode, float x, float y);
 	void Start()override;
 	bool Update()override;
 };

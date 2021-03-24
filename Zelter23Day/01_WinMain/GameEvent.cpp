@@ -75,15 +75,56 @@ bool ITextEvent::Update()
 	return false;
 }
 
-ITileEvent::ITileEvent()
+ITileEvent::ITileEvent(ITileEvent::Mode mode, float x, float y)
 {
+	mMode = mode;
+	mControlPointX = x;
+	mCoutrolPointY = y;
 }
 
 void ITileEvent::Start()
 {
+	GameObject* player = ObjectManager::GetInstance()->FindObject("Player");
+	mPlayerX = player->GetX();
+	mPlayerY = player->GetY();
 }
 
 bool ITileEvent::Update()
 {
+	GameObject* player = ObjectManager::GetInstance()->FindObject("Player");
+	mPlayerX = player->GetX();
+	mPlayerY = player->GetY();
+	if (mMode == ITileEvent::Mode::UpLeft)
+	{
+		if (mPlayerX < mControlPointX
+			&& mPlayerY < mCoutrolPointY)
+		{
+			return true;
+		}
+	}
+	else if (mMode == ITileEvent::Mode::UpRight)
+	{
+		if (mPlayerX > mControlPointX
+			&& mPlayerY < mCoutrolPointY)
+		{
+			return true;
+		}
+	}
+	else if (mMode == ITileEvent::Mode::DownLeft)
+	{
+		if (mPlayerX < mControlPointX
+			&& mPlayerY > mCoutrolPointY)
+		{
+			return true;
+		}
+	}
+	else if (mMode == ITileEvent::Mode::DownRight)
+	{
+		if (mPlayerX > mControlPointX
+			&& mPlayerY > mCoutrolPointY)
+		{
+			return true;
+		}
+	}
 	return false;
 }

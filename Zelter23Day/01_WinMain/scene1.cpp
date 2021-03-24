@@ -74,6 +74,7 @@ void scene1::Init()
 
 	//이벤트 초기화
 	GameEventManager::GetInstance()->RemoveAllEvent();
+	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*100,TileSize*100));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(10.f, L"지훈이는 이 일을 기억해둡니다."));
 }
 

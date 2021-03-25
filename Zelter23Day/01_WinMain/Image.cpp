@@ -312,7 +312,7 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	//0.2+ 0.5-0-0.5 길이
 	float downUpPercent = 0.3f + abs(timePercent - 0.5f);
 	//0-0.5-0 그림자 투명도
-	float upDownPercent = abs(0.5f - (downUpPercent - 0.3f));
+	float upDownPercent = abs(0.6f - (downUpPercent - 0.3f));
 
 	//크기
 	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(),
@@ -447,11 +447,13 @@ void Image::EveningBackgroundRender(float time)
 	color = { 1.0f,0.0f,0.0f,
 		//투명도
 		time };
+	D2D_RECT_F rc = { 0,0,WINSIZEX,WINSIZEY };
 	D2DRenderer::GetInstance()->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
 	D2DRenderer::GetInstance()->GetRenderTarget()
-		->FillOpacityMask(mBitmap, brush, D2D1_OPACITY_MASK_CONTENT::D2D1_OPACITY_MASK_CONTENT_GRAPHICS,
-			dxArea,
-			dxSrc);
+		->FillRectangle(rc, brush);
+		//->FillOpacityMask(mBitmap, brush, D2D1_OPACITY_MASK_CONTENT::D2D1_OPACITY_MASK_CONTENT_GRAPHICS,
+		//	dxArea,
+		//	dxSrc);
 
 	//리셋
 	ResetRenderOption();

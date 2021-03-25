@@ -11,7 +11,7 @@ private:
 
 	map<wstring, int> mItemInventoryList; //인벤토리 아이템 이미지 key값과 value: count
 	map<wstring, int> mItemDropList; //땅에 있는 아이템 이미지 key값과 value: count
-	int indexX, indexY;
+	int indexX, indexY, index;
 public:
 
 	ItemManager();

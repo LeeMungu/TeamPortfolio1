@@ -74,7 +74,8 @@ void scene1::Init()
 
 	//이벤트 초기화
 	GameEventManager::GetInstance()->RemoveAllEvent();
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"지훈이는 이 일을 기억해둡니다."));
+	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(5.f));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(10.f, L"아직 성남시에 군인들이\n있다고들었어.\n일단 남동쪽으로 가보자."));
 	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*132));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"특정 좌표에 도달했습니다."));
@@ -180,6 +181,29 @@ void scene1::Update()
 			}
 		}
 	}
+	//집벽 타일 처리
+	vector<RECT> tempHousingWallList = ObjectManager::GetInstance()->GetClipingHousingWall();
+	if (tempHousingWallList.size() != NULL)
+	{
+		for (int i = 0; i < tempHousingWallList.size(); ++i)
+		{
+			int startWallTileX = (int)(tempHousingWallList[i].left / TileSize);
+			int startWallTileY = (int)(tempHousingWallList[i].top / TileSize);
+			int endWallTileX = (int)(tempHousingWallList[i].right / TileSize);
+			int endWallTileY = (int)(tempHousingWallList[i].bottom / TileSize);
+			int wallTileCountX = endWallTileX - startWallTileX + 1;
+			int wallTileCountY = endWallTileY - startWallTileY + 1;
+			for (int j = 0; j < wallTileCountX * wallTileCountY; ++j)
+			{
+				if (mTileList[startWallTileY + j / wallTileCountX][startWallTileX + j % wallTileCountX]->GetTileLayer() != TileLayer::wall)
+				{
+					mTileList[startWallTileY + j / wallTileCountX][startWallTileX + j % wallTileCountX]->SetTileLayer(TileLayer::wall);
+				}
+			}
+		}
+	}
+
+	
 	float randomX = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountX-1));
 	float randomY = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountY-1));
 	

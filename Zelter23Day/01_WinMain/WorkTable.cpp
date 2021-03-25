@@ -22,12 +22,12 @@ void WorkTable::Init()
 	mIsTableOpen = false;
 	mIsOpenTrigger = false;
 	mIsMakingOpen = false;
-	mStartBtn = new Button(L"WorkTable_start_btn", mX + 550, mY + 330, 2, [this]() {});
+	mStartBtn = new Button(L"WorkTable_start_btn", mX + 550, mY + 330, 2, [this]() {MakingItem(); });
 	mTimeUpBtn = new Button(L"WorkTable_Timer_up", mX + 490, mY + 10 + 330, 2, [this]() {});
 	mTimeDownBtn = new Button(L"WorkTable_Timer_down", mX + 490, mY - 10 + 330, 2, [this]() {});
 	mMakeWoodBoard = new Button(L"나무판", mX + 230, mY + 120, 80, 50, [this]() {Worktemplet(); });
 	mNumImage = IMAGEMANAGER->FindImage(L"SW_num");
-	
+	mMakingCount = 1;
 
 }
 
@@ -124,7 +124,8 @@ void WorkTable::Worktemplet()
 						//재료아이템 
 
 						//만들어질 아이템
-						Item* maikingborad = new Item(L"WoodBoard", "makeboard", mX + 450, mY + 150, 1, ItemKind::holding);
+						
+						Item* maikingborad = new Item(L"WoodBoard", "makeboard", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게
 						maikingborad->Init();
 						ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, maikingborad);
 
@@ -144,4 +145,28 @@ void WorkTable::UpdateButton()
 	{
 		mMakeWoodBoard->Update();
 	}
+	if (mStartBtn != nullptr)
+	{
+		mStartBtn->Update();
+	}
+}
+
+void WorkTable::MakingItem()
+{
+	//vector<GameObject*> makeItem = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::MakingItem);
+	//
+	//if (makeItem.size() != NULL)
+	//{
+	//	for (int i = 0; i < makeItem.size(); i++)
+	//	{
+	//		if (((Item*)makeItem[i])->GetName() == "makeboard")
+	//		{
+	//			if (mMakingCount > 0)
+	//			{
+	//				ItemManager::GetInstance()->PutInInventory(L"WoodBoard", mMakingCount);
+	//			}
+	//		}
+	//
+	//	}
+	//}
 }

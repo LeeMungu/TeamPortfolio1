@@ -310,9 +310,9 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	float timePercent = ((float)((((int)time) % (60 * 24))*100) / (60 * 24))/100.f;
 	
 	//0.2+ 0.5-0-0.5 길이
-	float downUpPercent = 0.2f+abs(timePercent-0.5f);
-	//0-0.5-0 그림자
-	float upDownPercent = abs(0.5f -(downUpPercent-0.2f));
+	float downUpPercent = 0.3f + abs(timePercent - 0.5f);
+	//0-0.5-0 그림자 투명도
+	float upDownPercent = abs(0.5f - (downUpPercent - 0.3f));
 
 	//크기
 	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(),

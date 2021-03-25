@@ -385,6 +385,6 @@ void LoadingScene::Render(HDC hdc)
 		mLoadingImage2->LoadingRender(hdc, 0, 0, 0, 0, WINSIZEX, WINSIZEY, mTime);
 
 		D2DRenderer::GetInstance()->RenderText(
-			WINSIZEX/3,WINSIZEY/5*2,L"로딩 중 ~ ~ ♥",50 );
+			WINSIZEX/3,WINSIZEY/5*2,L"생존하기 위해 준비 중입니다...",50 );
 	}
 }

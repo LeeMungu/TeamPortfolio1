@@ -265,7 +265,7 @@ bool IAllUnitStop::Update()
 	}
 }
 
-IZombiGeneration::IZombiGeneration(float x, float y, vector<vector<Tile*>> tileList)
+IZombiGeneration::IZombiGeneration(float x, float y, vector<vector<Tile*>>& tileList)
 {
 	mX = x;
 	mY = y;
@@ -292,6 +292,32 @@ bool IZombiGeneration::Update()
 		zombi->SetTileList(mTileList);
 		zombi->Init();
 		ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, zombi);
+		return false;
+	}
+}
+
+IDelayFunEvent::IDelayFunEvent(float delayTime, function<void(void)> func)
+{
+	mDelayTime = delayTime;
+	mCurrentTime = 0.f;
+	mFunc = func;
+}
+
+void IDelayFunEvent::Start()
+{
+
+}
+
+bool IDelayFunEvent::Update()
+{
+	if (mDelayTime < mCurrentTime)
+	{
+		mFunc;
+		return true;
+	}
+	else
+	{
+		mCurrentTime += Time::GetInstance()->DeltaTime();
 		return false;
 	}
 }

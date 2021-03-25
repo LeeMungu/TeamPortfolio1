@@ -17,8 +17,8 @@ Gizmo::~Gizmo()
 
 void Gizmo::DrawRect(HDC hdc, RECT rc, Color color)
 {
-	if(color == Color::Red)
-		RenderRect(hdc, rc,1.0f,0,0);
+	if (color == Color::Red)
+		RenderRect(hdc, rc, 1.0f, 0, 0);
 	else if (color == Color::Green)
 		RenderRect(hdc, rc, 0, 1.0f, 0);
 	else if (color == Color::Blue)
@@ -29,7 +29,14 @@ void Gizmo::DrawRect(HDC hdc, RECT rc, Color color)
 		RenderRect(hdc, rc, 0, 1.0f, 0, 5.f);
 	else if (color == Color::Blue2)
 		RenderRect(hdc, rc, 0, 0, 1.0f, 5.f);
-
+	else if (color == Color::Mint)
+		RenderRect(hdc, rc, 33.f / 255.f, 189.f / 255.f, 153.f / 255.f);
+	else if (color == Color::Mint2)
+		RenderRect(hdc, rc, 33.f / 255.f, 189.f / 255.f, 153.f / 255.f, 5.f);
+	else if (color == Color::Purple)
+		RenderRect(hdc, rc, 97.f / 255.f, 28.f / 255.f, 161.f / 255.f);
+	else if (color == Color::Purple2)
+		RenderRect(hdc, rc, 97.f / 255.f, 28.f / 255.f, 161.f / 255.f, 5.f);
 }
 
 void Gizmo::DrawEllipse(HDC hdc, float x, float y, float radius, Color color)

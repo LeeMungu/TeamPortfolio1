@@ -6,7 +6,7 @@
 void MainScene::Init()
 {
 	mImage = ImageManager::GetInstance()->FindImage(L"LoadingCat");
-	mStartButton = new Button(L"시작~~♡", WINSIZEX / 5*2, WINSIZEY / 5 * 3,200,70, []() {SceneManager::GetInstance()->LoadScene(L"LoadingScene"); });
+	mStartButton = new Button(L"살아남기", WINSIZEX / 5*2, WINSIZEY / 5 * 3,200,70, []() {SceneManager::GetInstance()->LoadScene(L"LoadingScene"); });
 	mToolSceneButton = new Button(L"작업장", WINSIZEX / 5 * 3, WINSIZEY / 5 * 3,200,70, []() {SceneManager::GetInstance()->LoadScene(L"MapToolScene"); });
 }
 

@@ -276,10 +276,10 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 }
 
-void ItemManager::DropItems(wstring key, float x, float y)
+void ItemManager::DropItems(wstring key, float x, float y, int count)
 {
 	//아이템을 생성하고 드랍한다
-	Item* item = new Item(key, x, y);
+	Item* item = new Item(key, x, y, count);
 	item->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Item, item);
 }
@@ -320,9 +320,11 @@ void ItemManager::PutInInventory(wstring key)
 
 	Item* item;
 
+	int count = 1;
+
 	if (mItemInventoryList.find(key) == mItemInventoryList.end()) { //처음 생성
 		//아이템 리스트 생성 후 인벤토리에서 불러와서 생성, 사용함
-		mItemInventoryList.insert(make_pair(key, 1));
+		mItemInventoryList.insert(make_pair(key, count));
 
 		
 		for (int y = 0; y < 2; y++) {
@@ -345,8 +347,8 @@ void ItemManager::PutInInventory(wstring key)
 	}
 	else { //이미 있는 아이템은 count 증가
 		int num = mItemInventoryList[key];
-		if (num < 99) {
-			mItemInventoryList[key] = ++num;
+		if (num + count < 99) {
+			mItemInventoryList[key] += count;
 		}
 
 		string str;
@@ -500,8 +502,27 @@ void ItemManager::MoveItems()
 					//인벤토리 슬롯 외의 곳에 아이템 드롭하면
 					if (isMoved == false)
 					{
-						items[i]->SetX(((Item*)items[i])->mPrePosition.x);
-						items[i]->SetY(((Item*)items[i])->mPrePosition.y);
+						RECT rc;
+						RECT itemRc = items[i]->GetRect();
+						RECT inventoryRc = inventory->GetRect();
+						//인벤토리 안에 놓았을 때
+						if (IntersectRect(&rc, &itemRc, &inventoryRc))
+						{
+							items[i]->SetX(((Item*)items[i])->mPrePosition.x);
+							items[i]->SetY(((Item*)items[i])->mPrePosition.y);
+						}
+						//인벤토리 밖에 놓았을 때
+						else
+						{
+							string  str = items[i]->GetName();
+							wstring wstr = L"";
+							wstr.assign(str.begin(), str.end());
+							
+							DropItems(wstr, mPlayer->GetX() - 200, mPlayer->GetY(), mItemInventoryList[wstr]);
+							slotList[indexX][indexY].isFill = false;
+							mItemInventoryList.erase(wstr);
+							items[i]->SetIsDestroy(true);
+						}
 						((Item*)items[i])->SetIsClicking(false);
 					}
 

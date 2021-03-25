@@ -3,6 +3,7 @@
 
 #include "Camera.h"
 #include "TextBox.h"
+#include "Zombie01.h"
 IChangeCameraTargetEvent::IChangeCameraTargetEvent(GameObject * target)
 {
 	mTarget = target;
@@ -260,6 +261,34 @@ bool IAllUnitStop::Update()
 	else if (player->GetIsActive() == true)
 	{
 		player->SetIsActive(false);
+		return false;
+	}
+}
+
+IZombiGeneration::IZombiGeneration(float x, float y)
+{
+	mX = x;
+	mY = y;
+}
+
+void IZombiGeneration::Start()
+{
+	Zombie01* zombi = new Zombie01(mX, mY);
+	zombi->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, zombi);
+}
+
+bool IZombiGeneration::Update()
+{
+	if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).size() != NULL)
+	{
+		return true;
+	}
+	else
+	{
+		Zombie01* zombi = new Zombie01(mX, mY);
+		zombi->Init();
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, zombi);
 		return false;
 	}
 }

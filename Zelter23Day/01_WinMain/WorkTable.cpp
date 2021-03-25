@@ -35,9 +35,9 @@ void WorkTable::Release()
 
 void WorkTable::Update()
 {
+
 	if (mIsTableOpen && mIsOpenTrigger==false)
 	{
-		
 		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 		if (items.size() != NULL)
@@ -47,10 +47,9 @@ void WorkTable::Update()
 				{
 					if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
 					{
-						//아이템 목록 보여주기
-						//제작 버튼 노출되어야하고
-						items[i]->SetX(mX+450);
-						items[i]->SetY(mY+250);
+						Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(),"WoodBrench1", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+						workTableitem->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, workTableitem);
 					}
 					
 				}
@@ -65,24 +64,19 @@ void WorkTable::Update()
 	{
 		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
+
 		if (items.size() != NULL)
 		{
-			for (int i = 0; i < items.size(); ++i) {
-				if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
-				{
-					if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
-					{
-						//아이템 목록 보여주기
-						//제작 버튼 노출되어야하고
-						items[i]->SetX(mX - 450);
-						items[i]->SetY(mY - 250);
-					}
-				}
-			}
+			Item* tempWorkItem = (Item*)ObjectManager::GetInstance()->FindObject(ObjectLayer::InventoryItem, "WoodBrench1" );
+			tempWorkItem->SetIsDestroy(true);	
 		}
 
+		
+	
 		mIsOpenTrigger = false;
 	}
+
+	
 }
 
 void WorkTable::Render(HDC hdc)

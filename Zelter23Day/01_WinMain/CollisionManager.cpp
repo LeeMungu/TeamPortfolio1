@@ -204,8 +204,8 @@ void CollisionManager::ZombieAttack()
 				//좀비가 플레이어를 공격하였다!
 				if (IntersectRect(&temp, &playerRC, &enemyRC) && mPlayer->GetIsInvincible() == false)	
 				{
-					float mAnlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY() , mPlayer->GetX(), mPlayer->GetY());
-					mPlayer->ExecuteKnockback(mAnlge, 500.f);
+					float anlge = Math::GetAngle(zombie[i]->GetX(), zombie[i]->GetY() , mPlayer->GetX(), mPlayer->GetY());
+					mPlayer->ExecuteKnockback(anlge, 500.f);
 					mPlayer->SetHP(mPlayer->GetHP() - 1);
 					mPlayer->SetIsInvincible(true);
 					enemy->SetIsAttackCheck(true);

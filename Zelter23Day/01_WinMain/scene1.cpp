@@ -239,6 +239,7 @@ void scene1::Update()
 		{
 			WorkTable* tempTable = (WorkTable*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "WorkTable");
 			tempTable->SetTableOpen(false);
+			tempTable->DeleteItem();
 			tempTable->SetIsDestroy(true);
 			mIsWorkTable = false;
 			mPlayer->weaponUse(true);

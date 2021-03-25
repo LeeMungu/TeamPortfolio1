@@ -310,9 +310,9 @@ void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int widt
 	float timePercent = ((float)((((int)time) % (60 * 24))*100) / (60 * 24))/100.f;
 	
 	//0.2+ 0.5-0-0.5 길이
-	float downUpPercent = 0.2f+abs(timePercent-0.5f);
-	//0-0.5-0 그림자
-	float upDownPercent = abs(0.5f -(downUpPercent-0.2f));
+	float downUpPercent = 0.3f + abs(timePercent - 0.5f);
+	//0-0.5-0 그림자 투명도
+	float upDownPercent = abs(0.5f - (downUpPercent - 0.3f));
 
 	//크기
 	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(),
@@ -403,6 +403,42 @@ void Image::LoadingRender(HDC hdc, int x, int y, int frameX, int frameY, int wid
 		(float)(mFrameInfo[frame].y + mFrameInfo[frame].height));
 	//만들어진 사각형
 	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform( scaleMatrix * rotateMatrix * translateMatrix);
+	//그려
+	//{
+	ID2D1SolidColorBrush* brush;
+	D2D1_COLOR_F color;
+	//r,g,b,a
+	color = { 1.0f,0.0f,0.0f,
+		//투명도
+		time };
+	D2DRenderer::GetInstance()->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
+	D2DRenderer::GetInstance()->GetRenderTarget()
+		->FillOpacityMask(mBitmap, brush, D2D1_OPACITY_MASK_CONTENT::D2D1_OPACITY_MASK_CONTENT_GRAPHICS,
+			dxArea,
+			dxSrc);
+
+	//리셋
+	ResetRenderOption();
+}
+
+void Image::EveningBackgroundRender(float time)
+{
+	Vector2 size = Vector2(WINSIZEX, WINSIZEY);
+
+	//스케일 행렬을 만들어준다
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale,
+		//중심 좌표
+		D2D1::Point2F(size.X / 2.f, size.Y));
+	//회전 행렬을 만들어준다. 
+	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	//이동 행렬을 만들어준다.
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(size.X/2, size.Y/2);
+	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
+	D2D1_RECT_F dxSrc = D2D1::RectF(0.f, 0.f,
+		(float)(WINSIZEX),
+		(float)(WINSIZEY));
+	//만들어진 사각형
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
 	//그려
 	//{
 	ID2D1SolidColorBrush* brush;

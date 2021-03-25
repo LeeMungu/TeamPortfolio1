@@ -29,9 +29,18 @@ protected:
 	int mCount;
 	ItemKind mItemKind;
 	Image* mNumImage;
-	bool mIsOpened;
+	bool mIsFirst;
 	bool mIsClicking;
 	bool mIsSeleted;
+	
+	float mAngle;
+	float mSpeed;
+	float mGravity;
+
+	bool mIsPossiblePick;
+
+	float mCreatedTime;
+	float mAlpha;
 public:
 	POINT mPrePosition;
 
@@ -52,5 +61,9 @@ public:
 	void SetIsClicking(bool b) { mIsClicking = b; }
 	void SetIsSelected(bool b) { mIsSeleted = b; }
 	bool GetIsSelected() { return mIsSeleted; }
+
+	void DropMovement();
+	void NoPickUp();
+	bool GetIsPossiblePick() { return mIsPossiblePick; }
 };
 

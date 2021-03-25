@@ -78,13 +78,13 @@ void scene1::Init()
 	//패스파인더에서 터짐 후에 수정예정
 	//for (int i = 0; i < 1; ++i)
 	//{
-	//	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
 	//}
 	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(5.f));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(10.f, L"아직 성남시에 군인들이\n있다고들었어.\n일단 남동쪽으로 가보자."));
 	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*125));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"특정 좌표에 도달했습니다."));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"저건...좀비? 일단 갖고있는\n도끼를 이용하자."));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 }
 
@@ -239,6 +239,7 @@ void scene1::Update()
 		{
 			WorkTable* tempTable = (WorkTable*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "WorkTable");
 			tempTable->SetTableOpen(false);
+			tempTable->DeleteItem();
 			tempTable->SetIsDestroy(true);
 			mIsWorkTable = false;
 			mPlayer->weaponUse(true);

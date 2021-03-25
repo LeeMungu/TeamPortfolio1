@@ -72,7 +72,7 @@ void LoadingScene::Init()
 	//이미지 (QuickSlot UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_ammo", Resources(L"/01_UI/QuickSlot_Ammo.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_back", Resources(L"/01_UI/QuickSlot_Back.png")); });
-	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_front", Resources(L"/01_UI/QuickSlot_Front.png")); }); 
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_front", Resources(L"/01_UI/QuickSlot_Front.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_slotBase", Resources(L"/01_UI/QuickSlot_Slot_Base.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_tip_close", Resources(L"/01_UI/QuickSlot_Slot_Tip01.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"QuickSlot_tip_open", Resources(L"/01_UI/QuickSlot_Slot_Tip02.png")); });
@@ -236,11 +236,11 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House1", Resources(L"/02_House/NewHouse11_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House2", Resources(L"/02_House/NewHouse11_Wall.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House3", Resources(L"/02_House/NewHouse11_Roof.png")); });
-	
+
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House4", Resources(L"/02_House/NewHouse22_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House5", Resources(L"/02_House/NewHouse22_Wall.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House6", Resources(L"/02_House/NewHouse22_Roof.png")); });
-	
+
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House7", Resources(L"/02_House/NewHouse33_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House8", Resources(L"/02_House/NewHouse33_Wall.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House9", Resources(L"/02_House/NewHouse33_Roof.png")); });
@@ -326,7 +326,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"Siren2", Resources(L"/09_Sound/Siren2.mp3"), false); });
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"ZombieSound", Resources(L"/09_Sound/Zombie.mp3"), false); });
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"AxeWhip", Resources(L"/09_Sound/AxeWhip.mp3"), false); });
-
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"KakaoTalkSound", Resources(L"/09_Sound/KakaoTalkSound.mp3"), false); });
 
 
 
@@ -385,6 +385,6 @@ void LoadingScene::Render(HDC hdc)
 		mLoadingImage2->LoadingRender(hdc, 0, 0, 0, 0, WINSIZEX, WINSIZEY, mTime);
 
 		D2DRenderer::GetInstance()->RenderText(
-			WINSIZEX/3,WINSIZEY/5*2,L"로딩 중 ~ ~ ♥",50 );
+			WINSIZEX/3,WINSIZEY/5*2,L"생존하기 위해 준비 중입니다...",50 );
 	}
 }

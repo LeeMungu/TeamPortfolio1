@@ -18,6 +18,7 @@ Item::Item(wstring imageKey, string name, float x, float y, int count, ItemKind 
 	mY = y;
 	mCount = count;
 	mItemKind = kind;
+
 }
 void Item::Init()
 {
@@ -34,6 +35,16 @@ void Item::Init()
 	mIsSeleted = false;
 	mPrePosition.x = mX;
 	mPrePosition.y = mY;
+
+	mSpeed = 80.f;
+	mGravity = 150.f;
+	mIsFirst = true;
+
+	mAngle = Random::GetInstance()->RandomInt(70, 240) * 0.01f;
+	mIsPossiblePick = true;
+
+	mCreatedTime = Time::GetInstance()->GetSceneTime();
+	mAlpha = 1.f;
 }
 
 void Item::Release() {
@@ -41,6 +52,25 @@ void Item::Release() {
 
 void Item::Update()
 {
+	
+
+	if (mItemKind == ItemKind::drop)
+	{
+		DropMovement();
+
+		float mNowTime = Time::GetInstance()->GetSceneTime();
+		float timer = mNowTime - mCreatedTime;
+		if (timer > 10 && timer <= 15)
+		{
+			mAlpha -= 0.01f;
+		}
+
+		if(mAlpha <= 0)
+		{
+			this->SetIsDestroy(true);
+		}
+	}
+
 	if (mItemKind == ItemKind::quickSlot )
 	{
 		if (mIsSeleted == false)
@@ -58,8 +88,9 @@ void Item::Update()
 void Item::Render(HDC hdc)
 {
 	if (mItemKind == ItemKind::drop) { //¶¥¿¡ ¶³¾îÁ®ÀÖÀ» ¶© Ä«¸Þ¶ó ·£´õ
-		CameraManager::GetInstance()->GetMainCamera()->
-			Render(hdc, mImage, mRect.left, mRect.top);
+		//CameraManager::GetInstance()->GetMainCamera()->
+		//	Render(hdc, mImage, mRect.left, mRect.top);
+		CameraManager::GetInstance()->GetMainCamera()->AlphaRender(hdc, mImage, mRect.left, mRect.top, mAlpha);
 
 		CameraManager::GetInstance()->GetMainCamera()->
 			ScaleFrameRender(hdc, mNumImage, mX, mY + 5, mCount / 10 % 10, 0, 10, 10);
@@ -78,4 +109,28 @@ void Item::Render(HDC hdc)
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect, Gizmo::Color::Blue2);
 	}
+}
+
+void Item::DropMovement()
+{
+	if (mIsFirst == true)
+	{
+		if (mSpeed > 0)
+		{
+			mX += cosf(mAngle) * mSpeed * Time::GetInstance()->DeltaTime() * 2.f;
+			mY += sinf(mAngle) * mSpeed * Time::GetInstance()->DeltaTime();
+			mSpeed -= mGravity * Time::GetInstance()->DeltaTime();
+			mIsPossiblePick = false;
+		}
+		else
+		{
+			mIsFirst = false;
+			mIsPossiblePick = true;
+		}
+	}
+}
+
+void Item::NoPickUp()
+{
+
 }

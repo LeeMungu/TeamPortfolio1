@@ -21,61 +21,35 @@ void WorkTable::Init()
 
 	mIsTableOpen = false;
 	mIsOpenTrigger = false;
+	mIsMakingOpen = false;
 	mStartBtn = new Button(L"WorkTable_start_btn", mX + 550, mY + 330, 2, [this]() {});
 	mTimeUpBtn = new Button(L"WorkTable_Timer_up", mX + 490, mY + 10 + 330, 2, [this]() {});
 	mTimeDownBtn = new Button(L"WorkTable_Timer_down", mX + 490, mY - 10 + 330, 2, [this]() {});
-	
+	mMakeWoodBoard = new Button(L"나무판", mX + 230, mY + 120, 80, 50, [this]() {Worktemplet(); });
+	mNumImage = IMAGEMANAGER->FindImage(L"SW_num");
 	
 
 }
 
 void WorkTable::Release()
 {
+	SafeDelete(mStartBtn);
+
+	SafeDelete(mTimeUpBtn);
+
+	SafeDelete(mTimeDownBtn);
+
+	SafeDelete(mMakeWoodBoard);
 }
 
 void WorkTable::Update()
 {
-
+	UpdateButton();
 	if (mIsTableOpen && mIsOpenTrigger==false)
 	{
-		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
-
-		if (items.size() != NULL)
-		{
-			for (int i = 0; i < items.size(); ++i) {
-				if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
-				{
-					if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
-					{
-						Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(),"WoodBrench1", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
-						workTableitem->Init();
-						ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, workTableitem);
-					}
-					
-				}
-			}
-		}
-	
 
 		mIsOpenTrigger = true;
 	}
-
-	if (mIsTableOpen == false && mIsOpenTrigger == true)
-	{
-		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
-
-
-		if (items.size() != NULL)
-		{
-			Item* tempWorkItem = (Item*)ObjectManager::GetInstance()->FindObject(ObjectLayer::InventoryItem, "WoodBrench1" );
-			tempWorkItem->SetIsDestroy(true);	
-		}
-
-		
-	
-		mIsOpenTrigger = false;
-	}
-
 	
 }
 
@@ -87,6 +61,87 @@ void WorkTable::Render(HDC hdc)
 		mStartBtn->Render(hdc);
 		mTimeUpBtn->Render(hdc);
 		mTimeDownBtn->Render(hdc);
-	}
+	
 
+
+		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+	
+		if (items.size() != NULL)
+		{
+			for (int i = 0; i < items.size(); ++i) {
+				if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+				{
+					if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
+					{
+						if (mMakeWoodBoard != nullptr)
+						{
+							mMakeWoodBoard->Render(hdc);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+void WorkTable::DeleteItem()
+{
+	mIsMakingOpen = false;
+	vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+	if (items.size() != NULL)
+	{
+
+		vector<GameObject*> makingItem = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::MakingItem);
+		if (makingItem.size() != NULL)
+		{
+			for (int i = 0; i < makingItem.size(); i++)
+			{
+				makingItem[i]->SetIsDestroy(true);
+			}
+		}
+	}
+	
+}
+
+void WorkTable::Worktemplet()
+{
+	if (mIsMakingOpen == false)
+	{
+		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+
+		if (items.size() != NULL)
+		{
+			for (int i = 0; i < items.size(); ++i) {
+				if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+				{
+					if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
+					{
+						mIsMakingOpen = true;
+						//재료아이템
+						Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "wood", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+						workTableitem->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitem);
+						//재료아이템 
+
+						//만들어질 아이템
+						Item* maikingborad = new Item(L"WoodBoard", "makeboard", mX + 450, mY + 150, 1, ItemKind::holding);
+						maikingborad->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, maikingborad);
+
+						
+					}
+
+				}
+			}
+		}
+	}
+	
+}
+
+void WorkTable::UpdateButton()
+{
+	if (mMakeWoodBoard != nullptr)
+	{
+		mMakeWoodBoard->Update();
+	}
 }

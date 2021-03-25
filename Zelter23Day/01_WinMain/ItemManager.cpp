@@ -270,8 +270,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 
 		for (int i = 0; i < randCount; i++) 
 		{
-			DropItems(key, x - 50 + Random::GetInstance()->RandomInt(0, 100), 
-				y - 50 + Random::GetInstance()->RandomInt(0, 100) );
+			DropItems(key, x , y);
 		}
 	}
 }
@@ -303,29 +302,31 @@ void ItemManager::PickUpItems()
 				RECT itemsRc = ((Item*)items[i])->GetRect();
 				RECT playerRc = mPlayer->GetRect();
 
-				//플레이어와 아이템 충돌 처리
-				if (IntersectRect(&rc, &itemsRc, &playerRc))
+				if (((Item*)items[i])->GetIsPossiblePick() == true)
 				{
-					//인벤토리에 넣어줌
-					PutInInventory(((Item*)items[i])->GetKeyName());
-					//아이템 지워줌
-					items[i]->SetIsDestroy(true);
+					//플레이어와 아이템 충돌 처리
+					if (IntersectRect(&rc, &itemsRc, &playerRc))
+					{
+						//인벤토리에 넣어줌
+						PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
+						//아이템 지워줌
+						items[i]->SetIsDestroy(true);
+					}
 				}
 			}
 		}
 	}
 }
 
-void ItemManager::PutInInventory(wstring key)
+void ItemManager::PutInInventory(wstring key, int count)
 {
 	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
 	BagSlot (*slotList)[5] = inventory->GetSlotList();
 
 	string itemStr;
 	itemStr.assign(key.begin(), key.end());
-	Item* item = (Item*)ObjectManager::GetInstance()->FindObject(itemStr);
 
-	int count = item->GetCount();
+	Item* item;
 
 	if (mItemInventoryList.find(key) == mItemInventoryList.end()) { //처음 생성
 		//아이템 리스트 생성 후 인벤토리에서 불러와서 생성, 사용함
@@ -521,7 +522,7 @@ void ItemManager::MoveItems()
 							wstring wstr = L"";
 							wstr.assign(str.begin(), str.end());
 							
-							DropItems(wstr, mPlayer->GetX() - 100, mPlayer->GetY(), mItemInventoryList[wstr]);
+							DropItems(wstr, mPlayer->GetX(), mPlayer->GetY() + 15, mItemInventoryList[wstr]);
 							slotList[indexX][indexY].isFill = false;
 							mItemInventoryList.erase(wstr);
 							items[i]->SetIsDestroy(true);

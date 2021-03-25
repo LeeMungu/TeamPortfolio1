@@ -270,9 +270,6 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 
 		for (int i = 0; i < randCount; i++) 
 		{
-			//DropItems(key, x - 50 + Random::GetInstance()->RandomInt(0, 100), 
-			//	y - 50 + Random::GetInstance()->RandomInt(0, 100) );
-
 			DropItems(key, x , y);
 		}
 	}
@@ -309,7 +306,7 @@ void ItemManager::PickUpItems()
 				if (IntersectRect(&rc, &itemsRc, &playerRc))
 				{
 					//인벤토리에 넣어줌
-					PutInInventory(((Item*)items[i])->GetKeyName());
+					PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
 					//아이템 지워줌
 					items[i]->SetIsDestroy(true);
 				}
@@ -318,16 +315,15 @@ void ItemManager::PickUpItems()
 	}
 }
 
-void ItemManager::PutInInventory(wstring key)
+void ItemManager::PutInInventory(wstring key, int count)
 {
 	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
 	BagSlot (*slotList)[5] = inventory->GetSlotList();
 
 	string itemStr;
 	itemStr.assign(key.begin(), key.end());
-	Item* item = (Item*)ObjectManager::GetInstance()->FindObject(itemStr);
 
-	int count = item->GetCount();
+	Item* item;
 
 	if (mItemInventoryList.find(key) == mItemInventoryList.end()) { //처음 생성
 		//아이템 리스트 생성 후 인벤토리에서 불러와서 생성, 사용함

@@ -18,6 +18,7 @@ Item::Item(wstring imageKey, string name, float x, float y, int count, ItemKind 
 	mY = y;
 	mCount = count;
 	mItemKind = kind;
+
 }
 void Item::Init()
 {
@@ -34,6 +35,13 @@ void Item::Init()
 	mIsSeleted = false;
 	mPrePosition.x = mX;
 	mPrePosition.y = mY;
+
+	mSpeed = 80.f;
+	mGravity = 150.f;
+	mIsFirst = true;
+
+	mAngle = Random::GetInstance()->RandomInt(70, 240) * 0.01f;
+
 }
 
 void Item::Release() {
@@ -41,6 +49,9 @@ void Item::Release() {
 
 void Item::Update()
 {
+	
+	DropMovement();
+
 	if (mItemKind == ItemKind::quickSlot )
 	{
 		if (mIsSeleted == false)
@@ -78,4 +89,25 @@ void Item::Render(HDC hdc)
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect, Gizmo::Color::Blue2);
 	}
+}
+
+void Item::DropMovement()
+{
+	if (mItemKind == ItemKind::drop && mIsFirst == true)
+	{
+		if (mSpeed > 0)
+		{
+			mX += cosf(mAngle) * mSpeed * Time::GetInstance()->DeltaTime() * 2.f;
+			mY += sinf(mAngle) * mSpeed * Time::GetInstance()->DeltaTime();
+			mSpeed -= mGravity * Time::GetInstance()->DeltaTime();
+		}
+		else
+		{
+			mIsFirst = false;
+		}
+	}
+}
+
+void Item::NoPickUp()
+{
 }

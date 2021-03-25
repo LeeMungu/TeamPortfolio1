@@ -7,6 +7,8 @@ class WorkTable : public UI
 {
 	Image* mWorkTable;
 	Image* mNumImage;
+	
+
 
 	Button* mStartBtn;
 	Button* mTimeUpBtn;
@@ -16,7 +18,7 @@ class WorkTable : public UI
 	bool mIsOpenTrigger;
 
 	Button* mMakeWoodBoard;
-	
+	bool mIsMakingOpen;
 public:
 	WorkTable(const string& name);
 	void Init();
@@ -27,5 +29,8 @@ public:
 	bool GetTableOpen() { return mIsTableOpen; }
 	void SetTableOpen(bool istable) { mIsTableOpen = istable; }
 	void DeleteItem();
+
+	void Worktemplet();
+	void UpdateButton();
 };
 

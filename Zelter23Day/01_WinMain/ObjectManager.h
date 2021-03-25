@@ -28,6 +28,7 @@ enum class ObjectLayer : int
 	Mouse = 14,
 	UI = 15,
 	InventoryItem = 16,
+	MakingItem = 17,
 	End
 };
 

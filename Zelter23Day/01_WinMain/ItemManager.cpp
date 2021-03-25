@@ -270,8 +270,10 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 
 		for (int i = 0; i < randCount; i++) 
 		{
-			DropItems(key, x - 50 + Random::GetInstance()->RandomInt(0, 100), 
-				y - 50 + Random::GetInstance()->RandomInt(0, 100) );
+			//DropItems(key, x - 50 + Random::GetInstance()->RandomInt(0, 100), 
+			//	y - 50 + Random::GetInstance()->RandomInt(0, 100) );
+
+			DropItems(key, x , y);
 		}
 	}
 }

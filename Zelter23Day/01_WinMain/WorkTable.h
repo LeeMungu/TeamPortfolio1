@@ -12,6 +12,7 @@ class WorkTable : public UI
 	Button* mTimeDownBtn;
 
 	bool mIsTableOpen;
+	bool mIsOpenTrigger;
 
 public:
 	WorkTable(const string& name);

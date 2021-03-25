@@ -74,7 +74,8 @@ void scene1::Init()
 
 	//이벤트 초기화
 	GameEventManager::GetInstance()->RemoveAllEvent();
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"지훈이는 이 일을 기억해둡니다."));
+	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(5.f));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(10.f, L"아직 성남시에 군인들이\n있다고들었어.\n일단 남동쪽으로 가보자."));
 	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*132));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"특정 좌표에 도달했습니다."));

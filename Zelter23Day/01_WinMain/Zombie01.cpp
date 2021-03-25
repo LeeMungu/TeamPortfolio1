@@ -199,11 +199,15 @@ void Zombie01::Render(HDC hdc)
 
 	if (Input::GetInstance()->GetKey(VK_LCONTROL))
 	{
-		vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
-		for (int i = 0; i < Path.size(); ++i)
+		if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).size() != NULL)
 		{
-			CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, (Path[i]->GetRect()), Gizmo::Color::Blue2);
+			vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
+			for (int i = 0; i < Path.size(); ++i)
+			{
+				CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, (Path[i]->GetRect()), Gizmo::Color::Blue2);
+			}
 		}
+		
 	}
 
 }

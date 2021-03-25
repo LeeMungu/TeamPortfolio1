@@ -108,3 +108,15 @@ public:
 	void Start()override;
 	bool Update()override;
 };
+
+//딜레이후 함수
+class IDelayFunEvent : public IEvent
+{
+	function<void(void)> mFunc;
+	float mCurrentTime;
+	float mDelayTime;
+public:
+	IDelayFunEvent(float delayTime, function<void(void)> func);
+	void Start()override;
+	bool Update()override;
+};

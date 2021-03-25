@@ -295,3 +295,29 @@ bool IZombiGeneration::Update()
 		return false;
 	}
 }
+
+IDelayFunEvent::IDelayFunEvent(float delayTime, function<void(void)> func)
+{
+	mDelayTime = delayTime;
+	mCurrentTime = 0.f;
+	mFunc = func;
+}
+
+void IDelayFunEvent::Start()
+{
+
+}
+
+bool IDelayFunEvent::Update()
+{
+	if (mDelayTime < mCurrentTime)
+	{
+		mFunc;
+		return true;
+	}
+	else
+	{
+		mCurrentTime += Time::GetInstance()->DeltaTime();
+		return false;
+	}
+}

@@ -47,7 +47,7 @@ void WorkTable::Update()
 				{
 					if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
 					{
-						Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(),"WoodBrench1", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+						Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(),"wood", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
 						workTableitem->Init();
 						ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, workTableitem);
 					}
@@ -60,23 +60,6 @@ void WorkTable::Update()
 		mIsOpenTrigger = true;
 	}
 
-	if (mIsTableOpen == false && mIsOpenTrigger == true)
-	{
-		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
-
-
-		if (items.size() != NULL)
-		{
-			Item* tempWorkItem = (Item*)ObjectManager::GetInstance()->FindObject(ObjectLayer::InventoryItem, "WoodBrench1" );
-			tempWorkItem->SetIsDestroy(true);	
-		}
-
-		
-	
-		mIsOpenTrigger = false;
-	}
-
-	
 }
 
 void WorkTable::Render(HDC hdc)
@@ -89,4 +72,11 @@ void WorkTable::Render(HDC hdc)
 		mTimeDownBtn->Render(hdc);
 	}
 
+}
+
+void WorkTable::DeleteItem()
+{
+
+	Item* tempWorkItem = (Item*)ObjectManager::GetInstance()->FindObject(ObjectLayer::InventoryItem, "wood");
+	tempWorkItem->SetIsDestroy(true);
 }

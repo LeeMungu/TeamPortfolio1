@@ -265,15 +265,17 @@ bool IAllUnitStop::Update()
 	}
 }
 
-IZombiGeneration::IZombiGeneration(float x, float y)
+IZombiGeneration::IZombiGeneration(float x, float y, vector<vector<Tile*>> tileList)
 {
 	mX = x;
 	mY = y;
+	mTileList = tileList;
 }
 
 void IZombiGeneration::Start()
 {
 	Zombie01* zombi = new Zombie01(mX, mY);
+	zombi->SetTileList(mTileList);
 	zombi->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, zombi);
 }
@@ -287,6 +289,7 @@ bool IZombiGeneration::Update()
 	else
 	{
 		Zombie01* zombi = new Zombie01(mX, mY);
+		zombi->SetTileList(mTileList);
 		zombi->Init();
 		ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, zombi);
 		return false;

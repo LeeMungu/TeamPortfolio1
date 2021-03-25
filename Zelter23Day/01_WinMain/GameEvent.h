@@ -102,8 +102,9 @@ class IZombiGeneration : public IEvent
 {
 	float mX;
 	float mY;
+	vector<vector<class Tile*>> mTileList;
 public:
-	IZombiGeneration(float x, float y);
+	IZombiGeneration(float x, float y, vector<vector<class Tile*>> tileList );
 	void Start()override;
 	bool Update()override;
 };

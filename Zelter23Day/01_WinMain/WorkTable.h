@@ -23,5 +23,6 @@ public:
 
 	bool GetTableOpen() { return mIsTableOpen; }
 	void SetTableOpen(bool istable) { mIsTableOpen = istable; }
+	void DeleteItem();
 };
 

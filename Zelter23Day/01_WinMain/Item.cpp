@@ -60,7 +60,7 @@ void Item::Update()
 
 		float mNowTime = Time::GetInstance()->GetSceneTime();
 		float timer = mNowTime - mCreatedTime;
-		if (timer > 10 && timer <= 15)
+		if (timer > 10)
 		{
 			mAlpha -= 0.01f;
 		}
@@ -71,25 +71,12 @@ void Item::Update()
 		}
 	}
 
-	if (mItemKind == ItemKind::quickSlot )
-	{
-		if (mIsSeleted == false)
-		{
-			mY = ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot")->GetY() + 25;
-		}
-		else 
-		{
-			mY = ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot")->GetY() + 5;
-		}
-	}
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
 void Item::Render(HDC hdc)
 {
 	if (mItemKind == ItemKind::drop) { //¶¥¿¡ ¶³¾îÁ®ÀÖÀ» ¶© Ä«¸Þ¶ó ·£´õ
-		//CameraManager::GetInstance()->GetMainCamera()->
-		//	Render(hdc, mImage, mRect.left, mRect.top);
 		CameraManager::GetInstance()->GetMainCamera()->AlphaRender(hdc, mImage, mRect.left, mRect.top, mAlpha);
 
 		CameraManager::GetInstance()->GetMainCamera()->

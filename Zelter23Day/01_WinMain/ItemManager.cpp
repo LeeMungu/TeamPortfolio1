@@ -83,6 +83,7 @@ void ItemManager::Init()
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	indexX = 0;
 	indexY = 0;
+	index = 0;
 }
 
 void ItemManager::Release()
@@ -376,8 +377,6 @@ void ItemManager::MoveItems()
 
 	if (isOpened == true) //인벤토리 열려있을 때만
 	{
-		
-
 		for (int i = 0; i < items.size(); ++i)
 		{
 			if (((Item*)items[i])->GetIsClicking() == false) //드래그 중 아닐 때
@@ -386,25 +385,43 @@ void ItemManager::MoveItems()
 				if (PtInRect(&itemRc, _mousePosition) == true && Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 				{
 					bool isChecked = false;
-					for (int j = 0; j < 2; j++)
-					{
-						for (int k = 0; k < 5; k++)
-						{
 
+					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+					{
+						for (int j = 0; j < 2; j++)
+						{
+							for (int k = 0; k < 5; k++)
+							{
+
+								RECT rc;
+								RECT slotRc = slotList[j][k].rect;
+								RECT itemRc = items[i]->GetRect();
+
+								if (IntersectRect(&rc, &slotRc, &itemRc)) {
+									indexX = j;
+									indexY = k;
+									isChecked = true;
+									break;
+								}
+							}
+							if (isChecked == true) break;
+						}
+					}
+					else if(((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
+					{
+						for (int j = 0; j < 5; j++)
+						{
 							RECT rc;
-							RECT slotRc = slotList[j][k].rect;
+							RECT slotRc = quickSlotList[j].rect;
 							RECT itemRc = items[i]->GetRect();
 
 							if (IntersectRect(&rc, &slotRc, &itemRc)) {
 								indexX = j;
-								indexY = k;
 								isChecked = true;
 								break;
 							}
 						}
-						if (isChecked == true) break;
 					}
-
 					((Item*)items[i])->SetIsClicking(true);
 				}
 				else
@@ -418,13 +435,16 @@ void ItemManager::MoveItems()
 			{
 				items[i]->SetX(_mousePosition.x);
 				items[i]->SetY(_mousePosition.y);
+				((Item*)items[i])->SetIsSelected(false);
+
 
 				if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
 				{
 					bool isMoved = false;
 
 					//아이템과 인벤토리 슬롯 충돌 처리
-					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory) {
+					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory
+						|| ((Item*)items[i])->GetItemKind() == ItemKind::quickSlot) {
 						for (int j = 0; j < 2; j++)
 						{
 							for (int k = 0; k < 5; k++)
@@ -455,6 +475,7 @@ void ItemManager::MoveItems()
 										items[i]->SetY(slotList[j][k].y + 27);
 										slotList[j][k].isFill = true;
 										((Item*)items[i])->SetIsClicking(false);
+										((Item*)items[i])->SetKind(ItemKind::inventory);
 										isMoved = true;
 
 										//아이템이 원래 있던 슬롯은 isFill false를 해준다
@@ -485,7 +506,8 @@ void ItemManager::MoveItems()
 									items[i]->SetY(((Item*)items[i])->mPrePosition.y);
 									((Item*)items[i])->SetIsClicking(false);
 									isMoved = true;
-									slotList[indexX][indexY].isFill = true;
+									quickSlotList[indexX].isFill = true;
+									//slotList[indexX][indexY].isFill = false;
 									break;
 								}
 								else {
@@ -494,9 +516,8 @@ void ItemManager::MoveItems()
 									((Item*)items[i])->SetKind(ItemKind::quickSlot);
 									((Item*)items[i])->SetIsClicking(false);
 									isMoved = true;
-									slotList[indexX][indexY].isFill = false;
-
-									//items[i]->SetIsDestroy(true);
+									quickSlotList[indexX].isFill = false;
+									//slotList[indexX][indexY].isFill = false;
 									break;
 								}
 							}
@@ -575,21 +596,30 @@ void ItemManager::QuickSlotRePositioning(int num)
 		
 		if (((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
 		{
+			//선택한 위치에 있는 아이템
 			if (items[i]->GetX() == quickSlot->GetX() + (num - 1) * 63 + 90 + 27)
 			{
-				
+				//선택돼있던 슬롯이면
 				if (((Item*)items[i])->GetIsSelected())
 				{
+					//선택을 해제하고 아이템 위치를 내려줌
 					((Item*)items[i])->SetIsSelected(false);
+					items[i]->SetY(ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot")->GetY() + 25);
 				}
+				//선택안돼있던 슬롯이면
 				else
 				{
+					//선택하고 아이템 위치를 올려줌
 					((Item*)items[i])->SetIsSelected(true);
+					items[i]->SetY(ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot")->GetY() + 5);
 				}
 			}
+			//나머지 위치에 있는 아이템들
 			else
 			{
+				//아이템 위치 내림
 				((Item*)items[i])->SetIsSelected(false);
+				items[i]->SetY(ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot")->GetY() + 25);
 			}
 		}
 	}

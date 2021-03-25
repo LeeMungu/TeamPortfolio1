@@ -43,7 +43,7 @@ void MainGame::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Tile16", Resources(L"04_Tile/Tile (16).png"), 3, 7);
 	
 	//로딩화면
-	ImageManager::GetInstance()->LoadFromFile(L"LoadingCat", Resources(L"LoadingImage.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"LoadingCat", Resources(L"LoadingImage1.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"LoadingImage2", Resources(L"LoadingImage-1.png"));
 
 	//텍스트 박스

@@ -265,7 +265,7 @@ bool IAllUnitStop::Update()
 	}
 }
 
-IZombiGeneration::IZombiGeneration(float x, float y, vector<vector<Tile*>> tileList)
+IZombiGeneration::IZombiGeneration(float x, float y, vector<vector<Tile*>>& tileList)
 {
 	mX = x;
 	mY = y;

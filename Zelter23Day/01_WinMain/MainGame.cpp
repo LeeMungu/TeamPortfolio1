@@ -45,7 +45,7 @@ void MainGame::Init()
 	//로딩화면
 	ImageManager::GetInstance()->LoadFromFile(L"LoadingCat", Resources(L"LoadingImage1.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"LoadingImage2", Resources(L"LoadingImage-1.png"));
-	SoundPlayer::GetInstance()->LoadFromFile(L"Siren1", Resources(L"/09_Sound/Siren2.mp3"), false);
+	SoundPlayer::GetInstance()->LoadFromFile(L"Siren1", Resources(L"/09_Sound/Siren1.mp3"), false);
 
 	//텍스트 박스
 	ImageManager::GetInstance()->LoadFromFile(L"TextBox", Resources(L"TextBox.png"));

@@ -302,13 +302,16 @@ void ItemManager::PickUpItems()
 				RECT itemsRc = ((Item*)items[i])->GetRect();
 				RECT playerRc = mPlayer->GetRect();
 
-				//플레이어와 아이템 충돌 처리
-				if (IntersectRect(&rc, &itemsRc, &playerRc))
+				if (((Item*)items[i])->GetIsPossiblePick() == true)
 				{
-					//인벤토리에 넣어줌
-					PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
-					//아이템 지워줌
-					items[i]->SetIsDestroy(true);
+					//플레이어와 아이템 충돌 처리
+					if (IntersectRect(&rc, &itemsRc, &playerRc))
+					{
+						//인벤토리에 넣어줌
+						PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
+						//아이템 지워줌
+						items[i]->SetIsDestroy(true);
+					}
 				}
 			}
 		}
@@ -519,7 +522,7 @@ void ItemManager::MoveItems()
 							wstring wstr = L"";
 							wstr.assign(str.begin(), str.end());
 							
-							DropItems(wstr, mPlayer->GetX() - 100, mPlayer->GetY(), mItemInventoryList[wstr]);
+							DropItems(wstr, mPlayer->GetX(), mPlayer->GetY() + 15, mItemInventoryList[wstr]);
 							slotList[indexX][indexY].isFill = false;
 							mItemInventoryList.erase(wstr);
 							items[i]->SetIsDestroy(true);

@@ -36,6 +36,11 @@ protected:
 	float mAngle;
 	float mSpeed;
 	float mGravity;
+
+	bool mIsPossiblePick;
+
+	float mCreatedTime;
+	float mAlpha;
 public:
 	POINT mPrePosition;
 
@@ -59,5 +64,6 @@ public:
 
 	void DropMovement();
 	void NoPickUp();
+	bool GetIsPossiblePick() { return mIsPossiblePick; }
 };
 

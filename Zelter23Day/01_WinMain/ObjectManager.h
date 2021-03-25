@@ -41,6 +41,7 @@ private:
 	vector<class GameObject*> mZorderList;
 	vector<class GameObject*> mZorderRenderList;
 	vector<class GameObject*> mClipingInteractList;
+	vector<RECT> mClipingHousingWallList;
 public:
 	ObjectManager();
 
@@ -56,6 +57,7 @@ public:
 	vector<class GameObject*> FindObjects(ObjectLayer layer, const string& name);
 	vector<class GameObject*> GetObjectList(ObjectLayer layer);
 	vector<class GameObject*> GetClipingInteraceList() const { return mClipingInteractList; }
+	vector<RECT> GetClipingHousingWall() const { return mClipingHousingWallList; }
 
 	void Zorder(vector<GameObject*> &zorderRenderList);
 

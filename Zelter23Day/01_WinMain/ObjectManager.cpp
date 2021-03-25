@@ -21,7 +21,7 @@ void ObjectManager::Init()
 	for (; iter != mObjectList.end(); ++iter)
 	{
 		for (int i = 0; i < iter->second.size(); ++i)
-		{	
+		{
 			iter->second[i]->Init();
 		}
 	}
@@ -84,11 +84,12 @@ void ObjectManager::Update()
 	//업데이트 때 마다 새로 넣어줌<-필요한가?
 	mZorderList.clear();
 	mClipingInteractList.clear();
+	mClipingHousingWallList.clear();
 	ObjectIter iter1 = mObjectList.find(ObjectLayer::Enemy);
 	for (; iter1 != mObjectList.find(ObjectLayer::Bullet); ++iter1)
 	{
 		//집만 재외 하자
-		if (iter1->first != ObjectLayer::HousingObject )
+		if (iter1->first != ObjectLayer::HousingObject)
 		{
 			for (int i = 0; i < iter1->second.size(); ++i)
 			{
@@ -109,6 +110,23 @@ void ObjectManager::Update()
 				else
 				{
 					mClipingInteractList.push_back(iter1->second[i]);
+				}
+			}
+		}
+		else if (iter1->first == ObjectLayer::HousingObject)
+		{
+			for (int i = 0; i < iter1->second.size(); ++i)
+			{
+				if (((HousingObject*)iter1->second[i])->GethouseLayer() == HouseLayer::Roof)
+				{
+					vector<RECT> wallList = ((HousingObject*)iter1->second[i])->GetCollisionList();
+					if (wallList.size() != NULL)
+					{
+						for (int i = 0; i < wallList.size(); ++i)
+						{
+							mClipingHousingWallList.push_back(wallList[i]);
+						}
+					}
 				}
 			}
 		}

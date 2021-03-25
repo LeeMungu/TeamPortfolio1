@@ -182,6 +182,29 @@ void scene1::Update()
 			}
 		}
 	}
+	//집벽 타일 처리
+	vector<RECT> tempHousingWallList = ObjectManager::GetInstance()->GetClipingHousingWall();
+	if (tempHousingWallList.size() != NULL)
+	{
+		for (int i = 0; i < tempHousingWallList.size(); ++i)
+		{
+			int startWallTileX = (int)(tempHousingWallList[i].left / TileSize);
+			int startWallTileY = (int)(tempHousingWallList[i].top / TileSize);
+			int endWallTileX = (int)(tempHousingWallList[i].right / TileSize);
+			int endWallTileY = (int)(tempHousingWallList[i].bottom / TileSize);
+			int wallTileCountX = endWallTileX - startWallTileX + 1;
+			int wallTileCountY = endWallTileY - startWallTileY + 1;
+			for (int j = 0; j < wallTileCountX * wallTileCountY; ++j)
+			{
+				if (mTileList[startWallTileY + j / wallTileCountX][startWallTileX + j % wallTileCountX]->GetTileLayer() != TileLayer::wall)
+				{
+					mTileList[startWallTileY + j / wallTileCountX][startWallTileX + j % wallTileCountX]->SetTileLayer(TileLayer::wall);
+				}
+			}
+		}
+	}
+
+	
 	float randomX = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountX-1));
 	float randomY = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountY-1));
 	

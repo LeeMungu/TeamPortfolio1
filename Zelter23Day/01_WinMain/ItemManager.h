@@ -10,6 +10,7 @@ private:
 	Player* mPlayer;
 
 	map<wstring, int> mItemInventoryList; //인벤토리 아이템 이미지 key값과 value: count
+	map<wstring, int> mItemDropList; //땅에 있는 아이템 이미지 key값과 value: count
 	int indexX, indexY;
 public:
 
@@ -22,7 +23,7 @@ public:
 
 	ItemType SetItemType(wstring key);
 	void randomItem(wstring objectKey, float x, float y);
-	void DropItems(wstring key, float x, float y);
+	void DropItems(wstring key, float x, float y, int count = 1);
 	void PickUpItems();
 	void PutInInventory(wstring key);
 	void MoveItems();

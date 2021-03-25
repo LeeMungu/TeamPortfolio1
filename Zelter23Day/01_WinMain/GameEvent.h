@@ -102,8 +102,21 @@ class IZombiGeneration : public IEvent
 {
 	float mX;
 	float mY;
+	vector<vector<class Tile*>> mTileList;
 public:
-	IZombiGeneration(float x, float y);
+	IZombiGeneration(float x, float y, vector<vector<class Tile*>>& tileList );
+	void Start()override;
+	bool Update()override;
+};
+
+//딜레이후 함수
+class IDelayFunEvent : public IEvent
+{
+	function<void(void)> mFunc;
+	float mCurrentTime;
+	float mDelayTime;
+public:
+	IDelayFunEvent(float delayTime, function<void(void)> func);
 	void Start()override;
 	bool Update()override;
 };

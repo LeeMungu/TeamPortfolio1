@@ -25,7 +25,7 @@ public:
 	void randomItem(wstring objectKey, float x, float y);
 	void DropItems(wstring key, float x, float y, int count = 1);
 	void PickUpItems();
-	void PutInInventory(wstring key);
+	void PutInInventory(wstring key, int count);
 	void MoveItems();
 	void ItemRePositioning();
 	void QuickSlotRePositioning(int num);

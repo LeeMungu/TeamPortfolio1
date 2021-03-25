@@ -24,7 +24,8 @@ void WorkTable::Init()
 	mStartBtn = new Button(L"WorkTable_start_btn", mX + 550, mY + 330, 2, [this]() {});
 	mTimeUpBtn = new Button(L"WorkTable_Timer_up", mX + 490, mY + 10 + 330, 2, [this]() {});
 	mTimeDownBtn = new Button(L"WorkTable_Timer_down", mX + 490, mY - 10 + 330, 2, [this]() {});
-	
+	mMakeWoodBoard = new Button(L"나무판", mX, mY, 100, 100, [this]() {});
+	mNumImage = IMAGEMANAGER->FindImage(L"SW_num");
 	
 
 }
@@ -47,7 +48,11 @@ void WorkTable::Update()
 				{
 					if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
 					{
-						Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(),"WoodBrench1", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+						//버튼이 뜨고 그걸 누르면 옆에 이내용이 떠야하고
+						
+
+
+						Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(),"wood", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
 						workTableitem->Init();
 						ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, workTableitem);
 					}
@@ -60,23 +65,6 @@ void WorkTable::Update()
 		mIsOpenTrigger = true;
 	}
 
-	if (mIsTableOpen == false && mIsOpenTrigger == true)
-	{
-		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
-
-
-		if (items.size() != NULL)
-		{
-			Item* tempWorkItem = (Item*)ObjectManager::GetInstance()->FindObject(ObjectLayer::InventoryItem, "WoodBrench1" );
-			tempWorkItem->SetIsDestroy(true);	
-		}
-
-		
-	
-		mIsOpenTrigger = false;
-	}
-
-	
 }
 
 void WorkTable::Render(HDC hdc)
@@ -89,4 +77,32 @@ void WorkTable::Render(HDC hdc)
 		mTimeDownBtn->Render(hdc);
 	}
 
+
+	vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+
+	if (items.size() != NULL)
+	{
+		for (int i = 0; i < items.size(); ++i) {
+			if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+			{
+				if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
+				{
+					mMakeWoodBoard->Render(hdc);
+				}
+			}
+		}
+	}
+
+}
+
+void WorkTable::DeleteItem()
+{
+	vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+
+	if (items.size() != NULL)
+	{
+		Item* tempWorkItem = (Item*)ObjectManager::GetInstance()->FindObject(ObjectLayer::InventoryItem, "wood");
+		tempWorkItem->SetIsDestroy(true);
+	}
+	
 }

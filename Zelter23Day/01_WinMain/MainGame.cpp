@@ -52,6 +52,8 @@ void MainGame::Init()
 	SoundPlayer::GetInstance()->LoadFromFile(L"KakaoTalkSound", Resources(L"/09_Sound/KakaoTalkSound.mp3"), false);
 	//텍스트 박스
 	ImageManager::GetInstance()->LoadFromFile(L"TextBox", Resources(L"TextBox.png"));
+	//밤화면
+	ImageManager::GetInstance()->LoadFromFile(L"EveningBackground", Resources(L"EveningBackground.png"));
 
 	SceneManager::GetInstance()->AddScene(L"MapToolLoadingScene", new MapToolLoadingScene);
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);

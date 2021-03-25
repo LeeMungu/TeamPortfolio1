@@ -26,9 +26,10 @@ enum class ObjectLayer : int
 	Button = 12,
 	ObjectButton = 13,
 	Mouse = 14,
-	UI = 15,
-	InventoryItem = 16,
-	MakingItem = 17,
+	Weater = 15,
+	UI = 16,
+	InventoryItem = 17,
+	MakingItem = 18,
 	End
 };
 

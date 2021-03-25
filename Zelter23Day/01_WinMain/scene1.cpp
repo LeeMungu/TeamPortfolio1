@@ -20,7 +20,8 @@
 #include "HousingObject.h"
 #include "Tablet.h"
 #include "WorkTable.h"
-
+//นใ
+#include "Evening.h"
 //ภฬบฅฦฎ
 #include "GameEvent.h"
 #include "Weapon.h"
@@ -54,7 +55,9 @@ void scene1::Init()
 	Tablet* tablet = new Tablet("Tablet");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, tablet);
 
-
+	//นใ
+	Evening* evening = new Evening();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Weater, evening);
 
 	Load();
 

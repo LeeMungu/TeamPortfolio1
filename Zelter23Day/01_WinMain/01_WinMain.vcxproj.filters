@@ -121,6 +121,9 @@
     <Filter Include="MainGame\UI\WorkTable">
       <UniqueIdentifier>{4819def5-e8b4-4ff1-81c4-1cbbc91be862}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\Weather">
+      <UniqueIdentifier>{fcd84aaf-e038-420c-8e41-5b213bf20add}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -321,6 +324,9 @@
     <ClInclude Include="MainScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Evening.h">
+      <Filter>FrameWork\Weather</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -511,6 +517,9 @@
     </ClCompile>
     <ClCompile Include="MainScene.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Evening.cpp">
+      <Filter>FrameWork\Weather</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

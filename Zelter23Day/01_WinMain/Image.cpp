@@ -432,7 +432,7 @@ void Image::EveningBackgroundRender(float time)
 	//회전 행렬을 만들어준다. 
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	//이동 행렬을 만들어준다.
-	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(size.X/2, size.Y/2);
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(0, 0);
 	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
 	D2D1_RECT_F dxSrc = D2D1::RectF(0.f, 0.f,
 		(float)(WINSIZEX),
@@ -444,7 +444,7 @@ void Image::EveningBackgroundRender(float time)
 	ID2D1SolidColorBrush* brush;
 	D2D1_COLOR_F color;
 	//r,g,b,a
-	color = { 1.0f,0.0f,0.0f,
+	color = { 0.0f,0.0f,0.0f,
 		//투명도
 		time };
 	D2D_RECT_F rc = { 0,0,WINSIZEX,WINSIZEY };

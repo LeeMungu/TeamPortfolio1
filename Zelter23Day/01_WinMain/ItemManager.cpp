@@ -279,7 +279,10 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 void ItemManager::DropItems(wstring key, float x, float y, int count)
 {
 	//아이템을 생성하고 드랍한다
-	Item* item = new Item(key, x, y, count);
+	string itemStr;
+	itemStr.assign(key.begin(), key.end());
+
+	Item* item = new Item(key, itemStr, x, y, count, ItemKind::drop);
 	item->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Item, item);
 }
@@ -318,9 +321,11 @@ void ItemManager::PutInInventory(wstring key)
 	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
 	BagSlot (*slotList)[5] = inventory->GetSlotList();
 
-	Item* item;
+	string itemStr;
+	itemStr.assign(key.begin(), key.end());
+	Item* item = (Item*)ObjectManager::GetInstance()->FindObject(itemStr);
 
-	int count = 1;
+	int count = item->GetCount();
 
 	if (mItemInventoryList.find(key) == mItemInventoryList.end()) { //처음 생성
 		//아이템 리스트 생성 후 인벤토리에서 불러와서 생성, 사용함
@@ -331,10 +336,8 @@ void ItemManager::PutInInventory(wstring key)
 			bool isFill = false;
 			for (int x = 0; x < 5; x++) {
 				if (slotList[y][x].isFill == false) {
-					string str;
-					str.assign(key.begin(), key.end());
-	
-					item = new Item(key, str, slotList[y][x].x + 25, slotList[y][x].y + 25, mItemInventoryList[key], ItemKind::inventory);
+
+					item = new Item(key, itemStr, slotList[y][x].x + 25, slotList[y][x].y + 25, mItemInventoryList[key], ItemKind::inventory);
 					item->Init();
 					ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
 					slotList[y][x].isFill = true;
@@ -349,11 +352,11 @@ void ItemManager::PutInInventory(wstring key)
 		int num = mItemInventoryList[key];
 		if (num + count < 99) {
 			mItemInventoryList[key] += count;
+			num = mItemInventoryList[key];
 		}
 
-		string str;
-		str.assign(key.begin(), key.end());
-		item = (Item*)ObjectManager::GetInstance()->FindObject(str);
+		item = (Item*)ObjectManager::GetInstance()->FindObject(ObjectLayer::InventoryItem, itemStr);
+
 		item->SetCount(num);
 	}
 }
@@ -518,7 +521,7 @@ void ItemManager::MoveItems()
 							wstring wstr = L"";
 							wstr.assign(str.begin(), str.end());
 							
-							DropItems(wstr, mPlayer->GetX() - 200, mPlayer->GetY(), mItemInventoryList[wstr]);
+							DropItems(wstr, mPlayer->GetX() - 100, mPlayer->GetY(), mItemInventoryList[wstr]);
 							slotList[indexX][indexY].isFill = false;
 							mItemInventoryList.erase(wstr);
 							items[i]->SetIsDestroy(true);

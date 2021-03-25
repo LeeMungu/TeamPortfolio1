@@ -277,7 +277,7 @@ void CollisionManager::PlayerAttack()
 				//플레이어가 오브젝트를 공격하였다!
 				if (IntersectRect(&temp, &playerAttackRC, &objectRC) && object->GetIsInvincible() == false)
 				{
-					object->SetHp(object->GetHp() - 1);
+					object->SetHp(object->GetHp() - 10);
 					object->SetIsInvincible(true);
 					EffectManager* effect = new EffectManager(L"melee_attack",temp,0,5,0.1f);
 

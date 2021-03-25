@@ -60,6 +60,12 @@ void Item::Render(HDC hdc)
 	if (mItemKind == ItemKind::drop) { //¶¥¿¡ ¶³¾îÁ®ÀÖÀ» ¶© Ä«¸Þ¶ó ·£´õ
 		CameraManager::GetInstance()->GetMainCamera()->
 			Render(hdc, mImage, mRect.left, mRect.top);
+
+		CameraManager::GetInstance()->GetMainCamera()->
+			ScaleFrameRender(hdc, mNumImage, mX, mY + 5, mCount / 10 % 10, 0, 10, 10);
+		CameraManager::GetInstance()->GetMainCamera()->
+			ScaleFrameRender(hdc, mNumImage, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
+
 	}
 	else { //ÀÎº¥Åä¸®, Äü½½·ÔÀº ±×³É ·£´õ
 		mImage->Render(hdc, mRect.left, mRect.top);

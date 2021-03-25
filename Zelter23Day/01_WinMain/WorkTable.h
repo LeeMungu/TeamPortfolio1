@@ -19,6 +19,8 @@ class WorkTable : public UI
 
 	Button* mMakeWoodBoard;
 	bool mIsMakingOpen;
+
+	int mMakingCount;
 public:
 	WorkTable(const string& name);
 	void Init();
@@ -32,5 +34,6 @@ public:
 
 	void Worktemplet();
 	void UpdateButton();
+	void MakingItem();
 };
 

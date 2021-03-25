@@ -312,7 +312,7 @@ bool IDelayFunEvent::Update()
 {
 	if (mDelayTime < mCurrentTime)
 	{
-		mFunc;
+		mFunc();
 		return true;
 	}
 	else

@@ -96,3 +96,14 @@ public:
 	void Start()override;
 	bool Update()override;
 };
+
+//좀비 생성
+class IZombiGeneration : public IEvent
+{
+	float mX;
+	float mY;
+public:
+	IZombiGeneration(float x, float y);
+	void Start()override;
+	bool Update()override;
+};

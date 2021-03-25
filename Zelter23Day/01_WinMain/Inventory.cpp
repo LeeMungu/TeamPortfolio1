@@ -24,6 +24,10 @@ void Inventory::Init()
 			mSlotList[i][j].isFill = false;
 		}
 	}
+
+	mSizeX = 220 * 2;
+	mSizeY = 255 * 2;
+	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 }
 
 void Inventory::Release()
@@ -38,6 +42,8 @@ void Inventory::Update()
 		{ //i 누르면
 			mX = WINSIZEX / 2 - 30;
 			mY = WINSIZEY - 255 * 2;
+			mRect = RectMake(mX + 100, mY, mSizeX, mSizeY);
+
 			mIsOpened = true;
 
 			//bool isEnd = false;
@@ -71,6 +77,8 @@ void Inventory::Update()
 		if (Input::GetInstance()->GetKeyDown('I')) {//i키 누르면
 			mX = -1000;
 			mY = -1000;
+			mRect = RectMake(mX, mY, mSizeX, mSizeY);
+
 			mIsOpened = false;
 	
 			for (int i = 0; i < 2; i++) {
@@ -113,5 +121,7 @@ void Inventory::Render(HDC hdc)
 				}
 			}
 		}
+
+		//RenderRect(hdc, mRect);
 	}
 }

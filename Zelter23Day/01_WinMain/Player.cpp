@@ -594,6 +594,9 @@ void Player::PlayerCtrl() {
 			//공격모션
 			if (Input::GetInstance()->GetKeyDown('F'))
 			{
+				SoundPlayer::GetInstance()->Play(L"AxeWhip", 0.8f
+					* SoundPlayer::GetInstance()->GetEffectVolume());
+
 				mIsMousePosition = false;
 				if (mIsMousePosition == false)
 				{

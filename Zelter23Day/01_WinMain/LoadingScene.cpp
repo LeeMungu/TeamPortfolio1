@@ -325,6 +325,10 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"Siren1", Resources(L"/09_Sound/Siren1.mp3"), false); });
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"Siren2", Resources(L"/09_Sound/Siren2.mp3"), false); });
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"ZombieSound", Resources(L"/09_Sound/Zombie.mp3"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"AxeWhip", Resources(L"/09_Sound/AxeWhip.mp3"), false); });
+
+
+
 
 	mLoadingImage = IMAGEMANAGER->FindImage(L"LoadingCat");
 	mLoadingImage2 = ImageManager::GetInstance()->FindImage(L"LoadingImage2");

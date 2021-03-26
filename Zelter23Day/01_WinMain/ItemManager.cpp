@@ -589,7 +589,15 @@ void ItemManager::MoveItems()
 							wstr.assign(str.begin(), str.end());
 							
 							DropItems(wstr, mPlayer->GetX(), mPlayer->GetY() + 15, mItemInventoryList[wstr]);
-							slotList[indexX][indexY].isFill = false;
+
+							if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+							{
+								slotList[indexX][indexY].isFill = false;
+							}
+							else
+							{
+								quickSlotList[index].isFill = false;
+							}
 							mItemInventoryList.erase(wstr);
 							items[i]->SetIsDestroy(true);
 						}

@@ -10,11 +10,12 @@ enum class WeatherMode :int
 
 class WeatherManager
 {
-	Singleton(ObjectManager);
+	Singleton(WeatherManager);
 private:
 	WeatherMode mWeather;
 	bool mIsChangeWeather;
 	vector<class Rain*> mRainList;
+	int mRainCount;
 public:
 	void Init();
 	void Release();

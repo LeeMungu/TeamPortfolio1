@@ -16,7 +16,7 @@ void MainScene::Init()
 	GameEventManager::GetInstance()->PushEvent(new IDelayFunEvent(7.f, [this]() {
 		mImage = ImageManager::GetInstance()->FindImage(L"LoadingCat");
 		mStartButton = new Button(L"살아남기", WINSIZEX / 5*2, WINSIZEY / 5 * 3,200,70, []() {SceneManager::GetInstance()->LoadScene(L"LoadingScene"); });
-		mToolSceneButton = new Button(L"작업장", WINSIZEX / 5 * 3, WINSIZEY / 5 * 3,200,70, []() {SceneManager::GetInstance()->LoadScene(L"MapToolScene"); });
+		mToolSceneButton = new Button(L"작업장", WINSIZEX / 5 * 3, WINSIZEY / 5 * 3,200,70, []() {SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene"); });
 	}));
 	mImage = ImageManager::GetInstance()->FindImage(L"PrologueImage1");
 

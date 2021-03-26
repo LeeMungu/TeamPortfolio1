@@ -5,7 +5,7 @@
 
 void Camera::Init()
 {
-	mMode = Mode::Follow;
+	mMode = Mode::Free;
 	//mTarget = nullptr;
 	mX = WINSIZEX / 2;
 	mY = WINSIZEY / 2;

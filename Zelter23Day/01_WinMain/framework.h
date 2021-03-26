@@ -53,6 +53,7 @@ using namespace std;
 #include "ObjectManager.h"
 #include "SceneManager.h"
 #include "GameEventManager.h"
+#include "WeatherManager.h"
 #include "Gizmo.h"
 
 #include "Vector2.h"

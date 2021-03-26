@@ -10,8 +10,8 @@ TextBox::TextBox(wstring textContext)
 	mImage = ImageManager::GetInstance()->FindImage(L"TextBox");
 	mSizeX = mImage->GetWidth()*6;
 	mSizeY = mImage->GetHeight()*4;
-	mX = WINSIZEX/5*2;
-	mY = WINSIZEY/4*3;
+	mX = WINSIZEX/5*2 -100;
+	mY = WINSIZEY/4*3 + 50;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mTextContext = textContext;
 }

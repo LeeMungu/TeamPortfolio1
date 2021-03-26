@@ -28,11 +28,12 @@ void Rain::Release()
 
 void Rain::Update()
 {
-	mX += mSpeed * cosf(mAngle);
-	mY -= mSpeed * sinf(mAngle);
+	mX += mSpeed * cosf((90.f-mAngle)/180.f*PI);
+	mY += mSpeed * sinf((90.f-mAngle)/180.f*PI);
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-	if (mRect.right<0 || mRect.left>WINSIZEX || mRect.bottom<0 || mRect.top>WINSIZEY
-		||Math::GetDistance(mStartX,mStartY,mX,mY)>mLimitDistance)
+	if (
+		//mRect.right<0 || mRect.left>WINSIZEX || mRect.bottom<0 || mRect.top>WINSIZEY||
+		Math::GetDistance(mStartX,mStartY,mX,mY)>mLimitDistance)
 	{
 		mIsDestroy = true;
 	}

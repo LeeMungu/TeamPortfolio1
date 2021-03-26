@@ -4,6 +4,7 @@
 #include "Item.h"
 #include "Button.h"
 
+
 WorkTable::WorkTable(const string& name)
 	:UI(name)
 {
@@ -172,10 +173,10 @@ void WorkTable::MakingItem()
 								if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
 								{
 									((Item*)items[i])->SetCountMinus(mMakingCount * 2);
-									if (((Item*)items[i])->GetCount() <= 0)
-									{
-										
-									}
+									ItemManager::GetInstance()->SetmItemListCount(L"WoodBrench1", ((Item*)items[i])->GetCount());
+									POINT p = ItemManager::GetInstance()->GetInventoryIndex((Item*)items[i]);
+									ItemManager::GetInstance()->ItemCountCheck(((Item*)items[i]), p.x, p.y);
+									
 								}
 							}
 						}

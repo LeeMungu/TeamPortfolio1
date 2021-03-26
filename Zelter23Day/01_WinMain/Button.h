@@ -29,6 +29,7 @@ class Button final
 	int mIndexY;
 	//셀렉션 버튼 - 선택 되있는지 여부 확인
 	bool mIsSelect;
+	bool mIsMaking;
 public:
 	Button(wstring text,float x, float y, float sizeX, float sizeY, function<void(void)> func);
 	Button(wstring imageKey,int indexY, wstring text, float x, float y, float sizeX, float sizeY, function<void(void)> func);

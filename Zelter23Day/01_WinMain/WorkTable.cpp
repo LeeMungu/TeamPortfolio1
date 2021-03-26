@@ -124,7 +124,7 @@ void WorkTable::Worktemplet()
 						//재료아이템 
 
 						//만들어질 아이템
-						
+						mMakingCount = (int)((Item*)items[i])->GetCount() / 2;
 						Item* maikingborad = new Item(L"WoodBoard", "makeboard", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게
 						maikingborad->Init();
 						ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, maikingborad);
@@ -153,20 +153,38 @@ void WorkTable::UpdateButton()
 
 void WorkTable::MakingItem()
 {
-	//vector<GameObject*> makeItem = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::MakingItem);
-	//
-	//if (makeItem.size() != NULL)
-	//{
-	//	for (int i = 0; i < makeItem.size(); i++)
-	//	{
-	//		if (((Item*)makeItem[i])->GetName() == "makeboard")
-	//		{
-	//			if (mMakingCount > 0)
-	//			{
-	//				ItemManager::GetInstance()->PutInInventory(L"WoodBoard", mMakingCount);
-	//			}
-	//		}
-	//
-	//	}
-	//}
+	vector<GameObject*> makeItem = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::MakingItem);
+	
+	if (makeItem.size() != NULL)
+	{
+		for (int i = 0; i < makeItem.size(); i++)
+		{
+			if (((Item*)makeItem[i])->GetName() == "makeboard")
+			{
+				if (mMakingCount > 0)
+				{
+					vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+					if (items.size() != NULL)
+					{
+						for (int i = 0; i < items.size(); ++i) {
+							if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+							{
+								if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
+								{
+									((Item*)items[i])->SetCountMinus(mMakingCount * 2);
+									if (((Item*)items[i])->GetCount() <= 0)
+									{
+										((Item*)items[i])->SetIsDestroy(true);
+									}
+								}
+							}
+						}
+					}
+
+					ItemManager::GetInstance()->PutInInventory(L"WoodBoard", mMakingCount);
+				}
+			}
+	
+		}
+	}
 }

@@ -121,3 +121,11 @@ void Item::NoPickUp()
 {
 
 }
+
+void Item::SetCountMinus(int n)
+{
+	if (mCount >= n)
+	{
+		mCount -= n;
+	}
+}

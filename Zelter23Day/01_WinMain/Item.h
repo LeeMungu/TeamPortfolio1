@@ -65,5 +65,7 @@ public:
 	void DropMovement();
 	void NoPickUp();
 	bool GetIsPossiblePick() { return mIsPossiblePick; }
+
+	void SetCountMinus(int n);
 };
 

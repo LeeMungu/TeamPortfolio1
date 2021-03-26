@@ -172,6 +172,10 @@ void ObjectManager::Render(HDC hdc)
 	ObjectIter iter = mObjectList.find(ObjectLayer::Item);
 	for (; iter != mObjectList.end(); ++iter)
 	{
+		if (iter == mObjectList.find(ObjectLayer::Weater))
+		{
+			WeatherManager::GetInstance()->Render(hdc);
+		}
 		for (int i = 0; i < iter->second.size(); ++i)
 		{
 			if (iter->second[i]->GetIsActive() == true)

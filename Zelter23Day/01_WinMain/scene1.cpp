@@ -89,12 +89,16 @@ void scene1::Init()
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"저건...좀비? 일단 갖고있는\n도끼를 이용하자."));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+
+	WeatherManager::GetInstance()->Init();
+	WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
 }
 
 void scene1::Release()
 {
 	GameEventManager::GetInstance()->RemoveAllEvent();
 	ObjectManager::GetInstance()->Release();
+	WeatherManager::GetInstance()->Release();
 	//알아서해
 	for (int y = 0; y < mTileList.size(); ++y)
 	{
@@ -108,6 +112,8 @@ void scene1::Release()
 
 void scene1::Update()
 {
+	//Weather
+	WeatherManager::GetInstance()->Update();
 	//이벤트
 	GameEventManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();

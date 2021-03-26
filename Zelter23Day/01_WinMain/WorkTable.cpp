@@ -153,20 +153,20 @@ void WorkTable::UpdateButton()
 
 void WorkTable::MakingItem()
 {
-	//vector<GameObject*> makeItem = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::MakingItem);
-	//
-	//if (makeItem.size() != NULL)
-	//{
-	//	for (int i = 0; i < makeItem.size(); i++)
-	//	{
-	//		if (((Item*)makeItem[i])->GetName() == "makeboard")
-	//		{
-	//			if (mMakingCount > 0)
-	//			{
-	//				ItemManager::GetInstance()->PutInInventory(L"WoodBoard", mMakingCount);
-	//			}
-	//		}
-	//
-	//	}
-	//}
+	vector<GameObject*> makeItem = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::MakingItem);
+	
+	if (makeItem.size() != NULL)
+	{
+		for (int i = 0; i < makeItem.size(); i++)
+		{
+			if (((Item*)makeItem[i])->GetName() == "makeboard")
+			{
+				if (mMakingCount > 0)
+				{
+					ItemManager::GetInstance()->PutInInventory(L"WoodBoard", mMakingCount);
+				}
+			}
+	
+		}
+	}
 }

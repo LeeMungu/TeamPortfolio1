@@ -466,7 +466,19 @@ void ItemManager::MoveItems()
 										items[i]->SetY(((Item*)items[i])->mPrePosition.y);
 										((Item*)items[i])->SetIsClicking(false);
 										isMoved = true;
-										slotList[j][k].isFill = true;
+
+										//아이템이 원래 퀵슬롯에 있었으면
+										if (((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
+										{
+											quickSlotList[index].isFill = true;
+										}
+										//아이템이 원래 인벤토리에 있었으면
+										else
+										{
+											slotList[j][k].isFill = true;
+											slotList[indexX][indexY].isFill = true;
+										}
+
 										break;
 									}
 									//슬롯이 비어있으면
@@ -480,17 +492,16 @@ void ItemManager::MoveItems()
 										((Item*)items[i])->SetKind(ItemKind::inventory);
 										isMoved = true;
 
-										
-
 										//아이템이 원래 퀵슬롯에 있었으면
-										if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+										if (((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
 										{
-											quickSlotList[index].isFill = false;
+											quickSlotList[index].isFill = false; //<-이게 안됨 지금 아까 됐는데?
 											((Item*)items[i])->SetKind(ItemKind::inventory);
 										}
 										//아이템이 원래 인벤토리에 있었으면
 										else
 										{
+											quickSlotList[index].isFill = false;
 											//아이템이 원래 있던 슬롯은 isFill false를 해준다
 											slotList[indexX][indexY].isFill = false;
 										}

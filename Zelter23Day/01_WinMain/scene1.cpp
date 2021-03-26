@@ -84,34 +84,37 @@ void scene1::Init()
 	//	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
 	//}
 		//첫 등장 시 텍스트 창 출력
-		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"성남시에 군인들이\n아직 있다고들었어.\n길을 따라 남동쪽으로 가보자."));
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"다들 살아있으면 좋을텐데."));
-	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
-	
-	//특정 장소 도착 시 좀비등장 및 공격 텍스트창 출력
-	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*125));
-	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"저건...좀비? 일단 갖고있는\n도끼로 공격하자."));
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"좀비에 접근 후 F키를 누르면\n좀비를 공격할 수 있습니다."));
-	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+	//	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
+	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"성남시에 군인들이\n아직 있다고들었어.\n길을 따라 남동쪽으로 가보자."));
+	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"다들 살아있으면 좋을텐데."));
+	//GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+	//
+	////특정 장소 도착 시 좀비등장 및 공격 텍스트창 출력
+	//GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*125));
+	//GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"저건...좀비? 일단 갖고있는\n도끼로 공격하자."));
+	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"좀비에 접근 후 F키를 누르면\n좀비를 공격할 수 있습니다."));
+	//GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 
 	//탈출 전 폭탄 제작 이벤트 안내 텍스트창 출력
 	GameEventManager::GetInstance()->
 		PushEvent(new IObjectCrushEvent(
 			ObjectManager::GetInstance()->FindObject(ObjectLayer::InteractObject, "Barricade2"),
-			ObjectManager::GetInstance()->FindObject(ObjectLayer::Player,"Player")));
-	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"성남으로 가려면 이쪽으로\n가야하는데 길이 막혀있다..."));
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"아마 사제폭탄으로\n길을 만들 수 있을거야."));
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"주변을 돌아다니면서\n재료를 모아보자."));
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+			ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")));
+	
+		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"성남으로 가려면 이쪽으로\n가야하는데 길이 막혀있다..."));
+		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"아마 사제폭탄으로\n길을 만들 수 있을거야."));
+		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"주변을 돌아다니면서\n재료를 모아보자."));
+		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+		GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+	
+
 
 	WeatherManager::GetInstance()->Init();
 	WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);

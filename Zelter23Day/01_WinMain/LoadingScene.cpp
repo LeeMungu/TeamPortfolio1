@@ -333,7 +333,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"ZombieSound", Resources(L"/09_Sound/Zombie.mp3"), false); });
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"AxeWhip", Resources(L"/09_Sound/AxeWhip.mp3"), false); });
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"KakaoTalkSound", Resources(L"/09_Sound/KakaoTalkSound.mp3"), false); });
-
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"BombSound", Resources(L"/09_Sound/BombSound.wav"), false); });
 
 
 	mLoadingImage = IMAGEMANAGER->FindImage(L"LoadingCat");

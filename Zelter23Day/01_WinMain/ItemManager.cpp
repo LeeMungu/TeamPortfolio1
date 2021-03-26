@@ -15,6 +15,7 @@ ItemManager::ItemManager()
 	mItemImageList.insert(make_pair(L"StoneHammer", ItemType::weapon));
 	mItemImageList.insert(make_pair(L"Torch", ItemType::weapon));
 
+
 	mItemImageList.insert(make_pair(L"Rifle", ItemType::gun));
 	mItemImageList.insert(make_pair(L"Rifle2", ItemType::gun));
 	mItemImageList.insert(make_pair(L"Shotgun", ItemType::gun));
@@ -29,12 +30,15 @@ ItemManager::ItemManager()
 	mItemImageList.insert(make_pair(L"SMGBullet", ItemType::bullet));
 
 
+	mItemImageList.insert(make_pair(L"Bandage", ItemType::heal));
+
+
 	mItemImageList.insert(make_pair(L"GrilApple", ItemType::food));
 	mItemImageList.insert(make_pair(L"GrilMeat1", ItemType::food));
 	mItemImageList.insert(make_pair(L"GrilStickMeat", ItemType::food));
 	mItemImageList.insert(make_pair(L"RawApple", ItemType::food));
-	mItemImageList.insert(make_pair(L"Bandage", ItemType::food));
 	mItemImageList.insert(make_pair(L"RawMeat", ItemType::food));
+
 
 	mItemImageList.insert(make_pair(L"BackPack", ItemType::equipment));
 	mItemImageList.insert(make_pair(L"CrossBag", ItemType::equipment));
@@ -81,9 +85,12 @@ ItemManager::ItemManager()
 void ItemManager::Init()
 {
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
-	indexX = 0;
-	indexY = 0;
-	index = 0;
+	mIndexX = 0;
+	mIndexY = 0;
+	mIndex = 0;
+	mSelectedItem.count = NULL;
+	mSelectedItem.quickType = ItemType::end;
+	mSelectedItem.key = L"";
 }
 
 void ItemManager::Release()
@@ -399,8 +406,8 @@ void ItemManager::MoveItems()
 								RECT itemRc = items[i]->GetRect();
 
 								if (IntersectRect(&rc, &slotRc, &itemRc)) {
-									indexX = j;
-									indexY = k;
+									mIndexX = j;
+									mIndexY = k;
 									isChecked = true;
 									break;
 								}
@@ -418,7 +425,7 @@ void ItemManager::MoveItems()
 							RECT itemRc = items[i]->GetRect();
 
 							if (IntersectRect(&rc, &slotRc, &itemRc)) {
-								index = j;
+								mIndex = j;
 								isChecked = true;
 								break;
 							}
@@ -470,13 +477,13 @@ void ItemManager::MoveItems()
 										//아이템이 원래 퀵슬롯에 있었으면
 										if (((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
 										{
-											quickSlotList[index].isFill = true;
+											quickSlotList[mIndex].isFill = true;
 										}
 										//아이템이 원래 인벤토리에 있었으면
 										else
 										{
 											slotList[j][k].isFill = true;
-											slotList[indexX][indexY].isFill = true;
+											slotList[mIndexX][mIndexY].isFill = true;
 										}
 
 										break;
@@ -494,16 +501,16 @@ void ItemManager::MoveItems()
 										//아이템이 원래 퀵슬롯에 있었으면
 										if (((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
 										{
-											quickSlotList[index].isFill = false; //<-이게 안됨 지금 아까 됐는데?
+											quickSlotList[mIndex].isFill = false; //<-이게 안됨 지금 아까 됐는데?
 											((Item*)items[i])->SetKind(ItemKind::inventory);
 										}
 										//아이템이 원래 인벤토리에 있었으면
 										else
 										{
 
-											//quickSlotList[index].isFill = false;
+											//quickSlotList[mIndex].isFill = false;
 											//아이템이 원래 있던 슬롯은 isFill false를 해준다
-											slotList[indexX][indexY].isFill = false;
+											slotList[mIndexX][mIndexY].isFill = false;
 										}
 										break;
 									}
@@ -535,12 +542,12 @@ void ItemManager::MoveItems()
 									//아이템이 원래 인벤토리에 있었으면
 									if(((Item*)items[i])->GetItemKind() == ItemKind::inventory)
 									{
-										slotList[indexX][indexY].isFill = false;
+										slotList[mIndexX][mIndexY].isFill = false;
 									}
 									//아이템이 원래 슬롯에 있었으면
 									else
 									{
-										quickSlotList[index].isFill = true;
+										quickSlotList[mIndex].isFill = true;
 									}
 									break;
 								}
@@ -553,14 +560,14 @@ void ItemManager::MoveItems()
 									//아이템이 원래 인벤토리에 있었으면
 									if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
 									{
-										slotList[indexX][indexY].isFill = false;
+										slotList[mIndexX][mIndexY].isFill = false;
 										((Item*)items[i])->SetKind(ItemKind::quickSlot);
 										quickSlotList[j].isFill = true;
 									}
 									//아이템이 원래 슬롯에 있었으면
 									else
 									{
-										quickSlotList[index].isFill = false;
+										quickSlotList[mIndex].isFill = false;
 										quickSlotList[j].isFill = true;
 									}
 									break;
@@ -592,11 +599,11 @@ void ItemManager::MoveItems()
 
 							if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
 							{
-								slotList[indexX][indexY].isFill = false;
+								slotList[mIndexX][mIndexY].isFill = false;
 							}
 							else
 							{
-								quickSlotList[index].isFill = false;
+								quickSlotList[mIndex].isFill = false;
 							}
 							mItemInventoryList.erase(wstr);
 							items[i]->SetIsDestroy(true);
@@ -658,6 +665,11 @@ void ItemManager::QuickSlotRePositioning(int num)
 					//선택을 해제하고 아이템 위치를 내려줌
 					((Item*)items[i])->SetIsSelected(false);
 					items[i]->SetY(ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot")->GetY() + 25);
+
+					//셀렉된 아이템 정보 저장
+					mSelectedItem.count = ((Item*)items[i])->GetCount();
+					mSelectedItem.quickType = ((Item*)items[i])->GetType();
+					mSelectedItem.key = ((Item*)items[i])->GetKeyName();
 				}
 				//선택안돼있던 슬롯이면
 				else
@@ -665,6 +677,11 @@ void ItemManager::QuickSlotRePositioning(int num)
 					//선택하고 아이템 위치를 올려줌
 					((Item*)items[i])->SetIsSelected(true);
 					items[i]->SetY(ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot")->GetY() + 5);
+
+					//셀렉된 아이템 정보 초기화
+					mSelectedItem.count = NULL;
+					mSelectedItem.quickType = ItemType::end;
+					mSelectedItem.key = L"";
 				}
 			}
 			//나머지 위치에 있는 아이템들

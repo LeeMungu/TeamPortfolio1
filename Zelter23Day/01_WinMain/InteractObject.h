@@ -29,6 +29,9 @@ class InteractObject : public GameObject
 	//인터렉트 렉트
 	RECT mInteractRect;
 
+	//문짝 true = 닫힘.
+	bool mIsDoorOpen;
+
 
 public:
 	InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY);
@@ -51,6 +54,7 @@ public:
 
 	RECT GetInteractRect()const { return mInteractRect; }
 
+	bool GetIsDoorOpen() { return mIsDoorOpen; }
 	bool GetIsInvincible() { return mIsInvincible; }
 	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
 

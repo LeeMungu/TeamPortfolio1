@@ -42,40 +42,48 @@ void CollisionManager::PlayerCollision()
 		{
 			for (int i = 0; i < object.size(); ++i)
 			{
+				InteractObject* tempInteract = (InteractObject*) object[i];
 				objectRC = ((InteractObject*)object[i])->GetInteractRect();
-				if (IntersectRect(&temp, &playerRC, &objectRC))
+				if ((tempInteract->GetImageKey()).substr(0, 4) == L"Door" && tempInteract->GetIsDoorOpen() == true)
 				{
-					float pX = mPlayer->GetX();
-					float pY = mPlayer->GetY();
-					float pSizeX = playerRC.right - playerRC.left;
-					float pSizeY = playerRC.bottom - playerRC.top;
+					return;
+				}
+				else 
+				{
+					if (IntersectRect(&temp, &playerRC, &objectRC))
+					{
+						float pX = mPlayer->GetX();
+						float pY = mPlayer->GetY();
+						float pSizeX = playerRC.right - playerRC.left;
+						float pSizeY = playerRC.bottom - playerRC.top;
 
-					float tempW = temp.right - temp.left;
-					float tempH = temp.bottom - temp.top;
-					float tempX = temp.left + tempW / 2;
-					float tempY = temp.top + tempH / 2;
-					float ObjectX = objectRC.left + (objectRC.right - objectRC.left) / 2;
-					float ObjectY = objectRC.top + (objectRC.bottom - objectRC.top) / 2;
+						float tempW = temp.right - temp.left;
+						float tempH = temp.bottom - temp.top;
+						float tempX = temp.left + tempW / 2;
+						float tempY = temp.top + tempH / 2;
+						float ObjectX = objectRC.left + (objectRC.right - objectRC.left) / 2;
+						float ObjectY = objectRC.top + (objectRC.bottom - objectRC.top) / 2;
 
-					if (tempW < tempH && tempX > ObjectX && playerRC.left < objectRC.right)
-					{
-						pX = objectRC.right + pSizeX / 2;
-					}
-					if (tempW < tempH && tempX < ObjectX && playerRC.right > objectRC.left)
-					{
-						pX = objectRC.left - pSizeX / 2;
-					}
-					if (tempW > tempH && tempY > ObjectY && playerRC.top < objectRC.bottom)
-					{
-						pY = objectRC.bottom + pSizeY / 2;
-					}
-					if (tempW > tempH && tempY < ObjectY && playerRC.bottom > objectRC.top)
-					{
-						pY = objectRC.top - pSizeY / 2;
-					}
+						if (tempW < tempH && tempX > ObjectX && playerRC.left < objectRC.right)
+						{
+							pX = objectRC.right + pSizeX / 2;
+						}
+						if (tempW < tempH && tempX < ObjectX && playerRC.right > objectRC.left)
+						{
+							pX = objectRC.left - pSizeX / 2;
+						}
+						if (tempW > tempH && tempY > ObjectY && playerRC.top < objectRC.bottom)
+						{
+							pY = objectRC.bottom + pSizeY / 2;
+						}
+						if (tempW > tempH && tempY < ObjectY && playerRC.bottom > objectRC.top)
+						{
+							pY = objectRC.top - pSizeY / 2;
+						}
 
-					mPlayer->SetX(pX);
-					mPlayer->SetY(pY);
+						mPlayer->SetX(pX);
+						mPlayer->SetY(pY);
+					}
 				}
 			}
 		}
@@ -254,6 +262,7 @@ void CollisionManager::PlayerAttack()
 					enemy->ExecuteKnockback(mAngle, 200.f);
 					enemy->SetIsInvincible(true);
 					
+
 					EffectManager* effect = new EffectManager(L"melee_attack", temp, 0, 5, 0.1f);
 
 					for (int i = 0; i < 8; ++i)

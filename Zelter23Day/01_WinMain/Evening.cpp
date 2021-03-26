@@ -25,5 +25,6 @@ void Evening::Update()
 
 void Evening::Render(HDC hdc)
 {
-	mImage->EveningBackgroundRender(0.4f);
+	//0.4f
+	mImage->EveningBackgroundRender(Time::GetInstance()->GetSceneTime());
 }

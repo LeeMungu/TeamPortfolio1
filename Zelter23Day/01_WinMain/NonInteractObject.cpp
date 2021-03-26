@@ -8,6 +8,7 @@
 
 NonInteractObject::NonInteractObject(const wstring imageKey, float x, float y)
 {
+	mName.assign(imageKey.begin(), imageKey.end());
 	mX = x;
 	mY = y;
 	mImageKey = imageKey;

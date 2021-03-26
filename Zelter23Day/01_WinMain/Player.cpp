@@ -716,7 +716,7 @@ void Player::PlayerState() {
 	}
 }
 
-void Player::weaponUse(bool a)
+void Player::WeaponUse(bool a)
 {
 	Weapon* tempweapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "weapon");
 	tempweapon->SetIsUse(a);

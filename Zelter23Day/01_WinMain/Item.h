@@ -12,6 +12,8 @@ enum class ItemType
 	drink, // 음료
 	material, // 재료
 	structure, //설치물/장애물
+	heal,
+	end,
 };
 enum class ItemKind {
 	drop,

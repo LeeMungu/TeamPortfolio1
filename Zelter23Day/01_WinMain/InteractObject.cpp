@@ -9,7 +9,7 @@
 
 InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY)
 {
-
+	mName.assign(imageKey.begin(), imageKey.end());
 	//위치 판정해주기
 	mTileIndexX = x/TileSize;
 	mTileIndexY = y/TileSize;

@@ -174,7 +174,7 @@ void WorkTable::MakingItem()
 									((Item*)items[i])->SetCountMinus(mMakingCount * 2);
 									if (((Item*)items[i])->GetCount() <= 0)
 									{
-										((Item*)items[i])->SetIsDestroy(true);
+										
 									}
 								}
 							}

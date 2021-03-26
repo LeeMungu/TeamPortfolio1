@@ -378,245 +378,147 @@ void ItemManager::MoveItems()
 
 	QuickSlot* quickSlot = (QuickSlot*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot");
 	Slot *quickSlotList = quickSlot->GetSlotList();
-
 	vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
-	//아이템을 슬롯으로 드로그 앤 드롭해서 옮길 수 있음
 
+	//아이템을 슬롯으로 드로그 앤 드롭해서 옮길 수 있음
+	
 	if (isOpened == true) //인벤토리 열려있을 때만
 	{
-		for (int i = 0; i < items.size(); ++i)
+		for (int q = 0; q < items.size(); ++q)
 		{
-			if (((Item*)items[i])->GetIsClicking() == false) //드래그 중 아닐 때
+			if (((Item*)items[q])->GetIsClicking() == false) //드래그 중 아닐 때
 			{
-				RECT itemRc = items[i]->GetRect();
+				RECT itemRc = items[q]->GetRect();
 				if (PtInRect(&itemRc, _mousePosition) == true && Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 				{
-					bool isChecked = false;
-
-					//인벤토리 아이템일 때 현재 있는 인덱스를 기억함
-					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
-					{
-						for (int j = 0; j < 2; j++)
-						{
-							for (int k = 0; k < 5; k++)
-							{
-
-								RECT rc;
-								RECT slotRc = slotList[j][k].rect;
-								RECT itemRc = items[i]->GetRect();
-
-								if (IntersectRect(&rc, &slotRc, &itemRc)) {
-									mIndexX = j;
-									mIndexY = k;
-									isChecked = true;
-									break;
-								}
-							}
-							if (isChecked == true) break;
-						}
-					}
-					//퀵 슬롯 아이템일 때 현재 있는 인덱스를 기억함
-					else if(((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
-					{
-						for (int j = 0; j < 5; j++)
-						{
-							RECT rc;
-							RECT slotRc = quickSlotList[j].rect;
-							RECT itemRc = items[i]->GetRect();
-
-							if (IntersectRect(&rc, &slotRc, &itemRc)) {
-								mIndex = j;
-								isChecked = true;
-								break;
-							}
-						}
-					}
-					((Item*)items[i])->SetIsClicking(true);
-				}
-				else
-				{
-					((Item*)items[i])->mPrePosition.x = items[i]->GetX();
-					((Item*)items[i])->mPrePosition.y = items[i]->GetY();
-
+					mSeletedItemIndex = q;
+					((Item*)items[mSeletedItemIndex])->SetIsClicking(true);
 				}
 			}
-			else //드래그 중일 때
+		}
+		if (((Item*)items[mSeletedItemIndex])->GetIsClicking() == true)
+		{
+			if (((Item*)items[mSeletedItemIndex])->GetItemKind() == ItemKind::inventory)
 			{
-				items[i]->SetX(_mousePosition.x);
-				items[i]->SetY(_mousePosition.y);
-				((Item*)items[i])->SetIsSelected(false);
-
-
-				if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
+				int j = (_mousePosition.y - slotList[0][0].y) / 70;
+				int k = (_mousePosition.x - slotList[0][0].x) / 60;
+				mIndexX = j;
+				mIndexY = k;
+			}
+			else if (((Item*)items[mSeletedItemIndex])->GetItemKind() == ItemKind::quickSlot)
+			{
+				for (int j = 0; j < 5; j++)
 				{
-					bool isMoved = false;
+					RECT rc;
+					RECT slotRc = quickSlotList[j].rect;
+					RECT itemRc = items[mSeletedItemIndex]->GetRect();
 
-					//아이템과 인벤토리 슬롯 충돌 처리
-					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory 
-						|| ((Item*)items[i])->GetItemKind() == ItemKind::quickSlot) {
-						for (int j = 0; j < 2; j++)
+					if (IntersectRect(&rc, &slotRc, &itemRc)) {
+						mIndex = j;
+						break;
+					}
+				}
+			}
+			//드래그 중일 때
+			if (Input::GetInstance()->GetKey(VK_LBUTTON))
+			{
+				items[mSeletedItemIndex]->SetX(_mousePosition.x);
+				items[mSeletedItemIndex]->SetY(_mousePosition.y);
+				((Item*)items[mSeletedItemIndex])->SetIsSelected(false);
+			}
+			//자리교환
+			if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
+			{
+				//인벤토리안에서
+				if (((Item*)items[mSeletedItemIndex])->GetItemKind() == ItemKind::inventory
+					|| ((Item*)items[mSeletedItemIndex])->GetItemKind() == ItemKind::quickSlot)
+				{
+					//슬롯 위치
+					int j = (_mousePosition.y - slotList[0][0].y) / 70;
+					int k = (_mousePosition.x - slotList[0][0].x) / 60;
+					
+					RECT rc;
+					RECT slotRc = slotList[j][k].rect;
+					RECT itemRc = items[mSeletedItemIndex]->GetRect();
+					//특정위치에 놓았다.
+					if (IntersectRect(&rc, &slotRc, &itemRc))
+					{
+						//슬롯이 차있으면
+						if (slotList[j][k].isFill == true)
 						{
-							for (int k = 0; k < 5; k++)
+							//스왑
+							for (int l = 0; l < items.size(); ++l)
 							{
-								RECT rc;
-								RECT slotRc = slotList[j][k].rect;
-								RECT itemRc = items[i]->GetRect();
-
-								//왼쪽키를 뗀 순간 슬롯과 충돌
-								if (IntersectRect(&rc, &slotRc, &itemRc))
+								if (slotList[j][k].x + 27 == items[l]->GetX() &&
+									slotList[j][k].y + 27 == items[l]->GetY() && l != mSeletedItemIndex)
 								{
-									//슬롯이 차있으면
-									if (slotList[j][k].isFill == true)
-									{
-										//나중에 스왑하는 걸로 수정
-										items[i]->SetX(((Item*)items[i])->mPrePosition.x);
-										items[i]->SetY(((Item*)items[i])->mPrePosition.y);
-										((Item*)items[i])->SetIsClicking(false);
-										isMoved = true;
-
-										//아이템이 원래 퀵슬롯에 있었으면
-										if (((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
-										{
-											quickSlotList[mIndex].isFill = true;
-										}
-										//아이템이 원래 인벤토리에 있었으면
-										else
-										{
-											slotList[j][k].isFill = true;
-											slotList[mIndexX][mIndexY].isFill = true;
-										}
-
-										break;
-									}
-									//슬롯이 비어있으면
-									else if (slotList[j][k].isFill == false)
-									{
-										//아이템의 위치를 슬롯위치로 지정해주고 isFill true로 해줌
-										items[i]->SetX(slotList[j][k].x + 27);
-										items[i]->SetY(slotList[j][k].y + 27);
-										slotList[j][k].isFill = true;
-										((Item*)items[i])->SetIsClicking(false);
-										isMoved = true;
-
-										//아이템이 원래 퀵슬롯에 있었으면
-										if (((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
-										{
-											quickSlotList[mIndex].isFill = false; //<-이게 안됨 지금 아까 됐는데?
-											((Item*)items[i])->SetKind(ItemKind::inventory);
-										}
-										//아이템이 원래 인벤토리에 있었으면
-										else
-										{
-
-											//quickSlotList[mIndex].isFill = false;
-											//아이템이 원래 있던 슬롯은 isFill false를 해준다
-											slotList[mIndexX][mIndexY].isFill = false;
-										}
-										break;
-									}
+									items[l]->SetX(slotList[mIndexY][mIndexX].x + 27);
+									items[l]->SetY(slotList[mIndexY][mIndexX].y + 27);
+									((Item*)items[l])->SetKind(ItemKind::quickSlot);
 								}
-
 							}
 						}
-					
-						// 아이템과 퀵슬롯 충돌 처리 (플레이어 상호작용 하는거만 넣기)
-						if(((Item*)items[i])->GetType() == ItemType::drink || ((Item*)items[i])->GetType() == ItemType::food 
-							|| ((Item*)items[i])->GetType() == ItemType::gun || ((Item*)items[i])->GetType() == ItemType::weapon)
-						for (int j = 0; j < 5; j++)
-						{
-							RECT rc;
-							RECT slotRc = quickSlotList[j].rect;
-							RECT itemRc = items[i]->GetRect();
-							//왼쪽키를 뗀 순간 슬롯과 충돌
-							if (IntersectRect(&rc, &slotRc, &itemRc))
-							{
-								//슬롯이 차있으면
-								if (quickSlotList[j].isFill == true)
-								{
-									//나중에 스왑하는 걸로 수정
-									items[i]->SetX(((Item*)items[i])->mPrePosition.x);
-									items[i]->SetY(((Item*)items[i])->mPrePosition.y);
-									((Item*)items[i])->SetIsClicking(false);
-									isMoved = true;
 
-									//아이템이 원래 인벤토리에 있었으면
-									if(((Item*)items[i])->GetItemKind() == ItemKind::inventory)
-									{
-										slotList[mIndexX][mIndexY].isFill = false;
-									}
-									//아이템이 원래 슬롯에 있었으면
-									else
-									{
-										quickSlotList[mIndex].isFill = true;
-									}
-									break;
-								}
-								else {
-									items[i]->SetX(quickSlotList[j].x + 27);
-									items[i]->SetY(quickSlotList[j].y + 27);
-									
-									((Item*)items[i])->SetIsClicking(false);
-									isMoved = true;
-									//아이템이 원래 인벤토리에 있었으면
-									if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
-									{
-										slotList[mIndexX][mIndexY].isFill = false;
-										((Item*)items[i])->SetKind(ItemKind::quickSlot);
-										quickSlotList[j].isFill = true;
-									}
-									//아이템이 원래 슬롯에 있었으면
-									else
-									{
-										quickSlotList[mIndex].isFill = false;
-										quickSlotList[j].isFill = true;
-									}
-									break;
-								}
-							}
+						//아이템이 비어있든 차있든 이동, 변화
+						items[mSeletedItemIndex]->SetX(slotList[j][k].x + 27);
+						items[mSeletedItemIndex]->SetY(slotList[j][k].y + 27);
+						((Item*)items[mSeletedItemIndex])->SetIsClicking(false);
+						//아이템이 원래 퀵슬롯에 있었으면
+						if (((Item*)items[mSeletedItemIndex])->GetItemKind() == ItemKind::quickSlot)
+						{
+							((Item*)items[mSeletedItemIndex])->SetKind(ItemKind::inventory);
 						}
 					}
+				}
+			}
+		}
+	}
+					/*
 
-					//인벤토리 슬롯 외의 곳에 아이템 드롭하면
-					if (isMoved == false)
+
+
+					
+				}
+
+				//인벤토리 슬롯 외의 곳에 아이템 드롭하면
+				if (isMoved == false)
+				{
+					RECT rc;
+					RECT itemRc = items[i]->GetRect();
+					RECT inventoryRc = inventory->GetRect();
+					//인벤토리 안에 놓았을 때
+					if (IntersectRect(&rc, &itemRc, &inventoryRc))
 					{
-						RECT rc;
-						RECT itemRc = items[i]->GetRect();
-						RECT inventoryRc = inventory->GetRect();
-						//인벤토리 안에 놓았을 때
-						if (IntersectRect(&rc, &itemRc, &inventoryRc))
+						items[i]->SetX(((Item*)items[i])->mPrePosition.x);
+						items[i]->SetY(((Item*)items[i])->mPrePosition.y);
+					}
+					//인벤토리 밖에 놓았을 때
+					else
+					{
+						string  str = items[i]->GetName();
+						wstring wstr = L"";
+						wstr.assign(str.begin(), str.end());
+
+						DropItems(wstr, mPlayer->GetX(), mPlayer->GetY() + 15, mItemInventoryList[wstr]);
+
+						if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
 						{
-							items[i]->SetX(((Item*)items[i])->mPrePosition.x);
-							items[i]->SetY(((Item*)items[i])->mPrePosition.y);
+							slotList[mIndexX][mIndexY].isFill = false;
 						}
-						//인벤토리 밖에 놓았을 때
 						else
 						{
-							string  str = items[i]->GetName();
-							wstring wstr = L"";
-							wstr.assign(str.begin(), str.end());
-							
-							DropItems(wstr, mPlayer->GetX(), mPlayer->GetY() + 15, mItemInventoryList[wstr]);
-
-							if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
-							{
-								slotList[mIndexX][mIndexY].isFill = false;
-							}
-							else
-							{
-								quickSlotList[mIndex].isFill = false;
-							}
-							mItemInventoryList.erase(wstr);
-							items[i]->SetIsDestroy(true);
+							quickSlotList[mIndex].isFill = false;
 						}
-						((Item*)items[i])->SetIsClicking(false);
+						mItemInventoryList.erase(wstr);
+						items[i]->SetIsDestroy(true);
 					}
-
+					((Item*)items[i])->SetIsClicking(false);
 				}
-				
 			}
-			
-		}//items.size() for문 끝
-	}
+			}
+		//items.size() for문 끝
+		*/
+	
 }
 
 

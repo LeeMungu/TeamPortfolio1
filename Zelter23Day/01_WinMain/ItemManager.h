@@ -17,7 +17,7 @@ private:
 	map<wstring, int> mItemInventoryList; //인벤토리 아이템 이미지 key값과 value: count
 	
 	//아이템이 있는 슬롯 인덱스를 저장할 변수
-	int mIndexX, mIndexY, mIndex;
+	int mIndexX, mIndexY, mIndex, mSeletedItemIndex;
 
 	SelectedItem mSelectedItem;
 

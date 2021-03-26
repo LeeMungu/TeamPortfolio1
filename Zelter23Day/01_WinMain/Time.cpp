@@ -79,10 +79,22 @@ void Time::Tick(float lockFPS)
 		this->mFPSTimeElapsed += this->mDeltaTime;
 		//프로세스 실행 후 시간 증감
 		this->mWorldTime += this->mDeltaTime;
+		//테스트용
+		float speed;
+		speed = 1.f;
+		if (Input::GetInstance()->GetKey(VK_NUMPAD0))
+		{
+			speed = 100.f;
+		}
+		if (Input::GetInstance()->GetKeyUp(VK_NUMPAD0))
+		{
+			speed = 1.f;
+		}
+
 
 		//씬 타이머 추가
 		if (mIsSceneStart) {
-			this->mSceneTime += this->mDeltaTime;
+			this->mSceneTime += speed*this->mDeltaTime;
 		}
 
 		//초당 프레임 타임이 1초가 넘었다면 요소들 다시 초기화 

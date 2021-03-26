@@ -16,10 +16,10 @@ void LoadingScene::Init()
 	mIsEndLoading = false;
 
 	//이미지 (플레이어)
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_run.png"), 7, 4); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_walk.png"), 7, 4); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_run_gun", Resources(L"/03_Player/Player_GunRun.png"), 7, 4); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk_gun", Resources(L"/03_Player/Player_GunWalk.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_Run.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_Walk.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_Gunrun", Resources(L"/03_Player/Player_GunRun.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_Gunwalk", Resources(L"/03_Player/Player_GunWalk.png"), 7, 4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_attack", Resources(L"/03_Player/Player_attack.png"), 10, 2); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_roll", Resources(L"/03_Player/Player_roll1.png"), 7, 4); });
 
@@ -391,6 +391,6 @@ void LoadingScene::Render(HDC hdc)
 		mLoadingImage2->LoadingRender(hdc, 0, 0, 0, 0, WINSIZEX, WINSIZEY, mTime);
 
 		D2DRenderer::GetInstance()->RenderText(
-			WINSIZEX/3,WINSIZEY/5*2,L"생존하기 위해 준비 중입니다...",50 );
+			WINSIZEX/3 - 90,WINSIZEY/5*2,L"생존하기 위해 준비 중입니다...",30);
 	}
 }

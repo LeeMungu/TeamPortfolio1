@@ -333,6 +333,9 @@
     <ClInclude Include="WeatherManager.h">
       <Filter>FrameWork\Weather</Filter>
     </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -532,6 +535,9 @@
     </ClCompile>
     <ClCompile Include="WeatherManager.cpp">
       <Filter>FrameWork\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>MainGame\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

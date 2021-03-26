@@ -124,10 +124,10 @@ public:
 //오브젝트 충돌시 이벤트
 class IObjectCrushEvent : public IEvent
 {
-	RECT mPlayerRect;
-	RECT mObjectRect;
+	GameObject* mObject1;
+	GameObject* mObject2;
 public:
-	IObjectCrushEvent(class GameObject* object);
+	IObjectCrushEvent(class GameObject* object1, class GameObject* object2);
 	void Start()override;
 	bool Update()override;
 };

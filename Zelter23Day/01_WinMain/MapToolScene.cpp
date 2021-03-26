@@ -20,6 +20,7 @@ void MapToolScene::Init()
 	Image* houseImage = ImageManager::GetInstance()->FindImage(L"House");
 
 	Camera* camera = new Camera;
+	//camera->ChangeMode(Camera::Mode::Free);
 	CameraManager::GetInstance()->SetMainCamera(camera);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::camera, camera);
 
@@ -92,7 +93,8 @@ void MapToolScene::Update()
 	//카메라 보정값
 	float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
 	float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
-	
+
+
 	RECT bookRect = mToolBook->GetRect();//툴북 제외용
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{

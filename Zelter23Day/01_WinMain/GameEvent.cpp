@@ -321,21 +321,25 @@ bool IDelayFunEvent::Update()
 		return false;
 	}
 }
-
-IObjectCrushEvent::IObjectCrushEvent(GameObject* object)
+//형태도 바꿔야하고 그걸 바꿔서 어떻게 넣어야하는지
+IObjectCrushEvent::IObjectCrushEvent(GameObject* object1, GameObject* object2)
 {
-	mObjectRect = object->GetRect();
+	mObject1 = object1;
+	mObject2 = object2;
+	//mObjectRect = object->GetRect();
 }
 
 void IObjectCrushEvent::Start()
 {
-	mPlayerRect = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
+	//mPlayerRect = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
 }
 
 bool IObjectCrushEvent::Update()
 {
 	RECT temp;
-	if (IntersectRect(&temp, &mPlayerRect, &mObjectRect))
+	RECT rc1 = mObject1->GetRect();
+	RECT rc2 = mObject2->GetRect();
+	if (IntersectRect(&temp, &rc1,&rc2))
 	{
 		return true;
 	}

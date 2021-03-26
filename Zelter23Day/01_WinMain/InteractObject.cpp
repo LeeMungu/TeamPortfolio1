@@ -65,6 +65,7 @@ void InteractObject::Init()
 	mInvincibleCount = 0.f;
 	mIndexX = 0;
 	mIndexY = 0;
+	mIsDoorOpen == false;
 }
 
 void InteractObject::Release()
@@ -103,6 +104,13 @@ void InteractObject::Update()
 
 		mIsDestroy = true;
 	}
+
+	//wstring tempKey = mImageKey.substr(0, 4);
+
+	//if (tempKey == L"Door" && mIsDoorOpen == false)
+	//{
+
+	//}
 }
 
 void InteractObject::Render(HDC hdc)

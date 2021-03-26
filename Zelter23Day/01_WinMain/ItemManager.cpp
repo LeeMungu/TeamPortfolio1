@@ -386,6 +386,7 @@ void ItemManager::MoveItems()
 				{
 					bool isChecked = false;
 
+					//인벤토리 아이템일 때 현재 있는 인덱스를 기억함
 					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
 					{
 						for (int j = 0; j < 2; j++)
@@ -407,6 +408,7 @@ void ItemManager::MoveItems()
 							if (isChecked == true) break;
 						}
 					}
+					//퀵 슬롯 아이템일 때 현재 있는 인덱스를 기억함
 					else if(((Item*)items[i])->GetItemKind() == ItemKind::quickSlot)
 					{
 						for (int j = 0; j < 5; j++)
@@ -416,7 +418,7 @@ void ItemManager::MoveItems()
 							RECT itemRc = items[i]->GetRect();
 
 							if (IntersectRect(&rc, &slotRc, &itemRc)) {
-								indexX = j;
+								index = j;
 								isChecked = true;
 								break;
 							}
@@ -443,7 +445,7 @@ void ItemManager::MoveItems()
 					bool isMoved = false;
 
 					//아이템과 인벤토리 슬롯 충돌 처리
-					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory
+					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory 
 						|| ((Item*)items[i])->GetItemKind() == ItemKind::quickSlot) {
 						for (int j = 0; j < 2; j++)
 						{
@@ -478,15 +480,27 @@ void ItemManager::MoveItems()
 										((Item*)items[i])->SetKind(ItemKind::inventory);
 										isMoved = true;
 
-										//아이템이 원래 있던 슬롯은 isFill false를 해준다
-										slotList[indexX][indexY].isFill = false;
+										
+
+										//아이템이 원래 퀵슬롯에 있었으면
+										if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+										{
+											quickSlotList[index].isFill = false;
+											((Item*)items[i])->SetKind(ItemKind::inventory);
+										}
+										//아이템이 원래 인벤토리에 있었으면
+										else
+										{
+											//아이템이 원래 있던 슬롯은 isFill false를 해준다
+											slotList[indexX][indexY].isFill = false;
+										}
 										break;
 									}
 								}
 
 							}
 						}
-
+					
 						// 아이템과 퀵슬롯 충돌 처리 (플레이어 상호작용 하는거만 넣기)
 						if(((Item*)items[i])->GetType() == ItemType::drink || ((Item*)items[i])->GetType() == ItemType::food 
 							|| ((Item*)items[i])->GetType() == ItemType::gun || ((Item*)items[i])->GetType() == ItemType::weapon)
@@ -506,18 +520,38 @@ void ItemManager::MoveItems()
 									items[i]->SetY(((Item*)items[i])->mPrePosition.y);
 									((Item*)items[i])->SetIsClicking(false);
 									isMoved = true;
-									quickSlotList[indexX].isFill = true;
-									//slotList[indexX][indexY].isFill = false;
+
+									//아이템이 원래 인벤토리에 있었으면
+									if(((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+									{
+										slotList[indexX][indexY].isFill = false;
+									}
+									//아이템이 원래 슬롯에 있었으면
+									else
+									{
+										quickSlotList[index].isFill = true;
+									}
 									break;
 								}
 								else {
 									items[i]->SetX(quickSlotList[j].x + 27);
 									items[i]->SetY(quickSlotList[j].y + 27);
-									((Item*)items[i])->SetKind(ItemKind::quickSlot);
+									
 									((Item*)items[i])->SetIsClicking(false);
 									isMoved = true;
-									quickSlotList[indexX].isFill = false;
-									//slotList[indexX][indexY].isFill = false;
+									//아이템이 원래 인벤토리에 있었으면
+									if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+									{
+										slotList[indexX][indexY].isFill = false;
+										((Item*)items[i])->SetKind(ItemKind::quickSlot);
+										quickSlotList[j].isFill = true;
+									}
+									//아이템이 원래 슬롯에 있었으면
+									else
+									{
+										quickSlotList[index].isFill = false;
+										quickSlotList[j].isFill = true;
+									}
 									break;
 								}
 							}

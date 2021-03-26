@@ -346,7 +346,7 @@ void ItemManager::PutInInventory(wstring key, int count)
 			for (int x = 0; x < 5; x++) {
 				if (slotList[y][x].isFill == false) {
 
-					item = new Item(key, itemStr, slotList[y][x].x + 25, slotList[y][x].y + 25, mItemInventoryList[key], ItemKind::inventory);
+					item = new Item(key, itemStr, slotList[y][x].x + 27, slotList[y][x].y + 27, mItemInventoryList[key], ItemKind::inventory);
 					item->Init();
 					ObjectManager::GetInstance()->AddObject(ObjectLayer::InventoryItem, item);
 					slotList[y][x].isFill = true;
@@ -384,41 +384,47 @@ void ItemManager::MoveItems()
 	
 	if (isOpened == true) //인벤토리 열려있을 때만
 	{
-		for (int q = 0; q < items.size(); ++q)
+		if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 		{
-			if (((Item*)items[q])->GetIsClicking() == false) //드래그 중 아닐 때
+			for (int q = 0; q < items.size(); ++q)
 			{
 				RECT itemRc = items[q]->GetRect();
-				if (PtInRect(&itemRc, _mousePosition) == true && Input::GetInstance()->GetKeyDown(VK_LBUTTON))
+				if (PtInRect(&itemRc, _mousePosition) == true)
 				{
-					mSeletedItemIndex = q;
-					((Item*)items[mSeletedItemIndex])->SetIsClicking(true);
+					if (((Item*)items[q])->GetIsClicking() == false) //드래그 중 아닐 때
+					{
+						mSeletedItemIndex = q;
+						((Item*)items[mSeletedItemIndex])->SetIsClicking(true);
+
+						//선택한순간 위치인덱스 저장
+						if (((Item*)items[mSeletedItemIndex])->GetItemKind() == ItemKind::inventory)
+						{
+							int j = (_mousePosition.y - slotList[0][0].y) / 70;
+							int k = (_mousePosition.x - slotList[0][0].x) / 60;
+							mIndexY = j;
+							mIndexX = k;
+						}
+						else if (((Item*)items[mSeletedItemIndex])->GetItemKind() == ItemKind::quickSlot)
+						{
+							for (int j = 0; j < 5; j++)
+							{
+								RECT rc;
+								RECT slotRc = quickSlotList[j].rect;
+								RECT itemRc = items[mSeletedItemIndex]->GetRect();
+
+								if (IntersectRect(&rc, &slotRc, &itemRc)) {
+									mIndex = j;
+									break;
+								}
+							}
+						}
+					}
 				}
 			}
 		}
 		if (((Item*)items[mSeletedItemIndex])->GetIsClicking() == true)
 		{
-			if (((Item*)items[mSeletedItemIndex])->GetItemKind() == ItemKind::inventory)
-			{
-				int j = (_mousePosition.y - slotList[0][0].y) / 70;
-				int k = (_mousePosition.x - slotList[0][0].x) / 60;
-				mIndexX = j;
-				mIndexY = k;
-			}
-			else if (((Item*)items[mSeletedItemIndex])->GetItemKind() == ItemKind::quickSlot)
-			{
-				for (int j = 0; j < 5; j++)
-				{
-					RECT rc;
-					RECT slotRc = quickSlotList[j].rect;
-					RECT itemRc = items[mSeletedItemIndex]->GetRect();
-
-					if (IntersectRect(&rc, &slotRc, &itemRc)) {
-						mIndex = j;
-						break;
-					}
-				}
-			}
+			
 			//드래그 중일 때
 			if (Input::GetInstance()->GetKey(VK_LBUTTON))
 			{
@@ -454,7 +460,11 @@ void ItemManager::MoveItems()
 								{
 									items[l]->SetX(slotList[mIndexY][mIndexX].x + 27);
 									items[l]->SetY(slotList[mIndexY][mIndexX].y + 27);
-									((Item*)items[l])->SetKind(ItemKind::quickSlot);
+									if (((Item*)items[mSeletedItemIndex])->GetItemKind() == ItemKind::quickSlot)
+									{
+										((Item*)items[l])->SetKind(ItemKind::quickSlot);
+									}
+									break;
 								}
 							}
 						}
@@ -468,6 +478,7 @@ void ItemManager::MoveItems()
 						{
 							((Item*)items[mSeletedItemIndex])->SetKind(ItemKind::inventory);
 						}
+						((Item*)items[mSeletedItemIndex])->SetIsClicking(false);
 					}
 				}
 			}

@@ -43,7 +43,7 @@ void CollisionManager::PlayerCollision()
 			for (int i = 0; i < object.size(); ++i)
 			{
 				InteractObject* tempInteract = (InteractObject*) object[i];
-				objectRC = ((InteractObject*)object[i])->GetInteractRect();
+				objectRC = tempInteract->GetInteractRect();
 				if ((tempInteract->GetImageKey()).substr(0, 4) == L"Door" && tempInteract->GetIsDoorOpen() == true)
 				{
 					return;
@@ -96,38 +96,48 @@ void CollisionManager::PlayerCollision()
 			for (int i = 0; i < zombie.size(); ++i)
 			{
 				enemyRC = ((Enemy*)zombie[i])->GetCollisionBox();
-				if (IntersectRect(&temp, &playerRC, &enemyRC))	
+
+				InteractObject* tempInteract = (InteractObject*)object[i];
+				objectRC = tempInteract->GetInteractRect();
+				if ((tempInteract->GetImageKey()).substr(0, 4) == L"Door" && tempInteract->GetIsDoorOpen() == true)
 				{
-					float pX = mPlayer->GetX();
-					float pY = mPlayer->GetY();
-					float pSizeX = playerRC.right - playerRC.left;
-					float pSizeY = playerRC.bottom - playerRC.top;
+					return;
+				}
+				else
+				{
+					if (IntersectRect(&temp, &playerRC, &enemyRC))
+					{
+						float pX = mPlayer->GetX();
+						float pY = mPlayer->GetY();
+						float pSizeX = playerRC.right - playerRC.left;
+						float pSizeY = playerRC.bottom - playerRC.top;
 
-					float tempW = temp.right - temp.left;
-					float tempH = temp.bottom - temp.top;
-					float tempX = temp.left + tempW / 2;
-					float tempY = temp.top + tempH / 2;
-					float enemyX = enemyRC.left + (enemyRC.right - enemyRC.left) / 2;
-					float enemyY = enemyRC.top + (enemyRC.bottom - enemyRC.top) / 2;
+						float tempW = temp.right - temp.left;
+						float tempH = temp.bottom - temp.top;
+						float tempX = temp.left + tempW / 2;
+						float tempY = temp.top + tempH / 2;
+						float enemyX = enemyRC.left + (enemyRC.right - enemyRC.left) / 2;
+						float enemyY = enemyRC.top + (enemyRC.bottom - enemyRC.top) / 2;
 
-					if (tempW < tempH && tempX > enemyX && playerRC.left < enemyRC.right)
-					{
-						pX = enemyRC.right + pSizeX / 2;
+						if (tempW < tempH && tempX > enemyX && playerRC.left < enemyRC.right)
+						{
+							pX = enemyRC.right + pSizeX / 2;
+						}
+						if (tempW < tempH && tempX < enemyX && playerRC.right > enemyRC.left)
+						{
+							pX = enemyRC.left - pSizeX / 2;
+						}
+						if (tempW > tempH && tempY > enemyY && playerRC.top < enemyRC.bottom)
+						{
+							pY = enemyRC.bottom + pSizeY / 2;
+						}
+						if (tempW > tempH && tempY < enemyY && playerRC.bottom > enemyRC.top)
+						{
+							pY = enemyRC.top - pSizeY / 2;
+						}
+						mPlayer->SetX(pX);
+						mPlayer->SetY(pY);
 					}
-					if (tempW < tempH && tempX < enemyX && playerRC.right > enemyRC.left)
-					{
-						pX = enemyRC.left - pSizeX / 2;
-					}
-					if (tempW > tempH && tempY > enemyY && playerRC.top < enemyRC.bottom)
-					{
-						pY = enemyRC.bottom + pSizeY / 2;
-					}
-					if (tempW > tempH && tempY < enemyY && playerRC.bottom > enemyRC.top)
-					{
-						pY = enemyRC.top - pSizeY / 2;
-					}
-					mPlayer->SetX(pX);
-					mPlayer->SetY(pY);
 				}
 			}
 		}
@@ -180,13 +190,10 @@ void CollisionManager::PlayerCollision()
 							mPlayer->SetX(pX);
 							mPlayer->SetY(pY);
 						}
-
 					}
 				}
-
 			}
 		}
-
 	}
 }
 

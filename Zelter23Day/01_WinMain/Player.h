@@ -25,7 +25,11 @@ enum class Attacked
 	righttop,
 	rightdown
 };
-
+enum class Equipment
+{
+	normal,
+	gun,
+};
 
 class Player : public GameObject
 {
@@ -90,6 +94,9 @@ class Player : public GameObject
 	float mStartTime_thirst;
 	float mStartTime_stemina;
 	
+	SelectedItem mSelectedItem;
+	Equipment mEquipment;
+
 public:
 	Player(const string& name, float x, float y);
 	void Init()override;
@@ -123,6 +130,6 @@ public:
 	void Knockback();//넉백상태 후처리
 	void PlayerState();
 
-	void weaponUse(bool a);
+	void WeaponUse(bool a);
 };
 

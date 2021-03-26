@@ -90,14 +90,14 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 	{
 		mHouse07Rect1 = RectMakeCenter(mX, mY, mSizeX/1.5, mSizeY/1.5);
 
-		mHouse07Rect1_Left = RectMakeCenter(mHouse07Rect1.left, mY, mThick, mSizeY / 1.5 + 100);
+		mHouse07Rect1_Left = RectMakeCenter(mHouse07Rect1.left, mY+32, mThick, mSizeY / 1.5 + 98);
 		mCollisionList.push_back(mHouse07Rect1_Left);
-		mHouse07Rect1_Right = RectMakeCenter(mHouse07Rect1.right, mY, mThick, mSizeY / 1.5 + 100);
+		mHouse07Rect1_Right = RectMakeCenter(mHouse07Rect1.right, mY+32, mThick, mSizeY / 1.5 + 98);
 		mCollisionList.push_back(mHouse07Rect1_Right);
 		mHouse07Rect1_Top = RectMakeCenter(mX, mHouse07Rect1.top, mSizeX / 1.5, mThick);
 		mCollisionList.push_back(mHouse07Rect1_Top);
 
-		RECT mHouse07Rect1_Top2 = RectMakeCenter(mX - 166, mHouse07Rect1.top + 305, mSizeX / 3 , mThick);
+		RECT mHouse07Rect1_Top2 = RectMakeCenter(mX - 170, mHouse07Rect1.top + 305, mSizeX / 3 , mThick);
 		mCollisionList.push_back(mHouse07Rect1_Top2);
 
 		mHouse07Rect1_Bottom = RectMakeCenter(mX-230, mHouse07Rect1.bottom + 64 , mSizeX / 5, mThick);
@@ -114,12 +114,16 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 	{
 		mPoliceRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
-		mPoliceRect_Left = RectMakeCenter(mPoliceRect.left+128, mY + 80, mThick, mSizeY - 218);
+		mPoliceRect_Left = RectMakeCenter(mPoliceRect.left+120, mY + 70, mThick, mSizeY - 220);
 		mCollisionList.push_back(mPoliceRect_Left);
-		mPoliceRect_Right = RectMakeCenter(mPoliceRect.right-128, mY + 80, mThick, mSizeY - 250);
+		mPoliceRect_Right = RectMakeCenter(mPoliceRect.right-123, mY + 80, mThick, mSizeY - 245);
 		mCollisionList.push_back(mPoliceRect_Right);
 		mPoliceRect_Top = RectMakeCenter(mX, mPoliceRect.top+196, mSizeX - 218, mThick);
 		mCollisionList.push_back(mPoliceRect_Top);
+
+		RECT mPoliceRect_Top2 = RectMakeCenter(mX+ 170, mPoliceRect.top + 370, mSizeX /2 + 140, mThick);
+		mCollisionList.push_back(mPoliceRect_Top2);
+
 		mPoliceRect_Bottom = RectMakeCenter(mX - 245, mPoliceRect.bottom -55, mSizeX /2 , mThick);
 		mCollisionList.push_back(mPoliceRect_Bottom);
 

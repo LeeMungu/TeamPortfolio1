@@ -58,6 +58,9 @@ void ObjectManager::Release()
 		iter->second.clear();
 		iter->second.shrink_to_fit();
 	}
+	mZorderList.clear();
+	mZorderRenderList.clear();
+	mClipingInteractList.clear();
 }
 
 void ObjectManager::Update()

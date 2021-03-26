@@ -321,3 +321,23 @@ bool IDelayFunEvent::Update()
 		return false;
 	}
 }
+
+IObjectCrushEvent::IObjectCrushEvent(GameObject* object)
+{
+	mObjectRect = object->GetRect();
+}
+
+void IObjectCrushEvent::Start()
+{
+	mPlayerRect = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")->GetRect();
+}
+
+bool IObjectCrushEvent::Update()
+{
+	RECT temp;
+	if (IntersectRect(&temp, &mPlayerRect, &mObjectRect))
+	{
+		return true;
+	}
+	return false;
+}

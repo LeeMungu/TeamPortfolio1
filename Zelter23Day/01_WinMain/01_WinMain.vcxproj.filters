@@ -327,6 +327,12 @@
     <ClInclude Include="Evening.h">
       <Filter>FrameWork\Weather</Filter>
     </ClInclude>
+    <ClInclude Include="Rain.h">
+      <Filter>FrameWork\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="WeatherManager.h">
+      <Filter>FrameWork\Weather</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -519,6 +525,12 @@
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Evening.cpp">
+      <Filter>FrameWork\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="Rain.cpp">
+      <Filter>FrameWork\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="WeatherManager.cpp">
       <Filter>FrameWork\Weather</Filter>
     </ClCompile>
   </ItemGroup>

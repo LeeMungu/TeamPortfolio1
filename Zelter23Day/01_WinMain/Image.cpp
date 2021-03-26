@@ -426,7 +426,7 @@ void Image::EveningBackgroundRender(float time)
 	//시간에 따른 길이 조정 : 0~1.f <-  1.f~0~1.f로 만들고 싶다. 기울기
 	float timePercent = ((float)((((int)time) % (60 * 24)) * 100) / (60 * 24)) / 100.f;
 	//0.5-0-0.5 길이
-	float downUpPercent = abs(timePercent - 0.5f)/0.5f*0.4f;
+	float downUpPercent = abs(timePercent - 0.5f)/0.5f*0.6f;
 
 	Vector2 size = Vector2(WINSIZEX, WINSIZEY);
 

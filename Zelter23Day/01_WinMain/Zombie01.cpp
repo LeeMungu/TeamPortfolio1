@@ -310,38 +310,43 @@ void Zombie01::Attack()
 
 void Zombie01::MovetoPlayer()
 {
-	vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
+	if (mZombistate == ZombieState::Chase)
+	{
+		vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
 
-	if (Path.size() != NULL)
-	{
-		if (Path.size() > 2)
+		if (Path.size() != NULL)
 		{
-			mAngle = Math::GetAngle(Path[2]->GetX(), Path[2]->GetY(), mX, mY);
-		
+			if (Path.size() > 2)
+			{
+				mAngle = Math::GetAngle(Path[2]->GetX(), Path[2]->GetY(), mX, mY);
+
+			}
+			mX -= cosf(mAngle) * mSpeed;
+			mY -= -sinf(mAngle) * mSpeed;
 		}
-		mX -= cosf(mAngle) * mSpeed;
-		mY -= -sinf(mAngle) * mSpeed;
+		if (mPlayer->GetRect().left > mRect.right)
+		{
+			mCurrentAnimation = mRightMove;
+			mCurrentAnimation->Play();
+		}
+		else if (mPlayer->GetRect().left < mRect.left)
+		{
+			mCurrentAnimation = mLeftMove;
+			mCurrentAnimation->Play();
+		}
+		else if (mPlayer->GetRect().top > mRect.bottom)
+		{
+			mCurrentAnimation = mDownMove;
+			mCurrentAnimation->Play();
+		}
+		else if (mPlayer->GetRect().bottom < mRect.top)
+		{
+			mCurrentAnimation = mUpMove;
+			mCurrentAnimation->Play();
+		}
+
 	}
-	if (mPlayer->GetRect().left > mRect.right)
-	{
-		mCurrentAnimation = mRightMove;
-		mCurrentAnimation->Play();
-	}
-	else if (mPlayer->GetRect().left < mRect.left)
-	{
-		mCurrentAnimation = mLeftMove;
-		mCurrentAnimation->Play();
-	}
-	else if (mPlayer->GetRect().top > mRect.bottom)
-	{
-		mCurrentAnimation = mDownMove;
-		mCurrentAnimation->Play();
-	}
-	else if(mPlayer->GetRect().bottom<mRect.top)
-	{
-		mCurrentAnimation = mUpMove;
-		mCurrentAnimation->Play();
-	}
+	
 	
 }
 

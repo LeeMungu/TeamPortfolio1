@@ -236,7 +236,7 @@ void scene1::Update()
 			workTable->SetTableOpen(true);
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, workTable);
 			mIsWorkTable = true;
-			mPlayer->weaponUse(false);
+			mPlayer->WeaponUse(false);
 		}
 		else
 		{
@@ -245,7 +245,7 @@ void scene1::Update()
 			tempTable->DeleteItem();
 			tempTable->SetIsDestroy(true);
 			mIsWorkTable = false;
-			mPlayer->weaponUse(true);
+			mPlayer->WeaponUse(true);
 		}
 	}
 }

@@ -123,6 +123,6 @@ public:
 	void Knockback();//넉백상태 후처리
 	void PlayerState();
 
-	void weaponUse(bool a);
+	void WeaponUse(bool a);
 };
 

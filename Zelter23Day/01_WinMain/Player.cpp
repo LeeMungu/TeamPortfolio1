@@ -143,6 +143,9 @@ void Player::Init()
 	mStartTime_hunger = Time::GetInstance()->GetSceneTime();
 	mStartTime_thirst = Time::GetInstance()->GetSceneTime();
 	mStartTime_stemina = Time::GetInstance()->GetSceneTime();
+
+	mEquipment = Equipment::normal;
+	mSelectedItem = ItemManager::GetInstance()->GetSelectedItem();
 }
 
 void Player::Release()
@@ -352,14 +355,14 @@ void Player::PlayerCtrl() {
 
 						if (_mousePosition.y > playerPoint.y)
 						{
-							mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+							EquipmentPlayerImage(0);
 							mCurrentAnimation = mDownWalkAni;
 							mSpeed = 5.f;
 							mCurrentAnimation->Play();
 
 						}
 						else {
-							mImage = IMAGEMANAGER->FindImage(L"Player_run");
+							EquipmentPlayerImage(1);
 							mCurrentAnimation = mUpRunAni;
 							mSpeed = 10.f;
 							mCurrentAnimation->Play();
@@ -380,14 +383,14 @@ void Player::PlayerCtrl() {
 
 						if (_mousePosition.y < playerPoint.y)
 						{
-							mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+							EquipmentPlayerImage(0);
 							mCurrentAnimation = mUpWalkAni;
 							mSpeed = 5.f;
 							mCurrentAnimation->Play();
 
 						}
 						else {
-							mImage = IMAGEMANAGER->FindImage(L"Player_run");
+							EquipmentPlayerImage(1);
 							mCurrentAnimation = mDownRunAni;
 							mSpeed = 10.f;
 							mCurrentAnimation->Play();
@@ -416,12 +419,12 @@ void Player::PlayerCtrl() {
 
 						if (_mousePosition.x > playerPoint.x)
 						{
-							mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+							EquipmentPlayerImage(0);
 							mCurrentAnimation = mRightWalkAni;
 							mSpeed = 5.f;
 						}
 						else {
-							mImage = IMAGEMANAGER->FindImage(L"Player_run");
+							EquipmentPlayerImage(1);
 							mCurrentAnimation = mLeftRunAni;
 							mSpeed = 10.f;
 						}
@@ -440,12 +443,12 @@ void Player::PlayerCtrl() {
 
 						if (_mousePosition.x < playerPoint.x)
 						{
-							mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+							EquipmentPlayerImage(0);
 							mCurrentAnimation = mLeftWalkAni;
 							mSpeed = 5.f;
 						}
 						else {
-							mImage = IMAGEMANAGER->FindImage(L"Player_run");
+							EquipmentPlayerImage(1);
 							mCurrentAnimation = mRightRunAni;
 							mSpeed = 10.f;
 						}
@@ -479,14 +482,14 @@ void Player::PlayerCtrl() {
 
 						if (_mousePosition.y > playerPoint.y)
 						{
-							mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+							EquipmentPlayerImage(0);
 							mCurrentAnimation = mDownWalkAni;
 							mSpeed = 5.f;
 							mCurrentAnimation->Play();
 
 						}
 						else {
-							mImage = IMAGEMANAGER->FindImage(L"Player_run");
+							EquipmentPlayerImage(1);
 							mCurrentAnimation = mUpRunAni;
 							mSpeed = 10.f;
 							mCurrentAnimation->Play();
@@ -507,14 +510,14 @@ void Player::PlayerCtrl() {
 
 						if (_mousePosition.y < playerPoint.y)
 						{
-							mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+							EquipmentPlayerImage(0);
 							mCurrentAnimation = mUpWalkAni;
 							mSpeed = 5.f;
 							mCurrentAnimation->Play();
 
 						}
 						else {
-							mImage = IMAGEMANAGER->FindImage(L"Player_run");
+							EquipmentPlayerImage(1);
 							mCurrentAnimation = mDownRunAni;
 							mSpeed = 10.f;
 							mCurrentAnimation->Play();
@@ -543,12 +546,12 @@ void Player::PlayerCtrl() {
 
 						if (_mousePosition.x > playerPoint.x)
 						{
-							mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+							EquipmentPlayerImage(0);
 							mCurrentAnimation = mRightWalkAni;
 							mSpeed = 5.f;
 						}
 						else {
-							mImage = IMAGEMANAGER->FindImage(L"Player_run");
+							EquipmentPlayerImage(1);
 							mCurrentAnimation = mLeftRunAni;
 							mSpeed = 10.f;
 						}
@@ -567,12 +570,12 @@ void Player::PlayerCtrl() {
 
 						if (_mousePosition.x < playerPoint.x)
 						{
-							mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+							EquipmentPlayerImage(0);
 							mCurrentAnimation = mLeftWalkAni;
 							mSpeed = 5.f;
 						}
 						else {
-							mImage = IMAGEMANAGER->FindImage(L"Player_run");
+							EquipmentPlayerImage(1);
 							mCurrentAnimation = mRightRunAni;
 							mSpeed = 10.f;
 						}
@@ -625,7 +628,7 @@ void Player::PlayerCtrl() {
 	else if (mPlayerState == PlayerState::attack) {
 		if (mCurrentAnimation == mLeftAttack) {
 			if (mCurrentAnimation->GetIsPlay() == false) {
-				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+				EquipmentPlayerImage(0);
 				mPlayerState = PlayerState::idle;
 				mCurrentAnimation->Stop();
 				mCurrentAnimation = mLeftIdleAni;
@@ -634,7 +637,7 @@ void Player::PlayerCtrl() {
 		}
 		else if (mCurrentAnimation == mRightAttack) {
 			if (mCurrentAnimation->GetIsPlay() == false) {
-				mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+				EquipmentPlayerImage(0);
 				mCurrentAnimation->Stop();
 				mCurrentAnimation = mRightIdleAni;
 				mCurrentAnimation->Play();
@@ -720,4 +723,30 @@ void Player::WeaponUse(bool a)
 {
 	Weapon* tempweapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "weapon");
 	tempweapon->SetIsUse(a);
+}
+
+void Player::EquipmentPlayerImage(int mode)
+{
+	if (mode == 0) //walk
+	{
+		if (mEquipment == Equipment::normal)
+		{
+			mImage = IMAGEMANAGER->FindImage(L"Player_walk");
+		}
+		else
+		{
+			mImage = IMAGEMANAGER->FindImage(L"Player_walk_gun");
+		}
+	}
+	else //run
+	{
+		if (mEquipment == Equipment::normal)
+		{
+			mImage = IMAGEMANAGER->FindImage(L"Player_run");
+		}
+		else
+		{
+			mImage = IMAGEMANAGER->FindImage(L"Player_run_gun");
+		}
+	}
 }

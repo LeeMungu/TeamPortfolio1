@@ -42,5 +42,11 @@ public:
 	map<wstring, int> GetmItemInventoryList() { return mItemInventoryList; }
 	//플레이어에서 받을 퀵슬롯에서 선택된 아이템 정보를 가져옴
 	SelectedItem GetSelectedItem() { return mSelectedItem; }
+
+	void ItemCountCheck(Item* item, int y, int x);
+
+	void SetmItemListCount(wstring wstr, int count) { mItemInventoryList[wstr] = count; }
+
+	POINT GetInventoryIndex(Item* item);
 };
 

@@ -12,7 +12,7 @@ enum class PlayerState
 	roll,
 	attack,
 	die,
-	shot,
+	gun,
 };
 enum class Attacked
 {
@@ -62,10 +62,7 @@ class Player : public GameObject
 	Animation* mUpRoll;
 	Animation* mDownRoll;
 
-	Animation* mUpShotAni;
-	Animation* mLeftShotAni;
-	Animation* mRightShotAni;
-	Animation* mDownShotAni;
+	
 
 	float mSpeed;
 	int mHP;
@@ -131,5 +128,7 @@ public:
 	void PlayerState();
 
 	void WeaponUse(bool a);
+
+	void EquipmentPlayerImage(int mode);//0넣으면 walk, 나머지 run
 };
 

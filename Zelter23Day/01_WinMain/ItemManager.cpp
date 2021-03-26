@@ -695,3 +695,54 @@ void ItemManager::QuickSlotRePositioning(int num)
 	}
 	
 }
+
+void ItemManager::ItemCountCheck(Item* item, int y, int x)
+{
+	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
+	BagSlot(*slotList)[5] = inventory->GetSlotList();
+
+
+	if (mItemInventoryList[item->GetKeyName()] <= 0)
+	{
+		slotList[y][x].isFill = false;
+		mItemInventoryList.erase(item->GetKeyName());
+		item->SetIsDestroy(true);
+	}
+}
+
+POINT ItemManager::GetInventoryIndex(Item* item)
+{
+	Inventory* inventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
+	BagSlot(*slotList)[5] = inventory->GetSlotList();
+
+	POINT p;
+	
+	
+	bool isChecked = false;
+	//인벤토리 아이템일 때 현재 있는 인덱스를 기억함
+	if (item->GetItemKind() == ItemKind::inventory)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			for (int k = 0; k < 5; k++)
+			{
+
+				RECT rc;
+				RECT slotRc = slotList[j][k].rect;
+				RECT itemRc = item->GetRect();
+
+				if (IntersectRect(&rc, &slotRc, &itemRc)) {
+					p.x = j;
+					p.y = k;
+					isChecked = true;
+					break;
+				}
+			}
+			if (isChecked == true) break;
+		}
+	}
+	
+		
+
+	return p;
+}

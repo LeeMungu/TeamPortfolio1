@@ -16,8 +16,10 @@ void LoadingScene::Init()
 	mIsEndLoading = false;
 
 	//이미지 (플레이어)
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_GunRun.png"), 7, 4); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_GunWalk.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_run.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_walk.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_run_gun", Resources(L"/03_Player/Player_GunRun.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk_gun", Resources(L"/03_Player/Player_GunWalk.png"), 7, 4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_attack", Resources(L"/03_Player/Player_attack.png"), 10, 2); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_roll", Resources(L"/03_Player/Player_roll1.png"), 7, 4); });
 
@@ -146,6 +148,10 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"dispenser4", Resources(L"/05_Object/dispenser4.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Doll1", Resources(L"/05_Object/Doll1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Doll2", Resources(L"/05_Object/Doll2.png"), 2, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door01", Resources(L"/05_Object/Door01.png"), 1, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door02", Resources(L"/05_Object/Door02.png"), 1, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door03", Resources(L"/05_Object/Door03.png"), 1, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door04", Resources(L"/05_Object/Door04.png"), 1, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"DustBox1", Resources(L"/05_Object/DustBox1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"DustBox2", Resources(L"/05_Object/DustBox2.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"DustBox3", Resources(L"/05_Object/DustBox3.png"), 2, 1); });

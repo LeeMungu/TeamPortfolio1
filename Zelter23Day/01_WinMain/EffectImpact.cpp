@@ -172,6 +172,7 @@ void EffectImpact::Init()
 	else if (temp == L"Cha") { mIndexY = 1; }
 	else if (temp == L"Clo") { mIndexY = 1; }
 	else if (temp == L"Com") { mIndexY = 2; }
+	else if (temp == L"Doo") { mIndexY = 1; }
 	else if (temp == L"Dea") { mIndexY = 1; }
 	else if (temp == L"Des") { mIndexY = 4; }
 	else if (temp == L"dis") { mIndexY = 4; }

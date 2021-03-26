@@ -54,6 +54,8 @@ void MainGame::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"TextBox", Resources(L"TextBox.png"));
 	//밤화면
 	ImageManager::GetInstance()->LoadFromFile(L"EveningBackground", Resources(L"EveningBackground.png"));
+	//비이미지
+	ImageManager::GetInstance()->LoadFromFile(L"Rain", Resources(L"Rain.png"));
 
 	SceneManager::GetInstance()->AddScene(L"MapToolLoadingScene", new MapToolLoadingScene);
 	SceneManager::GetInstance()->AddScene(L"MapToolScene", new MapToolScene);

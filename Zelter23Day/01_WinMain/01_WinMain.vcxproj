@@ -194,6 +194,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerHPUI.h" />
     <ClInclude Include="QuickSlot.h" />
+    <ClInclude Include="Rain.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="UI.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeatherManager.h" />
     <ClInclude Include="WorkTable.h" />
     <ClInclude Include="Zombie01.h" />
     <ClInclude Include="Zombie02.h" />
@@ -267,6 +269,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerHPUI.cpp" />
     <ClCompile Include="QuickSlot.cpp" />
+    <ClCompile Include="Rain.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="scene1.cpp" />
@@ -282,6 +285,7 @@
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeatherManager.cpp" />
     <ClCompile Include="WorkTable.cpp" />
     <ClCompile Include="Zombie01.cpp" />
     <ClCompile Include="Zombie02.cpp" />

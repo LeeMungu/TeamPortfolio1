@@ -120,3 +120,14 @@ public:
 	void Start()override;
 	bool Update()override;
 };
+
+//오브젝트 충돌시 이벤트
+class IObjectCrushEvent : public IEvent
+{
+	RECT mPlayerRect;
+	RECT mObjectRect;
+public:
+	IObjectCrushEvent(class GameObject* object);
+	void Start()override;
+	bool Update()override;
+};

@@ -21,6 +21,7 @@ class WorkTable : public UI
 	bool mIsMakingOpen;
 
 	int mMakingCount;
+	int mMakingTotalCount;
 public:
 	WorkTable(const string& name);
 	void Init();

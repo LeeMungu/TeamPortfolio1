@@ -113,7 +113,7 @@ void Button::Update()
 					{
 						mFunc();
 					}
-					mIsSelect = true;
+					//mIsSelect = true;
 				}
 			}
 			else

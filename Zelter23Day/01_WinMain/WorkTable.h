@@ -22,6 +22,8 @@ class WorkTable : public UI
 
 	int mMakingCount;
 	int mMakingTotalCount;
+
+	int mMakeCost;
 public:
 	WorkTable(const string& name);
 	void Init();

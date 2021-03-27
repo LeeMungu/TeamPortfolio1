@@ -25,7 +25,14 @@ void WorkTable::Init()
 	mIsMakingOpen = false;
 	mMakingTotalCount = 0;
 	mMakingCount = 0;
-	mStartBtn = new Button(L"WorkTable_start_btn", mX + 550, mY + 330, 2, [this]() {MakingItem(); });
+	mMakeCost = 0;
+	mStartBtn = new Button(L"WorkTable_start_btn", mX + 550, mY + 330, 2, [this]() {
+		MakingItem(); 
+		if (mMakingCount > 0)
+		{
+			DeleteItem();
+		}
+		});
 	mTimeUpBtn = new Button(L"WorkTable_Timer_up", mX + 490, mY - 10 + 330, 2, [this]() {
 		if (mMakingTotalCount > mMakingCount) 
 		{ 
@@ -133,6 +140,7 @@ void WorkTable::Worktemplet()
 					if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
 					{
 						mIsMakingOpen = true;
+						mMakeCost = 2;
 						//재료아이템
 						Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "wood", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
 						workTableitem->Init();
@@ -140,7 +148,11 @@ void WorkTable::Worktemplet()
 						//재료아이템 
 
 						//만들어질 아이템
-						mMakingTotalCount = (int)((Item*)items[i])->GetCount() / 2;
+						mMakingTotalCount = (int)((Item*)items[i])->GetCount() / mMakeCost;
+						if (mMakeCost > ((Item*)items[i])->GetCount())
+						{
+							mMakingCount = 0;
+						}
 						Item* maikingborad = new Item(L"WoodBoard", "makeboard", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게
 						maikingborad->Init();
 						ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, maikingborad);
@@ -195,7 +207,7 @@ void WorkTable::MakingItem()
 							{
 								if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
 								{
-									((Item*)items[i])->SetCountMinus(mMakingCount * 2);
+									((Item*)items[i])->SetCountMinus(mMakingCount * mMakeCost);
 									ItemManager::GetInstance()->SetmItemListCount(L"WoodBrench1", ((Item*)items[i])->GetCount());
 									POINT p = ItemManager::GetInstance()->GetInventoryIndex((Item*)items[i]);
 									ItemManager::GetInstance()->ItemCountCheck(((Item*)items[i]), p.x, p.y);

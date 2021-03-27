@@ -13,7 +13,7 @@ WorkTable::WorkTable(const string& name)
 
 void WorkTable::Init()
 {
-	
+
 	mX = WINSIZEX / 2 - 350;
 	mY = WINSIZEY / 2 - 250;
 	mWorkTable = IMAGEMANAGER->FindImage(L"WorkTable");
@@ -27,29 +27,30 @@ void WorkTable::Init()
 	mMakingCount = 0;
 	mMakeCost = 0;
 	mStartBtn = new Button(L"WorkTable_start_btn", mX + 550, mY + 330, 2, [this]() {
-		MakingItem(); 
+		MakingItem();
 		if (mMakingCount > 0)
 		{
 			DeleteItem();
 		}
 		});
 	mTimeUpBtn = new Button(L"WorkTable_Timer_up", mX + 490, mY - 10 + 330, 2, [this]() {
-		if (mMakingTotalCount > mMakingCount) 
-		{ 
-			mMakingCount++; 
+		if (mMakingTotalCount > mMakingCount)
+		{
+			mMakingCount++;
 		}
 		DeleteItem();
-		Worktemplet();
+		Worktemplet(mBtnKey);
 		});
 	mTimeDownBtn = new Button(L"WorkTable_Timer_down", mX + 490, mY + 10 + 330, 2, [this]() {
-		if (mMakingCount>0) 
+		if (mMakingCount > 0)
 		{
 			mMakingCount--;
 		}
 		DeleteItem();
-		Worktemplet();
+		Worktemplet(mBtnKey);
 		});
-	mMakeWoodBoard = new Button(L"나무판", mX + 230, mY + 120, 80, 50, [this]() {Worktemplet(); });
+	mMakeWoodBoard = new Button(L"나무판", mX + 230, mY + 120, 80, 50, [this]() {mBtnKey = "WoodBoard";  Worktemplet(mBtnKey); });
+	//vmMakeBonFire = new Button(L"모닥불", mX + 230, mY + 140, 80, 50, [this]() {mBtnKey = "BonFire", Worktemplet(mBtnKey); });
 	mNumImage = IMAGEMANAGER->FindImage(L"SW_num");
 
 }
@@ -57,12 +58,10 @@ void WorkTable::Init()
 void WorkTable::Release()
 {
 	SafeDelete(mStartBtn);
-
 	SafeDelete(mTimeUpBtn);
-
 	SafeDelete(mTimeDownBtn);
-
 	SafeDelete(mMakeWoodBoard);
+	SafeDelete(mMakeBonFire);
 }
 
 void WorkTable::Update()
@@ -101,6 +100,13 @@ void WorkTable::Render(HDC hdc)
 							mMakeWoodBoard->Render(hdc);
 						}
 					}
+					if (((Item*)items[i])->GetKeyName() == L"WoodBoard")
+					{
+						if (mMakeBonFire != nullptr)
+						{
+							mMakeBonFire->Render(hdc);
+						}
+					}
 				}
 			}
 		}
@@ -126,43 +132,46 @@ void WorkTable::DeleteItem()
 	
 }
 
-void WorkTable::Worktemplet()
+void WorkTable::Worktemplet(string btnkey)
 {
 	if (mIsMakingOpen == false)
 	{
 		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
-
-		if (items.size() != NULL)
+		if (btnkey == "WoodBoard")
 		{
-			for (int i = 0; i < items.size(); ++i) {
-				if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
-				{
-					if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
+			if (items.size() != NULL)
+			{
+				for (int i = 0; i < items.size(); ++i) {
+					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
 					{
-						mIsMakingOpen = true;
-						mMakeCost = 2;
-						//재료아이템
-						Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "wood", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
-						workTableitem->Init();
-						ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitem);
-						//재료아이템 
-
-						//만들어질 아이템
-						mMakingTotalCount = (int)((Item*)items[i])->GetCount() / mMakeCost;
-						if (mMakeCost > ((Item*)items[i])->GetCount())
+						if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
 						{
-							mMakingCount = 0;
+							mIsMakingOpen = true;
+							mMakeCost = 2;
+							//재료아이템
+							Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "wood", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+							workTableitem->Init();
+							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitem);
+							//재료아이템 
+
+							//만들어질 아이템
+							mMakingTotalCount = (int)((Item*)items[i])->GetCount() / mMakeCost;
+							if (mMakeCost > ((Item*)items[i])->GetCount())
+							{
+								mMakingCount = 0;
+							}
+							Item* maikingborad = new Item(L"WoodBoard", "makeboard", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게
+							maikingborad->Init();
+							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, maikingborad);
+
+
 						}
-						Item* maikingborad = new Item(L"WoodBoard", "makeboard", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게
-						maikingborad->Init();
-						ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, maikingborad);
 
-						
 					}
-
 				}
 			}
 		}
+		
 	}
 	
 }

@@ -84,8 +84,8 @@ void scene1::Init()
 	//	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
 	//}
 	//첫 등장 시 텍스트 창 출력
-		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
+		//GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"성남시에 군인들이\n아직 있다고들었어.\n길을 따라 남동쪽으로 가보자."));
 	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"다들 살아있으면 좋을텐데."));

@@ -6,6 +6,7 @@
 #include "Tile.h"
 #include "MapToolScene.h"
 #include "Weapon.h"
+#include "Bomb.h"
 
 Player::Player(const string& name, float x, float y)
 	:GameObject(name)
@@ -272,7 +273,7 @@ void Player::Update()
 		mAttackBox = RectMakeCenter(0, 0, 0, 0);
 	}
 
-
+	
 }
 
 void Player::Render(HDC hdc)

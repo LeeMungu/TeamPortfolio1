@@ -7,6 +7,7 @@
 #include "MapToolScene.h"
 #include "Weapon.h"
 #include "Bomb.h"
+#include "ShotGun.h"
 
 Player::Player(const string& name, float x, float y)
 	:GameObject(name)
@@ -137,9 +138,13 @@ void Player::Init()
 	mDash = 0;
 	mDashTime = 0;
 
-	Weapon* weapon = new Weapon("weapon",mX,mY,0,0);
-	weapon->SetPlayerPtr(this);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
+	//Weapon* weapon = new Weapon("weapon",mX,mY,0,0);
+	//weapon->SetPlayerPtr(this);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
+
+	ShotGun* shotgun = new ShotGun("shotgun", mX, mY, 0, 0);
+	shotgun->SetPlayerPtr(this);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, shotgun);
 
 	mStartTime_hunger = Time::GetInstance()->GetSceneTime();
 	mStartTime_thirst = Time::GetInstance()->GetSceneTime();

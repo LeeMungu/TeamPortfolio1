@@ -6,6 +6,9 @@ class MainScene : public Scene
 	class Image* mImage;
 	class Button* mStartButton;
 	class Button* mToolSceneButton;
+
+	bool mIsSkip;
+
 public:
 	void Init()override;
 	void Release()override;

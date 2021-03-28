@@ -25,6 +25,7 @@
 //ÀÌº¥Æ®
 #include "GameEvent.h"
 #include "Weapon.h"
+#include "Bomb.h"
 void scene1::Init()
 {
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");

@@ -122,6 +122,6 @@ void Inventory::Render(HDC hdc)
 			}
 		}
 
-		//RenderRect(hdc, mRect);
+		RenderRect(hdc, mRect);
 	}
 }

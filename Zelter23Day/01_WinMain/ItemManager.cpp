@@ -131,6 +131,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	//오브젝트에 따라 랜덤으로 아이템 key를 정해준다
 	wstring key;
 	wstring key2;
+	wstring key3;
 
 	if (str == L"Ben") //벤치 - 나뭇가지
 	{ 
@@ -151,10 +152,12 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	else if (str == L"Cha") //의자
 	{ 
 		key = L"WoodBrench1";
+		key = L"Iron1";
 	}
 	else if (str == L"Clo") //옷장
 	{ 
 		key = L"WoodBrench1";
+		key2 = L"ClothRag";
 	}
 	else if (str == L"Com") //컴퓨터
 	{ 
@@ -170,15 +173,17 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 	else if (str == L"dis") //자판기
 	{ 
-		key = L"Can";
+		key = L"Iron1";
+		key2 = L"Can";
 	}
 	else if (str == L"Dol") //인형
 	{ 
 		key = L"ClothPiece";
+		key3 = L"Shotgun";
 	}
 	else if (str == L"Dus") //쓰레기통
 	{ 
-
+		key2 = L"Bottle";
 	}
 	else if (str == L"Fan") //선풍기
 	{ 
@@ -199,6 +204,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	else if (str == L"Ref")  //냉장고
 	{
 		key = L"Iron1";
+		key2 = L"RawMeat";
 	}
 	else if (str == L"Roc")  //돌
 	{
@@ -207,6 +213,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	else if (str == L"She")  //선반
 	{
 		key = L"WoodBrench1";
+		key2 = L"Bandage";
 	}
 	else if (str == L"Sho") 
 	{
@@ -218,6 +225,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 		else  //쇼케이스
 		{
 			key = L"Iron1";
+			key2 = L"RawMeat";
 		}
 	}
 	else if (str == L"Sig") //전광판
@@ -227,6 +235,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	else if (str == L"Sof") //소파
 	{ 
 		key = L"WoodBrench1";
+		key2 = L"ClothRag";
 	}
 	else if (str == L"Suv") //suv 자동차
 	{ 
@@ -280,12 +289,25 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	//재료 개수 랜덤
 	if (key != L"") 
 	{
-		int randCount = Random::GetInstance()->RandomInt(1, 4);
+		int randCount = Random::GetInstance()->RandomInt(1, 3);
 
 		for (int i = 0; i < randCount; i++) 
 		{
 			DropItems(key, x , y);
 		}
+	}
+	if (key2 != L"")
+	{
+		int randCount = Random::GetInstance()->RandomInt(0, 2);
+
+		for (int i = 0; i < randCount; i++)
+		{
+			DropItems(key2, x, y);
+		}
+	}
+	if (key3 != L"")
+	{
+			DropItems(key3, x, y);
 	}
 }
 
@@ -558,7 +580,8 @@ void ItemManager::IntersectInventory(int j, int k)
 					if (((Item*)mItems[l])->GetType() == ItemType::drink
 						|| ((Item*)mItems[l])->GetType() == ItemType::food
 						|| ((Item*)mItems[l])->GetType() == ItemType::gun
-						|| ((Item*)mItems[l])->GetType() == ItemType::weapon)
+						|| ((Item*)mItems[l])->GetType() == ItemType::weapon
+						|| ((Item*)mItems[mSeletedItemIndex])->GetType() == ItemType::heal)
 					{
 						mItems[mSeletedItemIndex]->SetX(mSlotList[j][k].x + 27);
 						mItems[mSeletedItemIndex]->SetY(mSlotList[j][k].y + 27);
@@ -573,21 +596,34 @@ void ItemManager::IntersectInventory(int j, int k)
 						//드롭한 아이템의 퀵슬롯 선택 여부 false
 						((Item*)mItems[mSeletedItemIndex])->SetIsSelected(false);
 					}
-					//스왑 불가능한 타입이면 아이템 위치를 되돌린다.
+					//스왑 불가능한 타입이면 아이템 원래 퀵슬롯 위치를 되돌린다.
 					else
 					{
-						mItems[l]->SetX(mSlotList[mIndexY][mIndexX].x + 27);
-						mItems[l]->SetY(mSlotList[mIndexY][mIndexX].y + 27);
+						mItems[mSeletedItemIndex]->SetX(mQuickSlotList[mIndex].x + 27);
+						mItems[mSeletedItemIndex]->SetY(mQuickSlotList[mIndex].y + 27);
 					}
 				}
 				//드래그 중인 아이템이 인벤토리에 있었으면
 				else
 				{
-					mItems[mSeletedItemIndex]->SetX(mSlotList[j][k].x + 27);
-					mItems[mSeletedItemIndex]->SetY(mSlotList[j][k].y + 27);
-					//스왑한 아이템을 이동시켜줌
-					mItems[l]->SetX(mSlotList[mIndexY][mIndexX].x + 27);
-					mItems[l]->SetY(mSlotList[mIndexY][mIndexX].y + 27);
+					//스왑할 아이템이 상호작용할 수 있을 타입일 때만 교환해준다
+					if (((Item*)mItems[l])->GetType() == ItemType::drink
+						|| ((Item*)mItems[l])->GetType() == ItemType::food
+						|| ((Item*)mItems[l])->GetType() == ItemType::gun
+						|| ((Item*)mItems[l])->GetType() == ItemType::weapon
+						|| ((Item*)mItems[mSeletedItemIndex])->GetType() == ItemType::heal)
+					{
+						mItems[mSeletedItemIndex]->SetX(mSlotList[j][k].x + 27);
+						mItems[mSeletedItemIndex]->SetY(mSlotList[j][k].y + 27);
+						//스왑한 아이템을 이동시켜줌
+						mItems[l]->SetX(mSlotList[mIndexY][mIndexX].x + 27);
+						mItems[l]->SetY(mSlotList[mIndexY][mIndexX].y + 27);
+					}
+					else
+					{
+						mItems[mSeletedItemIndex]->SetX(mSlotList[mIndexY][mIndexX].x + 27);
+						mItems[mSeletedItemIndex]->SetY(mSlotList[mIndexY][mIndexX].y + 27);
+					}
 				}
 				break;
 			}
@@ -620,11 +656,12 @@ void ItemManager::IntersectQuickSlot(int indexQ)
 	if (((Item*)mItems[mSeletedItemIndex])->GetType() == ItemType::drink
 		|| ((Item*)mItems[mSeletedItemIndex])->GetType() == ItemType::food
 		|| ((Item*)mItems[mSeletedItemIndex])->GetType() == ItemType::gun
-		|| ((Item*)mItems[mSeletedItemIndex])->GetType() == ItemType::weapon)
+		|| ((Item*)mItems[mSeletedItemIndex])->GetType() == ItemType::weapon
+		|| ((Item*)mItems[mSeletedItemIndex])->GetType() == ItemType::heal)
 	{
 		mItems[mSeletedItemIndex]->SetX(mQuickSlotList[indexQ].x + 27);
 		mItems[mSeletedItemIndex]->SetY(mQuickSlotList[indexQ].y + 27);
-
+		
 		//슬롯이 차있으면
 		if (mQuickSlotList[indexQ].isFill == true)
 		{
@@ -642,7 +679,7 @@ void ItemManager::IntersectQuickSlot(int indexQ)
 
 						//스왑할 아이템을 인벤토리로 설정
 						((Item*)mItems[l])->SetKind(ItemKind::inventory);
-						((Item*)mItems[l])->SetIsClicking(false);
+						
 						//드롭할 아이템을 퀵슬롯으로 설정
 						((Item*)mItems[mSeletedItemIndex])->SetKind(ItemKind::quickSlot);
 
@@ -663,6 +700,7 @@ void ItemManager::IntersectQuickSlot(int indexQ)
 					{
 						mItems[l]->SetX(mQuickSlotList[mIndex].x + 27);
 						mItems[l]->SetY(mQuickSlotList[mIndex].y + 27);
+						((Item*)mItems[l])->SetKind(ItemKind::quickSlot);
 					}
 					break;
 				}
@@ -678,7 +716,8 @@ void ItemManager::IntersectQuickSlot(int indexQ)
 				((Item*)mItems[mSeletedItemIndex])->SetKind(ItemKind::quickSlot);
 				mSlotList[mIndexY][mIndexX].isFill = false;
 			}
-			else
+			//아이템이 원래 퀵슬롯에 있었으면
+			else if(((Item*)mItems[mSeletedItemIndex])->GetItemKind() == ItemKind::quickSlot)
 			{
 				mQuickSlotList[mIndex].isFill = false;
 			}

@@ -296,11 +296,11 @@ void Zombie01::Attack()
 		int resize = 10;
 		if (mCurrentAnimation == mRightAttack && mCurrentAnimation->GetNowFrameX() > 1 && mCurrentAnimation->GetNowFrameX() < 4)
 		{
-			mAttackBox = RectMakeCenter(mCollisionBox.right - resize, mY, mSizeX + resize, mSizeY*1.1);
+			mAttackBox = RectMakeCenter(mCollisionBox.right - resize, mY, mSizeX + resize * 2, mSizeY*1.1);
 		}
 		else if (mCurrentAnimation == mLeftAttack && mCurrentAnimation->GetNowFrameX() > 1 && mCurrentAnimation->GetNowFrameX() < 4)
 		{
-			mAttackBox = RectMakeCenter(mCollisionBox.left + resize, mY, mSizeX - resize, mSizeY*1.1);
+			mAttackBox = RectMakeCenter(mCollisionBox.left + resize, mY, mSizeX + resize * 2, mSizeY*1.1);
 		}
 	}
 

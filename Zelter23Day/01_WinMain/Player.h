@@ -74,6 +74,7 @@ class Player : public GameObject
 	bool mIsKnockback;
 	float mKnockbackDistance;
 	float mAngle;
+	float mTakenAngle;
 	float mDash;
 
 	bool mIsMousePosition;

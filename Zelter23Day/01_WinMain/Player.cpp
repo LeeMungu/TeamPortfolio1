@@ -6,6 +6,7 @@
 #include "Tile.h"
 #include "MapToolScene.h"
 #include "Weapon.h"
+#include "Bomb.h"
 
 Player::Player(const string& name, float x, float y)
 	:GameObject(name)
@@ -272,7 +273,7 @@ void Player::Update()
 		mAttackBox = RectMakeCenter(0, 0, 0, 0);
 	}
 
-
+	
 }
 
 void Player::Render(HDC hdc)
@@ -664,8 +665,8 @@ void Player::Knockback()
 {
 	if (mIsKnockback == true)
 	{
-		mX += cosf(mAngle) * mKnockbackDistance * Time::GetInstance()->DeltaTime();
-		mY -= sinf(mAngle) * mKnockbackDistance * Time::GetInstance()->DeltaTime();
+		mX += cosf(mTakenAngle) * mKnockbackDistance * Time::GetInstance()->DeltaTime();
+		mY -= sinf(mTakenAngle) * mKnockbackDistance * Time::GetInstance()->DeltaTime();
 		mKnockbackDistance -= 1700.2f * Time::GetInstance()->DeltaTime();
 		if (mKnockbackDistance <= 0)
 		{
@@ -678,7 +679,7 @@ void Player::Knockback()
 void Player::ExecuteKnockback(float angle, float force)
 {
 	mIsKnockback = true;
-	mAngle = angle;
+	mTakenAngle = angle;
 	mKnockbackDistance = force;
 }
 

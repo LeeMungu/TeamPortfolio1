@@ -15,12 +15,15 @@ void Bomb::Init()
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mIsExplosion = false;
 
+	mIsUse = true;
+
 	SoundPlayer::GetInstance()->Play(L"BombSound", 0.8 * SoundPlayer::GetInstance()->GetEffectVolume());
 
 }
 
 void Bomb::Release()
 {
+
 }
 
 void Bomb::Update()
@@ -29,6 +32,15 @@ void Bomb::Update()
 	float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
 	//후...문구마렵다...
 
+	if (mIsUse == true)
+	{
+		if (Input::GetInstance()->GetKeyDown('B'))
+		{
+			SoundPlayer::GetInstance()->Play(L"BombSound", 0.8 
+				* SoundPlayer::GetInstance()->GetEffectVolume());
+
+		}
+	}
 
 
 

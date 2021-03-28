@@ -62,7 +62,7 @@ void Item::Update()
 		float timer = mNowTime - mCreatedTime;
 		if (timer > 10)
 		{
-			mAlpha -= 0.01f;
+			mAlpha -= 0.005f;
 		}
 
 		if(mAlpha <= 0)
@@ -77,13 +77,24 @@ void Item::Update()
 void Item::Render(HDC hdc)
 {
 	if (mItemKind == ItemKind::drop) { //¶¥¿¡ ¶³¾îÁ®ÀÖÀ» ¶© Ä«¸Þ¶ó ·£´õ
-		CameraManager::GetInstance()->GetMainCamera()->AlphaRender(hdc, mImage, mRect.left, mRect.top, mAlpha);
+		CameraManager::GetInstance()->GetMainCamera()->AlphaScaleRender(hdc, mImage, mRect.left, mRect.top, 27, 27, mAlpha);
 
-		CameraManager::GetInstance()->GetMainCamera()->
-			ScaleFrameRender(hdc, mNumImage, mX, mY + 5, mCount / 10 % 10, 0, 10, 10);
-		CameraManager::GetInstance()->GetMainCamera()->
-			ScaleFrameRender(hdc, mNumImage, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
+		if (mCount != 1)
+		{
+			CameraManager::GetInstance()->GetMainCamera()->
+				ScaleFrameRender(hdc, mNumImage, mX, mY + 5, mCount / 10 % 10, 0, 10, 10);
+			CameraManager::GetInstance()->GetMainCamera()->
+				ScaleFrameRender(hdc, mNumImage, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
+		}
 
+	}
+	else if (mItemKind == ItemKind::inventory)
+	{
+		mImage->Render(hdc, mRect.left, mRect.top);
+		RenderRect(hdc, mRect);
+
+		mNumImage->ScaleFrameRender(hdc, mX, mY + 5, mCount / 10 % 10, 0, 10, 10);
+		mNumImage->ScaleFrameRender(hdc, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
 	}
 	else { //ÀÎº¥Åä¸®, Äü½½·ÔÀº ±×³É ·£´õ
 		mImage->Render(hdc, mRect.left, mRect.top);

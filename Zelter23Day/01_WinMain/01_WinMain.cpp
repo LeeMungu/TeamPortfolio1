@@ -100,6 +100,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	_mainGame->Init();
 	Time::GetInstance()->Start();
 
+	RECT Clip;
+	GetClientRect(_hWnd, &Clip);
+	ClientToScreen(_hWnd, (LPPOINT)&Clip);
+	ClientToScreen(_hWnd, (LPPOINT)(&Clip.right));
+	ClipCursor(&Clip);
 
 	//GetMessage : 어떤 메세지가 들어올 떄까지(즉, 입력, 출력등등 어떤 명령이 
 	//들어올때까지) 내부적으로 중지를 걸어놓는 녀석

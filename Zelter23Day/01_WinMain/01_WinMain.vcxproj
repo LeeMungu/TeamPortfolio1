@@ -201,6 +201,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="scene1.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ShotGun.h" />
     <ClInclude Include="SmartWatch.h" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="SteminaUI.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="scene1.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ShotGun.cpp" />
     <ClCompile Include="SmartWatch.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="SteminaUI.cpp" />

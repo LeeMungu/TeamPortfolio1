@@ -22,6 +22,13 @@ void MainGame::Init()
 	main->Init();
 	CameraManager::GetInstance()->SetMainCamera(main);
 
+	RECT Clip;
+	GetClientRect(_hWnd, &Clip);
+	ClientToScreen(_hWnd, (LPPOINT)&Clip);
+	ClientToScreen(_hWnd, (LPPOINT)(&Clip.right));
+	ClipCursor(&Clip);
+
+
 
 	ImageManager::GetInstance()->LoadFromFile(L"Book", Resources(L"book.png"), 9, 5);
 	ImageManager::GetInstance()->LoadFromFile(L"BookButton", Resources(L"bookUI.png"), 3, 4);
@@ -86,6 +93,15 @@ Update : 매 프레임 실행되는 함수, 여기서 연산 처리 한다.
 void MainGame::Update()
 {
 	SceneManager::GetInstance()->Update();
+
+	if (Input::GetInstance()->GetKeyDown(VK_F1))
+	{
+		RECT Clip;
+		GetClientRect(_hWnd, &Clip);
+		ClientToScreen(_hWnd, (LPPOINT)&Clip);
+		ClientToScreen(_hWnd, (LPPOINT)(&Clip.right));
+		ClipCursor(&Clip);
+	}
 }
 
 /*

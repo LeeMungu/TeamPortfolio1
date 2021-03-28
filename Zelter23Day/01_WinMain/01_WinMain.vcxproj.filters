@@ -336,6 +336,9 @@
     <ClInclude Include="Bomb.h">
       <Filter>MainGame\Player</Filter>
     </ClInclude>
+    <ClInclude Include="ShotGun.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -537,6 +540,9 @@
       <Filter>FrameWork\Weather</Filter>
     </ClCompile>
     <ClCompile Include="Bomb.cpp">
+      <Filter>MainGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotGun.cpp">
       <Filter>MainGame\Player</Filter>
     </ClCompile>
   </ItemGroup>

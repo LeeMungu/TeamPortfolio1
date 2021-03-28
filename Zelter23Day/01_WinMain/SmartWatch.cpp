@@ -20,7 +20,7 @@ void SmartWatch::Init()
 	mBaseImage = IMAGEMANAGER->FindImage(L"SmarWatch_base");
 	mGlassDark = IMAGEMANAGER->FindImage(L"SW_glass_dark");
 	mGlass = IMAGEMANAGER->FindImage(L"SW_glass");
-	mTimeBG = IMAGEMANAGER->FindImage(L"SW_morning");
+	mTimeBG = IMAGEMANAGER->FindImage(L"SW_night");
 	mUIBaseImage = IMAGEMANAGER->FindImage(L"BlackBase");
 
 	mNumberImg = IMAGEMANAGER->FindImage(L"SW_num");

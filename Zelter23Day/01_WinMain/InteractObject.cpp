@@ -19,8 +19,17 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 	mHp = hp;
 	mImageKey = imageKey;
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
-	mSizeX = mImage->GetFrameWidth()* InteractObjectSize;
-	mSizeY = mImage->GetFrameHeight()* InteractObjectSize;
+	if (mImage->GetKey().substr(0,4) == L"Door")
+	{
+		mSizeX = mImage->GetFrameWidth() * InteractObjectSize * 2 ;
+		mSizeY = mImage->GetFrameHeight() * InteractObjectSize * 1.8;
+	}
+	else
+	{
+		mSizeX = mImage->GetFrameWidth() * InteractObjectSize;
+		mSizeY = mImage->GetFrameHeight() * InteractObjectSize;
+	}
+
 	mTileCountX = tileCountX;
 	mTileCountY = tileCountY;
 	if ((mTileCountX * InteractObjectSize) % 2 == 1)//X방향 홀수 타일
@@ -77,7 +86,7 @@ void InteractObject::Release()
 void InteractObject::Update()
 {
 	//피격 판정 딜레이 확인.
-	if (mIsInvincible == true)
+	if (mIsInvincible == true && mImage->GetKey().substr(0,4) != L"Door")
 	{
 		mInvincibleCount += Time::GetInstance()->DeltaTime();
 
@@ -90,7 +99,7 @@ void InteractObject::Update()
 		mIsInvincible = false;
 		mInvincibleCount = 0.f;
 	}
-	if (mIsInvincible == false)
+	if (mIsInvincible == false && mImage->GetKey().substr(0, 4) != L"Door")
 	{
 		mSizeY = mImage->GetFrameHeight() * InteractObjectSize;
 		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);

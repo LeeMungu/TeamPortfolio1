@@ -105,6 +105,7 @@ void ItemManager::Update()
 	mItems = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 	PickUpItems();
+
 	MoveItems();
 	//CheckFillSlot();
 	//ItemRePositioning();
@@ -328,25 +329,25 @@ void ItemManager::PickUpItems()
 	//아이템 리스트 받아옴
 	if (mPlayer->GetPlayerState() != PlayerState::attack)
 	{
-		vector<GameObject*> mItems = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Item);
+		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Item);
 
-		if (mItems.size() != NULL)
+		if (items.size() != NULL)
 		{
-			for (int i = 0; i < mItems.size(); ++i)
+			for (int i = 0; i < items.size(); ++i)
 			{
 				RECT rc;
-				RECT mItemsRc = ((Item*)mItems[i])->GetRect();
+				RECT mItemsRc = ((Item*)items[i])->GetRect();
 				RECT playerRc = mPlayer->GetRect();
 
-				if (((Item*)mItems[i])->GetIsPossiblePick() == true)
+				if (((Item*)items[i])->GetIsPossiblePick() == true)
 				{
 					//플레이어와 아이템 충돌 처리
 					if (IntersectRect(&rc, &mItemsRc, &playerRc))
 					{
 						//인벤토리에 넣어줌
-						PutInInventory(((Item*)mItems[i])->GetKeyName(), ((Item*)mItems[i])->GetCount());
+						PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
 						//아이템 지워줌
-						mItems[i]->SetIsDestroy(true);
+						items[i]->SetIsDestroy(true);
 					}
 				}
 			}
@@ -772,10 +773,10 @@ void ItemManager::ItemRePositioning()
 //버튼을 누르면 퀵슬롯에 있는 아이템들의 위치를 정렬해줌
 void ItemManager::QuickSlotRePositioning(int num)
 {
-	
+	//아이템 리스트를 불러옴
 	for (int i = 0; i < mItems.size(); ++i)
 	{
-		
+		//아이템이 퀵슬롯인거만 불러옴
 		if (((Item*)mItems[i])->GetItemKind() == ItemKind::quickSlot)
 		{
 			//선택한 위치에 있는 아이템
@@ -806,7 +807,7 @@ void ItemManager::QuickSlotRePositioning(int num)
 					mSelectedItem.count = ((Item*)mItems[i])->GetCount();
 					mSelectedItem.quickType = ((Item*)mItems[i])->GetType();
 					mSelectedItem.key = ((Item*)mItems[i])->GetKeyName();
-
+					
 					mPlayer->SetSelectedItem(mSelectedItem);
 				}
 			}
@@ -820,6 +821,15 @@ void ItemManager::QuickSlotRePositioning(int num)
 		}
 	}
 	
+	//만약 클릭한 슬롯이 isFill false이면 아이템 정보 NULL 해준다
+	if (mQuickSlotList[num - 1].isFill == false) {
+		mSelectedItem.count = NULL;
+		mSelectedItem.quickType = ItemType::end;
+		mSelectedItem.key = L"";
+
+		mPlayer->SetSelectedItem(mSelectedItem);
+	}
+
 }
 
 //아이템이 0개 이하가 되면 아이템인벤토리리스트 map 에서 삭제해줌

@@ -190,7 +190,7 @@ void Player::Update()
 			if (mIsMousePosition == true)
 			{
 				mCurrentAnimation->Stop();
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				EquipmentPlayerImage(1);
 				mCurrentAnimation = mUpIdleAni;
 				mCurrentAnimation->Play();
 			}
@@ -204,7 +204,7 @@ void Player::Update()
 			if (mIsMousePosition == true)
 			{
 				mCurrentAnimation->Stop();
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				EquipmentPlayerImage(1);
 				mCurrentAnimation = mLeftIdleAni;
 				mCurrentAnimation->Play();
 			}
@@ -219,7 +219,7 @@ void Player::Update()
 			if (mIsMousePosition == true)
 			{
 				mCurrentAnimation->Stop();
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				EquipmentPlayerImage(1);
 				mCurrentAnimation = mDownIdleAni;
 				mCurrentAnimation->Play();
 			}
@@ -233,7 +233,7 @@ void Player::Update()
 			if (mIsMousePosition == true)
 			{
 				mCurrentAnimation->Stop();
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				EquipmentPlayerImage(1);
 				mCurrentAnimation = mRightIdleAni;
 				mCurrentAnimation->Play();
 			}
@@ -437,6 +437,7 @@ void Player::PlayerCtrl() {
 			}
 
 			if (Input::GetInstance()->GetKeyUp('W') || Input::GetInstance()->GetKeyUp('S')) {
+				EquipmentPlayerImage(0);
 				mPlayerState = PlayerState::idle;
 				mIsMousePosition = true;
 				if (mCurrentAnimation == mDownRunAni || mCurrentAnimation == mDownWalkAni) mCurrentAnimation = mDownIdleAni;
@@ -496,6 +497,7 @@ void Player::PlayerCtrl() {
 			if (Input::GetInstance()->GetKeyUp('A') || Input::GetInstance()->GetKeyUp('D')) {
 				mIsMousePosition = true;
 				if (mPlayerState != PlayerState::roll) {
+					EquipmentPlayerImage(0);
 					mPlayerState = PlayerState::idle;
 
 					if (mCurrentAnimation == mLeftRunAni || mCurrentAnimation == mLeftWalkAni) mCurrentAnimation = mLeftIdleAni;
@@ -564,6 +566,7 @@ void Player::PlayerCtrl() {
 			}
 
 			if (Input::GetInstance()->GetKeyUp('W') || Input::GetInstance()->GetKeyUp('S')) {
+				EquipmentPlayerImage(0);
 				mPlayerState = PlayerState::idle;
 				mIsMousePosition = true;
 				if (mCurrentAnimation == mDownRunAni || mCurrentAnimation == mDownWalkAni) mCurrentAnimation = mDownIdleAni;
@@ -623,6 +626,7 @@ void Player::PlayerCtrl() {
 			if (Input::GetInstance()->GetKeyUp('A') || Input::GetInstance()->GetKeyUp('D')) {
 				mIsMousePosition = true;
 				if (mPlayerState != PlayerState::roll) {
+					EquipmentPlayerImage(0);
 					mPlayerState = PlayerState::idle;
 
 					if (mCurrentAnimation == mLeftRunAni || mCurrentAnimation == mLeftWalkAni) mCurrentAnimation = mLeftIdleAni;

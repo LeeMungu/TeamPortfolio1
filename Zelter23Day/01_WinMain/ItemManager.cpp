@@ -194,7 +194,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 	else if (str == L"Han") //세면대
 	{ 
-
+		key = L"Stone1";
 	}
 	else if (str == L"Mot") //오토바이
 	{ 
@@ -217,6 +217,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	{
 		key = L"WoodBrench1";
 		key2 = L"Bandage";
+		y += 30;
 	}
 	else if (str == L"Sho") 
 	{
@@ -250,7 +251,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 	else if (str == L"Toi") //변기
 	{ 
-
+		key = L"Stone1";
 	}
 	else if (str == L"Tre") //나무
 	{ 
@@ -527,6 +528,7 @@ void ItemManager::MoveItems()
 	}
 	*/
 
+/**/
 	bool isOpened = mInventory->GetOpened();
 	
 	//아이템을 슬롯으로 드로그 앤 드롭해서 옮길 수 있음

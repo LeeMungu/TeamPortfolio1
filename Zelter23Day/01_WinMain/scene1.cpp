@@ -95,7 +95,7 @@ void scene1::Init()
 	//특정 장소 도착 시 좀비등장 및 공격 텍스트창 출력
 	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*125));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"저건...좀비? 일단 갖고있는\n도끼로 공격하자."));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"저건...좀비?\n한 놈밖에 없으니\n일단 갖고있는\n도끼로 공격하자."));
 	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"좀비에 접근 후 F키를 누르면\n좀비를 공격할 수 있습니다."));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());

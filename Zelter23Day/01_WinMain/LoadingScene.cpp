@@ -159,9 +159,9 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Doll1", Resources(L"/05_Object/Doll1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Doll2", Resources(L"/05_Object/Doll2.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door1", Resources(L"/05_Object/Door1.png"), 2, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door2", Resources(L"/05_Object/Door2.png"), 1, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door3", Resources(L"/05_Object/Door3.png"), 1, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door4", Resources(L"/05_Object/Door4.png"), 1, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door2", Resources(L"/05_Object/Door2.png"), 2, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door3", Resources(L"/05_Object/Door3.png"), 2, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door4", Resources(L"/05_Object/Door4.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"DustBox1", Resources(L"/05_Object/DustBox1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"DustBox2", Resources(L"/05_Object/DustBox2.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"DustBox3", Resources(L"/05_Object/DustBox3.png"), 2, 1); });

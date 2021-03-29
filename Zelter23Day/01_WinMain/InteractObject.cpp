@@ -187,7 +187,12 @@ void InteractObject::Render(HDC hdc)
 			else if (mIsDoorOpen == true)
 			{
 				//열린 문 이미지 넣어줄예정
-				if (mChangeDoor == true)
+				if (mChangeDoor == false)
+				{
+					CameraManager::GetInstance()->GetMainCamera()
+						->DoorScaleFrameRender(hdc, mImage, mRect.left, mRect.top, 1, mIndexY, mSizeX, mSizeY, mDoorTime);
+				}
+				else if (mChangeDoor == true)
 				{
 					CameraManager::GetInstance()->GetMainCamera()
 						->DoorScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY, 1.f-mDoorTime);

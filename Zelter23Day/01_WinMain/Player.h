@@ -124,10 +124,30 @@ public:
 
 	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
 	void SetAttacked(Attacked attacked) { mAttacked = attacked; }
-	void SetHP(int hp) { if (mHP > 0) mHP = hp; else mHP = 0; }
-	void SetThirst(int t) { if (mThirst > 0) mThirst = t; else mThirst = 0; }
-	void SetHunger(int h) { if (mHunger > 0) mHunger = h; else mHunger = 0; }
-	void SetStemina(int s) { if (mStemina > 0) mStemina = s; else mStemina = 0; }
+	void SetHP(int hp) 
+	{
+		if (mHP > 0 && mHunger <= 100) mHP = hp;
+		else if (mHP > 100) mHP = 100;
+		else mHP = 0;
+	}
+	void SetThirst(int t) 
+	{
+		if (mThirst > 0 && mThirst <= 100) mThirst = t;
+		else if (mThirst > 100) mThirst = 100;
+		else mThirst = 0;
+	}
+	void SetHunger(int h) 
+	{ 
+		if (mHunger > 0 && mHunger <= 100) mHunger = h;
+		else if (mHunger > 100) mHunger = 100;
+		else mHunger = 0; 
+	}
+	void SetStemina(int s) 
+	{
+		if (mStemina > 0 && mStemina <= 100) mStemina = s;
+		else if (mStemina > 100) mStemina = 100;
+		else mStemina = 0;
+	}
 	void SetNoDamage(bool noDamage) { mIsInvincible = noDamage; }
 		
 	void PlayerCtrl();

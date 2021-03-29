@@ -90,6 +90,8 @@ void ItemManager::Init()
 	mSelectedItem.count = NULL;
 	mSelectedItem.quickType = ItemType::end;
 	mSelectedItem.key = L"";
+
+	mInputNum = 0;
 }
 
 void ItemManager::Release()
@@ -105,8 +107,8 @@ void ItemManager::Update()
 	mItems = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 
 	PickUpItems();
-
 	MoveItems();
+	UseQuickSlot(mInputNum);
 	//CheckFillSlot();
 	//ItemRePositioning();
 }
@@ -747,26 +749,30 @@ void ItemManager::IntersectQuickSlot(int indexQ)
 //숫자 키 누르면
 void ItemManager::ItemRePositioning()
 {
-
 	if (Input::GetInstance()->GetKeyDown('1'))
 	{
 		QuickSlotRePositioning(1);
+		mInputNum = 1;
 	}
 	else if (Input::GetInstance()->GetKeyDown('2'))
 	{
 		QuickSlotRePositioning(2);
+		mInputNum = 2;
 	}
 	else if (Input::GetInstance()->GetKeyDown('3'))
 	{
 		QuickSlotRePositioning(3);
+		mInputNum = 3;
 	}
 	else if (Input::GetInstance()->GetKeyDown('4'))
 	{
 		QuickSlotRePositioning(4);
+		mInputNum = 4;
 	}
 	else if (Input::GetInstance()->GetKeyDown('5'))
 	{
 		QuickSlotRePositioning(5);
+		mInputNum = 5;
 	}
 }
 
@@ -809,6 +815,9 @@ void ItemManager::QuickSlotRePositioning(int num)
 					mSelectedItem.key = ((Item*)mItems[i])->GetKeyName();
 					
 					mPlayer->SetSelectedItem(mSelectedItem);
+
+					mInputItem = (Item*)mItems[i];
+
 				}
 			}
 			//나머지 위치에 있는 아이템들
@@ -829,7 +838,47 @@ void ItemManager::QuickSlotRePositioning(int num)
 
 		mPlayer->SetSelectedItem(mSelectedItem);
 	}
+}
 
+//슬롯 선택된거 클릭하면 사용한다.
+void ItemManager::UseQuickSlot(int num)
+{
+	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON) && mInputItem != nullptr)
+	{
+		if (mSelectedItem.quickType == ItemType::drink)
+		{
+			//플레이어 목마름 회복
+			mPlayer->SetThirst(mPlayer->GetThirst() + 10);
+			
+			//개수를 줄여줌
+			mSelectedItem.count -= 1;
+			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
+			mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
+			ItemCountCheck(mInputItem, num - 1, 0);
+		}
+		else if (mSelectedItem.quickType == ItemType::food)
+		{
+			//플레이어 배고픔 회복
+			mPlayer->SetHunger(mPlayer->GetHunger() + 10);
+
+			//개수를 줄여줌
+			mSelectedItem.count -= 1;
+			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
+			mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
+			ItemCountCheck(mInputItem, num - 1, 0);
+		}
+		else if (mSelectedItem.quickType == ItemType::heal)
+		{
+			//플레이어 스테미나 회복
+			mPlayer->SetThirst(mPlayer->GetThirst() + 10);
+
+			//개수를 줄여줌
+			mSelectedItem.count -= 1;
+			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
+			mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
+			ItemCountCheck(mInputItem, num - 1, 0);
+		}
+	}
 }
 
 //아이템이 0개 이하가 되면 아이템인벤토리리스트 map 에서 삭제해줌
@@ -837,7 +886,20 @@ void ItemManager::ItemCountCheck(Item* item, int y, int x)
 {
 	if (mItemInventoryList[item->GetKeyName()] <= 0)
 	{
-		mSlotList[y][x].isFill = false;
+		if (item->GetItemKind() == ItemKind::inventory)
+		{
+			mSlotList[y][x].isFill = false;
+		}
+		else if (item->GetItemKind() == ItemKind::quickSlot)
+		{
+			mQuickSlotList[y].isFill = false;
+
+			mSelectedItem.count = NULL;
+			mSelectedItem.quickType = ItemType::end;
+			mSelectedItem.key = L"";
+
+			mPlayer->SetSelectedItem(mSelectedItem);
+		}
 		mItemInventoryList.erase(item->GetKeyName());
 		item->SetIsDestroy(true);
 	}

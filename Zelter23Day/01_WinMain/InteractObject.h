@@ -33,7 +33,8 @@ class InteractObject : public GameObject
 	bool mIsDoorOpen;
 	bool mChangeDoor;
 	float mDoorTime;
-
+	
+	GameObject* mPlayer;
 public:
 	InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY);
 

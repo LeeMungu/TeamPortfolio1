@@ -299,18 +299,27 @@ void CollisionManager::PlayerAttack()
 		{
 			for (int i = 0; i < interactobject.size(); ++i)
 			{
-				InteractObject* object = (InteractObject*)interactobject[i];
-				objectRC = object->GetInteractRect();
+				InteractObject* tempInteract = (InteractObject*)interactobject[i];
+				objectRC = tempInteract->GetInteractRect();
 				//플레이어가 오브젝트를 공격하였다!
-				if (IntersectRect(&temp, &playerAttackRC, &objectRC) && object->GetIsInvincible() == false)
-				{
-					object->SetHp(object->GetHp() - 10);
-					object->SetIsInvincible(true);
-					EffectManager* effect = new EffectManager(L"Melee_attack",temp,0,5,0.1f);
 
-					for (int i = 0; i < 8; ++i)
+
+				if ((tempInteract->GetImageKey()).substr(0, 4) == L"Door" && tempInteract->GetIsDoorOpen() == true)
+				{
+					return;
+				}
+				else
+				{
+					if (IntersectRect(&temp, &playerAttackRC, &objectRC) && tempInteract->GetIsInvincible() == false)
 					{
-						EffectImpact* impact = new EffectImpact(object->GetImageKey(), object->GetX(), object->GetY(), i);
+						tempInteract->SetHp(tempInteract->GetHp() - 10);
+						tempInteract->SetIsInvincible(true);
+						EffectManager* effect = new EffectManager(L"Melee_attack", temp, 0, 5, 0.1f);
+
+						for (int i = 0; i < 8; ++i)
+						{
+							EffectImpact* impact = new EffectImpact(tempInteract->GetImageKey(), tempInteract->GetX(), tempInteract->GetY(), i);
+						}
 					}
 				}
 			}

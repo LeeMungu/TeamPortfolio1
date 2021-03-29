@@ -6,6 +6,7 @@ class MainScene : public Scene
 	class Image* mImage;
 	class Button* mStartButton;
 	class Button* mToolSceneButton;
+	class Button* mExitButton;
 
 	bool mIsSkip;
 

@@ -19,16 +19,7 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 	mHp = hp;
 	mImageKey = imageKey;
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
-	if (mImage->GetKey().substr(0,4) == L"Door")
-	{
-		mSizeX = mImage->GetFrameWidth() * InteractObjectSize * 2 ;
-		mSizeY = mImage->GetFrameHeight() * InteractObjectSize * 1.8;
-	}
-	else
-	{
-		mSizeX = mImage->GetFrameWidth() * InteractObjectSize;
-		mSizeY = mImage->GetFrameHeight() * InteractObjectSize;
-	}
+	
 
 	mTileCountX = tileCountX;
 	mTileCountY = tileCountY;
@@ -41,6 +32,40 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 		mX = mTileIndexX * TileSize + mTileCountX * InteractObjectSize / 2 * TileSize;// -TileSize / 2;
 	}
 	mY = mTileIndexY * TileSize - mSizeY / 2 + TileSize/2;
+
+	if (mImage->GetKey() == L"Door1")
+	{
+		mX -= 32;
+		mY -= 35;
+		mSizeX = mImage->GetFrameWidth() * InteractObjectSize * 2 + 5;
+		mSizeY = mImage->GetFrameHeight() * InteractObjectSize * 1.7;
+	}
+	else if (mImage->GetKey() == L"Door2")
+	{
+		mX += 1;
+		mY -= 22;
+		mSizeX = mImage->GetFrameWidth() * InteractObjectSize +6;
+		mSizeY = mImage->GetFrameHeight() * InteractObjectSize +4;
+	}
+	else if (mImage->GetKey() == L"Door3")
+	{
+		mX += 34;
+		mY -= 52;
+		mSizeX = mImage->GetFrameWidth() * InteractObjectSize *1.9 -2;
+		mSizeY = mImage->GetFrameHeight() * InteractObjectSize + 20;
+	}
+	else if (mImage->GetKey() == L"Door4")
+	{
+		mX -= 18;
+		mY -= 46;
+		mSizeX = mImage->GetFrameWidth() * InteractObjectSize +8;
+		mSizeY = mImage->GetFrameHeight() * InteractObjectSize ;
+	}
+	else
+	{
+		mSizeX = mImage->GetFrameWidth() * InteractObjectSize;
+		mSizeY = mImage->GetFrameHeight() * InteractObjectSize;
+	}
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	
 	int interactRectSizeX, interactRectSizeY;

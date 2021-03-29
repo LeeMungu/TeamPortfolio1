@@ -45,10 +45,10 @@ void Tile::Render(HDC hdc)
 			{
 				Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Red2);
 			}
-			else
-			{
-				Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Green);
-			}
+			//else
+			//{
+			//	Gizmo::GetInstance()->DrawRect(hdc, tempRc, Gizmo::Color::Green);
+			//}
 
 			//컨트롤키로 속성 표시
 			if (Input::GetInstance()->GetKey(VK_LCONTROL))

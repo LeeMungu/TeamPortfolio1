@@ -194,7 +194,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 	else if (str == L"Han") //세면대
 	{ 
-
+		key = L"Stone1";
 	}
 	else if (str == L"Mot") //오토바이
 	{ 
@@ -217,6 +217,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	{
 		key = L"WoodBrench1";
 		key2 = L"Bandage";
+		y += 30;
 	}
 	else if (str == L"Sho") 
 	{
@@ -250,7 +251,7 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 	else if (str == L"Toi") //변기
 	{ 
-
+		key = L"Stone1";
 	}
 	else if (str == L"Tre") //나무
 	{ 
@@ -333,7 +334,7 @@ void ItemManager::PickUpItems()
 	{
 		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Item);
 
-		if (items.size() != NULL)
+		if (items.size() != NULL )
 		{
 			for (int i = 0; i < items.size(); ++i)
 			{
@@ -346,10 +347,30 @@ void ItemManager::PickUpItems()
 					//플레이어와 아이템 충돌 처리
 					if (IntersectRect(&rc, &mItemsRc, &playerRc))
 					{
-						//인벤토리에 넣어줌
-						PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
-						//아이템 지워줌
-						items[i]->SetIsDestroy(true);
+						int num = 0;
+						for (int j = 0; j < 5; j++) {
+							if (mQuickSlotList[j].isFill == true)
+							{
+								num++;
+							}
+						}
+						map<wstring, int>::iterator iter;
+						iter = mItemInventoryList.find(((Item*)items[i])->GetKeyName());
+						//이터레이터 끝까지 가면 없는거
+						if (iter == mItemInventoryList.end() && mItemInventoryList.size() - num < 10)
+						{
+							//인벤토리에 넣어줌
+							PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
+							//아이템 지워줌
+							items[i]->SetIsDestroy(true);
+						}
+						else if(iter != mItemInventoryList.end())
+						{
+							//인벤토리에 넣어줌
+							PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
+							//아이템 지워줌
+							items[i]->SetIsDestroy(true);
+						}
 					}
 				}
 			}
@@ -527,6 +548,7 @@ void ItemManager::MoveItems()
 	}
 	*/
 
+/**/
 	bool isOpened = mInventory->GetOpened();
 	
 	//아이템을 슬롯으로 드로그 앤 드롭해서 옮길 수 있음
@@ -670,7 +692,7 @@ void ItemManager::MoveItems()
 						// 아이템과 퀵슬롯 충돌 처리 (플레이어 상호작용 하는거만 넣기)
 						if (((Item*)mItems[i])->GetType() == ItemType::drink || ((Item*)mItems[i])->GetType() == ItemType::food
 							|| ((Item*)mItems[i])->GetType() == ItemType::gun || ((Item*)mItems[i])->GetType() == ItemType::weapon
-							|| ((Item*)mItems[i])->GetType() == ItemType::heal)
+							|| ((Item*)mItems[i])->GetType() == ItemType::heal || ((Item*)mItems[i])->GetType() == ItemType::structure)
 							for (int j = 0; j < 5; j++)
 							{
 								RECT rc;

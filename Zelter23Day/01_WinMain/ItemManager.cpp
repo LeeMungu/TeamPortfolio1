@@ -957,27 +957,22 @@ void ItemManager::ItemRePositioning()
 	if (Input::GetInstance()->GetKeyDown('1'))
 	{
 		QuickSlotRePositioning(1);
-		mInputNum = 1;
 	}
 	else if (Input::GetInstance()->GetKeyDown('2'))
 	{
 		QuickSlotRePositioning(2);
-		mInputNum = 2;
 	}
 	else if (Input::GetInstance()->GetKeyDown('3'))
 	{
 		QuickSlotRePositioning(3);
-		mInputNum = 3;
 	}
 	else if (Input::GetInstance()->GetKeyDown('4'))
 	{
 		QuickSlotRePositioning(4);
-		mInputNum = 4;
 	}
 	else if (Input::GetInstance()->GetKeyDown('5'))
 	{
 		QuickSlotRePositioning(5);
-		mInputNum = 5;
 	}
 }
 
@@ -1006,6 +1001,8 @@ void ItemManager::QuickSlotRePositioning(int num)
 					mSelectedItem.key = L"";
 
 					mPlayer->SetSelectedItem(mSelectedItem);
+
+					mInputNum = 0;
 				}
 				//선택안돼있던 슬롯이면
 				else
@@ -1023,6 +1020,7 @@ void ItemManager::QuickSlotRePositioning(int num)
 
 					mInputItem = (Item*)mItems[i];
 
+					mInputNum = num;
 				}
 			}
 			//나머지 위치에 있는 아이템들
@@ -1048,7 +1046,7 @@ void ItemManager::QuickSlotRePositioning(int num)
 //슬롯 선택된거 클릭하면 사용한다.
 void ItemManager::UseQuickSlot(int num)
 {
-	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON) && mInputItem != nullptr)
+	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON) && mInputItem != nullptr && mInputNum != 0)
 	{
 		if (mSelectedItem.quickType == ItemType::drink)
 		{
@@ -1069,7 +1067,7 @@ void ItemManager::UseQuickSlot(int num)
 			//개수를 줄여줌
 			mSelectedItem.count -= 1;
 			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
-			//mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
+			mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);	
 			ItemCountCheck(mInputItem, num - 1, 0);
 		}
 		else if (mSelectedItem.quickType == ItemType::heal)
@@ -1105,7 +1103,7 @@ void ItemManager::ItemCountCheck(Item* item, int y, int x)
 
 			mPlayer->SetSelectedItem(mSelectedItem);
 		}
-		mItemInventoryList.erase(item->GetKeyName());
+		mItemInventoryList.erase(item->GetKeyName()); 
 		item->SetIsDestroy(true);
 	}
 }

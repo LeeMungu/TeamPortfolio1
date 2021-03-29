@@ -303,30 +303,29 @@ void ObjectManager::Zorder(vector<GameObject*> &zorderRenderList)
 	{
 		if ((a->GetName() == "House2" || a->GetName() == "House5" || a->GetName() == "House8" || a->GetName() == "police2" || a->GetName() == "shop2")
 			 &&((HousingObject*)a)->GetZotherRect().size() != NULL)
-		{
-				for (int i = 0; i < ((HousingObject*)a)->GetZotherRect().size(); ++i)
+		{	
+			for (int i = 0; i < ((HousingObject*)a)->GetZotherRect().size(); ++i)
+			{
+				RECT temp;
+				RECT housingWallRect = ((HousingObject*)a)->GetZotherRect()[i];
+				RECT playerRc = b->GetRect();
+				if (b->GetName() == "Player")
 				{
-					RECT temp;
-					RECT housingWallRect = ((HousingObject*)a)->GetZotherRect()[i];
-					RECT playerRc = b->GetRect();
-					if (b->GetName() == "Player")
+					playerRc = { b->GetRect().left, b->GetRect().top - 50, b->GetRect().right, b->GetRect().bottom };
+				}
+				if (IntersectRect(&temp, &housingWallRect, &playerRc))
+				{
+					if ((playerRc.top < housingWallRect.top && playerRc.bottom > housingWallRect.top)
+						||(playerRc.bottom>housingWallRect.bottom&&playerRc.top < housingWallRect.bottom))
 					{
-						playerRc = { b->GetRect().left, b->GetRect().top - 50, b->GetRect().right, b->GetRect().bottom };
+						return true;
 					}
-					if (IntersectRect(&temp, &housingWallRect, &playerRc))
+					else
 					{
-						if ((playerRc.top < housingWallRect.top && playerRc.bottom > housingWallRect.top)
-							||(playerRc.bottom>housingWallRect.bottom&&playerRc.top < housingWallRect.bottom))
-						{
-							return true;
-						}
-						else
-						{
-							return false;
-						}
+						return false;
 					}
 				}
-		
+			}
 		}
 		else if ((b->GetName() == "House2" || b->GetName() == "House5" || b->GetName() == "House8" || b->GetName() == "police2" || b->GetName() == "shop2")
 			&& (((HousingObject*)b)->GetZotherRect().size() != NULL))

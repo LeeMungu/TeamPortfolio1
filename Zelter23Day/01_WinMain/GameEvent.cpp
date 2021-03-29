@@ -211,6 +211,7 @@ bool IAllUnitActive::Update()
 			//여기까지 왔다면 모두 트루다.
 			return true;
 		}
+		return true;
 	}
 	else if (player->GetIsActive() == false)
 	{
@@ -257,6 +258,7 @@ bool IAllUnitStop::Update()
 			//for를 다돌았다면 모두 정지상태
 			return true;
 		}
+		return true;
 	}
 	else if (player->GetIsActive() == true)
 	{

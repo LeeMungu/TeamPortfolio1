@@ -401,7 +401,7 @@ void ItemManager::MoveItems()
 
 	//아이템을 슬롯으로 드래그 앤 드롭해서 옮길 수 있음
 	
-	if (isOpened == true) //인벤토리 열려있을 때만
+	if (isOpened == true && mItems.size()!=NULL) //인벤토리 열려있을 때만
 	{
 		if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 		{

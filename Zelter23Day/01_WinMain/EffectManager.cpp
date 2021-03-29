@@ -10,10 +10,30 @@ EffectManager::EffectManager(wstring imagename, RECT temp, int frameStartX, int 
 {
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Effect, this);
 	mImage = IMAGEMANAGER->FindImage(imagename);
-	mX = temp.left + (temp.right - temp.left) / 2;
-	mY = temp.top + (temp.bottom - temp.top) / 2;
-	mSizeX = mImage->GetFrameWidth();
-	mSizeY = mImage->GetFrameHeight();
+
+
+	if (mImage->GetKey() ==L"Effect_blood_L" )
+	{
+		mX = temp.left;
+		mY = temp.top + (temp.bottom - temp.top) / 2;
+		mSizeX = mImage->GetFrameWidth()*2;
+		mSizeY = mImage->GetFrameHeight()*2;
+	}
+	else if (mImage->GetKey() == L"Effect_blood_R")
+	{
+		mX = temp.right;
+		mY = temp.top + (temp.bottom - temp.top) / 2;
+		mSizeX = mImage->GetFrameWidth() * 2;
+		mSizeY = mImage->GetFrameHeight() * 2;
+	}
+	else
+	{
+		mX = temp.left + (temp.right - temp.left) / 2;
+		mY = temp.top + (temp.bottom - temp.top) / 2;
+		mSizeX = mImage->GetFrameWidth();
+		mSizeY = mImage->GetFrameHeight();
+	}
+
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 	mAnimation = new Animation();
@@ -40,6 +60,8 @@ void EffectManager::Render(HDC hdc)
 {
 
 	CameraManager::GetInstance()->GetMainCamera()->
-		ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX*0.5, mSizeY*0.5);
+		ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
+
+
 }
 

@@ -58,7 +58,7 @@ void MainGame::Init()
 	SoundPlayer::GetInstance()->LoadFromFile(L"Siren1", Resources(L"/09_Sound/Siren1.mp3"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"KakaoTalkSound", Resources(L"/09_Sound/KakaoTalkSound.mp3"), false);
 	//텍스트 박스
-	ImageManager::GetInstance()->LoadFromFile(L"TextBox", Resources(L"TextBox.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"TextBox", Resources(L"paper_ui.png"));
 	//밤화면
 	ImageManager::GetInstance()->LoadFromFile(L"EveningBackground", Resources(L"EveningBackground.png"));
 	//비이미지

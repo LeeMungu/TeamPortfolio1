@@ -70,6 +70,7 @@ class HousingObject : public GameObject
 	RECT mShopRect2_Right;
 	RECT mShopRect2_Bottom;
 
+	vector<RECT> mZotherRect;
 public:
 	HousingObject(const wstring& name, float x, float y, int tileCountX, int tileCountY);
 
@@ -82,6 +83,7 @@ public:
 	void SetAlpha(float alpha) { mAlpha = alpha; }
 	
 	vector<RECT> GetCollisionList() { return mCollisionList; }
+	vector<RECT> GetZotherRect() { return mZotherRect; }
 	wstring GetImageKey()const { return mImageKey; }
 
 

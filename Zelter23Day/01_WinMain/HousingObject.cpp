@@ -13,6 +13,7 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 	mTileIndexY = y / TileSize;
 	mThick = 30;
 	mImageKey = name;
+	mName.assign(name.begin(), name.end());
 	if (mImageKey == L"House1" || mImageKey == L"House4" || mImageKey == L"House7" || mImageKey == L"police1" || mImageKey== L"shop1")
 	{
 		mHouselayer = HouseLayer::Floor;
@@ -162,7 +163,7 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
+	mZotherRect.clear();
 }
 
 void HousingObject::Init()
@@ -195,27 +196,36 @@ void HousingObject::Update()
 	{
 		mRect.bottom = mRect.bottom ;
 	}
-	if (mImageKey == L"House3")
+
+
+	if (mImageKey == L"House3" || mImageKey == L"House2")
 	{
 		mHouse01Rect1 = RectMakeCenter(mX, mY - 20, mSizeX / 2 + 100, mSizeY / 2 - 18);
 		mHouse01Rect2 = RectMakeCenter(mX + 140, mY + 230, mSizeX / 4, mSizeY / 4);
+		mZotherRect.push_back(mHouse01Rect1);
+		mZotherRect.push_back(mHouse01Rect2);
 	}
-	if (mImageKey == L"House6")
+	else if (mImageKey == L"House6" || mImageKey == L"House5")
 	{
 		mHouse04Rect1 = RectMakeCenter(mX, mY + 50, mSizeX / 2 + 280, mSizeY / 2 + 20);
+		mZotherRect.push_back(mHouse04Rect1);
 	}
-	if (mImageKey == L"House9")
+	else if (mImageKey == L"House9" || mImageKey == L"House8")
 	{
 		mHouse07Rect1 = RectMakeCenter(mX, mY, mSizeX / 1.5, mSizeY /1.5+100);
+		mZotherRect.push_back(mHouse07Rect1);
 	}
-	if (mImageKey == L"police3")
+	else if (mImageKey == L"police3" || mImageKey == L"police2")
 	{
 		mPoliceRect = RectMakeCenter(mX, mY+80, mSizeX-250, mSizeY-250);
+		mZotherRect.push_back(mPoliceRect);
 	}
-	if (mImageKey == L"shop3")
+	else if (mImageKey == L"shop3" || mImageKey == L"shop2")
 	{
 		mShopRect1 = RectMakeCenter(mX+220, mY+150, mSizeX/2-70, mSizeY/2);
 		mShopRect2 = RectMakeCenter(mX-200, mY-150, mSizeX/2-50, mSizeY/3-50);
+		mZotherRect.push_back(mShopRect1);
+		mZotherRect.push_back(mShopRect2);
 	}
 
 	
@@ -275,22 +285,30 @@ void HousingObject::Render(HDC hdc)
 			CameraManager::GetInstance()->GetMainCamera()
 				->RenderRect(hdc, mRect);
 
-			CameraManager::GetInstance()->GetMainCamera()
-				->RenderRect(hdc, mHouse01Rect1, Gizmo::Color::Blue2);
-			CameraManager::GetInstance()->GetMainCamera()
-				->RenderRect(hdc, mHouse01Rect2, Gizmo::Color::Blue2);
-
-			CameraManager::GetInstance()->GetMainCamera()
-				->RenderRect(hdc, mHouse04Rect1, Gizmo::Color::Blue2);
-			CameraManager::GetInstance()->GetMainCamera()
-				->RenderRect(hdc, mHouse07Rect1, Gizmo::Color::Blue2);
-			CameraManager::GetInstance()->GetMainCamera()
-				->RenderRect(hdc, mPoliceRect, Gizmo::Color::Blue2);
-
-			CameraManager::GetInstance()->GetMainCamera()
-				->RenderRect(hdc, mShopRect1, Gizmo::Color::Blue2);
-			CameraManager::GetInstance()->GetMainCamera()
-				->RenderRect(hdc, mShopRect2, Gizmo::Color::Blue2);
+			if (mZotherRect.size() != NULL)
+			{
+				for (int i = 0; i < mZotherRect.size(); ++i)
+				{
+					CameraManager::GetInstance()->GetMainCamera()
+						->RenderRect(hdc, mZotherRect[i], Gizmo::Color::Blue2);
+				}
+			}
+			//CameraManager::GetInstance()->GetMainCamera()
+			//	->RenderRect(hdc, mHouse01Rect1, Gizmo::Color::Blue2);
+			//CameraManager::GetInstance()->GetMainCamera()
+			//	->RenderRect(hdc, mHouse01Rect2, Gizmo::Color::Blue2);
+			//
+			//CameraManager::GetInstance()->GetMainCamera()
+			//	->RenderRect(hdc, mHouse04Rect1, Gizmo::Color::Blue2);
+			//CameraManager::GetInstance()->GetMainCamera()
+			//	->RenderRect(hdc, mHouse07Rect1, Gizmo::Color::Blue2);
+			//CameraManager::GetInstance()->GetMainCamera()
+			//	->RenderRect(hdc, mPoliceRect, Gizmo::Color::Blue2);
+			//
+			//CameraManager::GetInstance()->GetMainCamera()
+			//	->RenderRect(hdc, mShopRect1, Gizmo::Color::Blue2);
+			//CameraManager::GetInstance()->GetMainCamera()
+			//	->RenderRect(hdc, mShopRect2, Gizmo::Color::Blue2);
 
 
 			for (int i = 0; i < mCollisionList.size(); ++i)

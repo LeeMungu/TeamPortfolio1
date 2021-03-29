@@ -28,7 +28,7 @@ Time::Time()
 	this->mIsStart = true;
 
 	this->mIsSceneStart = false;
-	this->mSceneTime = 0.0f;
+	this->mSceneTime = 60.f*7.f;
 }
 
 
@@ -40,7 +40,7 @@ void Time::Tick(float lockFPS)
 		//mWorldTime 버그 때문에 추가
 		if (isFirstChecking == false)
 		{
-			this->mSceneTime = 0.0f;
+			this->mSceneTime = 60.f * 7.f;
 			this->mWorldTime = 0.0f;
 			this->mFrameRate = this->mFPSFrameCount = 0;
 			this->mFPSTimeElapsed = this->mWorldTime = 0.0f;

@@ -71,7 +71,7 @@ void scene1::Init()
 
 	//true 설정하면 씬 시간 흐름
 	Time::GetInstance()->SetIsSceneStart(true);
-	mZombieCount = 200;
+	mZombieCount = 100;
 	mZombieCoolTime = 1; // 좀비 쿨타임
 	mZombieCoolTimer = 0;//델타타임 더해줄 타이머
 
@@ -87,8 +87,8 @@ void scene1::Init()
 	//	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
 	//}
 	//첫 등장 시 텍스트 창 출력
-	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
+	//GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"성남시에 군인들이\n아직 있다고들었어.\n길을 따라 남동쪽으로 가보자."));
 	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"다들 살아있으면 좋을텐데."));
@@ -120,10 +120,20 @@ void scene1::Init()
 		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
 		GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 	
+		//좀비 등장 이벤트
+		
+		GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight, TileSize * 231, TileSize * 68));
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"좀비테스트 바닥."));
+		//for (int i = 0; i < 1; ++i)
+		//	{
+		//		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
+		//	}
 
 
-	//WeatherManager::GetInstance()->Init();
-	//WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
+
+
+	WeatherManager::GetInstance()->Init();
+	WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
 
 	ItemManager::GetInstance()->DropItems(L"Pistol", 6000, 3450, 1);
 
@@ -148,7 +158,7 @@ void scene1::Release()
 void scene1::Update()
 {
 	//Weather
-	//WeatherManager::GetInstance()->Update();
+	WeatherManager::GetInstance()->Update();
 	//이벤트
 	GameEventManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();

@@ -27,6 +27,7 @@ void WorkTable::Init()
 	mMakingCount = 0;
 	mMakeCost = 0;
 	mMakeCost2 = 0;
+
 	mStartBtn = new Button(L"WorkTable_start_btn", mX + 550, mY + 330, 2, [this]() {
 		MakingItem(mBtnKey);
 		if (mMakingCount > 0)
@@ -53,6 +54,7 @@ void WorkTable::Init()
 	mMakeWoodBoard = new Button(L"나무판", mX + 230, mY + 120, 80, 50, [this]() {mBtnKey = "WoodBoard"; DeleteItem(); Worktemplet(mBtnKey); });
 	//vmMakeBonFire = new Button(L"모닥불", mX + 230, mY + 140, 80, 50, [this]() {mBtnKey = "BonFire", Worktemplet(mBtnKey); });
 	mMakeBarrigate = new Button(L"바리게이트", mX + 230, mY + 160, 80, 50, [this]() {mBtnKey = "Barrigate"; DeleteItem(); Worktemplet(mBtnKey); });
+	mMakeBoom = new Button(L"폭탄", mX + 230, mY + 200, 80, 50, [this]() {mBtnKey = "Boom"; DeleteItem(); Worktemplet(mBtnKey); });
 	mNumImage = IMAGEMANAGER->FindImage(L"SW_num");
 
 }
@@ -65,6 +67,7 @@ void WorkTable::Release()
 	SafeDelete(mMakeWoodBoard);
 	SafeDelete(mMakeBonFire);
 	SafeDelete(mMakeBarrigate);
+	SafeDelete(mMakeBoom);
 }
 
 void WorkTable::Update()
@@ -108,6 +111,13 @@ void WorkTable::Render(HDC hdc)
 							mMakeBarrigate->Render(hdc);
 						}
 					}
+					if (((Item*)items[i])->GetKeyName() == L"Iron1"|| ((Item*)items[i])->GetKeyName() == L"ClothPiece")
+					{
+						if (mMakeBoom != nullptr)
+						{
+							mMakeBoom->Render(hdc);
+						}
+					}
 					
 				}
 			}
@@ -139,6 +149,7 @@ void WorkTable::Worktemplet(string btnkey)
 	if (mIsMakingOpen == false)
 	{
 		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+		
 		if (btnkey == "WoodBoard")//나무판
 		{
 			if (items.size() != NULL)
@@ -226,6 +237,58 @@ void WorkTable::Worktemplet(string btnkey)
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, makeBarrigate);
 
 		}
+
+		if (btnkey == "Boom")
+		{
+			if (items.size() != NULL)
+			{
+				for (int i = 0; i < items.size(); ++i)
+				{
+					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+					{
+						mIsMakingOpen = true;
+						if (((Item*)items[i])->GetKeyName() == L"Iron1")
+						{
+							//재료아이템
+							Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "Iron1", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+							workTableitem->Init();
+							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitem);
+							mMakeItemCount = ((Item*)items[i])->GetCount();
+						}
+
+						if (((Item*)items[i])->GetKeyName() == L"ClothPiece") // 템 있을때 없을때 구분해주기
+						{
+							//재료아이템
+							Item* workTableitemcloth = new Item(((Item*)items[i])->GetKeyName(), "ClothPiece", mX + 480, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+							workTableitemcloth->Init();
+							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitemcloth);
+							mMakeItemCount2 = ((Item*)items[i])->GetCount();
+						}
+					}
+				}
+			}
+
+			if (mMakeItemCount > 1 && mMakeItemCount2 > 0)
+			{
+				mMakingTotalCount = (int)(mMakeItemCount + mMakeItemCount2) / 3;
+			}
+			else
+			{
+				mMakingCount = 0;
+			}
+
+
+			if ((mMakeItemCount + mMakeItemCount2) < 3)
+			{
+				mMakingCount = 0;
+			}
+
+
+			//만들어질 아이템
+			Item* makeBomb1 = new Item(L"Bomb", "makeBomb", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게
+			makeBomb1->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, makeBomb1);
+		}
 		
 	}
 	
@@ -252,6 +315,10 @@ void WorkTable::UpdateButton()
 	if (mMakeBarrigate != nullptr)
 	{
 		mMakeBarrigate->Update();
+	}
+	if (mMakeBoom!=nullptr)
+	{
+		mMakeBoom->Update();
 	}
 }
 
@@ -335,6 +402,50 @@ void WorkTable::MakingItem(string btnkey)
 					}
 				}
 
+			}
+		}
+	}
+	if (btnkey == "Boom")//폭탄
+	{
+		if (makeItem.size() != NULL)
+		{
+			for (int i = 0; i < makeItem.size(); i++)
+			{
+				if (((Item*)makeItem[i])->GetName() == "makeBomb")
+				{
+					if (mMakingCount > 0)
+					{
+						vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
+						if (items.size() != NULL)
+						{
+							for (int i = 0; i < items.size(); ++i)
+							{
+								if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+								{
+									if (((Item*)items[i])->GetKeyName() == L"Iron1")
+									{
+										((Item*)items[i])->SetCountMinus(mMakingCount * 2);
+										ItemManager::GetInstance()->SetmItemListCount(L"Iron1", ((Item*)items[i])->GetCount());
+										POINT p = ItemManager::GetInstance()->GetInventoryIndex((Item*)items[i]);
+										ItemManager::GetInstance()->ItemCountCheck(((Item*)items[i]), p.x, p.y);
+									}
+								}
+								if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
+								{
+									if (((Item*)items[i])->GetKeyName() == L"ClothPiece")
+									{
+										((Item*)items[i])->SetCountMinus(mMakingCount * 1);
+										ItemManager::GetInstance()->SetmItemListCount(L"ClothPiece", ((Item*)items[i])->GetCount());
+										POINT p = ItemManager::GetInstance()->GetInventoryIndex((Item*)items[i]);
+										ItemManager::GetInstance()->ItemCountCheck(((Item*)items[i]), p.x, p.y);
+									}
+								}
+							}
+						}
+
+						ItemManager::GetInstance()->PutInInventory(L"Bomb", mMakingCount);
+					}
+				}
 			}
 		}
 	}

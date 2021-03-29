@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "Mouse.h"
+#include "Bomb.h"
 
 ItemManager::ItemManager()
 {
@@ -75,7 +76,7 @@ ItemManager::ItemManager()
 	mItemImageList.insert(make_pair(L"Tent", ItemType::structure));
 	mItemImageList.insert(make_pair(L"WoodBrench1", ItemType::structure));
 	mItemImageList.insert(make_pair(L"WoodWorkTable", ItemType::structure));
-
+	mItemImageList.insert(make_pair(L"Bomb", ItemType::structure));
 
 	mItemImageList.insert(make_pair(L"Bottle", ItemType::drink));
 	mItemImageList.insert(make_pair(L"Can", ItemType::drink));
@@ -1108,21 +1109,30 @@ void ItemManager::UseQuickSlot(int num)
 		}
 		else if (mSelectedItem.quickType == ItemType::structure)
 		{
-			if (mSelectedItem.count > 0)
-			{
-				Mouse* mouse = new Mouse(mSelectedItem.key, ObjectLayer::InteractObject);
-				mouse->SetHpMax(10);
-				mouse->SetTileCountX(1);
-				mouse->SetTileCountY(1);
-				mouse->Init();
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
 
+			if (mSelectedItem.key == L"Bomb")
+			{
+				Bomb* bomb = new Bomb(mPlayer->GetX(), mPlayer->GetY());
+				bomb->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::Boom, bomb);
 			}
-		
-			mSelectedItem.count -= 1;
-			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
-			mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
-			ItemCountCheck(mInputItem, num - 1, 0);
+			else
+			{
+				//if (mSelectedItem.count > 0)
+				//{
+				//	Mouse* mouse = new Mouse(mSelectedItem.key, ObjectLayer::InteractObject);
+				//	mouse->SetHpMax(10);
+				//	mouse->SetTileCountX(1);
+				//	mouse->SetTileCountY(1);
+				//	mouse->Init();
+				//	ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+				//}
+				//
+				//mSelectedItem.count -= 1;
+				//mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
+				//mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
+				//ItemCountCheck(mInputItem, num - 1, 0);
+			}
 		}
 	}
 }

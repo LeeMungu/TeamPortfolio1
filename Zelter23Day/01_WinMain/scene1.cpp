@@ -20,6 +20,8 @@
 #include "HousingObject.h"
 #include "Tablet.h"
 #include "WorkTable.h"
+#include "ItemManager.h"
+
 //밤
 #include "Evening.h"
 //이벤트
@@ -69,8 +71,8 @@ void scene1::Init()
 
 	//true 설정하면 씬 시간 흐름
 	Time::GetInstance()->SetIsSceneStart(true);
-	mZombieCount = 15;
-	mZombieCoolTime = 10; // 좀비 쿨타임
+	mZombieCount = 200;
+	mZombieCoolTime = 1; // 좀비 쿨타임
 	mZombieCoolTimer = 0;//델타타임 더해줄 타이머
 
 	SoundPlayer::GetInstance()->Play(L"BGM", 0.5f * SoundPlayer::GetInstance()->GetBgmVolume());
@@ -87,17 +89,20 @@ void scene1::Init()
 	//첫 등장 시 텍스트 창 출력
 		//GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
 	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"성남시에 군인들이\n아직 있다고들었어.\n길을 따라 남동쪽으로 가보자."));
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"다들 살아있으면 좋을텐데."));
-	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
-	
+	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"성남시에 군인들이\n아직 있다고들었어.\n길을 따라 남동쪽으로 가보자."));
+	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"다들 살아있으면 좋을텐데."));
+	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"가는 길에 있는 경찰서에서\n권총을 주울 수 있을지 몰라."));
+	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"우선 가지고 있는 도끼로\n녀석들을 상대하자."));
+	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"좀비에 접근 후 F키를 누르면\n좀비를 공격할 수 있습니다."));
+	//GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+
 	//특정 장소 도착 시 좀비등장 및 공격 텍스트창 출력
 	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*125));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"저건...좀비?\n한 놈밖에 없으니\n일단 갖고있는\n도끼로 공격하자."));
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"좀비에 접근 후 F키를 누르면\n좀비를 공격할 수 있습니다."));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"이쪽으로 쭉 가면 성남시야."));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 
 	//탈출 전 폭탄 제작 이벤트 안내 텍스트창 출력
@@ -119,6 +124,8 @@ void scene1::Init()
 
 	WeatherManager::GetInstance()->Init();
 	WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
+
+	ItemManager::GetInstance()->DropItems(L"Pistol", 3000, 4000, 1);
 
 }
 
@@ -148,7 +155,7 @@ void scene1::Update()
 	CollisionManager::GetInstance()->Update();
 
 	ItemManager::GetInstance()->Update();
-	
+
 
 	Player* tempPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	int playerIndexX = tempPlayer->GetX() / TileSize;

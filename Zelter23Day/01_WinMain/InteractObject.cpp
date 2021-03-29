@@ -20,6 +20,8 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 	mImageKey = imageKey;
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
 	
+	mSizeX = mImage->GetFrameWidth() * InteractObjectSize;
+	mSizeY = mImage->GetFrameHeight() * InteractObjectSize;
 
 	mTileCountX = tileCountX;
 	mTileCountY = tileCountY;
@@ -61,11 +63,7 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 		mSizeX = mImage->GetFrameWidth() * InteractObjectSize +8;
 		mSizeY = mImage->GetFrameHeight() * InteractObjectSize ;
 	}
-	else
-	{
-		mSizeX = mImage->GetFrameWidth() * InteractObjectSize;
-		mSizeY = mImage->GetFrameHeight() * InteractObjectSize;
-	}
+	
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	
 	int interactRectSizeX, interactRectSizeY;

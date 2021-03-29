@@ -77,7 +77,7 @@ void MapToolBook::Init()
 			}
 			else if (mBookType == BookType::InterectObject)
 			{
-				if (mPage < 14)
+				if (mPage < 15)
 				{
 					mPage++;
 					mIsPageChange = true;
@@ -1050,6 +1050,32 @@ void MapToolBook::Update()
 							mouse->SetTileCountX(1);
 							mouse->SetTileCountY(1);
 						}
+						mouse->Init();
+						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+					});
+					objectButton->Init();
+					ObjectManager::GetInstance()->AddObject(ObjectLayer::ObjectButton, objectButton);
+				}
+			}
+			else if (mPage == 15)
+			{
+				//오브젝트버튼 초기화
+				vector<GameObject*> tempButton = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::ObjectButton);
+				if (tempButton.size() != NULL)
+				{
+					for (int i = 0; i < tempButton.size(); ++i)
+					{
+						tempButton[i]->SetIsDestroy(true);
+					}
+				}
+				for (int i = 0; i < 4; ++i)
+				{
+					ObjectButton* objectButton = new ObjectButton(L"Door" + to_wstring(i + 1),
+						mX - 250 + 100 * ((i) % 3), mY - 210 + 110 * ((i) / 3), [i]() {
+						Mouse* mouse = new Mouse(L"Door" + to_wstring(i + 1), ObjectLayer::InteractObject);
+						mouse->SetHpMax(10);
+						mouse->SetTileCountX(2);
+						mouse->SetTileCountY(1);
 						mouse->Init();
 						ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
 					});

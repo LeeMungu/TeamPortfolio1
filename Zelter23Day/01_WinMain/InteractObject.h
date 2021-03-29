@@ -29,9 +29,10 @@ class InteractObject : public GameObject
 	//인터렉트 렉트
 	RECT mInteractRect;
 
-	//문짝 true = 닫힘.
+	//문짝 true = 열림.
 	bool mIsDoorOpen;
-
+	bool mChangeDoor;
+	float mDoorTime;
 
 public:
 	InteractObject(const wstring imageKey, float x, float y, int hp, int tileCountX, int tileCountY);

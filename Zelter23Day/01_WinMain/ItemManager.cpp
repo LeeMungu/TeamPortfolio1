@@ -2,6 +2,7 @@
 #include "ItemManager.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "Mouse.h"
 
 ItemManager::ItemManager()
 {
@@ -1098,6 +1099,20 @@ void ItemManager::UseQuickSlot(int num)
 			mPlayer->SetThirst(mPlayer->GetThirst() + 10);
 
 			//개수를 줄여줌
+			mSelectedItem.count -= 1;
+			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
+			mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
+			ItemCountCheck(mInputItem, num - 1, 0);
+		}
+		else if (mSelectedItem.quickType == ItemType::structure)
+		{
+			Mouse* mouse = new Mouse(mSelectedItem.key, ObjectLayer::InteractObject);
+			mouse->SetHpMax(10);
+			mouse->SetTileCountX(1);
+			mouse->SetTileCountY(1);
+			mouse->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+			
 			mSelectedItem.count -= 1;
 			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
 			mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);

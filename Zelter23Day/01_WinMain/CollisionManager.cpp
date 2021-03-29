@@ -157,6 +157,7 @@ void CollisionManager::PlayerCollision()
 					for (int i = 0; i < houseVectorRC.size(); ++i)
 					{
 						houseRC = houseVectorRC[i];
+						//플레이어와 벽 충돌
 						if (IntersectRect(&temp, &playerRC, &houseRC))
 						{
 							float pX = mPlayer->GetX();
@@ -224,6 +225,16 @@ void CollisionManager::ZombieAttack()
 					mPlayer->SetHP(mPlayer->GetHP() - 1);
 					mPlayer->SetIsInvincible(true);
 					enemy->SetIsAttackCheck(true);
+
+					if (mPlayer->GetX() < zombie[i]->GetX())
+					{
+						EffectManager* effect = new EffectManager(L"Effect_blood_L", playerRC, 0, 7, 0.1f);
+					}
+					else
+					{
+						EffectManager* effect = new EffectManager(L"Effect_blood_R", playerRC, 0, 7, 0.1f);
+					}
+
 					
 				}
 				else if (interactobject.size() != NULL)

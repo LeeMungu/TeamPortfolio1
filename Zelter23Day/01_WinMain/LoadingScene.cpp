@@ -35,7 +35,8 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Melee_attack", Resources(L"/08_Effect/effect_1.png"), 6, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Pistol_shoot", Resources(L"/08_Effect/effect_2.png"), 7, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_impact", Resources(L"/08_Effect/effect_impact.png"), 8, 7); });
-	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_blood", Resources(L"/08_Effect/effect_blood.png"), 8, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_blood_R", Resources(L"/08_Effect/effect_blood.png"), 8, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_blood_L", Resources(L"/08_Effect/effect_blood_L.png"), 8, 1); });
 
 	//이미지 (플레이어HP UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon.png"), 12, 1); });

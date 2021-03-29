@@ -41,6 +41,7 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 		mY -= 35;
 		mSizeX = mImage->GetFrameWidth() * InteractObjectSize * 2 + 5;
 		mSizeY = mImage->GetFrameHeight() * InteractObjectSize * 1.7;
+		mPlayer = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	}
 	else if (mImage->GetKey() == L"Door2")
 	{
@@ -48,6 +49,8 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 		mY -= 22;
 		mSizeX = mImage->GetFrameWidth() * InteractObjectSize +6;
 		mSizeY = mImage->GetFrameHeight() * InteractObjectSize +4;
+		mPlayer = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+
 	}
 	else if (mImage->GetKey() == L"Door3")
 	{
@@ -55,6 +58,7 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 		mY -= 52;
 		mSizeX = mImage->GetFrameWidth() * InteractObjectSize *1.9 -2;
 		mSizeY = mImage->GetFrameHeight() * InteractObjectSize + 20;
+		mPlayer = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	}
 	else if (mImage->GetKey() == L"Door4")
 	{
@@ -62,6 +66,7 @@ InteractObject::InteractObject(const wstring imageKey, float x, float y, int hp,
 		mY -= 46;
 		mSizeX = mImage->GetFrameWidth() * InteractObjectSize +8;
 		mSizeY = mImage->GetFrameHeight() * InteractObjectSize ;
+		mPlayer = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	}
 	
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
@@ -143,11 +148,11 @@ void InteractObject::Update()
 
 	if (tempKey == L"Door")
 	{
-		GameObject* player = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
-		if (player != NULL)
+		
+		if (mPlayer != NULL)
 		{
 			RECT tempRc;
-			RECT playerRc = player->GetRect();
+			RECT playerRc = mPlayer->GetRect();
 			if (IntersectRect(&tempRc, &playerRc, &mRect))
 			{
 				if (Input::GetInstance()->GetKeyDown('E'))

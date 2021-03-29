@@ -1075,7 +1075,8 @@ void ItemManager::UseQuickSlot(int num)
 		{
 			//플레이어 목마름 회복
 			mPlayer->SetThirst(mPlayer->GetThirst() + 10);
-			
+			SoundPlayer::GetInstance()->Play(L"DrinkSound", 0.5f
+				* SoundPlayer::GetInstance()->GetEffectVolume());
 			//개수를 줄여줌
 			mSelectedItem.count -= 1;
 			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
@@ -1086,7 +1087,8 @@ void ItemManager::UseQuickSlot(int num)
 		{
 			//플레이어 배고픔 회복
 			mPlayer->SetHunger(mPlayer->GetHunger() + 10);
-
+			SoundPlayer::GetInstance()->Play(L"EatSound", 0.5f
+				* SoundPlayer::GetInstance()->GetEffectVolume());
 			//개수를 줄여줌
 			mSelectedItem.count -= 1;
 			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;

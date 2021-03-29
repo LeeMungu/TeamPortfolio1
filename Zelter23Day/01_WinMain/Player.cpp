@@ -727,8 +727,12 @@ void Player::PlayerState() {
 
 void Player::WeaponUse(bool a)
 {
-	Weapon* tempweapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "weapon");
-	tempweapon->SetIsUse(a);
+	if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Bullet).size() != NULL)
+	{
+		Weapon* tempweapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "weapon");
+		tempweapon->SetIsUse(a);
+	}
+	
 }
 
 void Player::EquipmentPlayerImage(int mode)

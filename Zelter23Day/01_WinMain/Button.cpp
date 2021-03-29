@@ -129,7 +129,6 @@ void Button::Update()
 					mIsSelect = true;
 				}
 			}
-			
 		}
 		//다른것이 선택되었다면<-어쩔수없이 외부에서 반응 할 수밖에없다. <-버튼관리자? 후에 생각해보기
 		if (mState == State::Select)
@@ -156,8 +155,10 @@ void Button::Update()
 
 void Button::Render(HDC hdc)
 {
-	if(mState == State::Normal)
+	if (mState == State::Normal)
+	{
 		RenderRect(hdc, mRect);
+	}
 	else
 	{
 		float sizeX = mSizeX * 0.75f;
@@ -165,10 +166,13 @@ void Button::Render(HDC hdc)
 		RECT rc = RectMakeCenter(mX, mY, sizeX, sizeY);
 		RenderRect(hdc, rc);
 	}
-	D2DRenderer::GetInstance()
-		->RenderText( mX - mSizeX / 3, mY - mSizeY / 4, mText.c_str(), 20);
 	if (mImage != nullptr)
 		mImage->ScaleFrameRender(hdc, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX,mSizeY);
+	else
+	{
+		D2DRenderer::GetInstance()
+			->RenderText(mX - mSizeX / 3, mY - mSizeY / 4, mText.c_str(), 20);
+	}
 }
 
 void Button::Move(float x, float y)

@@ -82,7 +82,7 @@ void Item::Update()
 void Item::Render(HDC hdc)
 {
 	if (mItemKind == ItemKind::drop) { //¶¥¿¡ ¶³¾îÁ®ÀÖÀ» ¶© Ä«¸Þ¶ó ·£´õ
-		CameraManager::GetInstance()->GetMainCamera()->AlphaScaleRender(hdc, mImage, mRect.left, mRect.top, 27, 27, mAlpha);
+		CameraManager::GetInstance()->GetMainCamera()->AlphaScaleRender(hdc, mImage, mRect.left, mRect.top, 28, 28, mAlpha);
 
 		if (mCount != 1)
 		{

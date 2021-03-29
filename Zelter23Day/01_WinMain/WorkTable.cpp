@@ -206,14 +206,13 @@ void WorkTable::Worktemplet(string btnkey)
 			//만들어질 아이템의 총 갯수 계산
 			if (mMakeItemCount > 1 && mMakeItemCount2 > 0)
 			{
-				mMakingTotalCount = mMakeItemCount + mMakeItemCount2;
-				mMakingCount = 0;
+				mMakingTotalCount = (int)(mMakeItemCount + mMakeItemCount2)/3;
 			}
-			else if(mMakeItemCount<=1 && mMakeItemCount2<=0)
+			if ((mMakeItemCount + mMakeItemCount2) < 3)
 			{
-				mMakingTotalCount = 0;
 				mMakingCount = 0;
 			}
+
 
 			//만들어질 아이템
 			Item* makeBarrigate = new Item(L"Barrigate", "makeBarrigate", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게

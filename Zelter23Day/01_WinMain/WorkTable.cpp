@@ -86,8 +86,6 @@ void WorkTable::Render(HDC hdc)
 		mStartBtn->Render(hdc);
 		mTimeUpBtn->Render(hdc);
 		mTimeDownBtn->Render(hdc);
-	
-
 
 		vector<GameObject*> items = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InventoryItem);
 	
@@ -176,14 +174,15 @@ void WorkTable::Worktemplet(string btnkey)
 
 		if (btnkey == "Barrigate")//바리게이트
 		{
-			mIsMakingOpen = true;
+			
 			if (items.size() != NULL)
 			{
 				for (int i = 0; i < items.size(); ++i)
 				{
 					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
 					{
-						if (((Item*)items[i])->GetKeyName() == L"WoodBoard") // 템 있을때 없을때 구분해주기
+						mIsMakingOpen = true;
+						if (((Item*)items[i])->GetKeyName() == L"WoodBoard")
 						{
 							//재료아이템
 							Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "WoodBoard", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
@@ -207,10 +206,10 @@ void WorkTable::Worktemplet(string btnkey)
 			//만들어질 아이템의 총 갯수 계산
 			if (mMakeItemCount > 1 && mMakeItemCount2 > 0)
 			{
-				mMakingTotalCount = (int)mMakeItemCount + mMakeItemCount2 / 3;
+				mMakingTotalCount = mMakeItemCount + mMakeItemCount2;
 				mMakingCount = 0;
 			}
-			else
+			else if(mMakeItemCount<=1 && mMakeItemCount2<=0)
 			{
 				mMakingTotalCount = 0;
 				mMakingCount = 0;

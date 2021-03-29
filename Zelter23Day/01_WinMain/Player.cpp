@@ -190,7 +190,7 @@ void Player::Update()
 			if (mIsMousePosition == true)
 			{
 				mCurrentAnimation->Stop();
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				EquipmentPlayerImage(1);
 				mCurrentAnimation = mUpIdleAni;
 				mCurrentAnimation->Play();
 			}
@@ -204,7 +204,7 @@ void Player::Update()
 			if (mIsMousePosition == true)
 			{
 				mCurrentAnimation->Stop();
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				EquipmentPlayerImage(1);
 				mCurrentAnimation = mLeftIdleAni;
 				mCurrentAnimation->Play();
 			}
@@ -219,7 +219,7 @@ void Player::Update()
 			if (mIsMousePosition == true)
 			{
 				mCurrentAnimation->Stop();
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				EquipmentPlayerImage(1);
 				mCurrentAnimation = mDownIdleAni;
 				mCurrentAnimation->Play();
 			}
@@ -233,7 +233,7 @@ void Player::Update()
 			if (mIsMousePosition == true)
 			{
 				mCurrentAnimation->Stop();
-				mImage = IMAGEMANAGER->FindImage(L"Player_run");
+				EquipmentPlayerImage(1);
 				mCurrentAnimation = mRightIdleAni;
 				mCurrentAnimation->Play();
 			}
@@ -278,34 +278,44 @@ void Player::Update()
 	}
 
 	//ÃÑµé°í ½î´Â°Å
-	if (mSelectedItem.quickType == ItemType::gun)
+	if(mSelectedItem.quickType == ItemType::gun)
 	{
 		mEquipment = Equipment::gun;
-		
-		if (weapon == nullptr)
+
+		if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Weapon).size() != NULL)
 		{
-			if (mSelectedItem.key == L"Shotgun")
-			{
-				weapon = new Weapon("Shotgun", mX, mY, 0, 0);
-				weapon->Init();
-				weapon->SetPlayerPtr(this);
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
-			}
-			else
-			{
-				weapon = new Weapon("weapon", mX, mY, 0, 0);
-				weapon->Init();
-				weapon->SetPlayerPtr(this);
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
-			}
+			Weapon* tempWeapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Shotgun");
+			if (tempWeapon != nullptr) tempWeapon->SetIsDestroy(true);
+
+			Weapon* tempWeapon2 = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Pistol");
+			if (tempWeapon2 != nullptr) tempWeapon2->SetIsDestroy(true);
+		}
+
+		if (mSelectedItem.key == L"Shotgun")
+		{
+			Weapon* shotgun = new Weapon("Shotgun", mX, mY, 0, 0);
+			shotgun->Init();
+			shotgun->SetPlayerPtr(this);
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Weapon, shotgun);
+		}
+		else
+		{
+			Weapon* pistol = new Weapon("Pistol", mX, mY, 0, 0);
+			pistol->Init();
+			pistol->SetPlayerPtr(this);
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Weapon, pistol);
 		}
 	}
 	else
 	{
 		mEquipment = Equipment::normal;
-		if (weapon != nullptr)
+		if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Weapon).size() != NULL)
 		{
-			weapon->SetIsDestroy(true);
+			Weapon* tempWeapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Shotgun");
+			if(tempWeapon != nullptr) tempWeapon->SetIsDestroy(true);
+
+			Weapon* tempWeapon2 = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Pistol");
+			if (tempWeapon2 != nullptr) tempWeapon2->SetIsDestroy(true);
 		}
 	}
 }
@@ -437,6 +447,7 @@ void Player::PlayerCtrl() {
 			}
 
 			if (Input::GetInstance()->GetKeyUp('W') || Input::GetInstance()->GetKeyUp('S')) {
+				EquipmentPlayerImage(0);
 				mPlayerState = PlayerState::idle;
 				mIsMousePosition = true;
 				if (mCurrentAnimation == mDownRunAni || mCurrentAnimation == mDownWalkAni) mCurrentAnimation = mDownIdleAni;
@@ -496,6 +507,7 @@ void Player::PlayerCtrl() {
 			if (Input::GetInstance()->GetKeyUp('A') || Input::GetInstance()->GetKeyUp('D')) {
 				mIsMousePosition = true;
 				if (mPlayerState != PlayerState::roll) {
+					EquipmentPlayerImage(0);
 					mPlayerState = PlayerState::idle;
 
 					if (mCurrentAnimation == mLeftRunAni || mCurrentAnimation == mLeftWalkAni) mCurrentAnimation = mLeftIdleAni;
@@ -564,6 +576,7 @@ void Player::PlayerCtrl() {
 			}
 
 			if (Input::GetInstance()->GetKeyUp('W') || Input::GetInstance()->GetKeyUp('S')) {
+				EquipmentPlayerImage(0);
 				mPlayerState = PlayerState::idle;
 				mIsMousePosition = true;
 				if (mCurrentAnimation == mDownRunAni || mCurrentAnimation == mDownWalkAni) mCurrentAnimation = mDownIdleAni;
@@ -623,6 +636,7 @@ void Player::PlayerCtrl() {
 			if (Input::GetInstance()->GetKeyUp('A') || Input::GetInstance()->GetKeyUp('D')) {
 				mIsMousePosition = true;
 				if (mPlayerState != PlayerState::roll) {
+					EquipmentPlayerImage(0);
 					mPlayerState = PlayerState::idle;
 
 					if (mCurrentAnimation == mLeftRunAni || mCurrentAnimation == mLeftWalkAni) mCurrentAnimation = mLeftIdleAni;

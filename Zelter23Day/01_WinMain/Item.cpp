@@ -60,14 +60,19 @@ void Item::Update()
 
 		float mNowTime = Time::GetInstance()->GetSceneTime();
 		float timer = mNowTime - mCreatedTime;
-		if (timer > 10)
-		{
-			mAlpha -= 0.005f;
-		}
 
-		if(mAlpha <= 0)
+		if (mKeyName != L"Pistol")
 		{
-			this->SetIsDestroy(true);
+
+			if (timer > 10)
+			{
+				mAlpha -= 0.005f;
+			}
+
+			if (mAlpha <= 0)
+			{
+				this->SetIsDestroy(true);
+			}
 		}
 	}
 

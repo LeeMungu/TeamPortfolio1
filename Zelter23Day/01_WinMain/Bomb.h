@@ -17,7 +17,6 @@ class Bomb : public GameObject
 	Image* mImage;
 
 	bool mIsExplosion;
-	bool mIsUse;
 
 	void Init()override;
 	void Release()override;

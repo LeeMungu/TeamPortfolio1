@@ -25,13 +25,17 @@ void LoadingScene::Init()
 
 	//이미지 (무기 /총)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Weapon_pistol", Resources(L"/03_Player/Weapon_pistol.png"), 1, 1); });
+
+	//이미지 (이벤트 폭탄)
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bomb", Resources(L"/03_Player/Bomb.png"), 1, 1); });
 	//이미지 (총알)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bullet", Resources(L"/03_Player/Bullet.png"), 1, 1); });
 
 	//이미지 (이펙트)
-	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"melee_attack", Resources(L"/08_Effect/effect_1.png"), 6, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"pistol_shoot", Resources(L"/08_Effect/effect_2.png"), 7, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"effect_impact", Resources(L"/08_Effect/effect_impact.png"), 8, 7); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Melee_attack", Resources(L"/08_Effect/effect_1.png"), 6, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Pistol_shoot", Resources(L"/08_Effect/effect_2.png"), 7, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_impact", Resources(L"/08_Effect/effect_impact.png"), 8, 7); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_blood", Resources(L"/08_Effect/effect_blood.png"), 8, 1); });
 
 	//이미지 (플레이어HP UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon.png"), 12, 1); });
@@ -148,7 +152,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"dispenser4", Resources(L"/05_Object/dispenser4.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Doll1", Resources(L"/05_Object/Doll1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Doll2", Resources(L"/05_Object/Doll2.png"), 2, 1); });
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door1", Resources(L"/05_Object/Door1.png"), 1, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door1", Resources(L"/05_Object/Door1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door2", Resources(L"/05_Object/Door2.png"), 1, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door3", Resources(L"/05_Object/Door3.png"), 1, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Door4", Resources(L"/05_Object/Door4.png"), 1, 1); });
@@ -335,6 +339,8 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"KakaoTalkSound", Resources(L"/09_Sound/KakaoTalkSound.mp3"), false); });
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"BombSound", Resources(L"/09_Sound/BombSound.wav"), false); });
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"ShotGunSound", Resources(L"/09_Sound/ShotGunSound.wav"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"AxeCollision", Resources(L"/09_Sound/AxeCollision.wav"), false); });
+	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"Scream", Resources(L"/09_Sound/Scream.wav"), false); });
 
 
 	mLoadingImage = IMAGEMANAGER->FindImage(L"LoadingCat");

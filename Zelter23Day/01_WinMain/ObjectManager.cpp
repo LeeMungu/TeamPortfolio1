@@ -100,19 +100,19 @@ void ObjectManager::Update()
 			}
 		}
 		//집벽 그려줄것 넣어주기
-		//else if (iter1->first == ObjectLayer::HousingObject)
-		//{
-		//	if (iter1->second.size() != NULL)
-		//	{
-		//		for (int i = 0; i<iter1->second.size(); ++i)
-		//		{
-		//			if (((HousingObject*)iter1->second[i])->GethouseLayer() == HouseLayer::HouseWall)
-		//			{
-		//				mZorderList.push_back(iter1->second[i]);
-		//			}
-		//		}
-		//	}
-		//}
+		else if (iter1->first == ObjectLayer::HousingObject)
+		{
+			if (iter1->second.size() != NULL)
+			{
+				for (int i = 0; i<iter1->second.size(); ++i)
+				{
+					if (((HousingObject*)iter1->second[i])->GethouseLayer() == HouseLayer::HouseWall)
+					{
+						mZorderList.push_back(iter1->second[i]);
+					}
+				}
+			}
+		}
 		if (iter1->first == ObjectLayer::InteractObject)
 		{
 			//카메라 영역 받아오기
@@ -315,15 +315,15 @@ void ObjectManager::Zorder(vector<GameObject*> &zorderRenderList)
 		//		}
 		//		if (IntersectRect(&temp, &housingWallRect, &playerRc))
 		//		{
-		//			if ((playerRc.top < housingWallRect.top && playerRc.bottom > housingWallRect.top)
-		//				||(playerRc.bottom>housingWallRect.bottom&&playerRc.top < housingWallRect.bottom))
+		//			//if ((playerRc.top < housingWallRect.top && playerRc.bottom > housingWallRect.top)
+		//			//	||(playerRc.bottom>housingWallRect.bottom&&playerRc.top < housingWallRect.bottom))
 		//			{
 		//				return true;
 		//			}
-		//			else
-		//			{
-		//				return false;
-		//			}
+		//			//else
+		//			//{
+		//			//	return false;
+		//			//}
 		//		}
 		//	}
 		//}
@@ -341,15 +341,15 @@ void ObjectManager::Zorder(vector<GameObject*> &zorderRenderList)
 		//		}
 		//		if (IntersectRect(&temp, &housingWallRect, &playerRc))
 		//		{
-		//			if ((playerRc.top < housingWallRect.top && playerRc.bottom > housingWallRect.top)
-		//				|| (playerRc.bottom > housingWallRect.bottom && playerRc.top < housingWallRect.bottom))
+		//			//if ((playerRc.top < housingWallRect.top && playerRc.bottom > housingWallRect.top)
+		//			//	|| (playerRc.bottom > housingWallRect.bottom && playerRc.top < housingWallRect.bottom))
 		//			{
 		//				return false;
 		//			}
-		//			else
-		//			{
-		//				return true;
-		//			}
+		//			//else
+		//			//{
+		//			//	return true;
+		//			//}
 		//		}
 		//	}
 		//}

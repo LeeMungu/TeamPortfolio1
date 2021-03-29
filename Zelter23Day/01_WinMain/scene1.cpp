@@ -132,8 +132,8 @@ void scene1::Init()
 
 
 
-	WeatherManager::GetInstance()->Init();
-	WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
+	//WeatherManager::GetInstance()->Init();
+	//WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
 
 	ItemManager::GetInstance()->DropItems(L"Pistol", 6000, 3450, 1);
 
@@ -143,7 +143,7 @@ void scene1::Release()
 {
 	GameEventManager::GetInstance()->RemoveAllEvent();
 	ObjectManager::GetInstance()->Release();
-	WeatherManager::GetInstance()->Release();
+	//WeatherManager::GetInstance()->Release();
 	//알아서해
 	for (int y = 0; y < mTileList.size(); ++y)
 	{
@@ -158,7 +158,7 @@ void scene1::Release()
 void scene1::Update()
 {
 	//Weather
-	WeatherManager::GetInstance()->Update();
+	//WeatherManager::GetInstance()->Update();
 	//이벤트
 	GameEventManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();

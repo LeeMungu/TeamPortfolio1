@@ -270,7 +270,7 @@ void CollisionManager::PlayerAttack()
 					enemy->SetIsInvincible(true);
 					
 
-					EffectManager* effect = new EffectManager(L"melee_attack", temp, 0, 5, 0.1f);
+					EffectManager* effect = new EffectManager(L"Melee_attack", temp, 0, 5, 0.1f);
 
 					for (int i = 0; i < 8; ++i)
 					{
@@ -295,7 +295,7 @@ void CollisionManager::PlayerAttack()
 				{
 					object->SetHp(object->GetHp() - 10);
 					object->SetIsInvincible(true);
-					EffectManager* effect = new EffectManager(L"melee_attack",temp,0,5,0.1f);
+					EffectManager* effect = new EffectManager(L"Melee_attack",temp,0,5,0.1f);
 
 					for (int i = 0; i < 8; ++i)
 					{
@@ -335,7 +335,7 @@ void CollisionManager::PlayerShoot()
 						enemy->SetIsInvincible(true);
 						enemy->SetChaseDistance(4);
 					}
-					EffectManager* effect = new EffectManager(L"pistol_shoot", temp, 0, 6, 0.1f);
+					EffectManager* effect = new EffectManager(L"Pistol_shoot", temp, 0, 6, 0.1f);
 					bullet->SetIsShot(true);
 
 					for (int i = 0; i < 8; ++i)
@@ -355,7 +355,7 @@ void CollisionManager::PlayerShoot()
 						object->SetHp(object->GetHp() - 1);
 						object->SetIsInvincible(true);
 					}
-					EffectManager* effect = new EffectManager(L"pistol_shoot", temp, 0, 6, 0.1f);
+					EffectManager* effect = new EffectManager(L"Pistol_shoot", temp, 0, 6, 0.1f);
 					bullet->SetIsShot(true);
 
 					for (int i = 0; i < 8; ++i)
@@ -381,7 +381,7 @@ void CollisionManager::PlayerShoot()
 							houseRC = houseVectorRC[i];
 							if (IntersectRect(&temp, &bulletRC, &houseRC))
 							{
-								EffectManager* effect = new EffectManager(L"pistol_shoot", temp, 0, 6, 0.1f);
+								EffectManager* effect = new EffectManager(L"Pistol_shoot", temp, 0, 6, 0.1f);
 								bullet->SetIsDestroy(true);
 							}
 						}

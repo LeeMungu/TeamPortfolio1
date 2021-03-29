@@ -114,6 +114,11 @@ void Camera::ShadowRender(HDC hdc,Image* image, int x, int y, int frameX, int fr
 	image->ShadowRender(hdc, x-mRect.left, y-mRect.top, frameX, frameY, width, height, alpha, time);
 }
 
+void Camera::DoorScaleFrameRender(HDC hdc, Image* image, int x, int y, int frameX, int frameY, int width, int height, float time)
+{
+	image->DoorScaleFrameRender(hdc, x - mRect.left, y - mRect.top, frameX, frameY, width, height, time);
+}
+
 void Camera::RenderRect(HDC hdc, RECT rc)
 {
 	if(IsInCameraArea(rc))

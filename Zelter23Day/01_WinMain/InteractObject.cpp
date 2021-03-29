@@ -65,7 +65,9 @@ void InteractObject::Init()
 	mInvincibleCount = 0.f;
 	mIndexX = 0;
 	mIndexY = 0;
-	mIsDoorOpen == false;
+	mIsDoorOpen = false;
+	mChangeDoor = false;
+	mDoorTime = 0.f;
 }
 
 void InteractObject::Release()
@@ -105,12 +107,35 @@ void InteractObject::Update()
 		mIsDestroy = true;
 	}
 
-	//wstring tempKey = mImageKey.substr(0, 4);
+	wstring tempKey = mImageKey.substr(0, 4);
 
-	//if (tempKey == L"Door" && mIsDoorOpen == false)
-	//{
-
-	//}
+	if (tempKey == L"Door")
+	{
+		GameObject* player = ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+		if (player != NULL)
+		{
+			RECT tempRc;
+			RECT playerRc = player->GetRect();
+			if (IntersectRect(&tempRc, &playerRc, &mRect))
+			{
+				if (Input::GetInstance()->GetKeyDown('E'))
+				{
+					mChangeDoor = true;
+				}
+			}
+			if (mChangeDoor)
+			{
+				mDoorTime += Time::GetInstance()->DeltaTime();
+				if (mDoorTime > 1)
+				{
+					if (mIsDoorOpen == true) mIsDoorOpen = false;
+					else if (mIsDoorOpen == false) mIsDoorOpen = true;
+					mDoorTime = 0.f;
+					mChangeDoor = false;
+				}
+			}
+		}
+	}
 }
 
 void InteractObject::Render(HDC hdc)
@@ -145,7 +170,34 @@ void InteractObject::Render(HDC hdc)
 			->ShadowRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY, 0.3f,
 				Time::GetInstance()->GetSceneTime());
 		//이미지
-		CameraManager::GetInstance()->GetMainCamera()
-			->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY,mSizeX,mSizeY);
+		wstring tempKey = mImageKey.substr(0, 4);
+
+		if (tempKey != L"Door")
+		{
+			CameraManager::GetInstance()->GetMainCamera()
+				->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY,mSizeX,mSizeY);
+		}
+		else if (tempKey == L"Door")
+		{
+			if (mIsDoorOpen == false)
+			{
+				CameraManager::GetInstance()->GetMainCamera()
+					->DoorScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY, mDoorTime);
+			}
+			else if (mIsDoorOpen == true)
+			{
+				//열린 문 이미지 넣어줄예정
+				if (mChangeDoor == false)
+				{
+					CameraManager::GetInstance()->GetMainCamera()
+						->DoorScaleFrameRender(hdc, mImage, mRect.left, mRect.top, 1, mIndexY, mSizeX, mSizeY, mDoorTime);
+				}
+				else if (mChangeDoor == true)
+				{
+					CameraManager::GetInstance()->GetMainCamera()
+						->DoorScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY, 1.f-mDoorTime);
+				}
+			}
+		}
 	}
 }

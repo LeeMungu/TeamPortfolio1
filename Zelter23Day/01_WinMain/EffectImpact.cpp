@@ -9,7 +9,7 @@
 EffectImpact::EffectImpact(wstring imagekey, int x, int y, int indexX)
 {
 
-	mImage = IMAGEMANAGER->GetInstance()->FindImage(L"effect_impact");
+	mImage = IMAGEMANAGER->GetInstance()->FindImage(L"Effect_impact");
 	mImageKey = imagekey;
 	mX = x;
 	mY = y;	

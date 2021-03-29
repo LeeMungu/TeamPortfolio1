@@ -87,17 +87,17 @@ void scene1::Init()
 	//	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
 	//}
 	//첫 등장 시 텍스트 창 출력
-		//GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
-	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"성남시에 군인들이\n아직 있다고들었어.\n길을 따라 남동쪽으로 가보자."));
-	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"다들 살아있으면 좋을텐데."));
-	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"가는 길에 있는 경찰서에서\n권총을 주울 수 있을지 몰라."));
-	//GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"우선 가지고 있는 도끼로\n녀석들을 상대하자."));
-	//GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"좀비에 접근 후 F키를 누르면\n좀비를 공격할 수 있습니다."));
-	//GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"성남시에 군인들이\n아직 있다고들었어.\n길을 따라 남동쪽으로 가보자."));
+	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"다들 살아있으면 좋을텐데."));
+	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"가는 길에 있는 경찰서에서\n권총을 주울 수 있을지 몰라."));
+	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"우선 가지고 있는 도끼로\n녀석들을 상대하자."));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"좀비에 접근 후 F키를 누르면\n좀비를 공격할 수 있습니다."));
+	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 
 	//특정 장소 도착 시 좀비등장 및 공격 텍스트창 출력
 	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*125));
@@ -122,8 +122,8 @@ void scene1::Init()
 	
 
 
-	WeatherManager::GetInstance()->Init();
-	WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
+	//WeatherManager::GetInstance()->Init();
+	//WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
 
 	ItemManager::GetInstance()->DropItems(L"Pistol", 6000, 3450, 1);
 
@@ -148,7 +148,7 @@ void scene1::Release()
 void scene1::Update()
 {
 	//Weather
-	WeatherManager::GetInstance()->Update();
+	//WeatherManager::GetInstance()->Update();
 	//이벤트
 	GameEventManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
@@ -262,16 +262,16 @@ void scene1::Update()
 	float randomX = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountX-1));
 	float randomY = Random::GetInstance()->RandomInt(TileSize+1, TileSize * (mTileCountY-1));
 	
-	if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).size() < mZombieCount)
-	{
-		mZombieCoolTimer += Time::GetInstance()->DeltaTime();
-		if (mZombieCoolTimer > mZombieCoolTime)
-		{
-			EnemyRespown(randomX, randomY);
-			mZombieCoolTimer = 0;
-		}
-		
-	}
+	//if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).size() < mZombieCount)
+	//{
+	//	mZombieCoolTimer += Time::GetInstance()->DeltaTime();
+	//	if (mZombieCoolTimer > mZombieCoolTime)
+	//	{
+	//		EnemyRespown(randomX, randomY);
+	//		mZombieCoolTimer = 0;
+	//	}
+	//	
+	//}
 
 	if (Input::GetInstance()->GetKeyDown('C'))
 	{

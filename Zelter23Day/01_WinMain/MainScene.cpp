@@ -25,7 +25,7 @@ void MainScene::Init()
 			mImage = ImageManager::GetInstance()->FindImage(L"LoadingCat");
 			mStartButton = new Button(L"StartButton", WINSIZEX / 5 * 2, WINSIZEY / 5 * 3, 1.5, []() {SceneManager::GetInstance()->LoadScene(L"LoadingScene"); });
 			mToolSceneButton = new Button(L"WorkButton", WINSIZEX / 5 * 3, WINSIZEY / 5 * 3, 1.5, []() {SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene"); });
-			mExitButton = new Button(L"EndButton", WINSIZEX / 5 * 2.9, WINSIZEY / 5 * 3, 1.5, []() {WM_CLOSE; });
+			//mExitButton = new Button(L"EndButton", WINSIZEX / 5 * 2.9, WINSIZEY / 5 * 3, 1.5, []() {WM_QUIT; });
 		}));
 		mImage = ImageManager::GetInstance()->FindImage(L"PrologueImage1");
 
@@ -54,7 +54,7 @@ void MainScene::Update()
 			mImage = ImageManager::GetInstance()->FindImage(L"LoadingCat");
 			mStartButton = new Button(L"StartButton", WINSIZEX / 5 * 1.7, WINSIZEY / 5 * 3, 1.5,[]() {SceneManager::GetInstance()->LoadScene(L"LoadingScene"); });
 			mToolSceneButton = new Button(L"WorkButton", WINSIZEX / 5 * 2.3, WINSIZEY / 5 * 3, 1.5, []() {SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene"); });
-			mExitButton = new Button(L"EndButton", WINSIZEX / 5 * 2.9, WINSIZEY / 5 * 3, 1.5, []() {WM_CLOSE; });
+			//mExitButton = new Button(L"EndButton", WINSIZEX / 5 * 2.9, WINSIZEY / 5 * 3, 1.5, []() { });
 		}));
 		mIsSkip = false;
 	}
@@ -67,10 +67,10 @@ void MainScene::Update()
 	{
 		mToolSceneButton->Update();
 	}
-	if (mExitButton != nullptr)
-	{
-		WM_CLOSE;
-	}
+	//if (mExitButton != nullptr)
+	//{
+	//	
+	//}
 }
 
 void MainScene::Render(HDC hdc)
@@ -84,8 +84,8 @@ void MainScene::Render(HDC hdc)
 	{
 		mToolSceneButton->Render(hdc);
 	}
-	if (mExitButton != nullptr)
-	{
-		mExitButton->Render(hdc);
-	}
+	//if (mExitButton != nullptr)
+	//{
+	//	mExitButton->Render(hdc);
+	//}
 }

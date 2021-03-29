@@ -4,6 +4,8 @@
 #include "pch.h"
 #include "MainGame.h"
 
+bool IsExit = true;
+
 HINSTANCE	_hInstance;		//APP 고유번호
 //HWND : Handler Window
 HWND		_hWnd;			//나중에 (그럴일은 없지만) WinAPI창을 여러개 생성했을 때 각 창을 컨트롤할 수 있는 Hanlder가 필요하다. 그게 바료 요 녀석
@@ -110,7 +112,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	//	DispatchMessage(&message);		//실제로 윈도우에 메시지 전달 담당
 	//}
 	// PeekMessage , GetMessage 차이 조사
-	while (true)
+	
+	while (IsExit == true)
 	{
 		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE) == true)
 		{

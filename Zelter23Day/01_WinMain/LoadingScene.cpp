@@ -91,6 +91,11 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Inventory_base", Resources(L"/01_UI/Player_InventoryBase.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Inventory_slot", Resources(L"/01_UI/UI_Slot.png")); });
 
+	//이미지 (시작화면 버튼 UI)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"StartButton", Resources(L"/01_UI/StartButton.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkButton", Resources(L"/01_UI/WorkButton.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"EndButton", Resources(L"/01_UI/EndButton.png")); });
+
 	//이미지(제작UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkTable", Resources(L"/01_UI/WorkTable.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkTable_start_btn", Resources(L"/01_UI/WorkTable_StartBtn.png")); });

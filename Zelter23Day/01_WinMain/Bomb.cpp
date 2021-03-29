@@ -29,8 +29,10 @@ void Bomb::Init()
 	mExplosion->InitFrameByStartEnd(0, 0, 6, 0, false);
 	mExplosion->SetIsLoop(false);
 	mExplosion->SetFrameUpdateTime(0.1f);
+	mExplosion->SetCallbackFunc([this]() {mIsDestroy = true; });
 
-
+	mCurrentAnimation = mExplosion;
+	mCurrentAnimation->Play();
 }
 
 void Bomb::Release()
@@ -57,17 +59,17 @@ void Bomb::Update()
 			mRcExplosion = RectMakeCenter(mX, mY, 200, 200);
 			SoundPlayer::GetInstance()->Play(L"BombSound", 0.8 * SoundPlayer::GetInstance()->GetEffectVolume());
 			mIsExplosionAfter = true;
-			mExplosion->Stop();
+
 		}
 	}
 	if (mIsExplosionAfter == true)
 	{
 		
-		mImage = IMAGEMANAGER->FindImage(L"pistol_shoot");
+		mImage = IMAGEMANAGER->FindImage(L"Pistol_shoot");
 		mSizeX = 200;
 		mSizeY = 200;
 		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-		mExplosion->Play();
+		mCurrentAnimation->Update();
 	}
 
 
@@ -77,6 +79,6 @@ void Bomb::Update()
 void Bomb::Render(HDC hdc)
 {
 	CameraManager::GetInstance()->GetMainCamera()
-		->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mExplosion->GetNowFrameX(), mExplosion->GetNowFrameY(), mSizeX, mSizeY);
+		->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY(), mSizeX, mSizeY);
 
 }

@@ -193,6 +193,7 @@ void WorkTable::Worktemplet(string btnkey)
 					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
 					{
 						mIsMakingOpen = true;
+		
 						if (((Item*)items[i])->GetKeyName() == L"WoodBoard")
 						{
 							//재료아이템
@@ -201,7 +202,7 @@ void WorkTable::Worktemplet(string btnkey)
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitem);
 							mMakeItemCount = ((Item*)items[i])->GetCount();
 						}
-
+						
 						if (((Item*)items[i])->GetKeyName() == L"Iron1") // 템 있을때 없을때 구분해주기
 						{
 							//재료아이템
@@ -213,7 +214,7 @@ void WorkTable::Worktemplet(string btnkey)
 					}
 				}
 			}
-
+		
 			//만들어질 아이템의 총 갯수 계산
 			if (mMakeItemCount > 1 && mMakeItemCount2 > 0)
 			{
@@ -223,19 +224,19 @@ void WorkTable::Worktemplet(string btnkey)
 			{
 				mMakingCount = 0;
 			}
-
-
+		
+		
 			if ((mMakeItemCount + mMakeItemCount2) < 3)
 			{
 				mMakingCount = 0;
 			}
-
-
+		
+		
 			//만들어질 아이템
 			Item* makeBarrigate = new Item(L"Barrigate", "makeBarrigate", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게
 			makeBarrigate->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, makeBarrigate);
-
+		
 		}
 
 		if (btnkey == "Boom")

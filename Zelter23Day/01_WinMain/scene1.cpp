@@ -213,6 +213,11 @@ void scene1::Update()
 			if (tempInteractList[i]->GetIsDestroy() != true)
 			{
 				InteractObject* tempInteract = (InteractObject*)tempInteractList[i];
+				wstring tempKey = tempInteract->GetImageKey().substr(0, 4);
+				if (tempKey == L"Door")
+				{
+					continue;
+				}
 				int y = 0;
 				int countx = tempInteract->GetTileCountX() * InteractObjectSize;
 				int county = tempInteract->GetTileCountY() * InteractObjectSize;

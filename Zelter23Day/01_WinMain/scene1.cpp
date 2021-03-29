@@ -135,16 +135,6 @@ void scene1::Init()
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 217, TileSize * 53, mTileList));
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 218, TileSize * 46, mTileList));
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 243, TileSize * 43, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 246, TileSize * 58, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 244, TileSize * 59, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 233, TileSize * 55, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 231, TileSize * 54, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 248, TileSize * 48, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 242, TileSize * 44, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 207, TileSize * 48, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 210, TileSize * 54, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 214, TileSize * 55, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 205, TileSize * 58, mTileList));
 
 
 
@@ -351,10 +341,10 @@ void scene1::Render(HDC hdc)
 				mTileList[y][x]->Render(hdc);
 			++renderCount;
 			//이벤트 테스팅용 지우지 말것!
-			CameraManager::GetInstance()->GetMainCamera()->RenderText(
-				mTileList[y][x]->GetX(), mTileList[y][x]->GetY(),
-				to_wstring(x)+L","+ to_wstring(y),
-				10);
+			//CameraManager::GetInstance()->GetMainCamera()->RenderText(
+			//	mTileList[y][x]->GetX(), mTileList[y][x]->GetY(),
+			//	to_wstring(x)+L","+ to_wstring(y),
+			//	10);
 		}
 	}
 

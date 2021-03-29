@@ -278,34 +278,44 @@ void Player::Update()
 	}
 
 	//ÃÑµé°í ½î´Â°Å
-	if (mSelectedItem.quickType == ItemType::gun)
+	if(mSelectedItem.quickType == ItemType::gun)
 	{
 		mEquipment = Equipment::gun;
-		
-		if (weapon == nullptr)
+
+		if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Weapon).size() != NULL)
 		{
-			if (mSelectedItem.key == L"Shotgun")
-			{
-				weapon = new Weapon("Shotgun", mX, mY, 0, 0);
-				weapon->Init();
-				weapon->SetPlayerPtr(this);
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
-			}
-			else
-			{
-				weapon = new Weapon("weapon", mX, mY, 0, 0);
-				weapon->Init();
-				weapon->SetPlayerPtr(this);
-				ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
-			}
+			Weapon* tempWeapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Shotgun");
+			if (tempWeapon != nullptr) tempWeapon->SetIsDestroy(true);
+
+			Weapon* tempWeapon2 = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Pistol");
+			if (tempWeapon2 != nullptr) tempWeapon2->SetIsDestroy(true);
+		}
+
+		if (mSelectedItem.key == L"Shotgun")
+		{
+			Weapon* shotgun = new Weapon("Shotgun", mX, mY, 0, 0);
+			shotgun->Init();
+			shotgun->SetPlayerPtr(this);
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Weapon, shotgun);
+		}
+		else
+		{
+			Weapon* pistol = new Weapon("Pistol", mX, mY, 0, 0);
+			pistol->Init();
+			pistol->SetPlayerPtr(this);
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Weapon, pistol);
 		}
 	}
 	else
 	{
 		mEquipment = Equipment::normal;
-		if (weapon != nullptr)
+		if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Weapon).size() != NULL)
 		{
-			weapon->SetIsDestroy(true);
+			Weapon* tempWeapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Shotgun");
+			if(tempWeapon != nullptr) tempWeapon->SetIsDestroy(true);
+
+			Weapon* tempWeapon2 = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Pistol");
+			if (tempWeapon2 != nullptr) tempWeapon2->SetIsDestroy(true);
 		}
 	}
 }

@@ -267,6 +267,33 @@ void Image::AlphaScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY,
 	this->ResetRenderOption();
 }
 
+void Image::DoorScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float time)
+{
+	//현재 프레임인덱스 
+	int frame = frameY * mMaxFrameX + frameX;
+	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth()*(1.f-time), mSize.Y * height / this->GetFrameHeight());
+
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x+ mSize.X * width / this->GetFrameWidth()*time, y);
+	//기울기
+	D2D_MATRIX_3X2_F skewMatrix = D2D1::Matrix3x2F::Skew(0, -time*90.f,
+		//회전기준->우하단이란 의미
+		D2D1::Point2F(size.X, size.Y)); // centre being the origin of the screen
+	//그릴 영역 세팅 
+	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
+	D2D1_RECT_F dxSrc = D2D1::RectF((float)mFrameInfo[frame].x, (float)mFrameInfo[frame].y,
+		(float)(mFrameInfo[frame].x + mFrameInfo[frame].width),
+		(float)(mFrameInfo[frame].y + mFrameInfo[frame].height));
+	//최종행렬 세팅
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(skewMatrix * scaleMatrix * rotateMatrix * translateMatrix);
+	//렌더링 요청
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha,
+		D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, &dxSrc);
+
+	this->ResetRenderOption();
+}
+
 void Image::ActivitScaleRender(HDC hdc, int x, int y, int width, int height, float angleX, float angleY)
 {
 	Vector2 size = Vector2(mSize.X * width / this->GetWidth(), mSize.Y * height / this->GetHeight());

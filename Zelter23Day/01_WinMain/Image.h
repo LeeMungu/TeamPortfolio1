@@ -61,6 +61,8 @@ public:
 	void AlphaScaleRender(HDC hdc, int x, int y, int width, int height, float alpha);
 	//알파값 + 프레임렌더링 + 크기 조정
 	void AlphaScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float alpha);
+	//문여닫기
+	void DoorScaleFrameRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float time);
 	//이미지 어그러뜨리기(좌우로 와리가리)
 	void ActivitScaleRender(HDC hdc, int x, int y, int width, int height, float angleX, float angleY);
 	//그림자 이미지 그리기

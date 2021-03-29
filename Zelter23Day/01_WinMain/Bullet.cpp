@@ -30,8 +30,8 @@ void Bullet::Release()
 
 void Bullet::Update()
 {
-	mX -= mSpeed * cosf(mAngle) * Time::GetInstance()->DeltaTime();
-	mY += mSpeed * sinf(mAngle) * Time::GetInstance()->DeltaTime();
+	mX += mSpeed * cosf(mAngle) * Time::GetInstance()->DeltaTime();
+	mY -= mSpeed * sinf(mAngle) * Time::GetInstance()->DeltaTime();
 	mRect = RectMakeCenter(mX, mY, mSizeX- mResize, mSizeY- mResize);
 	if (Math::GetDistance(mX, mY, mStartX, mStartY) > 1000 || mIsShot == true)
 	{

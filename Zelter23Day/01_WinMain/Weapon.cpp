@@ -91,10 +91,16 @@ void Weapon::Update()
 						Bullet* bullet5 = new Bullet(mX, mY, mAngle5 - 0.10);
 						bullet5->Init();
 						ObjectManager::GetInstance()->AddObject(ObjectLayer::Bullet, bullet5);
+
+						SoundPlayer::GetInstance()->Play(L"ShotGunSound", 0.5f
+							* SoundPlayer::GetInstance()->GetEffectVolume());
 					}
 
-					SoundPlayer::GetInstance()->Play(L"ShotSound", 0.5f
-						* SoundPlayer::GetInstance()->GetEffectVolume());
+					else
+					{
+						SoundPlayer::GetInstance()->Play(L"ShotSound", 0.5f
+							* SoundPlayer::GetInstance()->GetEffectVolume());
+					}
 				}
 			}
 			else
@@ -120,10 +126,15 @@ void Weapon::Update()
 					Bullet* bullet5 = new Bullet(mX, mY, mAngle5 - 0.10);
 					bullet5->Init();
 					ObjectManager::GetInstance()->AddObject(ObjectLayer::Bullet, bullet5);
-				}
 
-				SoundPlayer::GetInstance()->Play(L"ShotSound", 0.5f
-					* SoundPlayer::GetInstance()->GetEffectVolume());
+					SoundPlayer::GetInstance()->Play(L"ShotGunSound", 0.5f
+						* SoundPlayer::GetInstance()->GetEffectVolume());
+				}
+				else
+				{
+					SoundPlayer::GetInstance()->Play(L"ShotSound", 0.5f
+						* SoundPlayer::GetInstance()->GetEffectVolume());
+				}
 			}
 		}
 	}

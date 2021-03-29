@@ -1108,14 +1108,18 @@ void ItemManager::UseQuickSlot(int num)
 		}
 		else if (mSelectedItem.quickType == ItemType::structure)
 		{
-			Mouse* mouse = new Mouse(mSelectedItem.key, ObjectLayer::InteractObject);
-			mouse->SetHpMax(10);
-			mouse->SetTileCountX(1);
-			mouse->SetTileCountY(1);
-			mouse->Init();
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
-			
-			mSelectedItem.count -= 1;
+			if (mSelectedItem.count > 0)
+			{
+				Mouse* mouse = new Mouse(mSelectedItem.key, ObjectLayer::InteractObject);
+				mouse->SetHpMax(10);
+				mouse->SetTileCountX(1);
+				mouse->SetTileCountY(1);
+				mouse->Init();
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+
+				mSelectedItem.count -= 1;
+			}
+		
 			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
 			mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
 			ItemCountCheck(mInputItem, num - 1, 0);

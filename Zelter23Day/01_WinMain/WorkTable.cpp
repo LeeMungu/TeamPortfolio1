@@ -208,6 +208,12 @@ void WorkTable::Worktemplet(string btnkey)
 			{
 				mMakingTotalCount = (int)(mMakeItemCount + mMakeItemCount2)/3;
 			}
+			else
+			{
+				mMakingCount = 0;
+			}
+
+
 			if ((mMakeItemCount + mMakeItemCount2) < 3)
 			{
 				mMakingCount = 0;

@@ -165,7 +165,7 @@ void ObjectManager::Render(HDC hdc)
 			}
 		}
 	}
-
+	
 	//오브젝트레이어 앞에친구들은 안그려준다. 주의-
 	for (int i = 0; i < mZorderRenderList.size(); ++i)
 	{

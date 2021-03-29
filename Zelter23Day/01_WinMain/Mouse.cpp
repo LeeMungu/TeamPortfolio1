@@ -99,6 +99,7 @@ void Mouse::Update()
 			InteractObject* interactObject = new InteractObject(mImageKey, _mousePosition.x + cameraRc.left, mY + mSizeY / 2 + cameraRc.top, mHpMax, mTileCountX, mTileCountY);
 			interactObject->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::InteractObject, interactObject);
+			mIsDestroy = true;
 		}
 		else if (mObjectType == ObjectLayer::NoninteractObject)
 		{

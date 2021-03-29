@@ -22,6 +22,8 @@ public:
 	void PlayerShoot();
 	//좀비의 공격 (플레이어, 오브젝트)
 	void ZombieAttack();
+	//폭발은 예술이다.
+	void Boom();
 
 };
 

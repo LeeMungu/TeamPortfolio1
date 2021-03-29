@@ -125,7 +125,7 @@ void scene1::Init()
 	WeatherManager::GetInstance()->Init();
 	WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
 
-	ItemManager::GetInstance()->DropItems(L"Pistol", 3000, 4000, 1);
+	ItemManager::GetInstance()->DropItems(L"Pistol", 6000, 3450, 1);
 
 }
 

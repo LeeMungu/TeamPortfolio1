@@ -167,8 +167,6 @@ void WorkTable::Worktemplet(string btnkey)
 							Item* maikingborad = new Item(L"WoodBoard", "makeboard", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게
 							maikingborad->Init();
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, maikingborad);
-
-
 						}
 
 					}
@@ -178,14 +176,13 @@ void WorkTable::Worktemplet(string btnkey)
 
 		if (btnkey == "Barrigate")//바리게이트
 		{
+			mIsMakingOpen = true;
 			if (items.size() != NULL)
 			{
-				for (int i = 0; i < items.size(); ++i) {
+				for (int i = 0; i < items.size(); ++i)
+				{
 					if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
 					{
-						mIsMakingOpen = true;
-						
-						
 						if (((Item*)items[i])->GetKeyName() == L"WoodBoard") // 템 있을때 없을때 구분해주기
 						{
 							//재료아이템
@@ -194,13 +191,7 @@ void WorkTable::Worktemplet(string btnkey)
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitem);
 							mMakeItemCount = ((Item*)items[i])->GetCount();
 						}
-						else
-						{
-							Item* workTableitem = new Item(L"WoodBoard", "WoodBoard", mX + 450, mY + 250, 0, ItemKind::holding);
-							workTableitem->Init();
-							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitem);
-						}
-							
+
 						if (((Item*)items[i])->GetKeyName() == L"Iron1") // 템 있을때 없을때 구분해주기
 						{
 							//재료아이템
@@ -209,36 +200,27 @@ void WorkTable::Worktemplet(string btnkey)
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitemlron);
 							mMakeItemCount2 = ((Item*)items[i])->GetCount();
 						}
-						else
-						{
-							Item* workTableitemlron = new Item(L"Iron1", "Iron", mX + 480, mY + 250, 0, ItemKind::holding);
-							workTableitemlron->Init();
-							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitemlron);
-						}
-
-						
-						//만들어질 아이템의 총 갯수 계산
-						if (mMakeItemCount > 1 && mMakeItemCount2 > 0)
-						{
-							mMakingTotalCount = (int)mMakeItemCount + mMakeItemCount2 / 3;
-							mMakingCount = 0;
-						}
-						else
-						{
-							mMakingTotalCount = 0;
-							mMakingCount = 0;
-						}
-
-
-
-						//만들어질 아이템
-						Item* makeBarrigate = new Item(L"Barrigate", "makeBarrigate", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게
-						makeBarrigate->Init();
-						ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, makeBarrigate);
-						
 					}
 				}
 			}
+
+			//만들어질 아이템의 총 갯수 계산
+			if (mMakeItemCount > 1 && mMakeItemCount2 > 0)
+			{
+				mMakingTotalCount = (int)mMakeItemCount + mMakeItemCount2 / 3;
+				mMakingCount = 0;
+			}
+			else
+			{
+				mMakingTotalCount = 0;
+				mMakingCount = 0;
+			}
+
+			//만들어질 아이템
+			Item* makeBarrigate = new Item(L"Barrigate", "makeBarrigate", mX + 450, mY + 150, mMakingCount, ItemKind::holding); //holding을 만들아이템 종류로 잠깐 쓸게
+			makeBarrigate->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, makeBarrigate);
+
 		}
 		
 	}

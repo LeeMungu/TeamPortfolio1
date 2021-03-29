@@ -1117,9 +1117,9 @@ void ItemManager::UseQuickSlot(int num)
 				mouse->Init();
 				ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
 
-				mSelectedItem.count -= 1;
 			}
 		
+			mSelectedItem.count -= 1;
 			mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
 			mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
 			ItemCountCheck(mInputItem, num - 1, 0);

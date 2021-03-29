@@ -97,7 +97,7 @@ class Player : public GameObject
 	Equipment mEquipment;
 
 
-	Weapon* weapon;
+	//Weapon* weapon;
 
 public:
 	Player(const string& name, float x, float y);

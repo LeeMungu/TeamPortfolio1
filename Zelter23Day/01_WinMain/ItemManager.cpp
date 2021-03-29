@@ -19,7 +19,7 @@ ItemManager::ItemManager()
 	mItemImageList.insert(make_pair(L"Rifle2", ItemType::gun));
 	mItemImageList.insert(make_pair(L"Shotgun", ItemType::gun));
 	mItemImageList.insert(make_pair(L"CrossBow", ItemType::gun));
-	mItemImageList.insert(make_pair(L"Revolver", ItemType::gun));
+	mItemImageList.insert(make_pair(L"Pistol", ItemType::gun));
 
 
 	mItemImageList.insert(make_pair(L"PistolBullet", ItemType::bullet));

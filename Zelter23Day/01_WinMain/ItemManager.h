@@ -29,6 +29,8 @@ private:
 	Slot* mQuickSlotList;
 	vector<GameObject*> mItems;
 
+	int mInputNum;
+	Item* mInputItem;
 public:
 
 	ItemManager();
@@ -52,7 +54,7 @@ public:
 
 	void ItemRePositioning();
 	void QuickSlotRePositioning(int num);
-
+	void UseQuickSlot(int num);
 
 	//아이템 인벤토리 리스트 리턴
 	map<wstring, int> GetmItemInventoryList() { return mItemInventoryList; }

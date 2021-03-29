@@ -9,14 +9,12 @@
 #include "EffectManager.h"
 #include "EffectImpact.h"
 #include "HousingObject.h"
+#include "Bomb.h"
 
 
 void CollisionManager::Init()
 {
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
-
-
-
 }
 
 void CollisionManager::Update()
@@ -25,6 +23,7 @@ void CollisionManager::Update()
 	ZombieAttack();
 	PlayerAttack();
 	PlayerShoot();
+	Boom();
 }
 
 
@@ -258,6 +257,7 @@ void CollisionManager::ZombieAttack()
 }
 
 
+
 void CollisionManager::PlayerAttack()
 {
 	RECT temp;
@@ -302,15 +302,13 @@ void CollisionManager::PlayerAttack()
 				InteractObject* tempInteract = (InteractObject*)interactobject[i];
 				objectRC = tempInteract->GetInteractRect();
 				//플레이어가 오브젝트를 공격하였다!
-
-
-				if ((tempInteract->GetImageKey()).substr(0, 4) == L"Door" && tempInteract->GetIsDoorOpen() == true)
+				if (IntersectRect(&temp, &playerAttackRC, &objectRC) && tempInteract->GetIsInvincible() == false)
 				{
-					return;
-				}
-				else
-				{
-					if (IntersectRect(&temp, &playerAttackRC, &objectRC) && tempInteract->GetIsInvincible() == false)
+					if ((tempInteract->GetImageKey()).substr(0, 4) == L"Door" && tempInteract->GetIsDoorOpen() == true)
+					{
+						return;
+					}
+					else
 					{
 						tempInteract->SetHp(tempInteract->GetHp() - 10);
 						tempInteract->SetIsInvincible(true);
@@ -366,21 +364,21 @@ void CollisionManager::PlayerShoot()
 			}
 			for (int k = 0; k < interactobject.size(); ++k)
 			{
-				InteractObject* object = (InteractObject*)interactobject[k];
-				objectRC = object->GetInteractRect();
+				InteractObject* tempInteract = (InteractObject*)interactobject[k];
+				objectRC = tempInteract->GetInteractRect();
 				if (IntersectRect(&temp, &bulletRC, &objectRC) && bullet->GetIsShot() == false)
 				{
-					if (object->GetIsInvincible() == false)
+					if (tempInteract->GetIsInvincible() == false)
 					{
-						object->SetHp(object->GetHp() - 1);
-						object->SetIsInvincible(true);
+						tempInteract->SetHp(tempInteract->GetHp() - 1);
+						tempInteract->SetIsInvincible(true);
 					}
 					EffectManager* effect = new EffectManager(L"Pistol_shoot", temp, 0, 6, 0.1f);
 					bullet->SetIsShot(true);
 
 					for (int i = 0; i < 8; ++i)
 					{
-						EffectImpact* impact = new EffectImpact(object->GetImageKey(), object->GetX(), object->GetY(), i);
+						EffectImpact* impact = new EffectImpact(tempInteract->GetImageKey(), tempInteract->GetX(), tempInteract->GetY(), i);
 					}
 				}
 			}
@@ -408,6 +406,65 @@ void CollisionManager::PlayerShoot()
 					}
 				}
 			}
+		}
+	}
+}
+
+
+
+void CollisionManager::Boom()
+{
+	RECT temp;
+	RECT boomRC;
+	vector<GameObject*> boomList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Boom);
+	RECT enemyRC;
+	vector<GameObject*> zombie = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	RECT objectRC;
+	vector<GameObject*> interactobject = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::InteractObject);
+
+	int boomDamage = 100;
+
+	if (boomList.size() != NULL)
+	{
+		for (int i = 0; i < boomList.size(); ++i)
+		{
+			Bomb* boom = (Bomb*)boomList[i];
+			boomRC = boom->GetExplosionRC();
+			for (int j = 0; j < zombie.size(); j++)
+			{
+				Enemy* enemy = (Enemy*)zombie[j];
+				enemyRC = enemy->GetRect();
+				if (IntersectRect(&temp, &boomRC, &enemyRC))
+				{
+					enemy->SetHp(enemy->GetHP() - boomDamage);				
+					EffectManager* effect = new EffectManager(L"Pistol_shoot", temp, 0, 6, 0.1f);
+					for (int i = 0; i < 8; ++i)
+					{
+						EffectImpact* impact = new EffectImpact(enemy->GetImageKey(), enemy->GetX(), enemy->GetY(), i);
+					}
+				}
+			}
+			for (int k = 0; k < interactobject.size(); ++k)
+			{
+				InteractObject* tempInteract = (InteractObject*)interactobject[k];
+				objectRC = tempInteract->GetInteractRect();
+				if (IntersectRect(&temp, &boomRC, &objectRC))
+				{
+					if ((tempInteract->GetImageKey()).substr(0, 4) == L"Door" && tempInteract->GetIsDoorOpen() == true)
+					{
+						return;
+					}
+					else
+					{
+						tempInteract->SetHp(tempInteract->GetHp() - boomDamage);
+						EffectManager* effect = new EffectManager(L"Pistol_shoot", temp, 0, 6, 0.1f);
+						for (int i = 0; i < 8; ++i)
+						{
+							EffectImpact* impact = new EffectImpact(tempInteract->GetImageKey(), tempInteract->GetX(), tempInteract->GetY(), i);
+						}
+					}
+				}
+			}			
 		}
 	}
 }

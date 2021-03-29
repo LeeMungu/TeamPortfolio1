@@ -27,7 +27,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Weapon_pistol", Resources(L"/03_Player/Weapon_pistol.png"), 1, 1); });
 
 	//ÀÌ¹ÌÁö (ÀÌº¥Æ® ÆøÅº)
-	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bomb", Resources(L"/03_Player/Bomb.png"), 1, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bomb", Resources(L"/03_Player/Bomb.png"),1,1); });
 	//ÀÌ¹ÌÁö (ÃÑ¾Ë)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bullet", Resources(L"/03_Player/Bullet.png"), 1, 1); });
 

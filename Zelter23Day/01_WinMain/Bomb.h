@@ -33,6 +33,8 @@ public:
 	void Update()override;
 	void Render(HDC hdc)override;
 
+	RECT GetExplosionRC() { return mRcExplosion; }
+
 
 };
 

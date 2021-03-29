@@ -20,6 +20,7 @@ class WorkTable : public UI
 	Button* mMakeWoodBoard;
 	Button* mMakeBonFire;
 	Button* mMakeBarrigate;
+	Button* mMakeBoom;
 	bool mIsMakingOpen;
 
 	int mMakingCount;

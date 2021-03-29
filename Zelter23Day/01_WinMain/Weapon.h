@@ -29,8 +29,15 @@ public:
 	bool mIsEqip;
 
 	int mBullet;
+	int mBullet2;
+	int mBullet3;
+	int mBullet4;
+	int mBullet5;
 	float mAngle; //ÃÑ¾Ë ±ËÀû?
-	 //ÃÑ À§Ä¡
+	float mAngle2;
+	float mAngle3;
+	float mAngle4;
+	float mAngle5;
 
 	void Init()override;
 	void Release()override;

@@ -365,7 +365,6 @@ void ItemManager::PutInInventory(wstring key, int count)
 	if (mItemInventoryList.find(key) == mItemInventoryList.end()) { //처음 생성
 		//아이템 리스트 생성 후 인벤토리에서 불러와서 생성, 사용함
 		mItemInventoryList.insert(make_pair(key, count));
-
 		
 		for (int y = 0; y < 2; y++) {
 			bool isFill = false;
@@ -475,6 +474,7 @@ void ItemManager::MoveItems()
 						RECT rc;
 						RECT itemRc = mItems[mSeletedItemIndex]->GetRect();
 						RECT inventoryRc = mInventory->GetRect();
+
 						//인벤토리 안에 놓았을 때
 						if (IntersectRect(&rc, &itemRc, &inventoryRc))
 						{
@@ -511,10 +511,12 @@ void ItemManager::MoveItems()
 							mItemInventoryList.erase(wstr);
 							mItems[mSeletedItemIndex]->SetIsDestroy(true);
 
+							((Item*)mItems[mSeletedItemIndex])->SetIsClicking(false);
 						}
 						
 					}
 				}
+
 			}
 		}
 	}
@@ -651,7 +653,6 @@ void ItemManager::IntersectInventory(int j, int k)
 
 void ItemManager::IntersectQuickSlot(int indexQ)
 {
-	((Item*)mItems[mSeletedItemIndex])->SetIsClicking(false);
 	//상호작용되는 아이템 타입만
 	if (((Item*)mItems[mSeletedItemIndex])->GetType() == ItemType::drink
 		|| ((Item*)mItems[mSeletedItemIndex])->GetType() == ItemType::food
@@ -702,6 +703,7 @@ void ItemManager::IntersectQuickSlot(int indexQ)
 						mItems[l]->SetY(mQuickSlotList[mIndex].y + 27);
 						((Item*)mItems[l])->SetKind(ItemKind::quickSlot);
 					}
+					((Item*)mItems[mSeletedItemIndex])->SetIsClicking(false);
 					break;
 				}
 			}
@@ -727,6 +729,8 @@ void ItemManager::IntersectQuickSlot(int indexQ)
 			{
 				((Item*)mItems[mSeletedItemIndex])->SetIsSelected(true);
 			}
+
+			((Item*)mItems[mSeletedItemIndex])->SetIsClicking(false);
 		}
 	}
 	//상호작용이 안되는 아이템은 원래 있던 곳으로 돌아간다
@@ -734,6 +738,8 @@ void ItemManager::IntersectQuickSlot(int indexQ)
 	{
 		mItems[mSeletedItemIndex]->SetX(mSlotList[mIndexY][mIndexX].x + 27);
 		mItems[mSeletedItemIndex]->SetY(mSlotList[mIndexY][mIndexX].y + 27);
+
+		((Item*)mItems[mSeletedItemIndex])->SetIsClicking(false);
 	}
 }
 
@@ -782,10 +788,12 @@ void ItemManager::QuickSlotRePositioning(int num)
 					((Item*)mItems[i])->SetIsSelected(false);
 					mItems[i]->SetY(ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot")->GetY() + 27);
 
-					//셀렉된 아이템 정보 저장
-					mSelectedItem.count = ((Item*)mItems[i])->GetCount();
-					mSelectedItem.quickType = ((Item*)mItems[i])->GetType();
-					mSelectedItem.key = ((Item*)mItems[i])->GetKeyName();
+					//셀렉된 아이템 정보 초기화
+					mSelectedItem.count = NULL;
+					mSelectedItem.quickType = ItemType::end;
+					mSelectedItem.key = L"";
+
+					mPlayer->SetSelectedItem(mSelectedItem);
 				}
 				//선택안돼있던 슬롯이면
 				else
@@ -794,10 +802,12 @@ void ItemManager::QuickSlotRePositioning(int num)
 					((Item*)mItems[i])->SetIsSelected(true);
 					mItems[i]->SetY(ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot")->GetY() + 7);
 
-					//셀렉된 아이템 정보 초기화
-					mSelectedItem.count = NULL;
-					mSelectedItem.quickType = ItemType::end;
-					mSelectedItem.key = L"";
+					//셀렉된 아이템 정보 저장
+					mSelectedItem.count = ((Item*)mItems[i])->GetCount();
+					mSelectedItem.quickType = ((Item*)mItems[i])->GetType();
+					mSelectedItem.key = ((Item*)mItems[i])->GetKeyName();
+
+					mPlayer->SetSelectedItem(mSelectedItem);
 				}
 			}
 			//나머지 위치에 있는 아이템들

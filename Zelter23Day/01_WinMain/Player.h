@@ -3,6 +3,7 @@
 
 class Image;
 class Animation;
+class Weapon;
 
 enum class PlayerState
 {
@@ -95,6 +96,9 @@ class Player : public GameObject
 	SelectedItem mSelectedItem;
 	Equipment mEquipment;
 
+
+	Weapon* weapon;
+
 public:
 	Player(const string& name, float x, float y);
 	void Init()override;
@@ -109,6 +113,7 @@ public:
 	int GetThirst() { return mThirst; }
 	int GetHunger() { return mHunger; }
 	int GetStemina() { return mStemina; }
+
 	float GetInvincibleCount() { return mInvincibleCount; }
 	bool GetIsInvincible() { return mIsInvincible; }
 	bool GetIsKnockback() {return mIsKnockback;	}
@@ -120,6 +125,9 @@ public:
 	void SetIsInvincible(bool isInvincible) { mIsInvincible = isInvincible; }
 	void SetAttacked(Attacked attacked) { mAttacked = attacked; }
 	void SetHP(int hp) { if (mHP > 0) mHP = hp; else mHP = 0; }
+	void SetThirst(int t) { if (mThirst > 0) mThirst = t; else mThirst = 0; }
+	void SetHunger(int h) { if (mHunger > 0) mHunger = h; else mHunger = 0; }
+	void SetStemina(int s) { if (mStemina > 0) mStemina = s; else mStemina = 0; }
 	void SetNoDamage(bool noDamage) { mIsInvincible = noDamage; }
 		
 	void PlayerCtrl();
@@ -131,5 +139,6 @@ public:
 	void WeaponUse(bool a);
 
 	void EquipmentPlayerImage(int mode);//0넣으면 walk, 나머지 run
+	void SetSelectedItem(SelectedItem s){ mSelectedItem = s; }
 };
 

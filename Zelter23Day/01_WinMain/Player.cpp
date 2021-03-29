@@ -138,20 +138,16 @@ void Player::Init()
 	mDash = 0;
 	mDashTime = 0;
 
-	//Weapon* weapon = new Weapon("weapon",mX,mY,0,0);
-	//weapon->SetPlayerPtr(this);
-	//ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
-
-	ShotGun* shotgun = new ShotGun("shotgun", mX, mY, 0, 0);
-	shotgun->SetPlayerPtr(this);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, shotgun);
-
 	mStartTime_hunger = Time::GetInstance()->GetSceneTime();
 	mStartTime_thirst = Time::GetInstance()->GetSceneTime();
 	mStartTime_stemina = Time::GetInstance()->GetSceneTime();
 
 	mEquipment = Equipment::normal;
 	mSelectedItem = ItemManager::GetInstance()->GetSelectedItem();
+
+	//Weapon* weapon = new Weapon("weapon", mX, mY, 0, 0);
+	//weapon->SetPlayerPtr(this);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
 }
 
 void Player::Release()
@@ -243,6 +239,9 @@ void Player::Update()
 			}
 		}
 	}
+
+	
+
 	PlayerCtrl();
 	PlayerState();
 	AttackRectMake();
@@ -278,7 +277,37 @@ void Player::Update()
 		mAttackBox = RectMakeCenter(0, 0, 0, 0);
 	}
 
-	
+	//ÃÑµé°í ½î´Â°Å
+	if (mSelectedItem.quickType == ItemType::gun)
+	{
+		mEquipment = Equipment::gun;
+		
+		if (weapon == nullptr)
+		{
+			if (mSelectedItem.key == L"Shotgun")
+			{
+				weapon = new Weapon("Shotgun", mX, mY, 0, 0);
+				weapon->Init();
+				weapon->SetPlayerPtr(this);
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
+			}
+			else
+			{
+				weapon = new Weapon("weapon", mX, mY, 0, 0);
+				weapon->Init();
+				weapon->SetPlayerPtr(this);
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, weapon);
+			}
+		}
+	}
+	else
+	{
+		mEquipment = Equipment::normal;
+		if (weapon != nullptr)
+		{
+			weapon->SetIsDestroy(true);
+		}
+	}
 }
 
 void Player::Render(HDC hdc)
@@ -741,7 +770,7 @@ void Player::EquipmentPlayerImage(int mode)
 		}
 		else
 		{
-			mImage = IMAGEMANAGER->FindImage(L"Player_walk_gun");
+			mImage = IMAGEMANAGER->FindImage(L"Player_Gunwalk");
 		}
 	}
 	else //run
@@ -752,7 +781,7 @@ void Player::EquipmentPlayerImage(int mode)
 		}
 		else
 		{
-			mImage = IMAGEMANAGER->FindImage(L"Player_run_gun");
+			mImage = IMAGEMANAGER->FindImage(L"Player_Gunrun");
 		}
 	}
 }

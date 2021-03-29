@@ -92,6 +92,7 @@ class Player : public GameObject
 	float mStartTime_hunger;
 	float mStartTime_thirst;
 	float mStartTime_stemina;
+	float mStartTime_hp;
 	
 	SelectedItem mSelectedItem;
 	Equipment mEquipment;

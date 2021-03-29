@@ -141,6 +141,7 @@ void Player::Init()
 	mStartTime_hunger = Time::GetInstance()->GetSceneTime();
 	mStartTime_thirst = Time::GetInstance()->GetSceneTime();
 	mStartTime_stemina = Time::GetInstance()->GetSceneTime();
+	mStartTime_hp = Time::GetInstance()->GetSceneTime();
 
 	mEquipment = Equipment::normal;
 	mSelectedItem = ItemManager::GetInstance()->GetSelectedItem();
@@ -736,35 +737,63 @@ void Player::PlayerState() {
 	float sceneTime_hunger = Time::GetInstance()->GetSceneTime();
 	float sceneTime_thirst = Time::GetInstance()->GetSceneTime();
 	float sceneTime_stemina = Time::GetInstance()->GetSceneTime();
+	float sceneTime_hp;
 
+	//목마름 떨어지는거
 	if (mThirst > 0) {
-		if (sceneTime_thirst - mStartTime_thirst > 30) {
+		if (sceneTime_thirst - mStartTime_thirst > 25) {
 			mThirst -= 7;
 			mStartTime_thirst = Time::GetInstance()->GetSceneTime();
 		}
 	}
+	//목마름 0이면
 	else {
 		mThirst = 0;
-	}
+		sceneTime_hp = Time::GetInstance()->GetSceneTime();
 
+		if (sceneTime_hp - mStartTime_hp > 5) {
+			mHP -= 4;
+			mStartTime_hp = Time::GetInstance()->GetSceneTime();
+		}
+	}
+	//배고픔 떨어지는거
 	if (mHunger > 0) {
-		if (sceneTime_hunger - mStartTime_hunger > 35) {
+		if (sceneTime_hunger - mStartTime_hunger > 33) {
 			mHunger -= 7;
 			mStartTime_hunger = Time::GetInstance()->GetSceneTime();
 		}
 	}
+	//배고픔 0이면
 	else {
 		mHunger = 0;
-	}
+		sceneTime_hp = Time::GetInstance()->GetSceneTime();
 
+		if (sceneTime_hp - mStartTime_hp > 5) {
+			mHP -= 4;
+			mStartTime_hp = Time::GetInstance()->GetSceneTime();
+		}
+	}
+	//스테미나 떨어지는거
 	if (mStemina > 0) {
-		if (sceneTime_stemina - mStartTime_stemina > 40) {
+		if (sceneTime_stemina - mStartTime_stemina > 45) {
 			mStemina -= 7;
 			mStartTime_stemina = Time::GetInstance()->GetSceneTime();
 		}
 	}
+	//스테미나 0이면
 	else {
 		mStemina = 0;
+		sceneTime_hp = Time::GetInstance()->GetSceneTime();
+
+		if (sceneTime_hp - mStartTime_hp > 5) {
+			mHP -= 4;
+			mStartTime_hp = Time::GetInstance()->GetSceneTime();
+		}
+	}
+
+	if(mHP < 0)
+	{
+		mHP = 0;
 	}
 }
 

@@ -19,12 +19,16 @@ class WorkTable : public UI
 
 	Button* mMakeWoodBoard;
 	Button* mMakeBonFire;
+	Button* mMakeBarrigate;
 	bool mIsMakingOpen;
 
 	int mMakingCount;
 	int mMakingTotalCount;
 
 	int mMakeCost;
+	int mMakeCost2;
+	int mMakeItemCount;
+	int mMakeItemCount2;
 	string mBtnKey;
 public:
 	WorkTable(const string& name);
@@ -39,6 +43,6 @@ public:
 
 	void Worktemplet(string btnkey);
 	void UpdateButton();
-	void MakingItem();
+	void MakingItem(string btnkey);
 };
 

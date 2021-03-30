@@ -3,6 +3,7 @@
 #include "Inventory.h"
 #include "QuickSlot.h"
 class Player;
+class Pet;
 struct SelectedItem {
 	//퀵슬롯 선택된 아이템 이미지 type과 count 저장
 	wstring key;
@@ -15,6 +16,7 @@ class ItemManager
 private:
 	map<wstring, ItemType> mItemImageList; //아이템 이미지 key로 타입을 구분지어줌
 	Player* mPlayer;
+	Pet* mPet;
 
 	map<wstring, int> mItemInventoryList; //인벤토리 아이템 이미지 key값과 value: count
 	

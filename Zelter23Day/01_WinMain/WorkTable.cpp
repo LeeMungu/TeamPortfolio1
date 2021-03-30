@@ -125,6 +125,10 @@ void WorkTable::Render(HDC hdc)
 			}
 		}
 	}
+
+	D2DRenderer::GetInstance()
+		->RenderText(mX + 430, mY + 300, to_wstring(mMakeCost), 40);
+	
 }
 
 void WorkTable::DeleteItem()

@@ -364,14 +364,14 @@ void scene1::Render(HDC hdc)
 
 	ObjectManager::GetInstance()->Render(hdc);
 	//¾À ½Ã°£ º¸±â
-	float worldTime = Time::GetInstance()->GetWorldTime();
-	float sceneTime = Time::GetInstance()->GetSceneTime();
-	wstring strWorldTime = L"WorldTime : " + to_wstring(worldTime);
-	wstring strSceneTime = L"ScneTime : " + to_wstring(sceneTime);
-	D2DRenderer::GetInstance()
-		->RenderText(10, 200, strWorldTime.c_str(), strWorldTime.length());
-	D2DRenderer::GetInstance()
-		->RenderText(10, 280, strSceneTime.c_str(), strSceneTime.length());
+	//float worldTime = Time::GetInstance()->GetWorldTime();
+	//float sceneTime = Time::GetInstance()->GetSceneTime();
+	//wstring strWorldTime = L"WorldTime : " + to_wstring(worldTime);
+	//wstring strSceneTime = L"ScneTime : " + to_wstring(sceneTime);
+	//D2DRenderer::GetInstance()
+	//	->RenderText(10, 200, strWorldTime.c_str(), strWorldTime.length());
+	//D2DRenderer::GetInstance()
+	//	->RenderText(10, 280, strSceneTime.c_str(), strSceneTime.length());
 }
 
 void scene1::Load()

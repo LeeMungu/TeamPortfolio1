@@ -40,6 +40,8 @@ public:
 	void DoorScaleFrameRender(HDC hdc,class Image* image, int x, int y, int frameX, int frameY, int width, int height, float time);
 	//아이템테두리 그리기
 	void ItemRender(HDC hdc, class Image* image, int x, int y, int frameX, int frameY, int width, int height, float time);
+	//카메라 흔들기
+	void ShakingCamera(bool b);
 
 	void RenderRect(HDC hdc, RECT rc);
 	void RenderRect(HDC hdc, RECT rc, Gizmo::Color color);

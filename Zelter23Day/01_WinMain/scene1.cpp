@@ -329,6 +329,7 @@ void scene1::Update()
 	if (GameEventManager::GetInstance()->GetEventCount() == 0)
 	{
 		SceneManager::GetInstance()->LoadScene(L"EndingScene");
+		SoundPlayer::GetInstance()->Stop(L"BGM");
 	}
 }
 

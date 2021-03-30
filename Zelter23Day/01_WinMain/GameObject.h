@@ -8,6 +8,7 @@ protected:
 	float mY;
 	float mSizeX;
 	float mSizeY;
+	float mSpeed;
 	RECT mRect;
 
 	bool mIsActive;		//활성화 상태

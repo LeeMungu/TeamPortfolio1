@@ -150,6 +150,7 @@
     <ClInclude Include="01_WinMain.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="BackGround.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
@@ -161,6 +162,8 @@
     <ClInclude Include="EffectImpact.h" />
     <ClInclude Include="EffectImpactManager.h" />
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EndingScene.h" />
+    <ClInclude Include="EndingText.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Evening.h" />
     <ClInclude Include="Figure.h" />
@@ -223,6 +226,7 @@
     <ClCompile Include="01_WinMain.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -234,6 +238,8 @@
     <ClCompile Include="EffectImpact.cpp" />
     <ClCompile Include="EffectImpactManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EndingScene.cpp" />
+    <ClCompile Include="EndingText.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Evening.cpp" />
     <ClCompile Include="GameEvent.cpp" />

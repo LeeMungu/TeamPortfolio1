@@ -15,6 +15,10 @@ void LoadingScene::Init()
 	mLoadIndex = 0;
 	mIsEndLoading = false;
 
+	//이미지 (엔딩크레딧 관련)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"TestEndingCredit", Resources(L"/01_UI/TestEndingCredit.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"EndingBackGround", Resources(L"/01_UI/EndingBackGround.png")); });
+
 	//이미지 (플레이어)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_Run.png"), 7, 4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_Walk.png"), 7, 4); });

@@ -48,6 +48,19 @@ Button::Button(wstring imageKey, float x, float y, float multiply, function<void
 	mIsMaking = true;
 }
 
+Button::Button(wstring imageKey, float x, float y, function<void(void)> func)
+{
+	mImage = ImageManager::GetInstance()->FindImage(imageKey);
+	mSizeX = mImage->GetFrameWidth() - 50;
+	mSizeY = mImage->GetHeight() - 40;
+	mX = x;
+	mY = y;
+	mRect = RectMake(mX, mY, mSizeX, mSizeY);
+	mFunc = func;
+	mState = State::Normal;
+	mButtonType = Type::MenuButton;
+}
+
 void Button::Update()
 {
 	if (mButtonType == Type::OnOffButton)
@@ -151,27 +164,65 @@ void Button::Update()
 			
 		}
 	}
+	else if (mButtonType == Type::MenuButton)
+	{
+		if (mState == State::Normal)
+		{
+			if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
+			{
+				if (PtInRect(&mRect, _mousePosition))
+				{
+					mState = State::Push;
+				}
+			}
+		}
+		else
+		{
+			if (Input::GetInstance()->GetKeyUp(VK_LBUTTON))
+			{
+				mState = State::Normal;
+				if (mFunc != nullptr)
+				{
+					mFunc();
+				}
+			}
+
+		}
+	}
 }
 
 void Button::Render(HDC hdc)
 {
-	if (mState == State::Normal)
+	if (mButtonType != Type::MenuButton)
 	{
-		RenderRect(hdc, mRect);
+		if (mState == State::Normal)
+		{
+			RenderRect(hdc, mRect);
+		}
+		else
+		{
+			float sizeX = mSizeX * 0.75f;
+			float sizeY = mSizeY * 0.75f;
+			RECT rc = RectMakeCenter(mX, mY, sizeX, sizeY);
+			RenderRect(hdc, rc);
+		}
+		if (mImage != nullptr)
+			mImage->ScaleFrameRender(hdc, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY);
+		else
+		{
+			D2DRenderer::GetInstance()
+				->RenderText(mX - mSizeX / 3, mY - mSizeY / 4, mText.c_str(), 20);
+		}
 	}
-	else
+	else if(mButtonType == Type::MenuButton)
 	{
-		float sizeX = mSizeX * 0.75f;
-		float sizeY = mSizeY * 0.75f;
-		RECT rc = RectMakeCenter(mX, mY, sizeX, sizeY);
-		RenderRect(hdc, rc);
-	}
-	if (mImage != nullptr)
-		mImage->ScaleFrameRender(hdc, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX,mSizeY);
-	else
-	{
-		D2DRenderer::GetInstance()
-			->RenderText(mX - mSizeX / 3, mY - mSizeY / 4, mText.c_str(), 20);
+		if (mState == State::Normal) {
+			mImage->FrameRender(hdc, mRect.left - 20, mRect.top - 20, 0, 0);
+		}
+		else
+		{
+			mImage->FrameRender(hdc, mRect.left - 20, mRect.top - 20, 1, 0);
+		}
 	}
 }
 

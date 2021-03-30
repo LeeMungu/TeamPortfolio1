@@ -207,11 +207,6 @@ void scene1::Release()
 
 void scene1::Update()
 {
-	Camera* camera = CameraManager::GetInstance()->GetMainCamera();
-	if (Input::GetInstance()->GetKeyDown('P'))
-	{
-		camera->Camera::ShakingCamera(true);
-	}
 	//Weather
 	//WeatherManager::GetInstance()->Update();
 	

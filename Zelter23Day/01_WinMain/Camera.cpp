@@ -127,21 +127,14 @@ void Camera::ItemRender(HDC hdc, Image* image, int x, int y, int frameX, int fra
 //카메라 흔든다!
 void Camera::ShakingCamera(bool b)
 {
-	float pre_time = Time::GetInstance()->GetSceneTime();
-
 	if (b == true)
 	{
-		if (Time::GetInstance()->GetSceneTime() - pre_time > 1)
-		{
-			float mAngle = Random::GetInstance()->RandomInt(0, 100);
+		float mAngle = Random::GetInstance()->RandomInt(0, 200);
 
-			mX += cosf(mAngle) * 500 * Time::GetInstance()->DeltaTime();
-			mY += sinf(mAngle) * 500 * Time::GetInstance()->DeltaTime();
-
-			pre_time = Time::GetInstance()->GetSceneTime();
-		}
-
+		mX += cosf(mAngle) * 1500 * Time::GetInstance()->DeltaTime();
+		mY += sinf(mAngle) * 1500 * Time::GetInstance()->DeltaTime();
 	}
+	else return;
 }
 
 void Camera::RenderRect(HDC hdc, RECT rc)

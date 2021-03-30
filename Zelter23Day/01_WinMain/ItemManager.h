@@ -49,8 +49,8 @@ public:
 	void PutInInventory(wstring key, int count);
 
 	void MoveItems();
-	void IntersectInventory(int j, int k);
-	void IntersectQuickSlot(int indexQ);
+	//void IntersectInventory(int j, int k);
+	//void IntersectQuickSlot(int indexQ);
 
 	void ItemRePositioning();
 	void QuickSlotRePositioning(int num);

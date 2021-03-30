@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "TextBox.h"
 #include "Zombie01.h"
+#include "Pet.h"
 IChangeCameraTargetEvent::IChangeCameraTargetEvent(GameObject * target)
 {
 	mTarget = target;
@@ -298,6 +299,38 @@ bool IZombiGeneration::Update()
 	}
 }
 
+IPetGeneration::IPetGeneration(float x, float y, vector<vector<class Tile*>>& tileList)
+{
+	mX = x;
+	mY = y;
+	mTileList = tileList;
+}
+
+void IPetGeneration::Start()
+{
+	Pet* pet = new Pet(mX, mY);
+	pet->SetTileList(mTileList);
+	pet->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, pet);
+}
+
+bool IPetGeneration::Update()
+{
+	if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Player).size() != NULL)
+	{
+		return true;
+	}
+	else
+	{
+		Zombie01* pet = new Zombie01(mX, mY);
+		pet->SetTileList(mTileList);
+		pet->Init();
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, pet);
+		return false;
+	}
+}
+
+
 IDelayFunEvent::IDelayFunEvent(float delayTime, function<void(void)> func)
 {
 	mDelayTime = delayTime;
@@ -347,3 +380,4 @@ bool IObjectCrushEvent::Update()
 	}
 	return false;
 }
+

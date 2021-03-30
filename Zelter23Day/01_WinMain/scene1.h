@@ -12,6 +12,7 @@ class Tablet;
 class WorkTable;
 class ItemManager;
 class Weapon;
+class Pet;
 
 #define TileSize 32
 #define Pallette 64
@@ -32,6 +33,7 @@ class scene1 : public Scene
 	int mLoadingFile;
 
 	Player* mPlayer;
+	Pet* mPet;
 	Zombie01* mZombie01;
 	SmartWatch* mSmartWatch;
 	PlayerHPUI* mPlayerHPUI;
@@ -48,6 +50,7 @@ public:
 	void Render(HDC hdc)override;
 	void Load();
 	void EnemyRespown(float x, float y);
+	void PetRespown(float x, float y);
 
 private:
 

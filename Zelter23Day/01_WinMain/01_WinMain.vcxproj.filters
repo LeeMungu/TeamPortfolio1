@@ -348,6 +348,9 @@
     <ClInclude Include="BackGround.h">
       <Filter>MainGame\Object\Objectes</Filter>
     </ClInclude>
+    <ClInclude Include="Pet.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -562,6 +565,9 @@
     </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <Filter>MainGame\Object\Objectes</Filter>
+    </ClCompile>
+    <ClCompile Include="Pet.cpp">
+      <Filter>MainGame\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

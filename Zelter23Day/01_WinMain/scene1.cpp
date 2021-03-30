@@ -21,6 +21,7 @@
 #include "Tablet.h"
 #include "WorkTable.h"
 #include "ItemManager.h"
+#include "Pet.h"
 
 //밤
 #include "Evening.h"
@@ -81,20 +82,22 @@ void scene1::Init()
 
 	//이벤트 초기화 
 	GameEventManager::GetInstance()->RemoveAllEvent();
+
+	GameEventManager::GetInstance()->PushEvent(new IPetGeneration(1300, 1600, mTileList));
 	//패스파인더에서 터짐 후에 수정예정
 	//for (int i = 0; i < 1; ++i)
 	//{
-	//	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
 	//}
 	//첫 등장 시 텍스트 창 출력
-	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+	//GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
 	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"성남시에 군인들이\n아직 있다고들었어.\n길을 따라 남동쪽으로 가보자."));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(4.f, L"다들 살아있으면 좋을텐데.\n좀비들이 점점 남쪽으로\n내려오는 모양이야."));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(4.f, L"혹시 가는 길에 있는 경찰서에서\n권총을 주울 수 있을지 몰라."));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(4.f, L"우선 가지고 있는 도끼로\n녀석들을 상대하자."));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"좀비에 접근 후 F키를 누르면\n좀비를 공격할 수 있습니다."));
-	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+	//GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 
 	//특정 장소 도착 시 좀비등장 및 공격 텍스트창 출력
 	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*125));
@@ -104,43 +107,43 @@ void scene1::Init()
 
 	//탈출 전 폭탄 제작 이벤트 안내 텍스트창 출력
 	GameEventManager::GetInstance()->
-		PushEvent(new IObjectCrushEvent(
-			ObjectManager::GetInstance()->FindObject(ObjectLayer::InteractObject, "Barricade2"),
-			ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")));
+	PushEvent(new IObjectCrushEvent(
+	ObjectManager::GetInstance()->FindObject(ObjectLayer::InteractObject, "Barricade2"),
+	ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player")));
 	
-		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"성남으로 가려면 이쪽으로\n가야하는데 길이 막혀있다..."));
-		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"아마 사제폭탄으로\n길을 만들 수 있을거야."));
-		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"주변을 돌아다니면서\n재료를 모아보자."));
-		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-		GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"성남으로 가려면 이쪽으로\n가야하는데 길이 막혀있다..."));
+	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"아마 사제폭탄으로\n길을 만들 수 있을거야."));
+	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"주변을 돌아다니면서\n재료를 모아보자."));
+	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 	
-		//좀비 등장 이벤트
-		
-		GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::UpRight, TileSize * 232, TileSize * 68));
-		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"표지판에 누군가가 급하게\n휘갈겨 쓴 메모가 보인다."));
-		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-		GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"공터에 겨우 좀비들을\n몰아넣었으니 녀석들을\n유인하는 행동을 하지말 것\n목숨책임안짐."));
-		GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 219, TileSize * 39, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 225, TileSize * 44, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 235, TileSize * 41, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 245, TileSize * 48, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 236, TileSize * 53, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 224, TileSize * 53, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 222, TileSize * 57, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 226, TileSize * 63, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 217, TileSize * 53, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 218, TileSize * 46, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 243, TileSize * 43, mTileList));
+	//좀비 등장 이벤트
+	
+	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::UpRight, TileSize * 232, TileSize * 68));
+	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"표지판에 누군가가 급하게\n휘갈겨 쓴 메모가 보인다."));
+	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"공터에 겨우 좀비들을\n몰아넣었으니 녀석들을\n유인하는 행동을 하지말 것\n목숨책임안짐."));
+	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 219, TileSize * 39, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 225, TileSize * 44, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 235, TileSize * 41, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 245, TileSize * 48, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 236, TileSize * 53, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 224, TileSize * 53, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 222, TileSize * 57, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 226, TileSize * 63, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 217, TileSize * 53, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 218, TileSize * 46, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 243, TileSize * 43, mTileList));
 
-		//for (int i = 0; i < 1; ++i)
-		//	{
-		//		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
-		//	}
+	//for (int i = 0; i < 1; ++i)
+	//	{
+	//		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
+	//	}
 
 	//WeatherManager::GetInstance()->Init();
 	//WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
@@ -314,6 +317,8 @@ void scene1::Update()
 			//mPlayer->WeaponUse(true);
 		}
 	}
+
+
 }
 
 void scene1::Render(HDC hdc)
@@ -590,4 +595,12 @@ void scene1::EnemyRespown(float x, float y)
 	}
 	
 
+}
+
+void scene1::PetRespown(float x, float y)
+{
+	Pet* pet = new Pet(x, y);
+	pet->SetTileList(mTileList);
+	pet->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Pet, pet);
 }

@@ -37,6 +37,6 @@ void TextBox::Render(HDC hdc)
 	
 	//±Û¾¾ Ãâ·Â
 	D2DRenderer::GetInstance()->RenderText(
-		mRect.left+mSizeX/8, mRect.top+mSizeY/4, mTextContext.c_str(), 25);
+		mRect.left+mSizeX/8 + 10, mRect.top+mSizeY/4, mTextContext.c_str(), 30);
 
 }

@@ -157,6 +157,7 @@ void Zombie01::Update()
 
 	if (mHp <= 0)
 	{
+		ItemManager::GetInstance()->randomItem(L"Zom", mX, mY);
 		mIsDestroy = true;
 	}
 }

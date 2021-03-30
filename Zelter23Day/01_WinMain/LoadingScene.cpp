@@ -16,7 +16,6 @@ void LoadingScene::Init()
 	mIsEndLoading = false;
 
 	//이미지 (엔딩크레딧 관련)
-	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"TestEndingCredit", Resources(L"/01_UI/TestEndingCredit.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"EndingBackGround", Resources(L"/01_UI/EndingBackGround.png")); });
 
 	//이미지 (플레이어)
@@ -97,8 +96,8 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Inventory_slot", Resources(L"/01_UI/UI_Slot.png")); });
 
 	//이미지 (시작화면 버튼 UI)
-	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"StartButton", Resources(L"/01_UI/StartButton.png")); });
-	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkButton", Resources(L"/01_UI/WorkButton.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"StartButton", Resources(L"/01_UI/StartButton.png"), 2, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkButton", Resources(L"/01_UI/WorkButton.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"EndButton", Resources(L"/01_UI/EndButton.png")); });
 
 	//이미지(제작UI)
@@ -379,9 +378,12 @@ void LoadingScene::Release()
 void LoadingScene::Update()
 {
 	//mLoadingAnimation->Update();
-	if (mIsEndLoading == true && Input::GetInstance()->GetKeyDown(VK_SPACE))
+	if (mIsEndLoading == true )
 	{
+		if (Input::GetInstance()->GetKeyDown(VK_SPACE))
+		{
 			SceneManager::GetInstance()->LoadScene(L"Scene1");
+		}
 	}
 	if (mLoadIndex >= mLoadList.size())
 	{
@@ -414,6 +416,11 @@ void LoadingScene::Render(HDC hdc)
 	if (mIsEndLoading == true)
 	{
 		D2DRenderer::GetInstance()->RenderText(
-			WINSIZEX / 2 - 50, WINSIZEY - 100, L"Press Space", 30, DefaultBrush::White);
+			WINSIZEX / 2 - 70, WINSIZEY - 120, L"Press Space", 30, DefaultBrush::White);
+	}
+	else
+	{
+		D2DRenderer::GetInstance()->RenderText(
+			WINSIZEX / 2 - 70, 80, L"Now Loading...", 30, DefaultBrush::White);
 	}
 }

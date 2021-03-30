@@ -69,6 +69,15 @@ public:
 	bool Update()override;
 };
 
+class IGameEnding : public IEvent
+{
+	bool mIsGameEnding;
+public:
+	IGameEnding(bool GameEnding);
+	void Start()override;
+	bool Update()override;
+};
+
 //모든유닛 특정시간 스탑
 class IAllUnitStopTime : public IEvent
 {

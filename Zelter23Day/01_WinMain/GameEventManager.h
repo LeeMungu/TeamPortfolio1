@@ -13,5 +13,7 @@ public:
 	void Update();
 
 	void PushEvent(class IEvent* event);
+
+	int GetEventCount()const { return mEventQueue.size(); }
 };
 

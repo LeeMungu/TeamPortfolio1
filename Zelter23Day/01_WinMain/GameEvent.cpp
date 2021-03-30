@@ -347,3 +347,23 @@ bool IObjectCrushEvent::Update()
 	}
 	return false;
 }
+
+IGameEnding::IGameEnding(bool GameEnding)
+{
+	mIsGameEnding = false;
+}
+
+void IGameEnding::Start()
+{
+}
+
+bool IGameEnding::Update()
+{
+	mIsGameEnding = true;
+	if (mIsGameEnding == true)
+	{
+		
+		return true;
+	}
+	return false;
+}

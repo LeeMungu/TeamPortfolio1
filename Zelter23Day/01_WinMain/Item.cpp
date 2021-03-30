@@ -101,6 +101,13 @@ void Item::Render(HDC hdc)
 		mNumImage->ScaleFrameRender(hdc, mX, mY + 5, mCount / 10 % 10, 0, 10, 10);
 		mNumImage->ScaleFrameRender(hdc, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
 	}
+	else if (mItemKind == ItemKind::holding)
+	{
+		mImage->ScaleRender(hdc, mRect.left, mRect.top, 40, 40);
+	
+		mNumImage->ScaleFrameRender(hdc, mX + 10, mY + 10, mCount / 10 % 10, 0, 10, 10);
+		mNumImage->ScaleFrameRender(hdc, mX + 16, mY + 10, mCount % 10, 0, 10, 10);
+	}
 	else { //인벤토리, 퀵슬롯은 그냥 랜더
 		mImage->Render(hdc, mRect.left, mRect.top);
 

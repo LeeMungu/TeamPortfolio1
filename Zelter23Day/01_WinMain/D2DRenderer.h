@@ -2,6 +2,11 @@
 /****************************************************************************
 ## D2DRenderer ##
 *****************************************************************************/
+enum class DefaultBrush : UINT
+	{
+		White = 0, Black, Yellow, Red, Blue, Green, Gray, End
+	};
+
 class D2DRenderer final
 {
 public:
@@ -14,10 +19,7 @@ private:
 	D2DRenderer();
 	virtual ~D2DRenderer();
 public:
-	enum class DefaultBrush : UINT
-	{
-		White = 0, Black, Yellow, Red, Blue, Green, Gray, End
-	};
+	
 private:
 	typedef map<wstring, IDWriteTextFormat*>::iterator TextIter;
 private:

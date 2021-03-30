@@ -349,7 +349,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"Scream", Resources(L"/09_Sound/Scream.wav"), false); });
 
 
-	mLoadingImage = IMAGEMANAGER->FindImage(L"LoadingCat");
+	mLoadingImage = IMAGEMANAGER->FindImage(L"Menual");
 	mLoadingImage2 = ImageManager::GetInstance()->FindImage(L"LoadingImage2");
 	//mLoadingAnimation = new Animation();
 	//mLoadingAnimation->InitFrameByStartEnd(0, 0, 9, 0, false);
@@ -368,10 +368,10 @@ void LoadingScene::Release()
 
 void LoadingScene::Update()
 {
-	//mLoadingAnimation->Update();
-	if (mIsEndLoading == true)
+	mLoadingAnimation->Update();
+	if (mIsEndLoading == true && Input::GetInstance()->GetKeyDown(VK_SPACE))
 	{
-		SceneManager::GetInstance()->LoadScene(L"Scene1");
+			SceneManager::GetInstance()->LoadScene(L"Scene1");
 	}
 	if (mLoadIndex >= mLoadList.size())
 	{
@@ -403,7 +403,10 @@ void LoadingScene::Render(HDC hdc)
 		//	mLoadingImage->GetFrameHeight()*5);
 		mLoadingImage2->LoadingRender(hdc, 0, 0, 0, 0, WINSIZEX, WINSIZEY, mTime);
 
-		D2DRenderer::GetInstance()->RenderText(
-			WINSIZEX/3 - 90,WINSIZEY/5*2,L"생존하기 위해 준비 중입니다...",30);
+		if (mIsEndLoading == true)
+		{
+			D2DRenderer::GetInstance()->RenderText(
+				WINSIZEX / 2 - 50, WINSIZEY - 100, L"Press Space", 30, DefaultBrush::White);
+		}
 	}
 }

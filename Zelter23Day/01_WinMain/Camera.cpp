@@ -13,6 +13,7 @@ void Camera::Init()
 	mSizeY = WINSIZEY;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mMoveSpeed = 25.f;
+	mIsShake = false;
 }
 
 void Camera::Release()
@@ -125,23 +126,13 @@ void Camera::ItemRender(HDC hdc, Image* image, int x, int y, int frameX, int fra
 }
 
 //카메라 흔든다!
-void Camera::ShakingCamera(bool b)
+void Camera::ShakingCamera()
 {
-	float pre_time = Time::GetInstance()->GetSceneTime();
+	float mAngle = Random::GetInstance()->RandomInt(0, 200);
 
-	if (b == true)
-	{
-		if (Time::GetInstance()->GetSceneTime() - pre_time > 1)
-		{
-			float mAngle = Random::GetInstance()->RandomInt(0, 100);
-
-			mX += cosf(mAngle) * 500 * Time::GetInstance()->DeltaTime();
-			mY += sinf(mAngle) * 500 * Time::GetInstance()->DeltaTime();
-
-			pre_time = Time::GetInstance()->GetSceneTime();
-		}
-
-	}
+	mX += cosf(mAngle) * 1500 * Time::GetInstance()->DeltaTime();
+	mY += sinf(mAngle) * 1500 * Time::GetInstance()->DeltaTime();
+	
 }
 
 void Camera::RenderRect(HDC hdc, RECT rc)

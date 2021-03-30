@@ -186,6 +186,8 @@ void scene1::Init()
 
 	ItemManager::GetInstance()->DropItems(L"Pistol", 6000, 3450, 1);
 
+	mShakingStartTime = 0;
+
 }
 
 void scene1::Release()
@@ -208,9 +210,17 @@ void scene1::Release()
 void scene1::Update()
 {
 	Camera* camera = CameraManager::GetInstance()->GetMainCamera();
-	if (Input::GetInstance()->GetKeyDown('P'))
+	
+	if (camera->mIsShake == true)
 	{
-		camera->Camera::ShakingCamera(true);
+		camera->ShakingCamera();
+		mShakingStartTime += Time::GetInstance()->DeltaTime();
+		
+		if (mShakingStartTime > 1.5f)
+		{
+			camera->mIsShake = false;
+			mShakingStartTime = 0;
+		}
 	}
 	//Weather
 	//WeatherManager::GetInstance()->Update();

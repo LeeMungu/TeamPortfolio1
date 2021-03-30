@@ -6,7 +6,6 @@
 #include "Inventory.h"
 #include "WorkTable.h"
 #include "Animation.h"
-
 Bomb::Bomb(float x, float y)
 {
 	mX = x;
@@ -49,7 +48,7 @@ void Bomb::Update()
 
 	if (mIsExplosionAfter == false)
 	{
-		if (Timer >= 10.f)
+		if (Timer >= 5.f)
 		{
 			mIsExplosion = true;
 		}
@@ -60,6 +59,8 @@ void Bomb::Update()
 			SoundPlayer::GetInstance()->Play(L"BombSound", 0.8 * SoundPlayer::GetInstance()->GetEffectVolume());
 			mIsExplosionAfter = true;
 
+			Camera* camera = CameraManager::GetInstance()->GetMainCamera();
+			camera->mIsShake = true;
 		}
 	}
 	if (mIsExplosionAfter == true)

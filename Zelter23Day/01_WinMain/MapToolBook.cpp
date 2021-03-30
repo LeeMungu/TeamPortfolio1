@@ -11,6 +11,10 @@
 
 void MapToolBook::Init()
 {
+
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"NextPageButton", Resources(L"/01_UI/NextPageButton.png"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"PrevPageButton", Resources(L"/01_UI/PrevPageButton.png"));
+
 	mX = WINSIZEX;
 	mY = WINSIZEY / 2;
 	mImage = ImageManager::GetInstance()->FindImage(L"Book");
@@ -65,7 +69,7 @@ void MapToolBook::Init()
 		mNoninterectObjectButton = new Button(L"BookButton", 3, L"NoninterectObject", mX - mSizeX / 2+50, mY - 100, 100, 50,
 			[this]() {ChangeMode(BookType::NoninterectObject); });
 
-		mNextButton = new Button(L"Next", mX - mSizeX / 6, mY + mSizeY / 3, 50, 50,
+		mNextButton = new Button(L"NextPageButton", mX - mSizeX / 6, mY + mSizeY / 3, 1.f,
 			[this]() {
 			if (mBookType == BookType::Tile)
 			{
@@ -92,7 +96,7 @@ void MapToolBook::Init()
 				}
 			}
 		});
-		mPrevButton = new Button(L"Prev", mX - mSizeX / 3, mY + mSizeY / 3, 50, 50,
+		mPrevButton = new Button(L"PrevPageButton", mX - mSizeX / 3.5, mY + mSizeY / 3, 1.f,
 			[this]() {
 			if (mBookType == BookType::Tile)
 			{

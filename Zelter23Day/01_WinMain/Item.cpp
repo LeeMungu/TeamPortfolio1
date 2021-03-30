@@ -25,8 +25,8 @@ void Item::Init()
 	mImage = IMAGEMANAGER->FindImage(mKeyName);
 	mType = ItemManager::GetInstance()->SetItemType(mKeyName);
 
-	mSizeX = mImage->GetWidth();
-	mSizeY = mImage->GetHeight();
+	mSizeX = mImage->GetWidth()*1.35f;
+	mSizeY = mImage->GetHeight()*1.35f;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 	mNumImage = IMAGEMANAGER->FindImage(L"SW_num");
@@ -82,7 +82,7 @@ void Item::Update()
 void Item::Render(HDC hdc)
 {
 	if (mItemKind == ItemKind::drop) { //¶¥¿¡ ¶³¾îÁ®ÀÖÀ» ¶© Ä«¸Þ¶ó ·£´õ
-		CameraManager::GetInstance()->GetMainCamera()->AlphaScaleRender(hdc, mImage, mRect.left, mRect.top, 28, 28, mAlpha);
+		CameraManager::GetInstance()->GetMainCamera()->AlphaScaleRender(hdc, mImage, mRect.left, mRect.top, mSizeX, mSizeY, mAlpha);
 
 		if (mCount != 1)
 		{
@@ -93,20 +93,15 @@ void Item::Render(HDC hdc)
 		}
 
 	}
-	else if (mItemKind == ItemKind::inventory)
+	else 
 	{
-		mImage->Render(hdc, mRect.left, mRect.top);
-		RenderRect(hdc, mRect);
+		mImage->ScaleRender(hdc, mRect.left, mRect.top, mSizeX, mSizeY);
 
 		mNumImage->ScaleFrameRender(hdc, mX, mY + 5, mCount / 10 % 10, 0, 10, 10);
 		mNumImage->ScaleFrameRender(hdc, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
 	}
-	else { //ÀÎº¥Åä¸®, Äü½½·ÔÀº ±×³É ·£´õ
-		mImage->Render(hdc, mRect.left, mRect.top);
-
-		mNumImage->ScaleFrameRender(hdc, mX , mY + 5, mCount / 10 % 10, 0, 10, 10);
-		mNumImage->ScaleFrameRender(hdc, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
-	}
+	
+	
 
 	if (Input::GetInstance()->GetKey(VK_LCONTROL))
 	{

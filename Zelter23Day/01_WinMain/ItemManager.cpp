@@ -744,6 +744,13 @@ void ItemManager::MoveItems()
 											mQuickSlotList[mIndex].isFill = false;
 											mQuickSlotList[j].isFill = true;
 										}
+
+										//선택돼있는 퀵슬롯창이면
+										if (mQuickSlot->GetSelectedSlot() == j + 1)
+										{
+											((Item*)mItems[i])->SetIsSelected(true);
+										}
+
 										break;
 									}
 								}
@@ -794,7 +801,7 @@ void ItemManager::MoveItems()
 	
 	
 }
-
+/*
 void ItemManager::IntersectInventory(int j, int k)
 {
 	((Item*)mItems[mSeletedItemIndex])->SetIsClicking(false);
@@ -974,7 +981,7 @@ void ItemManager::IntersectQuickSlot(int indexQ)
 
 		((Item*)mItems[mSeletedItemIndex])->SetIsClicking(false);
 	}
-}
+}*/
 
 //숫자 키 누르면
 void ItemManager::ItemRePositioning()

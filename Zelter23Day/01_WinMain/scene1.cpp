@@ -83,7 +83,7 @@ void scene1::Init()
 	//이벤트 초기화 
 	GameEventManager::GetInstance()->RemoveAllEvent();
 
-	GameEventManager::GetInstance()->PushEvent(new IPetGeneration(1300, 1600, mTileList));
+	GameEventManager::GetInstance()->PushEvent(new IPetGeneration(1200, 1600, mTileList));
 	//패스파인더에서 터짐 후에 수정예정
 	//for (int i = 0; i < 1; ++i)
 	//{
@@ -120,6 +120,7 @@ void scene1::Init()
 	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 	
+
 	//좀비 등장 이벤트
 	
 	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::UpRight, TileSize * 232, TileSize * 68));
@@ -145,6 +146,41 @@ void scene1::Init()
 	//		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
 	//	}
 
+		//좀비 등장 이벤트
+		
+		GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::UpRight, TileSize * 232, TileSize * 68));
+		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"표지판에 누군가가 급하게\n휘갈겨 쓴 메모가 보인다."));
+		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"공터에 겨우 좀비들을\n몰아넣었으니 녀석들을\n유인하는 행동을 하지말 것\n목숨책임안짐."));
+		GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 219, TileSize * 39, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 225, TileSize * 44, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 235, TileSize * 41, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 245, TileSize * 48, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 236, TileSize * 53, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 224, TileSize * 53, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 222, TileSize * 57, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 226, TileSize * 63, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 217, TileSize * 53, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 218, TileSize * 46, mTileList));
+		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 243, TileSize * 43, mTileList));
+
+
+		//폭발 후 엔딩
+		GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::UpRight, TileSize * 267, TileSize * 114));
+		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"좋아 이제 가볼까."));
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"다들 무사해줘."));
+		//GameEventManager::GetInstance()->PushEvent(new IGameEnding(true));
+
+
+		//for (int i = 0; i < 1; ++i)
+		//	{
+		//		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
+		//	}
+
+
 	//WeatherManager::GetInstance()->Init();
 	//WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);
 
@@ -165,6 +201,7 @@ void scene1::Release()
 			SafeDelete(mTileList[y][x]);
 		}
 	}
+	SoundPlayer::GetInstance()->Stop(L"BGM");
 }
 
 
@@ -172,8 +209,10 @@ void scene1::Update()
 {
 	//Weather
 	//WeatherManager::GetInstance()->Update();
+	
 	//이벤트
 	GameEventManager::GetInstance()->Update();
+
 	ObjectManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
 
@@ -318,6 +357,19 @@ void scene1::Update()
 		}
 	}
 
+	
+	if (GameEventManager::GetInstance()->GetEventCount() == 0)
+	{
+		SceneManager::GetInstance()->LoadScene(L"EndingScene");
+		
+	}
+	if (tempPlayer != nullptr)
+	{
+		if (tempPlayer->GetIsDie() == true)
+		{
+			SceneManager::GetInstance()->LoadScene(L"MainScene");
+		}
+	}
 
 }
 
@@ -352,14 +404,14 @@ void scene1::Render(HDC hdc)
 
 	ObjectManager::GetInstance()->Render(hdc);
 	//씬 시간 보기
-	float worldTime = Time::GetInstance()->GetWorldTime();
-	float sceneTime = Time::GetInstance()->GetSceneTime();
-	wstring strWorldTime = L"WorldTime : " + to_wstring(worldTime);
-	wstring strSceneTime = L"ScneTime : " + to_wstring(sceneTime);
-	D2DRenderer::GetInstance()
-		->RenderText(10, 200, strWorldTime.c_str(), strWorldTime.length());
-	D2DRenderer::GetInstance()
-		->RenderText(10, 280, strSceneTime.c_str(), strSceneTime.length());
+	//float worldTime = Time::GetInstance()->GetWorldTime();
+	//float sceneTime = Time::GetInstance()->GetSceneTime();
+	//wstring strWorldTime = L"WorldTime : " + to_wstring(worldTime);
+	//wstring strSceneTime = L"ScneTime : " + to_wstring(sceneTime);
+	//D2DRenderer::GetInstance()
+	//	->RenderText(10, 200, strWorldTime.c_str(), strWorldTime.length());
+	//D2DRenderer::GetInstance()
+	//	->RenderText(10, 280, strSceneTime.c_str(), strSceneTime.length());
 }
 
 void scene1::Load()

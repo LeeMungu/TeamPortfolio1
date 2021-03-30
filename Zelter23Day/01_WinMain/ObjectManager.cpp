@@ -280,6 +280,7 @@ void ObjectManager::Zorder(vector<GameObject*> &zorderRenderList)
 	for (int i = 0; i < zorderRenderList.size(); ++i)
 	{
 		//목록에서 카메라 안에 있는 애들만 남겨두고 싶음
+		//하우징 벽은 렉트바텀이 작아지니까 카메라 밖으로 나가게 된다. 경우에 따라서 올라가게 변경해야한다.
 		if (zorderRenderList[i]->GetRect().top > cameraRect.bottom || zorderRenderList[i]->GetRect().bottom < cameraRect.top
 			|| zorderRenderList[i]->GetRect().left > cameraRect.right || zorderRenderList[i]->GetRect().right < cameraRect.left)
 		{

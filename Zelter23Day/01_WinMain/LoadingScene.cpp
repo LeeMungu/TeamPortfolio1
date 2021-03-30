@@ -16,7 +16,6 @@ void LoadingScene::Init()
 	mIsEndLoading = false;
 
 	//이미지 (엔딩크레딧 관련)
-	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"TestEndingCredit", Resources(L"/01_UI/TestEndingCredit.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"EndingBackGround", Resources(L"/01_UI/EndingBackGround.png")); });
 
 	//이미지 (플레이어)
@@ -26,6 +25,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_Gunwalk", Resources(L"/03_Player/Player_GunWalk.png"), 7, 4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_attack", Resources(L"/03_Player/Player_attack.png"), 10, 2); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_roll", Resources(L"/03_Player/Player_roll1.png"), 7, 4); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_Die", Resources(L"/03_Player/Player_Die.png"), 7, 1); });
 
 	//이미지 (펫)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Pet", Resources(L"/03_Player/Cat.png"), 4, 8); });
@@ -382,9 +382,12 @@ void LoadingScene::Release()
 void LoadingScene::Update()
 {
 	//mLoadingAnimation->Update();
-	if (mIsEndLoading == true && Input::GetInstance()->GetKeyDown(VK_SPACE))
+	if (mIsEndLoading == true )
 	{
+		if (Input::GetInstance()->GetKeyDown(VK_SPACE))
+		{
 			SceneManager::GetInstance()->LoadScene(L"Scene1");
+		}
 	}
 	if (mLoadIndex >= mLoadList.size())
 	{
@@ -417,6 +420,11 @@ void LoadingScene::Render(HDC hdc)
 	if (mIsEndLoading == true)
 	{
 		D2DRenderer::GetInstance()->RenderText(
-			WINSIZEX / 2 - 50, WINSIZEY - 100, L"Press Space", 30, DefaultBrush::White);
+			WINSIZEX / 2 - 70, WINSIZEY - 120, L"Press Space", 30, DefaultBrush::White);
+	}
+	else
+	{
+		D2DRenderer::GetInstance()->RenderText(
+			WINSIZEX / 2 - 70, 80, L"Now Loading...", 30, DefaultBrush::White);
 	}
 }

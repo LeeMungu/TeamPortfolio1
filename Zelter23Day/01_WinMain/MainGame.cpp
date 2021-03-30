@@ -124,7 +124,7 @@ void MainGame::Render(HDC hdc)
 		//mFirstBuffer->Clear();
 		{
 			SceneManager::GetInstance()->Render(hdc);
-			RenderTime(hdc);
+			//RenderTime(hdc);
 		}
 		//mFirstBuffer->EndDraw();
 

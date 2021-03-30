@@ -240,13 +240,16 @@ void HousingObject::Update()
 	else if (mHouselayer == HouseLayer::HouseWall)
 	{
 		mRect.bottom = mZotherRect[0].bottom;
-		RECT tempRc;
-		RECT playerRc = mPlayer->GetRect();
-		if (IntersectRect(&tempRc, &playerRc, &mZotherRect[0]))
+		if (mPlayer != nullptr)
 		{
-			if (mRect.bottom > mRect.top + 100 && mRect.bottom < mRect.top + mSizeY)
+			RECT tempRc;
+			RECT playerRc = mPlayer->GetRect();
+			if (IntersectRect(&tempRc, &playerRc, &mZotherRect[0]))
 			{
-				mRect.bottom = mZotherRect[0].top;
+				if (mRect.bottom > mRect.top + 100 && mRect.bottom < mRect.top + mSizeY)
+				{
+					mRect.bottom = mZotherRect[0].top;
+				}
 			}
 		}
 	}
@@ -260,20 +263,6 @@ void HousingObject::Render(HDC hdc)
 {
 	if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mRect))
 	{
-		//타일 렉트
-		for (int y = 0; y < mTileCountY; ++y)
-		{
-			for (int x = 0; x < mTileCountX; ++x)
-			{
-				RECT rc = RectMakeCenter(
-					mTileIndexX * TileSize + TileSize / 2 + x * TileSize,
-					mRect.bottom - y * TileSize,
-					TileSize, TileSize);
-				CameraManager::GetInstance()->GetMainCamera()
-					->RenderRect(hdc, rc);
-			}
-		}
-
 		//이미지
 		if (mHouselayer == HouseLayer::Roof)
 		{

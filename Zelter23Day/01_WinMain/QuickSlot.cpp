@@ -108,8 +108,8 @@ void QuickSlot::Render(HDC hdc)
 		else 
 			mSlotList[i].tipOpenImg->ScaleRender(hdc, mSlotList[i].x + 14, mSlotList[i].y - 5, 28, 18);
 	
-		if (mSlotList[i].isFill == true)
-			RenderRect(hdc, mSlotList[i].rect);
+		//if (mSlotList[i].isFill == true)
+		//	RenderRect(hdc, mSlotList[i].rect);
 	}
 	mFrontImage->ScaleRender(hdc, mX + 76, mY + 30, 179 * 2, 16 * 2);
 

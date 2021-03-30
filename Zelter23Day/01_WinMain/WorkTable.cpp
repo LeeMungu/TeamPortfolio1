@@ -30,9 +30,10 @@ void WorkTable::Init()
 
 	mStartBtn = new Button(L"WorkTable_start_btn", mX + 550, mY + 330, 2, [this]() {
 		MakingItem(mBtnKey);
-		MakingCountSet();
+
 		if (mMakingCount > 0)
 		{
+			MakingCountSet();
 			DeleteItem();
 		}
 		});
@@ -163,7 +164,7 @@ void WorkTable::Worktemplet(string btnkey)
 							mIsMakingOpen = true;
 							mMakeCost = 2;
 							//재료아이템
-							Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "wood", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+							Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "wood", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ItemKind::holding);
 							workTableitem->Init();
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitem);
 							//재료아이템 
@@ -198,7 +199,7 @@ void WorkTable::Worktemplet(string btnkey)
 						if (((Item*)items[i])->GetKeyName() == L"WoodBoard")
 						{
 							//재료아이템
-							Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "WoodBoard", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+							Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "WoodBoard", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ItemKind::holding);
 							workTableitem->Init();
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitem);
 							mMakeItemCount = ((Item*)items[i])->GetCount();
@@ -207,7 +208,7 @@ void WorkTable::Worktemplet(string btnkey)
 						if (((Item*)items[i])->GetKeyName() == L"Iron1") // 템 있을때 없을때 구분해주기
 						{
 							//재료아이템
-							Item* workTableitemlron = new Item(((Item*)items[i])->GetKeyName(), "Iron", mX + 480, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+							Item* workTableitemlron = new Item(((Item*)items[i])->GetKeyName(), "Iron", mX + 480, mY + 250, ((Item*)items[i])->GetCount(), ItemKind::holding);
 							workTableitemlron->Init();
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitemlron);
 							mMakeItemCount2 = ((Item*)items[i])->GetCount();
@@ -252,7 +253,7 @@ void WorkTable::Worktemplet(string btnkey)
 						if (((Item*)items[i])->GetKeyName() == L"Iron1")
 						{
 							//재료아이템
-							Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "Iron1", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+							Item* workTableitem = new Item(((Item*)items[i])->GetKeyName(), "Iron1", mX + 450, mY + 250, ((Item*)items[i])->GetCount(), ItemKind::holding);
 							workTableitem->Init();
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitem);
 							mMakeItemCount = ((Item*)items[i])->GetCount();
@@ -261,7 +262,7 @@ void WorkTable::Worktemplet(string btnkey)
 						if (((Item*)items[i])->GetKeyName() == L"ClothPiece") // 템 있을때 없을때 구분해주기
 						{
 							//재료아이템
-							Item* workTableitemcloth = new Item(((Item*)items[i])->GetKeyName(), "ClothPiece", mX + 480, mY + 250, ((Item*)items[i])->GetCount(), ((Item*)items[i])->GetItemKind());
+							Item* workTableitemcloth = new Item(((Item*)items[i])->GetKeyName(), "ClothPiece", mX + 480, mY + 250, ((Item*)items[i])->GetCount(), ItemKind::holding);
 							workTableitemcloth->Init();
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitemcloth);
 							mMakeItemCount2 = ((Item*)items[i])->GetCount();
@@ -343,6 +344,7 @@ void WorkTable::MakingItem(string btnkey)
 							for (int i = 0; i < items.size(); ++i) {
 								if (((Item*)items[i])->GetItemKind() == ItemKind::inventory)
 								{
+
 									if (((Item*)items[i])->GetKeyName() == L"WoodBrench1")
 									{
 										((Item*)items[i])->SetCountMinus(mMakingCount * mMakeCost);

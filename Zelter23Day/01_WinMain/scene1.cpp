@@ -90,19 +90,16 @@ void scene1::Init()
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
 	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(0.5f));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"성남시에 군인들이\n아직 있다고들었어.\n길을 따라 남동쪽으로 가보자."));
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"다들 살아있으면 좋을텐데."));
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"가는 길에 있는 경찰서에서\n권총을 주울 수 있을지 몰라."));
-	GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"우선 가지고 있는 도끼로\n녀석들을 상대하자."));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(4.f, L"다들 살아있으면 좋을텐데.\n좀비들이 점점 남쪽으로\n내려오는 모양이야."));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(4.f, L"혹시 가는 길에 있는 경찰서에서\n권총을 주울 수 있을지 몰라."));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(4.f, L"우선 가지고 있는 도끼로\n녀석들을 상대하자."));
 	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"좀비에 접근 후 F키를 누르면\n좀비를 공격할 수 있습니다."));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 
 	//특정 장소 도착 시 좀비등장 및 공격 텍스트창 출력
 	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::DownRight,TileSize*84,TileSize*125));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"이쪽으로 쭉 가면 성남시야."));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"이 길을 따라가면 성남이야."));
 	GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 
 	//탈출 전 폭탄 제작 이벤트 안내 텍스트창 출력
@@ -123,7 +120,11 @@ void scene1::Init()
 		//좀비 등장 이벤트
 		
 		GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::UpRight, TileSize * 232, TileSize * 68));
-		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"좀비테스트 바닥."));
+		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"표지판에 누군가가 급하게\n휘갈겨 쓴 메모가 보인다."));
+		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"공터에 겨우 좀비들을\n몰아넣었으니 녀석들을\n유인하는 행동을 하지말 것\n목숨책임안짐."));
+		GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 219, TileSize * 39, mTileList));
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 225, TileSize * 44, mTileList));
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 235, TileSize * 41, mTileList));
@@ -136,16 +137,10 @@ void scene1::Init()
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 218, TileSize * 46, mTileList));
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 243, TileSize * 43, mTileList));
 
-
-
-
 		//for (int i = 0; i < 1; ++i)
 		//	{
 		//		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
 		//	}
-
-
-
 
 	//WeatherManager::GetInstance()->Init();
 	//WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);

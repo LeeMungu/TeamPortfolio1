@@ -143,6 +143,13 @@ void MapToolLoadingScene::Init()
 	//이미지 (몬스터)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie01", Resources(L"/06_Zombie/zombie01.png"), 5, 6); });
 
+	//이미지(맵툴 버튼)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"LoadButton", Resources(L"/01_UI/LoadButton.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"SaveButton", Resources(L"/01_UI/SaveButton.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"NextPageButton", Resources(L"/01_UI/NextPageButton.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"PrevPageButton", Resources(L"/01_UI/PrevPageButton.png")); });
+
+
 	//이미지 (Active Object)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bench1", Resources(L"/05_Object/Bench1.png"), 2, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Bench2", Resources(L"/05_Object/Bench2.png"), 2, 1); });

@@ -14,6 +14,11 @@
 
 void MapToolScene::Init()
 {
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"LoadButton", Resources(L"/01_UI/LoadButton.png"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"SaveButton", Resources(L"/01_UI/SaveButton.png"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"NextPageButton", Resources(L"/01_UI/NextPageButton.png"));
+	IMAGEMANAGER->GetInstance()->LoadFromFile(L"PrevPageButton", Resources(L"/01_UI/PrevPageButton.png"));
+
 	mTileCountX = 300;
 	mTileCountY = 300;
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"Tile");
@@ -343,9 +348,9 @@ void MapToolScene::Update()
 	//버튼 생성
 	if (mToolBook->GetIsOpenBook() && mSaveButton == nullptr && mLoadButton == nullptr)
 	{
-		mSaveButton = new Button(L"Save", mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY(), 200, 50,
+		mSaveButton = new Button(L"SaveButton", mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY(), 1.5f,
 			bind(&MapToolScene::Save, this));
-		mLoadButton = new Button(L"Load", mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY() + 100, 200, 50,
+		mLoadButton = new Button(L"LoadButton", mToolBook->GetX() + mToolBook->GetSizeX() / 5, mToolBook->GetY() + 100, 1.5f,
 			bind(&MapToolScene::Load, this));
 	}
 	//버튼 업데이트

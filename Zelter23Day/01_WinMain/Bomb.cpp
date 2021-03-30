@@ -6,7 +6,6 @@
 #include "Inventory.h"
 #include "WorkTable.h"
 #include "Animation.h"
-
 Bomb::Bomb(float x, float y)
 {
 	mX = x;
@@ -42,7 +41,6 @@ void Bomb::Release()
 
 void Bomb::Update()
 {
-	Camera* camera = CameraManager::GetInstance()->GetMainCamera();
 	float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
 	float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
 	//생성된지 몇초 지났는지 알수있음
@@ -60,6 +58,9 @@ void Bomb::Update()
 			mRcExplosion = RectMakeCenter(mX, mY, 200, 200);
 			SoundPlayer::GetInstance()->Play(L"BombSound", 0.8 * SoundPlayer::GetInstance()->GetEffectVolume());
 			mIsExplosionAfter = true;
+
+			Camera* camera = CameraManager::GetInstance()->GetMainCamera();
+			camera->mIsShake = true;
 		}
 	}
 	if (mIsExplosionAfter == true)

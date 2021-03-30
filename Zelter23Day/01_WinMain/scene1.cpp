@@ -171,6 +171,7 @@ void scene1::Release()
 			SafeDelete(mTileList[y][x]);
 		}
 	}
+	SoundPlayer::GetInstance()->Stop(L"BGM");
 }
 
 
@@ -329,7 +330,14 @@ void scene1::Update()
 	if (GameEventManager::GetInstance()->GetEventCount() == 0)
 	{
 		SceneManager::GetInstance()->LoadScene(L"EndingScene");
-		SoundPlayer::GetInstance()->Stop(L"BGM");
+		
+	}
+	if (tempPlayer != nullptr)
+	{
+		if (tempPlayer->GetIsDie() == true)
+		{
+			SceneManager::GetInstance()->LoadScene(L"MainScene");
+		}
 	}
 }
 

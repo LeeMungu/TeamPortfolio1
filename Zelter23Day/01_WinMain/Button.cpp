@@ -155,17 +155,18 @@ void Button::Update()
 
 void Button::Render(HDC hdc)
 {
-	if (mState == State::Normal)
-	{
-		RenderRect(hdc, mRect);
-	}
-	else
-	{
-		float sizeX = mSizeX * 0.75f;
-		float sizeY = mSizeY * 0.75f;
-		RECT rc = RectMakeCenter(mX, mY, sizeX, sizeY);
-		RenderRect(hdc, rc);
-	}
+	//버튼 렉트
+	//if (mState == State::Normal)
+	//{
+	//	RenderRect(hdc, mRect);
+	//}
+	//else
+	//{
+	//	float sizeX = mSizeX * 0.75f;
+	//	float sizeY = mSizeY * 0.75f;
+	//	RECT rc = RectMakeCenter(mX, mY, sizeX, sizeY);
+	//	RenderRect(hdc, rc);
+	//}
 	if (mImage != nullptr)
 		mImage->ScaleFrameRender(hdc, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX,mSizeY);
 	else

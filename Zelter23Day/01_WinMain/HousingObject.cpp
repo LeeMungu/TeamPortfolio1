@@ -260,20 +260,6 @@ void HousingObject::Render(HDC hdc)
 {
 	if (CameraManager::GetInstance()->GetMainCamera()->IsInCameraArea(mRect))
 	{
-		//타일 렉트
-		for (int y = 0; y < mTileCountY; ++y)
-		{
-			for (int x = 0; x < mTileCountX; ++x)
-			{
-				RECT rc = RectMakeCenter(
-					mTileIndexX * TileSize + TileSize / 2 + x * TileSize,
-					mRect.bottom - y * TileSize,
-					TileSize, TileSize);
-				CameraManager::GetInstance()->GetMainCamera()
-					->RenderRect(hdc, rc);
-			}
-		}
-
 		//이미지
 		if (mHouselayer == HouseLayer::Roof)
 		{

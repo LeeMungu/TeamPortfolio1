@@ -137,6 +137,15 @@ void scene1::Init()
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 218, TileSize * 46, mTileList));
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 243, TileSize * 43, mTileList));
 
+
+		//폭발 후 엔딩
+		GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::UpRight, TileSize * 267, TileSize * 114));
+		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"좋아 이제 가볼까."));
+		GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"다들 무사해줘."));
+		//GameEventManager::GetInstance()->PushEvent(new IGameEnding(true));
+
+
 		//for (int i = 0; i < 1; ++i)
 		//	{
 		//		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
@@ -169,8 +178,10 @@ void scene1::Update()
 {
 	//Weather
 	//WeatherManager::GetInstance()->Update();
+	
 	//이벤트
 	GameEventManager::GetInstance()->Update();
+
 	ObjectManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
 
@@ -313,6 +324,11 @@ void scene1::Update()
 			mIsWorkTable = false;
 			//mPlayer->WeaponUse(true);
 		}
+	}
+	
+	if (GameEventManager::GetInstance()->GetEventCount() == 0)
+	{
+		SceneManager::GetInstance()->LoadScene(L"EndingScene");
 	}
 }
 

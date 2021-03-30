@@ -503,6 +503,49 @@ void Image::EveningBackgroundRender(float time)
 	ResetRenderOption();
 }
 
+void Image::ItemRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float time)
+{
+	//시간에 따른 길이 조정 : 0~1.f <-  1.f~0~1.f로 만들고 싶다. 기울기
+	float timePercent = ((float)((((int)time) % (60 * 24)) * 100) / (60 * 24)) / 100.f;
+	//0.5-0-0.5 길이
+	float downUpPercent = abs(timePercent - 0.5f)*2.f;
+	//현재 프레임인덱스 
+	int frame = frameY * mMaxFrameX + frameX;
+	Vector2 size = Vector2(mSize.X * width / this->GetFrameWidth(), mSize.Y * height / this->GetFrameHeight());
+
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
+
+	//그릴 영역 세팅 
+	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
+	D2D1_RECT_F dxSrc = D2D1::RectF((float)mFrameInfo[frame].x, (float)mFrameInfo[frame].y,
+		(float)(mFrameInfo[frame].x + mFrameInfo[frame].width),
+		(float)(mFrameInfo[frame].y + mFrameInfo[frame].height));
+	
+	//최종행렬 세팅
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform( scaleMatrix * rotateMatrix * translateMatrix);
+
+	//그려
+	//{
+	ID2D1SolidColorBrush* brush;
+	D2D1_COLOR_F color;
+	//r,g,b,a
+	color = { 0.0f,1.0f,0.0f,
+		//투명도
+		downUpPercent };
+	D2DRenderer::GetInstance()->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
+	D2DRenderer::GetInstance()->GetRenderTarget()
+		->FillOpacityMask(mBitmap, brush, D2D1_OPACITY_MASK_CONTENT::D2D1_OPACITY_MASK_CONTENT_GRAPHICS,
+			dxArea,
+			dxSrc);
+	//DrawRectangle(rect, brush);
+	brush->Release();
+	//}
+
+	this->ResetRenderOption();
+}
+
 /********************************************************************************
 ## ResetRenderOption ##
 이미지 클래스 렌더 관련 옵션들 전부 초기화

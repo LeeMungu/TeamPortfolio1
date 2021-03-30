@@ -82,8 +82,14 @@ void Item::Update()
 void Item::Render(HDC hdc)
 {
 	if (mItemKind == ItemKind::drop) { //땅에 떨어져있을 땐 카메라 랜더
+		//테두리
+		CameraManager::GetInstance()->GetMainCamera()
+			->ItemRender(hdc, mImage, mRect.left-mSizeX*0.3f/2.f, mRect.top-mSizeY*0.3f/2.f, 0, 0, mSizeX*1.3f, mSizeY*1.3f, Time::GetInstance()->GetSceneTime()*800);
+
+		//아이템 이미지
 		CameraManager::GetInstance()->GetMainCamera()->AlphaScaleRender(hdc, mImage, mRect.left, mRect.top, mSizeX, mSizeY, mAlpha);
 
+		//숫자 이미지
 		if (mCount != 1)
 		{
 			CameraManager::GetInstance()->GetMainCamera()->

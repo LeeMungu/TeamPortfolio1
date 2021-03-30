@@ -8,8 +8,8 @@ TextBox::TextBox(wstring textContext)
 	:UI("TextBox")
 {
 	mImage = ImageManager::GetInstance()->FindImage(L"TextBox");
-	mSizeX = mImage->GetWidth()*6;
-	mSizeY = mImage->GetHeight()*4;
+	mSizeX = mImage->GetWidth();
+	mSizeY = mImage->GetHeight();
 	mX = WINSIZEX/5*2 -100;
 	mY = WINSIZEY/4*3 + 50;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);

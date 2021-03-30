@@ -7,11 +7,21 @@
 D2DRenderer::D2DRenderer()
 	:mD2DFactory(nullptr), mD2DRenderTarget(nullptr), mDWFactory(nullptr)
 {
+	AddFontResourceA("../02_Resources/10_Font/SangSangShin.otf");
+	AddFontResourceA("../02_Resources/10_Font/KCCImkwontaek.ttf");
+	AddFontResourceA("../02_Resources/10_Font/SSFaithfulness.ttf");
+	AddFontResourceA("../02_Resources/10_Font/Typo_PapyrusB.ttf");
+
 	this->CreateFactory();
 	this->CreateRenderTarget();
 	this->CreateDefaultBrush();
 	this->AddTextFormat(L"맑은고딕");
 	this->AddTextFormat(L"궁서체");
+
+	this->AddTextFormat(L"상상토끼 신과장");
+	this->AddTextFormat(L"KCC임권택체");
+	this->AddTextFormat(L"상상토끼 금면성실");
+	this->AddTextFormat(L"타이포_파피루스 B");
 	mD2DRenderTarget->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
 }
 

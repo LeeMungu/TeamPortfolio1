@@ -7,6 +7,7 @@
 #include "PathFinder.h"
 #include "Gizmo.h"
 #include "scene1.h"
+#include "ItemManager.h"
 
 
 Pet::Pet(float x, float y)
@@ -25,9 +26,9 @@ void Pet::Init()
 	mSizeX = mImage->GetFrameWidth() * 2;
 	mSizeY = mImage->GetFrameHeight() * 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-	mSpeed = 1.f;
+	mSpeed = 60.f;
 
-	mCollisionBox = RectMakeCenter(mX, mY, mSizeX /2, mSizeY /2);
+	mCollisionBox = RectMakeCenter(mX, mY, mSizeX *8, mSizeY *8);
 
 	mDownMove = new Animation;
 	mDownMove->InitFrameByStartEnd(0, 0, 3, 0, true);
@@ -53,7 +54,7 @@ void Pet::Init()
 	mCurrentAnimation->Play();
 
 	mPetState = PetState::Idle;
-	mFollowDistance = 200.f;
+	mFollowDistance = 250.f;
 
 	mIsCheck = false;
 	mIsTarget = false;
@@ -78,6 +79,27 @@ void Pet::Update()
 	{
 		mIsCheck = true;
 	}
+
+	//일정 거리 이하가 되면
+	if (mDistance < 250)
+	{
+		mPetState = PetState::Idle;
+		vector<GameObject*>item = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Item);
+		for (int i = 0; i < item.size(); ++i)
+		{
+			RECT temp;
+			RECT itemRC = item[i]->GetRect();
+			if (IntersectRect(&temp, &mCollisionBox, &itemRC))
+			{
+				float itemX = item[i]->GetX();
+				float itemY = item[i]->GetY();
+				float petAngle = Math::GetAngle(mX, mY, itemX, itemY);
+
+				mX += cosf(petAngle) * (mSpeed - 10) * Time::GetInstance()->DeltaTime();
+				mY -= sinf(petAngle) * (mSpeed - 10) * Time::GetInstance()->DeltaTime();
+			}
+		}
+	}
 	//인식후 거리가 벌어지면
 	if (mDistance >= mFollowDistance && mIsCheck == true)
 	{
@@ -87,13 +109,8 @@ void Pet::Update()
 	{
 		FollowPlayer();
 	}
-	//일정 거리 이하가 되면
-	if (mDistance < 200)
-	{
-		mPetState = PetState::Idle;
-	}
 
-	mCollisionBox = RectMakeCenter(mX, mY, mSizeX / 2, mSizeY / 2);
+	mCollisionBox = RectMakeCenter(mX, mY, mSizeX * 8, mSizeY * 8);
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mCurrentAnimation->Update();
 }
@@ -139,8 +156,8 @@ void Pet::FollowPlayer()
 			mAngle = Math::GetAngle(Path[2]->GetX(), Path[2]->GetY(), mX, mY);
 
 		}
-		mX -= cosf(mAngle) * mSpeed;
-		mY -= -sinf(mAngle) * mSpeed;
+		mX -= cosf(mAngle) * mSpeed * Time::GetInstance()->DeltaTime();
+		mY -= -sinf(mAngle) * mSpeed * Time::GetInstance()->DeltaTime();
 	}
 	if (mPlayer->GetRect().left > mRect.right)
 	{

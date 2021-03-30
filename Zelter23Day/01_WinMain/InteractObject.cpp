@@ -211,7 +211,7 @@ void InteractObject::Render(HDC hdc)
 			//그림자
 			CameraManager::GetInstance()->GetMainCamera()
 				->ShadowRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY, 0.3f,
-					Time::GetInstance()->GetSceneTime());
+					Time::GetInstance()->GetSceneTime(), mTileCountY);
 			//이미지
 			CameraManager::GetInstance()->GetMainCamera()
 				->ScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY,mSizeX,mSizeY);

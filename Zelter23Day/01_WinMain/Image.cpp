@@ -338,7 +338,7 @@ void Image::ActivitScaleRender(HDC hdc, int x, int y, int width, int height, flo
 	ResetRenderOption();
 }
 
-void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float alpha, float time)
+void Image::ShadowRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float alpha, float time, int tileCountY)
 {
 	//회전하는 경우 
 	//mAngle = 360.f / (60.f * 24.f) *time;

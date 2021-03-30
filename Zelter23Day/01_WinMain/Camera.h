@@ -35,7 +35,7 @@ public:
 	//엑티브
 	void ActivitScaleRender(HDC hdc, class Image* image, int x, int y, int width, int height, float angleX, float angleY);
 	//그림자
-	void ShadowRender(HDC hdc,class Image* image, int x, int y, int frameX, int frameY, int width, int height, float alpha, float time);
+	void ShadowRender(HDC hdc,class Image* image, int x, int y, int frameX, int frameY, int width, int height, float alpha, float time, int tileCountY = 0);
 	//문여닫기
 	void DoorScaleFrameRender(HDC hdc,class Image* image, int x, int y, int frameX, int frameY, int width, int height, float time);
 	//아이템테두리 그리기

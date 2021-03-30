@@ -183,21 +183,6 @@ void HousingObject::Update()
 {
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-	if (mHouselayer == HouseLayer::Floor)
-	{
-		mRect.bottom = mRect.bottom-2;
-	}
-	else if (mHouselayer == HouseLayer::HouseWall)
-	{
-		mRect.bottom = mRect.bottom - 1;
-	}
-	else if(mHouselayer == HouseLayer::Roof)
-	{
-		mRect.bottom = mRect.bottom ;
-	}
-
-
 	if (mImageKey == L"House3" || mImageKey == L"House2")
 	{
 		mHouse01Rect1 = RectMakeCenter(mX, mY - 20, mSizeX / 2 + 100, mSizeY / 2 - 18);
@@ -228,7 +213,6 @@ void HousingObject::Update()
 		mZotherRect.push_back(mShopRect2);
 	}
 
-	
 	if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Player).size() != NULL)
 	{
 		RECT tempRc;
@@ -246,6 +230,29 @@ void HousingObject::Update()
 		}
 	}
 
+
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	if (mHouselayer == HouseLayer::Floor)
+	{
+		mRect.bottom = mRect.bottom - 2;
+	}
+	else if (mHouselayer == HouseLayer::HouseWall)
+	{
+		mRect.bottom = mZotherRect[0].bottom;
+		RECT tempRc;
+		RECT playerRc = mPlayer->GetRect();
+		if (IntersectRect(&tempRc, &playerRc, &mZotherRect[0]))
+		{
+			if (mRect.bottom > mRect.top + 100 && mRect.bottom < mRect.top + mSizeY)
+			{
+				mRect.bottom = mZotherRect[0].top;
+			}
+		}
+	}
+	else if (mHouselayer == HouseLayer::Roof)
+	{
+		mRect.bottom = mRect.bottom;
+	}
 }
 
 void HousingObject::Render(HDC hdc)

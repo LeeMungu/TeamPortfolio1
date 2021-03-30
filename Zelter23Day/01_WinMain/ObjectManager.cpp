@@ -99,14 +99,14 @@ void ObjectManager::Update()
 				mZorderList.push_back(iter1->second[i]);
 			}
 		}
-		//집벽 그려줄것 넣어주기
+		//집벽, 지붕 그려줄것 넣어주기
 		else if (iter1->first == ObjectLayer::HousingObject)
 		{
 			if (iter1->second.size() != NULL)
 			{
 				for (int i = 0; i<iter1->second.size(); ++i)
 				{
-					if (((HousingObject*)iter1->second[i])->GethouseLayer() == HouseLayer::HouseWall)
+					if (((HousingObject*)iter1->second[i])->GethouseLayer() != HouseLayer::Floor)
 					{
 						mZorderList.push_back(iter1->second[i]);
 					}
@@ -172,16 +172,7 @@ void ObjectManager::Render(HDC hdc)
 		mZorderRenderList[i]->Render(hdc);
 	}
 
-	for (int i = 0; i < iterhouse->second.size(); ++i)
-	{
-		if (iterhouse->second[i]->GetIsActive() == true)
-		{
-			if (((HousingObject*)iterhouse->second[i])->GethouseLayer() == HouseLayer::Roof)
-			{
-				iterhouse->second[i]->Render(hdc);
-			}
-		}
-	}
+	
 
 	ObjectIter iter = mObjectList.find(ObjectLayer::Item);
 	for (; iter != mObjectList.end(); ++iter)
@@ -301,58 +292,6 @@ void ObjectManager::Zorder(vector<GameObject*> &zorderRenderList)
 
 	auto func = [](GameObject* a, GameObject* b)
 	{
-		//if ((a->GetName() == "House2" || a->GetName() == "House5" || a->GetName() == "House8" || a->GetName() == "police2" || a->GetName() == "shop2")
-		//	 &&((HousingObject*)a)->GetZotherRect().size() != NULL)
-		//{	
-		//	for (int i = 0; i < ((HousingObject*)a)->GetZotherRect().size(); ++i)
-		//	{
-		//		RECT temp;
-		//		RECT housingWallRect = ((HousingObject*)a)->GetZotherRect()[i];
-		//		RECT playerRc = b->GetRect();
-		//		if (b->GetName() == "Player")
-		//		{
-		//			playerRc = { b->GetRect().left, b->GetRect().top - 50, b->GetRect().right, b->GetRect().bottom };
-		//		}
-		//		if (IntersectRect(&temp, &housingWallRect, &playerRc))
-		//		{
-		//			//if ((playerRc.top < housingWallRect.top && playerRc.bottom > housingWallRect.top)
-		//			//	||(playerRc.bottom>housingWallRect.bottom&&playerRc.top < housingWallRect.bottom))
-		//			{
-		//				return true;
-		//			}
-		//			//else
-		//			//{
-		//			//	return false;
-		//			//}
-		//		}
-		//	}
-		//}
-		//else if ((b->GetName() == "House2" || b->GetName() == "House5" || b->GetName() == "House8" || b->GetName() == "police2" || b->GetName() == "shop2")
-		//	&& (((HousingObject*)b)->GetZotherRect().size() != NULL))
-		//{
-		//	for (int i = 0; i < ((HousingObject*)b)->GetZotherRect().size(); ++i)
-		//	{
-		//		RECT temp;
-		//		RECT housingWallRect = ((HousingObject*)b)->GetZotherRect()[i];
-		//		RECT playerRc = a->GetRect();
-		//		if (a->GetName() == "Player")
-		//		{
-		//			playerRc = { a->GetRect().left, a->GetRect().top - 50, a->GetRect().right, a->GetRect().bottom };
-		//		}
-		//		if (IntersectRect(&temp, &housingWallRect, &playerRc))
-		//		{
-		//			//if ((playerRc.top < housingWallRect.top && playerRc.bottom > housingWallRect.top)
-		//			//	|| (playerRc.bottom > housingWallRect.bottom && playerRc.top < housingWallRect.bottom))
-		//			{
-		//				return false;
-		//			}
-		//			//else
-		//			//{
-		//			//	return true;
-		//			//}
-		//		}
-		//	}
-		//}
 		//a바닥이 작으면 트루
 		return a->GetRect().bottom < b->GetRect().bottom;
 

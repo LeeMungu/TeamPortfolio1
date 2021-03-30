@@ -378,7 +378,7 @@ void LoadingScene::Release()
 
 void LoadingScene::Update()
 {
-	mLoadingAnimation->Update();
+	//mLoadingAnimation->Update();
 	if (mIsEndLoading == true && Input::GetInstance()->GetKeyDown(VK_SPACE))
 	{
 			SceneManager::GetInstance()->LoadScene(L"Scene1");
@@ -402,21 +402,18 @@ void LoadingScene::Update()
 
 void LoadingScene::Render(HDC hdc)
 {
-	if (mIsEndLoading == false)
-	{
-		mLoadingImage->Render(hdc, 0, 0);
-		//mLoadingImage->ScaleFrameRender(hdc, (WINSIZEX - mLoadingImage->GetFrameWidth()*5) / 2,
-		//	(WINSIZEY - mLoadingImage->GetFrameHeight()*5) / 2,
-		//	mLoadingAnimation->GetNowFrameX(),
-		//	mLoadingAnimation->GetNowFrameY(),
-		//	mLoadingImage->GetFrameWidth()*5,
-		//	mLoadingImage->GetFrameHeight()*5);
-		mLoadingImage2->LoadingRender(hdc, 0, 0, 0, 0, WINSIZEX, WINSIZEY, mTime);
+	mLoadingImage->Render(hdc, 0, 0);
+	//mLoadingImage->ScaleFrameRender(hdc, (WINSIZEX - mLoadingImage->GetFrameWidth()*5) / 2,
+	//	(WINSIZEY - mLoadingImage->GetFrameHeight()*5) / 2,
+	//	mLoadingAnimation->GetNowFrameX(),
+	//	mLoadingAnimation->GetNowFrameY(),
+	//	mLoadingImage->GetFrameWidth()*5,
+	//	mLoadingImage->GetFrameHeight()*5);
+	mLoadingImage2->LoadingRender(hdc, 0, 0, 0, 0, WINSIZEX, WINSIZEY, mTime);
 
-		if (mIsEndLoading == true)
-		{
-			D2DRenderer::GetInstance()->RenderText(
-				WINSIZEX / 2 - 50, WINSIZEY - 100, L"Press Space", 30, DefaultBrush::White);
-		}
+	if (mIsEndLoading == true)
+	{
+		D2DRenderer::GetInstance()->RenderText(
+			WINSIZEX / 2 - 50, WINSIZEY - 100, L"Press Space", 30, DefaultBrush::White);
 	}
 }

@@ -35,6 +35,8 @@ enum class Equipment
 class Player : public GameObject
 {
 
+	
+
 	Player* mPlayer;
 
 	Image* mImage;
@@ -63,6 +65,7 @@ class Player : public GameObject
 	Animation* mUpRoll;
 	Animation* mDownRoll;
 
+	Animation* mDie;
 	
 
 	float mSpeed;
@@ -73,6 +76,7 @@ class Player : public GameObject
 	float mInvincibleCount;
 	bool mIsInvincible;
 	bool mIsKnockback;
+	bool mIsDie;
 	float mKnockbackDistance;
 	float mAngle;
 	float mTakenAngle;
@@ -114,7 +118,7 @@ public:
 	int GetThirst() { return mThirst; }
 	int GetHunger() { return mHunger; }
 	int GetStemina() { return mStemina; }
-
+	bool GetIsDie() { return mIsDie; }
 	float GetInvincibleCount() { return mInvincibleCount; }
 	bool GetIsInvincible() { return mIsInvincible; }
 	bool GetIsKnockback() {return mIsKnockback;	}

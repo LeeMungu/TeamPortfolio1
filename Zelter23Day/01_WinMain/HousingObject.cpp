@@ -191,6 +191,15 @@ void HousingObject::Update()
 	else if (mHouselayer == HouseLayer::HouseWall)
 	{
 		mRect.bottom = mRect.bottom - 1;
+		RECT tempRc;
+		RECT playerRc = mPlayer->GetRect();
+		if (IntersectRect(&tempRc, &playerRc, &mRect))
+		{
+			if (mRect.bottom > mRect.top + 100 && mRect.bottom < mRect.top + mSizeY)
+			{
+				mRect.bottom = playerRc.bottom;
+			}
+		}
 	}
 	else if(mHouselayer == HouseLayer::Roof)
 	{

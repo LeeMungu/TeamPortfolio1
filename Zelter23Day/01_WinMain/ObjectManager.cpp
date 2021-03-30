@@ -99,14 +99,14 @@ void ObjectManager::Update()
 				mZorderList.push_back(iter1->second[i]);
 			}
 		}
-		//집벽 그려줄것 넣어주기
+		//집벽, 지붕 그려줄것 넣어주기
 		else if (iter1->first == ObjectLayer::HousingObject)
 		{
 			if (iter1->second.size() != NULL)
 			{
 				for (int i = 0; i<iter1->second.size(); ++i)
 				{
-					if (((HousingObject*)iter1->second[i])->GethouseLayer() == HouseLayer::HouseWall)
+					if (((HousingObject*)iter1->second[i])->GethouseLayer() != HouseLayer::Floor)
 					{
 						mZorderList.push_back(iter1->second[i]);
 					}
@@ -172,16 +172,7 @@ void ObjectManager::Render(HDC hdc)
 		mZorderRenderList[i]->Render(hdc);
 	}
 
-	for (int i = 0; i < iterhouse->second.size(); ++i)
-	{
-		if (iterhouse->second[i]->GetIsActive() == true)
-		{
-			if (((HousingObject*)iterhouse->second[i])->GethouseLayer() == HouseLayer::Roof)
-			{
-				iterhouse->second[i]->Render(hdc);
-			}
-		}
-	}
+	
 
 	ObjectIter iter = mObjectList.find(ObjectLayer::Item);
 	for (; iter != mObjectList.end(); ++iter)

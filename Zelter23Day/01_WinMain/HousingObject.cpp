@@ -240,13 +240,16 @@ void HousingObject::Update()
 	else if (mHouselayer == HouseLayer::HouseWall)
 	{
 		mRect.bottom = mZotherRect[0].bottom;
-		RECT tempRc;
-		RECT playerRc = mPlayer->GetRect();
-		if (IntersectRect(&tempRc, &playerRc, &mZotherRect[0]))
+		if (mPlayer != nullptr)
 		{
-			if (mRect.bottom > mRect.top + 100 && mRect.bottom < mRect.top + mSizeY)
+			RECT tempRc;
+			RECT playerRc = mPlayer->GetRect();
+			if (IntersectRect(&tempRc, &playerRc, &mZotherRect[0]))
 			{
-				mRect.bottom = mZotherRect[0].top;
+				if (mRect.bottom > mRect.top + 100 && mRect.bottom < mRect.top + mSizeY)
+				{
+					mRect.bottom = mZotherRect[0].top;
+				}
 			}
 		}
 	}

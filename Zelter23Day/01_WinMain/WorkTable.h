@@ -45,5 +45,7 @@ public:
 	void Worktemplet(string btnkey);
 	void UpdateButton();
 	void MakingItem(string btnkey);
+
+	void MakingCountSet();
 };
 

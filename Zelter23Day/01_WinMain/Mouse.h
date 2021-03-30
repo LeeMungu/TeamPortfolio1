@@ -13,6 +13,9 @@ class Mouse : public GameObject
 	int mTileCountY;
 	int mTileCountX;
 	int mHpMax;
+
+	bool mIsClick;
+	bool mIsCheck;
 public:
 	Mouse(wstring imageKey, ObjectLayer objectLayer);
 	void Init()override;
@@ -23,5 +26,8 @@ public:
 	void SetHpMax(int hpMax) { mHpMax = hpMax; }
 	void SetTileCountX(int tileCountX) { mTileCountX = tileCountX; }
 	void SetTileCountY(int tileCountY) { mTileCountY = tileCountY; }
+
+	bool GetmIsClick() { return mIsClick; }
+	void SetmIsClick(bool b) { mIsClick = b; }
 };
 

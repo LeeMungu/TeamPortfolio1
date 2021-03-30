@@ -15,6 +15,10 @@ void LoadingScene::Init()
 	mLoadIndex = 0;
 	mIsEndLoading = false;
 
+	//이미지 (엔딩크레딧 관련)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"TestEndingCredit", Resources(L"/01_UI/TestEndingCredit.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"EndingBackGround", Resources(L"/01_UI/EndingBackGround.png")); });
+
 	//이미지 (플레이어)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_Run.png"), 7, 4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_Walk.png"), 7, 4); });
@@ -37,6 +41,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_impact", Resources(L"/08_Effect/effect_impact.png"), 8, 7); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_blood_R", Resources(L"/08_Effect/effect_blood.png"), 8, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_blood_L", Resources(L"/08_Effect/effect_blood_L.png"), 8, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Explosion", Resources(L"/08_Effect/Explosion.png"), 6, 6); });
 
 	//이미지 (플레이어HP UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon.png"), 12, 1); });
@@ -251,22 +256,27 @@ void LoadingScene::Init()
 	//이미지 (집)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House1", Resources(L"/02_House/NewHouse11_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House2", Resources(L"/02_House/NewHouse11_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House3-2", Resources(L"/02_House/NewHouse11_Wall2.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House3", Resources(L"/02_House/NewHouse11_Roof.png")); });
 
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House4", Resources(L"/02_House/NewHouse22_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House5", Resources(L"/02_House/NewHouse22_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House6-2", Resources(L"/02_House/NewHouse22_Wall2.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House6", Resources(L"/02_House/NewHouse22_Roof.png")); });
 
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House7", Resources(L"/02_House/NewHouse33_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House8", Resources(L"/02_House/NewHouse33_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House9-2", Resources(L"/02_House/NewHouse33_Wall2.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House9", Resources(L"/02_House/NewHouse33_Roof.png")); });
 
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police1", Resources(L"/02_House/PoliceOffice1_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police2", Resources(L"/02_House/PoliceOffice1_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police3-2", Resources(L"/02_House/PoliceOffice1_Wall2.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police3", Resources(L"/02_House/PoliceOffice1_Roof.png")); });
 
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop1", Resources(L"/02_House/Shop11_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop2", Resources(L"/02_House/Shop11_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop3-2", Resources(L"/02_House/Shop11_Wall2.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop3", Resources(L"/02_House/Shop11_Roof.png")); });
 
 	//이미지 (아이템)

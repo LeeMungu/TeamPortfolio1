@@ -6,6 +6,7 @@
 #include "MapToolScene.h"
 #include "LoadingScene.h"
 #include "MainScene.h"
+#include "EndingScene.h"
 #include "scene1.h"
 #include "Camera.h"
 
@@ -70,7 +71,9 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"LoadingScene", new LoadingScene);
 	SceneManager::GetInstance()->AddScene(L"Scene1", new scene1);
 	SceneManager::GetInstance()->AddScene(L"MainScene", new MainScene);
+	SceneManager::GetInstance()->AddScene(L"EndingScene", new EndingScene);
 	SceneManager::GetInstance()->LoadScene(L"MainScene");
+	//SceneManager::GetInstance()->LoadScene(L"EndingScene");
 	//SceneManager::GetInstance()->LoadScene(L"MapToolLoadingScene");
 	//SceneManager::GetInstance()->LoadScene(L"LoadingScene");
 

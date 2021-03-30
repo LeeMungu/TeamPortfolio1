@@ -26,6 +26,8 @@ Mouse::Mouse(wstring imageKey, ObjectLayer objectLayer)
 		mSizeY = mImage->GetFrameHeight();
 	}
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mIsCheck = false;
+	mIsClick = false;
 }
 
 void Mouse::Init()
@@ -108,6 +110,7 @@ void Mouse::Update()
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::NoninteractObject, noninteractObject);
 		}
 	}
+
 }
 
 void Mouse::Render(HDC hdc)

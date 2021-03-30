@@ -32,6 +32,7 @@ enum class ObjectLayer : int
 	InventoryItem = 18,
 	MakingItem = 19,
 	Weapon = 20,
+	TextBox = 14,
 	End
 };
 

@@ -26,9 +26,9 @@ void Bomb::Init()
 	mIsExplosionAfter = false;
 
 	mExplosion = new Animation();
-	mExplosion->InitFrameByStartEnd(0, 0, 6, 0, false);
+	mExplosion->InitFrameByStartEnd(0, 0, 5, 5, false);
 	mExplosion->SetIsLoop(false);
-	mExplosion->SetFrameUpdateTime(0.1f);
+	mExplosion->SetFrameUpdateTime(0.03f);
 	mExplosion->SetCallbackFunc([this]() {mIsDestroy = true; });
 
 	mCurrentAnimation = mExplosion;
@@ -65,7 +65,7 @@ void Bomb::Update()
 	if (mIsExplosionAfter == true)
 	{
 		
-		mImage = IMAGEMANAGER->FindImage(L"Pistol_shoot");
+		mImage = IMAGEMANAGER->FindImage(L"Explosion");
 		mSizeX = 200;
 		mSizeY = 200;
 		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);

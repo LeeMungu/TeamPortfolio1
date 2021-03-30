@@ -16,6 +16,7 @@ class Player;
 class HousingObject : public GameObject
 {
 	Image* mImage;
+	Image* mImage2;
 	int mThick;
 	int mIndexX;
 	int mIndexY;

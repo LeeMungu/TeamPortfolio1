@@ -69,7 +69,7 @@ void MapToolBook::Init()
 		mNoninterectObjectButton = new Button(L"BookButton", 3, L"NoninterectObject", mX - mSizeX / 2+50, mY - 100, 100, 50,
 			[this]() {ChangeMode(BookType::NoninterectObject); });
 
-		mNextButton = new Button(L"NextPageButton", mX - mSizeX / 6, mY + mSizeY / 3, 1.f,
+		mNextButton = new Button(L"NextPageButton", mX - mSizeX / 10, mY + mSizeY / 3, 1.3f,
 			[this]() {
 			if (mBookType == BookType::Tile)
 			{
@@ -96,7 +96,7 @@ void MapToolBook::Init()
 				}
 			}
 		});
-		mPrevButton = new Button(L"PrevPageButton", mX - mSizeX / 3.5, mY + mSizeY / 3, 1.f,
+		mPrevButton = new Button(L"PrevPageButton", mX - mSizeX / 3.5f, mY + mSizeY / 3, 1.3f,
 			[this]() {
 			if (mBookType == BookType::Tile)
 			{
@@ -1450,7 +1450,7 @@ void MapToolBook::Update()
 
 void MapToolBook::Render(HDC hdc)
 {
-	RenderRect(hdc, mRect);
+	//RenderRect(hdc, mRect);
 	mImage->ScaleFrameRender(hdc, mRect.left, mRect.top,
 		mAnimation->GetNowFrameX(),
 		mAnimation->GetNowFrameY(),mSizeX,mSizeY);

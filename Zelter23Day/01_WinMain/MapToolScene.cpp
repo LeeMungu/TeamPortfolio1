@@ -465,21 +465,21 @@ void MapToolScene::Render(HDC hdc)
 	}
 
 	D2DRenderer::GetInstance()
-		->RenderText(10, 10, to_wstring(renderCount).c_str(), 12);
+		->RenderText(10, 10, L"화면 타일 수 :" + to_wstring(renderCount), 20);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 30, L"WASD : 카메라 이동", 12);
+		->RenderText(10, 30, L"WASD : 카메라 이동", 20);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 50, L"Shift + ←→↑↓ : 책 이동", 12);
+		->RenderText(10, 50, L"Shift + ←→↑↓ : 책 이동", 20);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 70, L"Lctrl : 테두리", 12);
+		->RenderText(10, 70, L"Lctrl : 테두리", 20);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 90, L"Lctrl + Z : 되감기", 12);
+		->RenderText(10, 90, L"Lctrl + Z : 되감기", 20);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 110, L"TAP + 드래그엔드롭 : 범위그려줌", 12);
+		->RenderText(10, 110, L"TAP + 드래그엔드롭 : 범위그려줌", 20);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 130, L"BackSpace : 마우스 초기화", 12);
+		->RenderText(10, 130, L"BackSpace : 마우스 초기화", 20);
 	D2DRenderer::GetInstance()
-		->RenderText(10, 150, L"Lctrl + X  : 마지막 오브젝트 지우기", 12);
+		->RenderText(10, 150, L"Lctrl + X, C  : 마지막 오브젝트 지우기", 20);
 
 	//클릭한 속성별로 마우스 따라다니며 그려주기
 	if (mCurrentPallete != nullptr)

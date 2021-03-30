@@ -137,7 +137,7 @@ void Pet::FollowPlayer()
 		if (Path.size() != NULL  )
 		{
 
-			if (Path.size() > 5)
+			if (Path.size() > 3)
 			{
 				mAngle = Math::GetAngle(Path[2]->GetX(), Path[2]->GetY(), mX, mY);
 

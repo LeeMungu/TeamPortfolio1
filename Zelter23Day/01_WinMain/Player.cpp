@@ -24,6 +24,7 @@ Player::Player(const string& name, float x, float y)
 void Player::Init()
 {
 	mImage = IMAGEMANAGER->FindImage(L"Player_run");
+	
 	mSizeX = mImage->GetFrameWidth() * 2;
 	mSizeY = mImage->GetFrameHeight() * 2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
@@ -33,6 +34,8 @@ void Player::Init()
 	mAttacked = Attacked::left;
 
 	mIsMousePosition = false;
+
+	mIsDie = false;
 
 	mCollisionBox = RectMakeCenter(mX , mY , mSizeX / 2, mSizeY / 3);
 	mAttackBox = RectMakeCenter(0, 0, 0, 0);
@@ -133,6 +136,11 @@ void Player::Init()
 	mRightIdleAni->SetIsLoop(true);
 	mRightIdleAni->SetFrameUpdateTime(0.1f);
 
+	mDie = new Animation();
+	mDie->InitFrameByStartEnd(0, 0, 6, 0, false);
+	mDie->SetIsLoop(false);
+	mDie->SetFrameUpdateTime(0.3f);
+
 	mCurrentAnimation = mDownIdleAni;
 	mPlayerState = PlayerState::idle;
 	mDash = 0;
@@ -175,6 +183,8 @@ void Player::Release()
 	SafeDelete(mRightRoll);
 	SafeDelete(mDownRoll);
 	SafeDelete(mUpRoll);
+
+	SafeDelete(mDie);
 }
 
 void Player::Update()
@@ -183,141 +193,158 @@ void Player::Update()
 	float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
 	float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
 	mAngle = Math::GetAngle(mX, mY, _mousePosition.x + cameraX, _mousePosition.y + cameraY);
-
-	if (mPlayerState != PlayerState::roll)
+	if (mHP > 0)
 	{
-		if (mAngle > 45.f / 180.f * PI && mAngle < 135.f / 180.f * PI)
+		if (mPlayerState != PlayerState::roll)
 		{
-			if (mIsMousePosition == true)
+			if (mAngle > 45.f / 180.f * PI && mAngle < 135.f / 180.f * PI)
 			{
-				mCurrentAnimation->Stop();
-				EquipmentPlayerImage(1);
-				mCurrentAnimation = mUpIdleAni;
-				mCurrentAnimation->Play();
+				if (mIsMousePosition == true)
+				{
+					mCurrentAnimation->Stop();
+					EquipmentPlayerImage(1);
+					mCurrentAnimation = mUpIdleAni;
+					mCurrentAnimation->Play();
+				}
 			}
 		}
-	}
 
-	if (mPlayerState != PlayerState::roll)
-	{
-		if (mAngle > 135.f / 180.f * PI && mAngle < 225.f / 180.f * PI)
+		if (mPlayerState != PlayerState::roll)
 		{
-			if (mIsMousePosition == true)
+			if (mAngle > 135.f / 180.f * PI && mAngle < 225.f / 180.f * PI)
 			{
-				mCurrentAnimation->Stop();
-				EquipmentPlayerImage(1);
-				mCurrentAnimation = mLeftIdleAni;
-				mCurrentAnimation->Play();
+				if (mIsMousePosition == true)
+				{
+					mCurrentAnimation->Stop();
+					EquipmentPlayerImage(1);
+					mCurrentAnimation = mLeftIdleAni;
+					mCurrentAnimation->Play();
+				}
 			}
 		}
-	}
 
 
-	if (mPlayerState != PlayerState::roll)
-	{
-		if (mAngle > 225.f / 180.f * PI && mAngle < 315.f / 180.f * PI)
+		if (mPlayerState != PlayerState::roll)
 		{
-			if (mIsMousePosition == true)
+			if (mAngle > 225.f / 180.f * PI && mAngle < 315.f / 180.f * PI)
 			{
-				mCurrentAnimation->Stop();
-				EquipmentPlayerImage(1);
-				mCurrentAnimation = mDownIdleAni;
-				mCurrentAnimation->Play();
+				if (mIsMousePosition == true)
+				{
+					mCurrentAnimation->Stop();
+					EquipmentPlayerImage(1);
+					mCurrentAnimation = mDownIdleAni;
+					mCurrentAnimation->Play();
+				}
 			}
 		}
-	}
 
-	if (mPlayerState != PlayerState::roll)
-	{
-		if (mAngle > 360.f - 45.f / 180.f * PI || mAngle < 45.f / 180.f * PI)
+		if (mPlayerState != PlayerState::roll)
 		{
-			if (mIsMousePosition == true)
+			if (mAngle > 360.f - 45.f / 180.f * PI || mAngle < 45.f / 180.f * PI)
 			{
-				mCurrentAnimation->Stop();
-				EquipmentPlayerImage(1);
-				mCurrentAnimation = mRightIdleAni;
-				mCurrentAnimation->Play();
+				if (mIsMousePosition == true)
+				{
+					mCurrentAnimation->Stop();
+					EquipmentPlayerImage(1);
+					mCurrentAnimation = mRightIdleAni;
+					mCurrentAnimation->Play();
+				}
 			}
 		}
-	}
 
-	
 
-	PlayerCtrl();
-	PlayerState();
-	AttackRectMake();
 
-	mCurrentAnimation->Update();
-	mSizeX = mImage->GetFrameWidth() * 2;
-	mSizeY = mImage->GetFrameHeight() * 2;
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY/3);
-	mCollisionBox = RectMakeCenter(mX , mY, mSizeX / 2, mSizeY / 3);
-	Knockback();
+		PlayerCtrl();
+		PlayerState();
+		AttackRectMake();
 
-	if (mDash > 0)
-	{
-		mDashTime += Time::GetInstance()->DeltaTime();
+		mCurrentAnimation->Update();
+		mSizeX = mImage->GetFrameWidth() * 2;
+		mSizeY = mImage->GetFrameHeight() * 2;
+		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY / 3);
+		mCollisionBox = RectMakeCenter(mX, mY, mSizeX / 2, mSizeY / 3);
+		Knockback();
 
-		if (mDashTime > 0.4f)
+		if (mDash > 0)
 		{
-			mDashTime = 0;
-			mDash = 0;
-		}
-	}
+			mDashTime += Time::GetInstance()->DeltaTime();
 
-	if (mIsInvincible == true) //플레이어 무적 확인 및 초기화
-	{
-		mInvincibleCount += Time::GetInstance()->DeltaTime();
-		if (mInvincibleCount >= 0.7f)
-		{
-			mIsInvincible = false;
-		}
-	}
-	if (mCurrentAnimation != mLeftAttack && mCurrentAnimation != mRightAttack)
-	{
-		mAttackBox = RectMakeCenter(0, 0, 0, 0);
-	}
-
-	//총들고 쏘는거
-	if(mSelectedItem.quickType == ItemType::gun)
-	{
-		mEquipment = Equipment::gun;
-
-		if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Weapon).size() != NULL)
-		{
-			Weapon* tempWeapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Shotgun");
-			if (tempWeapon != nullptr) tempWeapon->SetIsDestroy(true);
-
-			Weapon* tempWeapon2 = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Pistol");
-			if (tempWeapon2 != nullptr) tempWeapon2->SetIsDestroy(true);
+			if (mDashTime > 0.4f)
+			{
+				mDashTime = 0;
+				mDash = 0;
+			}
 		}
 
-		if (mSelectedItem.key == L"Shotgun")
+		if (mIsInvincible == true) //플레이어 무적 확인 및 초기화
 		{
-			Weapon* shotgun = new Weapon("Shotgun", mX, mY, 0, 0);
-			shotgun->Init();
-			shotgun->SetPlayerPtr(this);
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::Weapon, shotgun);
+			mInvincibleCount += Time::GetInstance()->DeltaTime();
+			if (mInvincibleCount >= 0.7f)
+			{
+				mIsInvincible = false;
+			}
+		}
+		if (mCurrentAnimation != mLeftAttack && mCurrentAnimation != mRightAttack)
+		{
+			mAttackBox = RectMakeCenter(0, 0, 0, 0);
+		}
+
+		//총들고 쏘는거
+		if (mSelectedItem.quickType == ItemType::gun)
+		{
+			mEquipment = Equipment::gun;
+
+			if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Weapon).size() != NULL)
+			{
+				Weapon* tempWeapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Shotgun");
+				if (tempWeapon != nullptr) tempWeapon->SetIsDestroy(true);
+
+				Weapon* tempWeapon2 = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Pistol");
+				if (tempWeapon2 != nullptr) tempWeapon2->SetIsDestroy(true);
+			}
+
+			if (mSelectedItem.key == L"Shotgun")
+			{
+				Weapon* shotgun = new Weapon("Shotgun", mX, mY, 0, 0);
+				shotgun->Init();
+				shotgun->SetPlayerPtr(this);
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::Weapon, shotgun);
+			}
+			else
+			{
+				Weapon* pistol = new Weapon("Pistol", mX, mY, 0, 0);
+				pistol->Init();
+				pistol->SetPlayerPtr(this);
+				ObjectManager::GetInstance()->AddObject(ObjectLayer::Weapon, pistol);
+			}
 		}
 		else
 		{
-			Weapon* pistol = new Weapon("Pistol", mX, mY, 0, 0);
-			pistol->Init();
-			pistol->SetPlayerPtr(this);
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::Weapon, pistol);
+			mEquipment = Equipment::normal;
+			if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Weapon).size() != NULL)
+			{
+				Weapon* tempWeapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Shotgun");
+				if (tempWeapon != nullptr) tempWeapon->SetIsDestroy(true);
+
+				Weapon* tempWeapon2 = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Pistol");
+				if (tempWeapon2 != nullptr) tempWeapon2->SetIsDestroy(true);
+			}
 		}
 	}
-	else
+	else if (mHP <= 0)
 	{
-		mEquipment = Equipment::normal;
-		if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Weapon).size() != NULL)
+		if (mCurrentAnimation != mDie)
 		{
-			Weapon* tempWeapon = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Shotgun");
-			if(tempWeapon != nullptr) tempWeapon->SetIsDestroy(true);
-
-			Weapon* tempWeapon2 = (Weapon*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Weapon, "Pistol");
-			if (tempWeapon2 != nullptr) tempWeapon2->SetIsDestroy(true);
+			mImage = IMAGEMANAGER->FindImage(L"Player_Die");
+			mCurrentAnimation->Stop();
+			mDie->SetCallbackFunc([this]() {mIsDie = true; });
+			mCurrentAnimation = mDie;
+			mCurrentAnimation->Play();
+			mSizeX = mImage->GetFrameWidth()* 2;
+			mSizeY = mImage->GetFrameHeight() * 2;
+			mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 		}
+		mCurrentAnimation->Update();
 	}
 }
 
@@ -792,10 +819,7 @@ void Player::PlayerState() {
 		}
 	}
 
-	if(mHP < 0)
-	{
-		mHP = 0;
-	}
+	
 }
 
 void Player::WeaponUse(bool a)

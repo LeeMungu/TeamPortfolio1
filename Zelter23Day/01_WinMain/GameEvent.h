@@ -118,6 +118,18 @@ public:
 	bool Update()override;
 };
 
+class IPetGeneration : public IEvent
+{
+	float mX;
+	float mY;
+	vector<vector<class Tile*>> mTileList;
+public:
+	IPetGeneration(float x, float y, vector<vector<class Tile*>>& tileList);
+	void Start()override;
+	bool Update()override;
+};
+
+
 //딜레이후 함수
 class IDelayFunEvent : public IEvent
 {

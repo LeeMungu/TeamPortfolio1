@@ -43,6 +43,8 @@ protected:
 
 	float mCreatedTime;
 	float mAlpha;
+
+	Image* mWorkslot;
 public:
 	POINT mPrePosition;
 

@@ -195,6 +195,7 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="PathFinder.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Pet.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerHPUI.h" />
     <ClInclude Include="QuickSlot.h" />
@@ -275,6 +276,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Pet.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerHPUI.cpp" />
     <ClCompile Include="QuickSlot.cpp" />

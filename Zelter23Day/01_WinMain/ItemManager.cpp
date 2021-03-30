@@ -2,6 +2,7 @@
 #include "ItemManager.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "Pet.h"
 #include "Mouse.h"
 #include "Bomb.h"
 
@@ -86,6 +87,7 @@ ItemManager::ItemManager()
 void ItemManager::Init()
 {
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+
 	mIndexX = 0;
 	mIndexY = 0;
 	mIndex = 0;
@@ -102,6 +104,7 @@ void ItemManager::Release()
 
 void ItemManager::Update()
 {
+	mPet = (Pet*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Pet");
 	mInventory = (Inventory*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "Inventory");
 	mSlotList = mInventory->GetSlotList();
 	mQuickSlot = (QuickSlot*)ObjectManager::GetInstance()->FindObject(ObjectLayer::UI, "QuickSlot");
@@ -344,7 +347,7 @@ void ItemManager::PickUpItems()
 				RECT rc;
 				RECT mItemsRc = ((Item*)items[i])->GetRect();
 				RECT playerRc = mPlayer->GetRect();
-
+				
 				if (((Item*)items[i])->GetIsPossiblePick() == true)
 				{
 					//플레이어와 아이템 충돌 처리
@@ -373,6 +376,41 @@ void ItemManager::PickUpItems()
 							PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
 							//아이템 지워줌
 							items[i]->SetIsDestroy(true);
+						}
+					}				
+
+					if (mPet != nullptr)
+					{
+						RECT petRC = mPet->GetRect();
+						{
+							//플레이어와 아이템 충돌 처리
+							if (IntersectRect(&rc, &mItemsRc, &petRC))
+							{
+								int num = 0;
+								for (int j = 0; j < 5; j++) {
+									if (mQuickSlotList[j].isFill == true)
+									{
+										num++;
+									}
+								}
+								map<wstring, int>::iterator iter;
+								iter = mItemInventoryList.find(((Item*)items[i])->GetKeyName());
+								//이터레이터 끝까지 가면 없는거
+								if (iter == mItemInventoryList.end() && mItemInventoryList.size() - num < 10)
+								{
+									//인벤토리에 넣어줌
+									PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
+									//아이템 지워줌
+									items[i]->SetIsDestroy(true);
+								}
+								else if (iter != mItemInventoryList.end())
+								{
+									//인벤토리에 넣어줌
+									PutInInventory(((Item*)items[i])->GetKeyName(), ((Item*)items[i])->GetCount());
+									//아이템 지워줌
+									items[i]->SetIsDestroy(true);
+								}
+							}
 						}
 					}
 				}

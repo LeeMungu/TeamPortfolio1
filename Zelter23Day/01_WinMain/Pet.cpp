@@ -12,6 +12,7 @@
 Pet::Pet(float x, float y)
 
 {
+	mName = "Pet";
 	mX = x;
 	mY = y;
 
@@ -52,7 +53,7 @@ void Pet::Init()
 	mCurrentAnimation->Play();
 
 	mPetState = PetState::Idle;
-	mFollowDistance = 30.f;
+	mFollowDistance = 200.f;
 
 	mIsCheck = false;
 	mIsTarget = false;
@@ -72,19 +73,26 @@ void Pet::Update()
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	mDistance = Math::GetDistance(mPlayer->GetX(), mPlayer->GetY(), mX, mY);
 
-	if (mDistance < 10)
+	//주인 인식
+	if (mDistance < 30)
 	{
 		mIsCheck = true;
 	}
+	//인식후 거리가 벌어지면
 	if (mDistance >= mFollowDistance && mIsCheck == true)
 	{
-		mIsTarget = true;
-		FindPlayer();
+		mPetState = PetState::Follow;
 	}
-	if (mDistance < mFollowDistance && mIsTarget == true)
+	if (mPetState == PetState::Follow)
 	{
-		mIsTarget = false;
+		FollowPlayer();
 	}
+	//일정 거리 이하가 되면
+	if (mDistance < 200)
+	{
+		mPetState = PetState::Idle;
+	}
+
 	mCollisionBox = RectMakeCenter(mX, mY, mSizeX / 2, mSizeY / 2);
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mCurrentAnimation->Update();
@@ -99,7 +107,7 @@ void Pet::Render(HDC hdc)
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mCollisionBox);
-		if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).size() != NULL)
+		if (ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Player).size() != NULL)
 		{
 			if (mPetState == PetState::Follow)
 			{
@@ -115,56 +123,45 @@ void Pet::Render(HDC hdc)
 
 void Pet::FindPlayer()
 {
-	if (mIsTarget == true)
-	{
-		mPetState = PetState::Follow;
-		FollowPlayer();
-		if (mDistance < mFollowDistance)
-		{
-			mIsTarget = false;
-			mPetState = PetState::Idle;
-		}
-	}
+	vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
+
 }
 
 void Pet::FollowPlayer()
 {
+	vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
 
-	if (mPetState == PetState::Follow )
+	if (Path.size() != NULL  )
 	{
-		vector<Tile*> Path = PathFinder::GetInstance()->FindPath(mTileList, mX / TileSize, mY / TileSize, mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
 
-		if (Path.size() != NULL  )
+		if (Path.size() > 3)
 		{
+			mAngle = Math::GetAngle(Path[2]->GetX(), Path[2]->GetY(), mX, mY);
 
-			if (Path.size() > 3)
-			{
-				mAngle = Math::GetAngle(Path[2]->GetX(), Path[2]->GetY(), mX, mY);
-
-			}
-			mX -= cosf(mAngle) * mSpeed;
-			mY -= -sinf(mAngle) * mSpeed;
 		}
-		if (mPlayer->GetRect().left > mRect.right)
-		{
-			mCurrentAnimation = mRightMove;
-			mCurrentAnimation->Play();
-		}
-		else if (mPlayer->GetRect().left < mRect.left)
-		{
-			mCurrentAnimation = mLeftMove;
-			mCurrentAnimation->Play();
-		}
-		else if (mPlayer->GetRect().top > mRect.bottom)
-		{
-			mCurrentAnimation = mDownMove;
-			mCurrentAnimation->Play();
-		}
-		else if (mPlayer->GetRect().bottom < mRect.top)
-		{
-			mCurrentAnimation = mUpMove;
-			mCurrentAnimation->Play();
-		}
-
+		mX -= cosf(mAngle) * mSpeed;
+		mY -= -sinf(mAngle) * mSpeed;
 	}
+	if (mPlayer->GetRect().left > mRect.right)
+	{
+		mCurrentAnimation = mRightMove;
+		mCurrentAnimation->Play();
+	}
+	else if (mPlayer->GetRect().left < mRect.left)
+	{
+		mCurrentAnimation = mLeftMove;
+		mCurrentAnimation->Play();
+	}
+	else if (mPlayer->GetRect().top > mRect.bottom)
+	{
+		mCurrentAnimation = mDownMove;
+		mCurrentAnimation->Play();
+	}
+	else if (mPlayer->GetRect().bottom < mRect.top)
+	{
+		mCurrentAnimation = mUpMove;
+		mCurrentAnimation->Play();
+	}
+
+	
 }

@@ -251,22 +251,27 @@ void LoadingScene::Init()
 	//이미지 (집)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House1", Resources(L"/02_House/NewHouse11_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House2", Resources(L"/02_House/NewHouse11_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House3-2", Resources(L"/02_House/NewHouse11_Wall2.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House3", Resources(L"/02_House/NewHouse11_Roof.png")); });
 
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House4", Resources(L"/02_House/NewHouse22_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House5", Resources(L"/02_House/NewHouse22_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House6-2", Resources(L"/02_House/NewHouse22_Wall2.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House6", Resources(L"/02_House/NewHouse22_Roof.png")); });
 
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House7", Resources(L"/02_House/NewHouse33_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House8", Resources(L"/02_House/NewHouse33_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House9-2", Resources(L"/02_House/NewHouse33_Wall2.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"House9", Resources(L"/02_House/NewHouse33_Roof.png")); });
 
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police1", Resources(L"/02_House/PoliceOffice1_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police2", Resources(L"/02_House/PoliceOffice1_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police3-2", Resources(L"/02_House/PoliceOffice1_Wall2.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"police3", Resources(L"/02_House/PoliceOffice1_Roof.png")); });
 
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop1", Resources(L"/02_House/Shop11_Bottom.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop2", Resources(L"/02_House/Shop11_Wall.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop3-2", Resources(L"/02_House/Shop11_Wall2.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"shop3", Resources(L"/02_House/Shop11_Roof.png")); });
 
 	//이미지 (아이템)

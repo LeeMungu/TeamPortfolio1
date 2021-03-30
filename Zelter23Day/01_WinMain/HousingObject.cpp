@@ -25,6 +25,7 @@ HousingObject::HousingObject(const wstring& name, float x, float y, int tileCoun
 	else if (mImageKey == L"House3" || mImageKey == L"House6" || mImageKey == L"House9" || mImageKey == L"police3" || mImageKey == L"shop3")
 	{
 		mHouselayer = HouseLayer::Roof;
+		mImage2 = IMAGEMANAGER->FindImage(mImageKey+L"-2");
 	}
 	mImage = IMAGEMANAGER->FindImage(mImageKey);
 	mSizeX = mImage->GetFrameWidth()*2;
@@ -276,6 +277,8 @@ void HousingObject::Render(HDC hdc)
 		//ÀÌ¹ÌÁö
 		if (mHouselayer == HouseLayer::Roof)
 		{
+			CameraManager::GetInstance()->GetMainCamera()
+				->AlphaScaleFrameRender(hdc, mImage2, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY, 1.f - mAlpha);
 			CameraManager::GetInstance()->GetMainCamera()
 				->AlphaScaleFrameRender(hdc, mImage, mRect.left, mRect.top, mIndexX, mIndexY, mSizeX, mSizeY, mAlpha);
 		}

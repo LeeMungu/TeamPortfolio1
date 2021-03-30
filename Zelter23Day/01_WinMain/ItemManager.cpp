@@ -290,7 +290,8 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 	else if (str == L"Zom") //좀비
 	{ 
-		key = L"RawMeat";
+		key2 = L"RawMeat";
+		key = L"ClothPiece";
 	}
 	//재료 개수 랜덤
 	if (key != L"") 

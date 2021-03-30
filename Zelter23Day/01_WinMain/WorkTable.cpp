@@ -51,10 +51,10 @@ void WorkTable::Init()
 		DeleteItem();
 		Worktemplet(mBtnKey);
 		});
-	mMakeWoodBoard = new Button(L"³ª¹«ÆÇ", mX + 230, mY + 120, 80, 50, [this]() {mBtnKey = "WoodBoard"; DeleteItem(); Worktemplet(mBtnKey); });
+	mMakeWoodBoard = new Button(L"³ª¹«ÆÇ", mX + 230, mY + 120, 80, 50, [this]() {mBtnKey = "WoodBoard"; MakingCountSet(); DeleteItem(); Worktemplet(mBtnKey); });
 	//vmMakeBonFire = new Button(L"¸ð´ÚºÒ", mX + 230, mY + 140, 80, 50, [this]() {mBtnKey = "BonFire", Worktemplet(mBtnKey); });
-	mMakeBarrigate = new Button(L"¹Ù¸®°ÔÀÌÆ®", mX + 230, mY + 160, 80, 50, [this]() {mBtnKey = "Barrigate"; DeleteItem(); Worktemplet(mBtnKey); });
-	mMakeBoom = new Button(L"ÆøÅº", mX + 230, mY + 200, 80, 50, [this]() {mBtnKey = "Boom"; DeleteItem(); Worktemplet(mBtnKey); });
+	mMakeBarrigate = new Button(L"¹Ù¸®°ÔÀÌÆ®", mX + 230, mY + 160, 80, 50, [this]() {mBtnKey = "Barrigate"; MakingCountSet(); DeleteItem(); Worktemplet(mBtnKey); });
+	mMakeBoom = new Button(L"ÆøÅº", mX + 230, mY + 200, 80, 50, [this]() {mBtnKey = "Boom"; MakingCountSet(); DeleteItem(); Worktemplet(mBtnKey); });
 	mNumImage = IMAGEMANAGER->FindImage(L"SW_num");
 
 }
@@ -451,4 +451,12 @@ void WorkTable::MakingItem(string btnkey)
 		}
 	}
 	
+}
+
+void WorkTable::MakingCountSet()
+{
+	mMakingCount = 0;
+	mMakingTotalCount = 0;
+	mMakeItemCount = 0;
+	mMakeItemCount2 = 0;
 }

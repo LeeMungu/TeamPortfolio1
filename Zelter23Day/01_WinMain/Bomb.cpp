@@ -49,7 +49,7 @@ void Bomb::Update()
 
 	if (mIsExplosionAfter == false)
 	{
-		if (Timer >= 0.5f)
+		if (Timer >= 10.f)
 		{
 			mIsExplosion = true;
 		}

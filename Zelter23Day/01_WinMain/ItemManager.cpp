@@ -290,7 +290,8 @@ void ItemManager::randomItem(wstring objectKey, float x, float y)
 	}
 	else if (str == L"Zom") //좀비
 	{ 
-		key = L"RawMeat";
+		key2 = L"RawMeat";
+		key = L"ClothPiece";
 	}
 	//재료 개수 랜덤
 	if (key != L"") 
@@ -1129,13 +1130,21 @@ void ItemManager::UseQuickSlot(int num)
 					mouse->SetTileCountX(1);
 					mouse->SetTileCountY(1);
 					mouse->Init();
+					mouse->SetmIsClick(true);
 					ObjectManager::GetInstance()->AddObject(ObjectLayer::Mouse, mouse);
+
+					if (mouse->GetmIsClick() == true)
+					{
+						mSelectedItem.count -= 1;
+						mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
+						mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
+						ItemCountCheck(mInputItem, num - 1, 0);
+					}
+					
+					
 				}
 				
-				mSelectedItem.count -= 1;
-				mItemInventoryList[mSelectedItem.key] = mSelectedItem.count;
-				mInputItem->SetCount(mItemInventoryList[mSelectedItem.key]);
-				ItemCountCheck(mInputItem, num - 1, 0);
+				
 			}
 		}
 	}
@@ -1196,5 +1205,6 @@ POINT ItemManager::GetInventoryIndex(Item* item)
 	
 	return p;
 }
+
 
 

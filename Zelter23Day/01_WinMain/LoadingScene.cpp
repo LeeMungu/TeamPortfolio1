@@ -109,6 +109,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkTable_start_btn", Resources(L"/01_UI/WorkTable_StartBtn.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkTable_Timer_up", Resources(L"/01_UI/WorkTable_TimerBtn_Up.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkTable_Timer_down", Resources(L"/01_UI/WorkTable_TimerBtn_Down.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WokrTable_Slot", Resources(L"/01_UI/Slot.png")); });
 
 	//이미지 (몬스터)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie01", Resources(L"/06_Zombie/zombie01.png"), 5, 6); });

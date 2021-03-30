@@ -119,6 +119,24 @@ void Camera::DoorScaleFrameRender(HDC hdc, Image* image, int x, int y, int frame
 	image->DoorScaleFrameRender(hdc, x - mRect.left, y - mRect.top, frameX, frameY, width, height, time);
 }
 
+void Camera::ItemRender(HDC hdc, Image* image, int x, int y, int frameX, int frameY, int width, int height, float time)
+{
+	image->ItemRender(hdc, x-mRect.left, y-mRect.top, frameX, frameY, width, height, time);
+}
+
+//카메라 흔든다!
+void Camera::ShakingCamera(bool b)
+{
+	if (b == true)
+	{
+		float mAngle = Random::GetInstance()->RandomInt(0, 200);
+
+		mX += cosf(mAngle) * 1500 * Time::GetInstance()->DeltaTime();
+		mY += sinf(mAngle) * 1500 * Time::GetInstance()->DeltaTime();
+	}
+	else return;
+}
+
 void Camera::RenderRect(HDC hdc, RECT rc)
 {
 	if(IsInCameraArea(rc))

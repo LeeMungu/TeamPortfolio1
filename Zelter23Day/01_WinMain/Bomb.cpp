@@ -42,6 +42,7 @@ void Bomb::Release()
 
 void Bomb::Update()
 {
+	Camera* camera = CameraManager::GetInstance()->GetMainCamera();
 	float cameraX = CameraManager::GetInstance()->GetMainCamera()->GetRect().left;
 	float cameraY = CameraManager::GetInstance()->GetMainCamera()->GetRect().top;
 	//생성된지 몇초 지났는지 알수있음
@@ -49,7 +50,7 @@ void Bomb::Update()
 
 	if (mIsExplosionAfter == false)
 	{
-		if (Timer >= 10.f)
+		if (Timer >= 5.f)
 		{
 			mIsExplosion = true;
 		}
@@ -59,7 +60,6 @@ void Bomb::Update()
 			mRcExplosion = RectMakeCenter(mX, mY, 200, 200);
 			SoundPlayer::GetInstance()->Play(L"BombSound", 0.8 * SoundPlayer::GetInstance()->GetEffectVolume());
 			mIsExplosionAfter = true;
-
 		}
 	}
 	if (mIsExplosionAfter == true)

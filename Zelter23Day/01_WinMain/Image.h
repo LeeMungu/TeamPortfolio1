@@ -71,7 +71,8 @@ public:
 	void LoadingRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float time);
 	//저녁에 어두워지기 그리기
 	void EveningBackgroundRender(float time);
-
+	//아이템 테두리 이미지
+	void ItemRender(HDC hdc, int x, int y, int frameX, int frameY, int width, int height, float time);
 	//렌더 리셋
 	void ResetRenderOption();
 

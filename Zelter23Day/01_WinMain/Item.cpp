@@ -30,7 +30,8 @@ void Item::Init()
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 	mNumImage = IMAGEMANAGER->FindImage(L"SW_num");
-
+	mWorkslot = IMAGEMANAGER->FindImage(L"WokrTable_Slot");
+	
 	mIsClicking = false;
 	mIsSeleted = false;
 	mPrePosition.x = mX;
@@ -82,8 +83,14 @@ void Item::Update()
 void Item::Render(HDC hdc)
 {
 	if (mItemKind == ItemKind::drop) { //땅에 떨어져있을 땐 카메라 랜더
+		//테두리
+		CameraManager::GetInstance()->GetMainCamera()
+			->ItemRender(hdc, mImage, mRect.left-mSizeX*0.3f/2.f, mRect.top-mSizeY*0.3f/2.f, 0, 0, mSizeX*1.3f, mSizeY*1.3f, Time::GetInstance()->GetSceneTime()*800);
+
+		//아이템 이미지
 		CameraManager::GetInstance()->GetMainCamera()->AlphaScaleRender(hdc, mImage, mRect.left, mRect.top, mSizeX, mSizeY, mAlpha);
 
+		//숫자 이미지
 		if (mCount != 1)
 		{
 			CameraManager::GetInstance()->GetMainCamera()->
@@ -92,6 +99,14 @@ void Item::Render(HDC hdc)
 				ScaleFrameRender(hdc, mNumImage, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
 		}
 
+	}
+	else if (mItemKind == ItemKind::holding)
+	{
+		mImage->ScaleRender(hdc, mRect.left, mRect.top, mSizeX, mSizeY);
+		mWorkslot->ScaleRender(hdc, mRect.left-15, mRect.top-15, 56, 56);
+
+		mNumImage->ScaleFrameRender(hdc, mX, mY + 5, mCount / 10 % 10, 0, 10, 10);
+		mNumImage->ScaleFrameRender(hdc, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
 	}
 	else 
 	{

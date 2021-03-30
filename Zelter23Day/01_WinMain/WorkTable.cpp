@@ -17,7 +17,6 @@ void WorkTable::Init()
 	mX = WINSIZEX / 2 - 350;
 	mY = WINSIZEY / 2 - 250;
 	mWorkTable = IMAGEMANAGER->FindImage(L"WorkTable");
-	mWorkslot = IMAGEMANAGER->FindImage(L"WokrTable_Slot");
 	mSizeX = mWorkTable->GetFrameWidth() * 2;
 	mSizeY = mWorkTable->GetFrameHeight() * 2;
 
@@ -209,7 +208,7 @@ void WorkTable::Worktemplet(string btnkey)
 						if (((Item*)items[i])->GetKeyName() == L"Iron1") // 템 있을때 없을때 구분해주기
 						{
 							//재료아이템
-							Item* workTableitemlron = new Item(((Item*)items[i])->GetKeyName(), "Iron", mX + 480, mY + 250, ((Item*)items[i])->GetCount(), ItemKind::holding);
+							Item* workTableitemlron = new Item(((Item*)items[i])->GetKeyName(), "Iron", mX + 500, mY + 250, ((Item*)items[i])->GetCount(), ItemKind::holding);
 							workTableitemlron->Init();
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitemlron);
 							mMakeItemCount2 = ((Item*)items[i])->GetCount();
@@ -263,7 +262,7 @@ void WorkTable::Worktemplet(string btnkey)
 						if (((Item*)items[i])->GetKeyName() == L"ClothPiece") // 템 있을때 없을때 구분해주기
 						{
 							//재료아이템
-							Item* workTableitemcloth = new Item(((Item*)items[i])->GetKeyName(), "ClothPiece", mX + 480, mY + 250, ((Item*)items[i])->GetCount(), ItemKind::holding);
+							Item* workTableitemcloth = new Item(((Item*)items[i])->GetKeyName(), "ClothPiece", mX + 500, mY + 250, ((Item*)items[i])->GetCount(), ItemKind::holding);
 							workTableitemcloth->Init();
 							ObjectManager::GetInstance()->AddObject(ObjectLayer::MakingItem, workTableitemcloth);
 							mMakeItemCount2 = ((Item*)items[i])->GetCount();

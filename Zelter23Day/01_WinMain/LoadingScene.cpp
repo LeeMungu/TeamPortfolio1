@@ -15,6 +15,10 @@ void LoadingScene::Init()
 	mLoadIndex = 0;
 	mIsEndLoading = false;
 
+	//이미지 (엔딩크레딧 관련)
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"TestEndingCredit", Resources(L"/01_UI/TestEndingCredit.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"EndingBackGround", Resources(L"/01_UI/EndingBackGround.png")); });
+
 	//이미지 (플레이어)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_run", Resources(L"/03_Player/Player_Run.png"), 7, 4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_walk", Resources(L"/03_Player/Player_Walk.png"), 7, 4); });
@@ -37,6 +41,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_impact", Resources(L"/08_Effect/effect_impact.png"), 8, 7); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_blood_R", Resources(L"/08_Effect/effect_blood.png"), 8, 1); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Effect_blood_L", Resources(L"/08_Effect/effect_blood_L.png"), 8, 1); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Explosion", Resources(L"/08_Effect/Explosion.png"), 6, 6); });
 
 	//이미지 (플레이어HP UI)
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"Heart", Resources(L"/01_UI/Heart_Icon.png"), 12, 1); });
@@ -354,7 +359,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {SoundPlayer::GetInstance()->LoadFromFile(L"Scream", Resources(L"/09_Sound/Scream.wav"), false); });
 
 
-	mLoadingImage = IMAGEMANAGER->FindImage(L"LoadingCat");
+	mLoadingImage = IMAGEMANAGER->FindImage(L"Menual");
 	mLoadingImage2 = ImageManager::GetInstance()->FindImage(L"LoadingImage2");
 	//mLoadingAnimation = new Animation();
 	//mLoadingAnimation->InitFrameByStartEnd(0, 0, 9, 0, false);
@@ -374,9 +379,9 @@ void LoadingScene::Release()
 void LoadingScene::Update()
 {
 	//mLoadingAnimation->Update();
-	if (mIsEndLoading == true)
+	if (mIsEndLoading == true && Input::GetInstance()->GetKeyDown(VK_SPACE))
 	{
-		SceneManager::GetInstance()->LoadScene(L"Scene1");
+			SceneManager::GetInstance()->LoadScene(L"Scene1");
 	}
 	if (mLoadIndex >= mLoadList.size())
 	{
@@ -397,18 +402,18 @@ void LoadingScene::Update()
 
 void LoadingScene::Render(HDC hdc)
 {
-	if (mIsEndLoading == false)
-	{
-		mLoadingImage->Render(hdc, 0, 0);
-		//mLoadingImage->ScaleFrameRender(hdc, (WINSIZEX - mLoadingImage->GetFrameWidth()*5) / 2,
-		//	(WINSIZEY - mLoadingImage->GetFrameHeight()*5) / 2,
-		//	mLoadingAnimation->GetNowFrameX(),
-		//	mLoadingAnimation->GetNowFrameY(),
-		//	mLoadingImage->GetFrameWidth()*5,
-		//	mLoadingImage->GetFrameHeight()*5);
-		mLoadingImage2->LoadingRender(hdc, 0, 0, 0, 0, WINSIZEX, WINSIZEY, mTime);
+	mLoadingImage->Render(hdc, 0, 0);
+	//mLoadingImage->ScaleFrameRender(hdc, (WINSIZEX - mLoadingImage->GetFrameWidth()*5) / 2,
+	//	(WINSIZEY - mLoadingImage->GetFrameHeight()*5) / 2,
+	//	mLoadingAnimation->GetNowFrameX(),
+	//	mLoadingAnimation->GetNowFrameY(),
+	//	mLoadingImage->GetFrameWidth()*5,
+	//	mLoadingImage->GetFrameHeight()*5);
+	mLoadingImage2->LoadingRender(hdc, 0, 0, 0, 0, WINSIZEX, WINSIZEY, mTime);
 
+	if (mIsEndLoading == true)
+	{
 		D2DRenderer::GetInstance()->RenderText(
-			WINSIZEX/3 - 90,WINSIZEY/5*2,L"생존하기 위해 준비 중입니다...",30);
+			WINSIZEX / 2 - 50, WINSIZEY - 100, L"Press Space", 30, DefaultBrush::White);
 	}
 }

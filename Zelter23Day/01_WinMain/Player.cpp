@@ -385,6 +385,7 @@ void Player::PlayerCtrl() {
 				mPlayerState = PlayerState::run;
 				mCurrentAnimation->Stop();
 				mDash = 0;
+				mDashTime = 0;
 			}
 			if (Input::GetInstance()->GetKeyDown(VK_RBUTTON))
 			{

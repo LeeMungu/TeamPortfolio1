@@ -30,6 +30,7 @@ void WorkTable::Init()
 
 	mStartBtn = new Button(L"WorkTable_start_btn", mX + 550, mY + 330, 2, [this]() {
 		MakingItem(mBtnKey);
+		MakingCountSet();
 		if (mMakingCount > 0)
 		{
 			DeleteItem();

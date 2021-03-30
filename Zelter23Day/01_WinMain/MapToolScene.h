@@ -89,6 +89,8 @@ class MapToolScene : public Scene
 
 	Button* mSaveButton;
 	Button* mLoadButton;
+	Button* mPrevButton;
+	Button* mNextButton;
 
 	TileLayer mCurrentLayer;
 

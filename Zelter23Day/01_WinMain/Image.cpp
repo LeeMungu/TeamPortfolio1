@@ -103,7 +103,10 @@ void Image::Render(HDC hdc, int x, int y)
 void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, int tempHeight)
 {
 	//float ratioX = ((float)tempWidth) / mSize.X;
-	float ratioY = ((float)mFrameInfo[0].height)/((float)tempHeight);
+	float ratioY = ((float)mFrameInfo[0].height)/((float)tempWidth);
+
+	//float ratio = ((float)tempHeight) / ((float)mFrameInfo[0].height);
+
 	mSize.X = (float)tempWidth;
 	mSize.Y = (float)tempHeight;
 
@@ -112,11 +115,12 @@ void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, i
 	//그릴 영역 세팅 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
 	D2D1_RECT_F dxSrc = D2D1::RectF((float)mFrameInfo[0].x, 
-		((float)mFrameInfo[0].y)+ ((float)tempY)*ratioY/2.f, //시작점(
+		((float)mFrameInfo[0].y)+ ((float)tempY)*ratioY, //시작점(
 		(float)(mFrameInfo[0].x + mFrameInfo[0].width), //뒷점
 		(float)(mFrameInfo[0].y + mFrameInfo[0].height)); 
 	//스케일 행렬을 만들어준다
 	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	//scaleMatrix = D2D1::Matrix3x2F::Identity();
 	//회전 행렬을 만들어준다. 
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	//이동 행렬을 만들어준다.
@@ -134,6 +138,14 @@ void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, i
 		&dxSrc);	//원본 이미지에서 일정 영역을 보여주고 싶을 때 영역을 입력하는 옵션
 					//해당 이미지 파일의 사이즈를 기준으로 영역을 설정
 	ResetRenderOption();
+
+	ID2D1RenderTarget* renderTarget = D2DRenderer::GetInstance()->GetRenderTarget();
+	ID2D1SolidColorBrush* brush;
+	D2D1_COLOR_F color;
+	//r,g,b,a
+	color = { 0, 0, 0, 1.0f };
+	renderTarget->CreateSolidColorBrush(color, &brush);
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawRectangle(dxArea,brush);
 }
 
 void Image::FrameRender(HDC hdc, int x, int y, int frameX, int frameY)

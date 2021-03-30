@@ -43,6 +43,8 @@ class scene1 : public Scene
 	int mZombieCount;
 	float mZombieCoolTime;
 	float mZombieCoolTimer;
+
+	float mShakingStartTime;
 public:
 	void Init()override;
 	void Release()override;
@@ -55,5 +57,6 @@ public:
 private:
 
 	void SetLoadingFile(int i) { mLoadingFile = i; }
+
 };
 

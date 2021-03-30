@@ -27,6 +27,9 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_roll", Resources(L"/03_Player/Player_roll1.png"), 7, 4); });
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Player_Die", Resources(L"/03_Player/Player_Die.png"), 7, 1); });
 
+	//이미지 (펫)
+	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Pet", Resources(L"/03_Player/Cat.png"), 4, 8); });
+
 	//이미지 (무기 /총)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Weapon_pistol", Resources(L"/03_Player/Weapon_pistol.png"), 1, 1); });
 
@@ -106,6 +109,7 @@ void LoadingScene::Init()
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkTable_start_btn", Resources(L"/01_UI/WorkTable_StartBtn.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkTable_Timer_up", Resources(L"/01_UI/WorkTable_TimerBtn_Up.png")); });
 	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WorkTable_Timer_down", Resources(L"/01_UI/WorkTable_TimerBtn_Down.png")); });
+	AddLoadFunc([]() {IMAGEMANAGER->GetInstance()->LoadFromFile(L"WokrTable_Slot", Resources(L"/01_UI/Slot.png")); });
 
 	//이미지 (몬스터)
 	AddLoadFunc([]() {IMAGEMANAGER->LoadFromFile(L"Zombie01", Resources(L"/06_Zombie/zombie01.png"), 5, 6); });

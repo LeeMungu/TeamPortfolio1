@@ -212,7 +212,7 @@ void Button::Render(HDC hdc)
 		else
 		{
 			D2DRenderer::GetInstance()
-				->RenderText(mX - mSizeX / 3, mY - mSizeY / 4, mText.c_str(), 20);
+				->RenderText(mX - mSizeX / 3, mY - mSizeY / 4, mText.c_str(), 20, DefaultBrush::White);
 		}
 	}
 	else if(mButtonType == Type::MenuButton)

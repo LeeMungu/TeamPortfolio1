@@ -12,6 +12,7 @@ class Button final
 	{
 		OnOffButton = 0,
 		SelectButton = 1,
+		MenuButton = 2,
 		End
 	};
 	function<void(void)> mFunc;	//버튼눌렸을때 실행될 함수
@@ -34,6 +35,9 @@ public:
 	Button(wstring text,float x, float y, float sizeX, float sizeY, function<void(void)> func);
 	Button(wstring imageKey,int indexY, wstring text, float x, float y, float sizeX, float sizeY, function<void(void)> func);
 	Button(wstring imageKey, float x, float y, float multiply, function<void(void)> func);
+
+	Button(wstring imageKey, float x, float y, function<void(void)> func);
+
 	void Update();
 	void Render(HDC hdc);
 

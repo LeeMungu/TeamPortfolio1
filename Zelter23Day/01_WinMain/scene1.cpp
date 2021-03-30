@@ -137,16 +137,10 @@ void scene1::Init()
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 218, TileSize * 46, mTileList));
 		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 243, TileSize * 43, mTileList));
 
-
-
-
 		//for (int i = 0; i < 1; ++i)
 		//	{
 		//		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
 		//	}
-
-
-
 
 	//WeatherManager::GetInstance()->Init();
 	//WeatherManager::GetInstance()->SetWeather(WeatherMode::Rain);

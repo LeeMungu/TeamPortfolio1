@@ -531,7 +531,7 @@ void Image::ItemRender(HDC hdc, int x, int y, int frameX, int frameY, int width,
 	ID2D1SolidColorBrush* brush;
 	D2D1_COLOR_F color;
 	//r,g,b,a
-	color = { 0.0f,1.0f,0.0f,
+	color = { 1.0f,1.0f,1.0f,
 		//Åõ¸íµµ
 		downUpPercent };
 	D2DRenderer::GetInstance()->GetRenderTarget()->CreateSolidColorBrush(color, &brush);

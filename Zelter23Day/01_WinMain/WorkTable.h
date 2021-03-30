@@ -7,7 +7,7 @@ class WorkTable : public UI
 {
 	Image* mWorkTable;
 	Image* mNumImage;
-	
+	Image* mWorkslot;
 
 
 	Button* mStartBtn;

@@ -17,6 +17,7 @@ void WorkTable::Init()
 	mX = WINSIZEX / 2 - 350;
 	mY = WINSIZEY / 2 - 250;
 	mWorkTable = IMAGEMANAGER->FindImage(L"WorkTable");
+	mWorkslot = IMAGEMANAGER->FindImage(L"WokrTable_Slot");
 	mSizeX = mWorkTable->GetFrameWidth() * 2;
 	mSizeY = mWorkTable->GetFrameHeight() * 2;
 

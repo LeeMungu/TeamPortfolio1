@@ -30,7 +30,8 @@ void Item::Init()
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 	mNumImage = IMAGEMANAGER->FindImage(L"SW_num");
-
+	mWorkslot = IMAGEMANAGER->FindImage(L"WokrTable_Slot");
+	
 	mIsClicking = false;
 	mIsSeleted = false;
 	mPrePosition.x = mX;
@@ -92,6 +93,14 @@ void Item::Render(HDC hdc)
 				ScaleFrameRender(hdc, mNumImage, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
 		}
 
+	}
+	else if (mItemKind == ItemKind::holding)
+	{
+		mImage->ScaleRender(hdc, mRect.left, mRect.top, mSizeX, mSizeY);
+		mWorkslot->ScaleRender(hdc, mRect.left-15, mRect.top-15, 56, 56);
+
+		mNumImage->ScaleFrameRender(hdc, mX, mY + 5, mCount / 10 % 10, 0, 10, 10);
+		mNumImage->ScaleFrameRender(hdc, mX + 6, mY + 5, mCount % 10, 0, 10, 10);
 	}
 	else 
 	{

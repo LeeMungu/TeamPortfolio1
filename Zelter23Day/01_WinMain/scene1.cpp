@@ -141,44 +141,12 @@ void scene1::Init()
 	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 218, TileSize * 46, mTileList));
 	GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 243, TileSize * 43, mTileList));
 
-	//for (int i = 0; i < 1; ++i)
-	//	{
-	//		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
-	//	}
-
-		//좀비 등장 이벤트
+	//폭발 후 엔딩
+	GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::UpRight, TileSize * 267, TileSize * 114));
+	GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"좋아 이제 가볼까."));
+	GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"다들 무사해줘."));
 		
-		GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::UpRight, TileSize * 232, TileSize * 68));
-		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"표지판에 누군가가 급하게\n휘갈겨 쓴 메모가 보인다."));
-		GameEventManager::GetInstance()->PushEvent(new IDelayEvent(1.f));
-		GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"공터에 겨우 좀비들을\n몰아넣었으니 녀석들을\n유인하는 행동을 하지말 것\n목숨책임안짐."));
-		GameEventManager::GetInstance()->PushEvent(new IAllUnitActive());
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 219, TileSize * 39, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 225, TileSize * 44, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 235, TileSize * 41, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 245, TileSize * 48, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 236, TileSize * 53, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 224, TileSize * 53, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 222, TileSize * 57, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 226, TileSize * 63, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 217, TileSize * 53, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 218, TileSize * 46, mTileList));
-		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(TileSize * 243, TileSize * 43, mTileList));
-
-
-		//폭발 후 엔딩
-		GameEventManager::GetInstance()->PushEvent(new ITileEvent(ITileEvent::Mode::UpRight, TileSize * 267, TileSize * 114));
-		GameEventManager::GetInstance()->PushEvent(new IAllUnitStop());
-		GameEventManager::GetInstance()->PushEvent(new ITextEvent(3.f, L"좋아 이제 가볼까."));
-		GameEventManager::GetInstance()->PushEvent(new ITextEvent(5.f, L"다들 무사해줘."));
-		//GameEventManager::GetInstance()->PushEvent(new IGameEnding(true));
-
-
-		//for (int i = 0; i < 1; ++i)
-		//	{
-		//		GameEventManager::GetInstance()->PushEvent(new IZombiGeneration(1000, 1600, mTileList));
-		//	}
 
 
 	//WeatherManager::GetInstance()->Init();

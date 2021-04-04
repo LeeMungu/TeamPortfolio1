@@ -139,13 +139,13 @@ void Image::Render(HDC hdc, int x, int y, int tempX, int tempY, int tempWidth, i
 					//해당 이미지 파일의 사이즈를 기준으로 영역을 설정
 	ResetRenderOption();
 
-	ID2D1RenderTarget* renderTarget = D2DRenderer::GetInstance()->GetRenderTarget();
-	ID2D1SolidColorBrush* brush;
-	D2D1_COLOR_F color;
-	//r,g,b,a
-	color = { 0, 0, 0, 1.0f };
-	renderTarget->CreateSolidColorBrush(color, &brush);
-	D2DRenderer::GetInstance()->GetRenderTarget()->DrawRectangle(dxArea,brush);
+	//ID2D1RenderTarget* renderTarget = D2DRenderer::GetInstance()->GetRenderTarget();
+	//ID2D1SolidColorBrush* brush;
+	//D2D1_COLOR_F color;
+	////r,g,b,a
+	//color = { 0, 0, 0, 1.0f };
+	//renderTarget->CreateSolidColorBrush(color, &brush);
+	//D2DRenderer::GetInstance()->GetRenderTarget()->DrawRectangle(dxArea,brush);
 }
 
 void Image::FrameRender(HDC hdc, int x, int y, int frameX, int frameY)
